@@ -1,0 +1,49 @@
+/* Base Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global custom styles */
+@layer base {
+  /* Light theme (default) */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased;
+  }
+  
+  /* High contrast theme overrides */
+  html.high-contrast {
+    @apply bg-white;
+  }
+  
+  html.high-contrast body {
+    @apply bg-white text-black;
+  }
+  
+  html.high-contrast a {
+    @apply text-blue-700 underline;
+  }
+  
+  /* Accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Print styles */
+  @media print {
+    .no-print {
+      display: none;
+    }
+  }
+}

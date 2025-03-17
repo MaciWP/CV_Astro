@@ -1,0 +1,52 @@
+{
+    "meta": {
+      "title": "Professional CV - Swiss Standards",
+      "description": "A professional CV/portfolio following Swiss standards"
+    },
+    "header": {
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "nationality": "Nationality",
+      "dateOfBirth": "Date of Birth",
+      "workPermit": "Work Permit"
+    },
+    "sections": {
+      "summary": "Professional Summary",
+      "experience": "Work Experience",
+      "education": "Education & Training",
+      "skills": "Technical Skills",
+      "languages": "Languages",
+      "projects": "Key Projects"
+    },
+    "buttons": {
+      "downloadPDF": "Download PDF",
+      "switchLanguage": "Change Language",
+      "switchTheme": "Change Theme"
+    },
+    "languageLevels": {
+      "native": "Native",
+      "fluent": "Fluent (C2)",
+      "advanced": "Advanced (C1)",
+      "intermediate": "Intermediate (B2)",
+      "basic": "Basic (A1/A2)"
+    },
+    "months": {
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April",
+      "may": "May",
+      "jun": "June",
+      "jul": "July",
+      "aug": "August",
+      "sep": "September",
+      "oct": "October",
+      "nov": "November",
+      "dec": "December"
+    },
+    "present": "Present",
+    "footer": {
+      "copyright": "© 2025 - Created with Astro, React, and Tailwind CSS"
+    }
+  }

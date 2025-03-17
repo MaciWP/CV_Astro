@@ -1,22 +1,64 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+---
+// Import the required components
+// Import React components
+// Note: These are client-side components that will be hydrated
+import { ThemeProvider } from '../contexts/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
+import LanguageSelector from '../components/LanguageSelector';
+import PDFDownload from '../components/PDFDownload';
+
+// Define props interface
+export interface Props {
+  title: string;
+  description: string;
+  lang: string;
+}
+
+// Destructure props with defaults
+const { 
+  title = "Professional CV - Swiss Standards", 
+  description = "A professional CV/portfolio following Swiss standards",
+  lang = "en"
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body class="min-h-screen bg-light-primary dark:bg-dark-primary high-contrast:bg-hc-primary text-light-text dark:text-dark-text high-contrast:text-hc-text">
+    <ThemeProvider client:load>
+      <header class="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 high-contrast:border-black">
+        <div class="font-bold text-xl">My CV</div>
+        <div class="flex gap-4 items-center">
+          <LanguageSelector client:load />
+          <ThemeToggle client:load />
+          <PDFDownload client:load />
+        </div>
+      </header>
+
+      <main class="container mx-auto p-4 max-w-4xl">
+        <slot />
+      </main>
+
+      <footer class="p-4 text-center border-t border-gray-200 dark:border-gray-700 high-contrast:border-black mt-8">
+        <p>&copy; 2025 - Created with Astro, React, and Tailwind CSS</p>
+      </footer>
+    </ThemeProvider>
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  /* Global styles - loaded from src/styles/global.css */
+  @import "../styles/global.css";
 </style>

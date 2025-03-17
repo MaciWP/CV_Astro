@@ -1,11 +1,35 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/cv/Header';
+import Summary from '../components/cv/Summary';
+import Experience from '../components/cv/Experience';
+import Education from '../components/cv/Education';
+import Skills from '../components/cv/Skills';
+import Languages from '../components/cv/Languages';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// This will be replaced by i18n values
+const pageTitle = "Professional CV";
+const pageDescription = "My professional CV built with Astro, React and Tailwind CSS following Swiss standards";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={pageTitle} description={pageDescription}>
+  <div class="space-y-8 print:space-y-4">
+    <!-- Personal information and photo -->
+    <Header client:load />
+    
+    <!-- Professional summary -->
+    <Summary client:load />
+    
+    <!-- Work Experience -->
+    <Experience client:load />
+    
+    <!-- Education and Training -->
+    <Education client:load />
+    
+    <!-- Technical Skills -->
+    <Skills client:load />
+    
+    <!-- Languages -->
+    <Languages client:load />
+  </div>
 </Layout>
