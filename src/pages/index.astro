@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// Importamos el componente Header simplificado
 import Header from '../components/cv/Header';
 import Experience from '../components/cv/Experience';
 import Skills from '../components/cv/Skills';
@@ -14,10 +16,10 @@ const pageDescription = "Professional CV for Oriol Macias, Software Developer";
 
 <Layout title={pageTitle} description={pageDescription}>
   <div id="cv-content" class="space-y-16">
-    <!-- Header - Información personal -->
+    <!-- IMPORTANTE: cambiamos client:load para asegurar que se hidrate completamente -->
     <Header client:load />
     
-    <!-- El resto de secciones se cargarán con client:visible para mejor rendimiento -->
+    <!-- El resto de secciones con client:visible -->
     <Experience client:visible />
     <Skills client:visible />
     <Languages client:visible />
@@ -25,3 +27,18 @@ const pageDescription = "Professional CV for Oriol Macias, Software Developer";
     <Projects client:visible />
   </div>
 </Layout>
+
+<script>
+  // Pequeño script para detectar problemas de carga
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('CV content loaded');
+    
+    // Verificar que el header existe y es visible
+    const header = document.getElementById('about');
+    if (header) {
+      console.log('Header found in DOM');
+    } else {
+      console.error('Header not found in DOM');
+    }
+  });
+</script>

@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
 /**
- * Componente de cabecera simplificado sin dependencias de traducción
+ * Header component with simplified animation
+ * This version fixes the issue with the header disappearing after initial render
  */
 const Header = () => {
+  // We'll set initial state to false and control it more carefully
   const [isVisible, setIsVisible] = useState(false);
   
-  // Efecto para animar la entrada del componente
   useEffect(() => {
-    setIsVisible(true);
+    // Set a small delay to ensure DOM is ready before animation starts
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <section id="about" className="pt-4 pb-8">
-      {/* Grid para layout responsive */}
-      <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 items-center transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-        {/* Información personal - toma más espacio en pantallas medianas */}
+      {/* Grid layout with simpler animation */}
+      <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 items-center transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        {/* Personal information - takes more space on medium screens */}
         <div className="md:col-span-8 space-y-6">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold mb-2">Oriol Macias</h1>
@@ -44,7 +50,7 @@ const Header = () => {
               </a>
             </div>
             
-            {/* Teléfono */}
+            {/* Phone */}
             <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
               <div className="p-2 bg-gray-100 dark:bg-gray-800 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,16 +76,16 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Foto de perfil - toma menos espacio en pantallas medianas */}
+        {/* Profile picture - takes less space on medium screens */}
         <div className="md:col-span-4 flex justify-center md:justify-end">
-          <div className={`relative w-40 h-40 md:w-48 md:h-48 overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: '200ms' }}>
-            {/* Placeholder para la imagen */}
+          <div className={`relative w-40 h-40 md:w-48 md:h-48 overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '200ms' }}>
+            {/* Placeholder for the image */}
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
-            {/* Borde adicional para efecto de marco */}
+            {/* Additional border for frame effect */}
             <div className="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
           </div>
         </div>

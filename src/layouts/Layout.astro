@@ -1,6 +1,5 @@
 ---
 // Import the required components
-import { ThemeProvider } from '../contexts/ThemeContext';
 import Navbar from '../components/Navbar';
 
 // Define props interface
@@ -27,70 +26,155 @@ const {
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#121620" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     
     <!-- Font Awesome for icons (loaded from CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
-    <!-- Set initial theme class -->
+    <!-- Set initial theme class to prevent flash of unstyled content -->
     <script is:inline>
-      // Get initial theme from localStorage or default to light
+      // Get initial theme from localStorage or default to dark
       function getInitialTheme() {
-        if (localStorage.getItem('theme')) {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
           return localStorage.getItem('theme');
         }
-        // Default to light theme instead of checking system preference
-        return 'light';
+        // Default to dark theme
+        return 'dark';
       }
       
-      // Apply theme class to html element
+      // Apply theme class to html element immediately
       document.documentElement.classList.add(getInitialTheme());
     </script>
+
+    <!-- Print styles for PDF download -->
+    <style is:inline>
+      @media print {
+        nav, footer, button, .no-print {
+          display: none !important;
+        }
+        
+        body {
+          background-color: white !important;
+          color: black !important;
+        }
+        
+        /* Asegurar que el contenido se ajuste para impresión */
+        @page {
+          size: A4 portrait;
+          margin: 1.5cm;
+        }
+        
+        main {
+          padding: 0 !important;
+        }
+        
+        /* Quitar sombras y efectos hover */
+        * {
+          box-shadow: none !important;
+          transition: none !important;
+        }
+        
+        /* Ajustar colores para impresión */
+        .dark\:text-dark-text,
+        .dark\:text-dark-text-secondary,
+        .text-light-text,
+        .text-light-text-secondary {
+          color: #000 !important;
+        }
+        
+        .dark\:bg-dark-surface,
+        .dark\:bg-dark-secondary,
+        .bg-light-surface,
+        .bg-light-secondary {
+          background-color: #fff !important;
+        }
+        
+        /* Asegurar que todas las secciones sean visibles */
+        .opacity-0 {
+          opacity: 1 !important;
+        }
+        
+        /* Mantener el borde rojo característico para mantener la identidad visual */
+        .border-brand-red {
+          border-color: #D83333 !important;
+        }
+      }
+    </style>
   </head>
-  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
-    <ThemeProvider client:load>
-      <div id="app-root">
-        <Navbar client:load />
+  <body class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300">
+    <div id="app-root">
+      <!-- Navbar con client:load para asegurar carga inmediata -->
+      <Navbar client:load />
 
-        <main class="container mx-auto px-4 py-8 max-w-5xl">
-          <slot />
-        </main>
+      <main class="container mx-auto px-4 py-8 max-w-5xl">
+        <slot />
+      </main>
 
-        <footer class="py-8 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-          <div class="container mx-auto px-4 max-w-5xl">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div class="flex items-center gap-2">
-                <div class="h-6 w-6 bg-brand-red dark:bg-brand-red rounded-none flex items-center justify-center transition-colors duration-300">
-                  <span class="text-white font-bold text-xs">OM</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                  © {new Date().getFullYear()} Oriol Macias
-                </p>
+      <!-- Footer inline porque el componente parece tener problemas -->
+      <footer class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300">
+        <div class="container mx-auto px-4 max-w-5xl">
+          <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+              <div class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center">
+                <span class="text-white font-bold text-xs">OM</span>
               </div>
-
-              <div class="flex gap-6">
-                <a
-                  href="#top"
-                  class="text-sm text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                >
-                  Back to top
-                </a>
-                <button 
-                  class="text-xs h-8 px-3 py-1 border border-brand-red dark:border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
-                  onclick="document.getElementById('cv-download-button')?.click()"
-                >
-                  <i class="fas fa-download mr-2"></i>
-                  Download CV
-                </button>
-              </div>
+              <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+                © {new Date().getFullYear()} Oriol Macias
+              </p>
+            </div>
+            <div class="flex items-center gap-6">
+              <a
+                href="#top"
+                class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
+              >
+                <i class="fas fa-arrow-up mr-2 text-xs"></i>
+                Back to top
+              </a>
+              <button 
+                id="cv-download-button"
+                class="text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
+                onclick="window.print()"
+              >
+                <i class="fas fa-download mr-2"></i>
+                Download CV
+              </button>
             </div>
           </div>
-        </footer>
-      </div>
-    </ThemeProvider>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Script para mejorar scroll suave a secciones -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Smooth scroll para anclas
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href').substring(1);
+            if (!targetId) return; // Evitar errores con href="#"
+            
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+              e.preventDefault();
+              window.scrollTo({
+                top: targetElement.offsetTop - 80, // Offset para el navbar
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+
+        // Detectar errores
+        window.addEventListener('error', function(e) {
+          console.error('Global error caught:', e.error);
+        });
+      });
+    </script>
   </body>
 </html>
 

@@ -26,6 +26,7 @@ export function ThemeProvider({ children }) {
   
   // Once mounted, set the theme from localStorage or default to light
   useEffect(() => {
+    // Get initial theme from localStorage or default to light
     const initialTheme = localStorage.getItem('theme') || themes.LIGHT;
     setTheme(initialTheme);
     setIsMounted(true);
@@ -33,11 +34,28 @@ export function ThemeProvider({ children }) {
     // Also ensure the class is applied to html element
     document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
     document.documentElement.classList.add(initialTheme);
+    
+    // Listen for storage events (in case theme is changed in another tab)
+    const handleStorageChange = (e) => {
+      if (e.key === 'theme') {
+        const newTheme = e.newValue || themes.LIGHT;
+        setTheme(newTheme);
+        document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
+        document.documentElement.classList.add(newTheme);
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   // Toggle between themes
   const toggleTheme = () => {
+    if (!isMounted) return;
+    
     const newTheme = theme === themes.LIGHT ? themes.DARK : themes.LIGHT;
+    
+    // Update state
     setTheme(newTheme);
     
     // Update the document classes
@@ -46,13 +64,11 @@ export function ThemeProvider({ children }) {
     
     // Store the theme preference
     localStorage.setItem('theme', newTheme);
-    
-    console.log('Theme toggled to:', newTheme); // Debugging
   };
 
-  // Don't render anything until mounting is complete
+  // Simple loading state to avoid hydration issues
   if (!isMounted) {
-    return <>{children}</>;
+    return <div className="invisible">{children}</div>;
   }
 
   return (
