@@ -1,30 +1,27 @@
 import React from 'react';
+import { useLanguage, languages } from '../contexts/LanguageContext';
 
 const LanguageSelector = () => {
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'de', name: 'Deutsch', flag: '🇨🇭' },
-    { code: 'fr', name: 'Français', flag: '🇨🇭' },
-    { code: 'it', name: 'Italiano', flag: '🇨🇭' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' }
-  ];
+  const { language, setLanguage } = useLanguage();
 
-  const changeLanguage = (lng) => {
-    console.log(`Changed language to: ${lng}`);
-    document.documentElement.setAttribute('lang', lng);
-  };
+  // Esta versión solo muestra los idiomas pero no cambia realmente la traducción
+  const languageOptions = [
+    { code: languages.EN, name: 'English', flag: '🇬🇧' },
+    { code: languages.ES, name: 'Español', flag: '🇪🇸' },
+    { code: languages.FR, name: 'Français', flag: '🇨🇭' }
+  ];
 
   return (
     <div className="relative">
       <select
         className="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        defaultValue="en"
-        onChange={(e) => changeLanguage(e.target.value)}
+        value={language}
+        onChange={(e) => setLanguage(e.target.value)}
         aria-label="Select language"
       >
-        {languages.map((language) => (
-          <option key={language.code} value={language.code}>
-            {language.flag} {language.name}
+        {languageOptions.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.flag} {lang.name}
           </option>
         ))}
       </select>

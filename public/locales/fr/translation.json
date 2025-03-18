@@ -1,0 +1,52 @@
+{
+    "meta": {
+      "title": "CV Professionnel - Normes Suisses",
+      "description": "Un CV/portfolio professionnel suivant les normes suisses"
+    },
+    "header": {
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "E-mail",
+      "nationality": "Nationalité",
+      "dateOfBirth": "Date de Naissance",
+      "workPermit": "Permis de Travail"
+    },
+    "sections": {
+      "summary": "Résumé Professionnel",
+      "experience": "Expérience Professionnelle",
+      "education": "Formation & Éducation",
+      "skills": "Compétences Techniques",
+      "languages": "Langues",
+      "projects": "Projets Principaux"
+    },
+    "buttons": {
+      "downloadPDF": "Télécharger PDF",
+      "switchLanguage": "Changer de Langue",
+      "switchTheme": "Changer de Thème"
+    },
+    "languageLevels": {
+      "native": "Langue Maternelle",
+      "fluent": "Courant (C2)",
+      "advanced": "Avancé (C1)",
+      "intermediate": "Intermédiaire (B2)",
+      "basic": "Élémentaire (A1/A2)"
+    },
+    "months": {
+      "jan": "Janvier",
+      "feb": "Février",
+      "mar": "Mars",
+      "apr": "Avril",
+      "may": "Mai",
+      "jun": "Juin",
+      "jul": "Juillet",
+      "aug": "Août",
+      "sep": "Septembre",
+      "oct": "Octobre",
+      "nov": "Novembre",
+      "dec": "Décembre"
+    },
+    "present": "Présent",
+    "footer": {
+      "copyright": "© 2025 - Créé avec Astro, React, et Tailwind CSS"
+    }
+  }

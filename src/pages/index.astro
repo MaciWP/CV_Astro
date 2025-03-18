@@ -1,35 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/cv/Hero';
+import Header from '../components/cv/Header';
 import Experience from '../components/cv/Experience';
 import Skills from '../components/cv/Skills';
 import Languages from '../components/cv/Languages';
 import Education from '../components/cv/Education';
 import Projects from '../components/cv/Projects';
 
-// This will be replaced by i18n values
+// Metadata de la página
 const pageTitle = "Oriol Macias - CV";
 const pageDescription = "Professional CV for Oriol Macias, Software Developer";
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <div class="space-y-16">
-    <!-- Hero section with personal info and summary -->
-    <Hero client:load />
+  <div id="cv-content" class="space-y-16">
+    <!-- Header - Información personal -->
+    <Header client:load />
     
-    <!-- Work Experience -->
-    <Experience client:load />
-    
-    <!-- Technical Skills -->
-    <Skills client:load />
-    
-    <!-- Languages -->
-    <Languages client:load />
-    
-    <!-- Education and Certifications -->
-    <Education client:load />
-    
-    <!-- Projects -->
-    <Projects client:load />
+    <!-- El resto de secciones se cargarán con client:visible para mejor rendimiento -->
+    <Experience client:visible />
+    <Skills client:visible />
+    <Languages client:visible />
+    <Education client:visible />
+    <Projects client:visible />
   </div>
 </Layout>

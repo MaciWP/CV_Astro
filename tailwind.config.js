@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
     darkMode: 'class',
     theme: {
       extend: {
+        fontFamily: {
+          sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        },
         colors: {
-          'brand-red': '#D33A2C', // Color principal rojo
+          // Basado en el diseño de referencia
+          'brand-red': '#D83333', // Color principal rojo para botones y acentos
           
           // Light theme
           'light-primary': '#ffffff',
@@ -23,34 +27,34 @@ module.exports = {
           'dark-text': '#f9fafb',
           'dark-text-secondary': '#9ca3af',
         },
-        fontFamily: {
-          sans: ['Arial', 'Calibri', 'Helvetica', 'sans-serif'],
+        boxShadow: {
+          'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+          'card-dark': '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+          'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
         },
-        animation: {
-          'fade-in': 'fadeIn 0.5s ease-out',
-          'slide-up': 'slideUp 0.5s ease-out',
-          'scale-in': 'scaleIn 0.3s ease-out',
-          'bounce-in': 'bounceIn 0.6s ease-out',
-          'spin-slow': 'spin 3s linear infinite',
+        borderRadius: {
+          'none': '0',
         },
         keyframes: {
-          fadeIn: {
-            '0%': { opacity: '0' },
-            '100%': { opacity: '1' },
+          "accordion-down": {
+            from: { height: 0 },
+            to: { height: "var(--radix-accordion-content-height)" },
           },
-          slideUp: {
-            '0%': { transform: 'translateY(20px)', opacity: '0' },
-            '100%': { transform: 'translateY(0)', opacity: '1' },
+          "accordion-up": {
+            from: { height: "var(--radix-accordion-content-height)" },
+            to: { height: 0 },
           },
-          scaleIn: {
-            '0%': { transform: 'scale(0.9)', opacity: '0' },
-            '100%': { transform: 'scale(1)', opacity: '1' },
-          },
-          bounceIn: {
-            '0%': { transform: 'scale(0.8)', opacity: '0' },
-            '70%': { transform: 'scale(1.05)', opacity: '1' },
-            '100%': { transform: 'scale(1)', opacity: '1' },
-          },
+        },
+        animation: {
+          "accordion-down": "accordion-down 0.2s ease-out",
+          "accordion-up": "accordion-up 0.2s ease-out",
+        },
+      },
+      container: {
+        center: true,
+        padding: "2rem",
+        screens: {
+          "2xl": "1400px",
         },
       },
     },

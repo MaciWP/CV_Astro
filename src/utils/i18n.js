@@ -1,33 +1,34 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+// Archivo simplificado sin funcionalidad de i18n real
+// Solo proporciona una API mínima para evitar errores
 
-// Initialize i18n
-i18n
-  // Detect user language
-  .use(LanguageDetector)
-  // Pass the i18n instance to react-i18next
-  .use(initReactI18next)
-  // Initialize i18n
-  .init({
-    // Default language
-    fallbackLng: 'en',
-    // Debug mode in development
-    debug: import.meta.env.DEV,
-    // Resources will be loaded on demand from /public/locales folder
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+const i18n = {
+    // Función de traducción que simplemente devuelve la clave
+    t: (key) => {
+      // Mapa de traducciones básicas para elementos clave de la UI
+      const translations = {
+        'buttons.downloadPDF': 'Download PDF',
+        'buttons.switchTheme': 'Change Theme',
+        'header.address': 'Address',
+        'header.phone': 'Phone',
+        'header.email': 'Email',
+        'header.nationality': 'Nationality',
+      };
+      
+      return translations[key] || key;
     },
-    // Default namespace
-    defaultNS: 'translation',
-    // Cache translations
-    cache: {
-      enabled: true,
+    
+    // Función de cambio de idioma que no hace nada
+    changeLanguage: (lng) => {
+      console.log(`Language would change to: ${lng}`);
+      return Promise.resolve();
     },
-    interpolation: {
-      // React already escapes values
-      escapeValue: false,
-    },
-  });
-
-export default i18n;
+  
+    // Propiedades y métodos adicionales para mantener la compatibilidad
+    language: 'en',
+    options: {
+      resources: {},
+      lng: 'en'
+    }
+  };
+  
+  export default i18n;

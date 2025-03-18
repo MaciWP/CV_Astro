@@ -4,45 +4,24 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px; /* For anchor links - accommodates fixed header */
-  }
-  
   body {
-    @apply antialiased font-sans;
+    @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Smooth theme transitions */
-  body, 
-  nav, 
-  header, 
-  main, 
-  section, 
-  footer, 
-  div, 
-  a, 
-  button, 
-  h1, 
-  h2, 
-  h3, 
-  h4, 
-  h5, 
-  h6, 
-  p, 
-  span {
-    @apply transition-colors duration-300;
+  /* Mejora de tipografía */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
   }
 
-  /* Section style for better scrolling */
+  /* Sección con mejor espaciado para scroll */
   section {
     scroll-margin-top: 80px;
     @apply mb-24;
   }
   
-  /* Accessibility */
+  /* Accesibilidad */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -54,90 +33,98 @@
     white-space: nowrap;
     border-width: 0;
   }
-  
-  /* Apply custom scrollbar */
+}
+
+@layer components {
+  /* Estilos para PDF */
+  .print-mode {
+    font-size: 10pt !important;
+  }
+
+  .print-mode h1 {
+    font-size: 18pt !important;
+  }
+
+  .print-mode h2 {
+    font-size: 14pt !important;
+  }
+
+  .print-mode h3 {
+    font-size: 12pt !important;
+  }
+
+  .print-mode .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .print-mode section {
+    margin-bottom: 15mm !important;
+  }
+
+  /* Transiciones suaves */
+  .transition-all {
+    transition-property: all;
+  }
+
+  /* Scroll suave */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 70px;
+  }
+
+  /* Estilos de scrollbar personalizados */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
-  
+
   ::-webkit-scrollbar-track {
-    @apply bg-light-secondary dark:bg-dark-secondary;
+    @apply bg-gray-100 dark:bg-gray-800;
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-brand-red/50 hover:bg-brand-red;
-    border-radius: 0;
+    @apply bg-gray-300 dark:bg-gray-600;
   }
-  
-  /* Print styles */
-  @media print {
-    .no-print {
-      display: none;
-    }
-    
-    nav, 
-    footer {
-      display: none;
-    }
-    
-    body {
-      background-color: white !important;
-      color: black !important;
-    }
-    
-    main {
-      padding: 0 !important;
-    }
-    
-    /* Remove shadows in print */
-    * {
-      box-shadow: none !important;
-    }
-    
-    /* Page breaks */
-    section {
-      page-break-inside: avoid;
-    }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
   }
 }
 
-@layer components {
-  .skill-bar {
-    @apply h-2 bg-light-secondary dark:bg-dark-surface rounded-none overflow-hidden;
+/* Estilos específicos para impresión */
+@media print {
+  .no-print {
+    display: none !important;
   }
   
-  .skill-progress {
-    @apply h-full bg-brand-red transition-all duration-1000 ease-out;
+  nav, 
+  footer {
+    display: none !important;
   }
   
-  .skill-pill {
-    @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-2 rounded-none inline-flex items-center justify-center text-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-red;
+  body {
+    background-color: white !important;
+    color: black !important;
   }
   
-  .section-header {
-    @apply flex items-center mb-6;
+  main {
+    padding: 0 !important;
   }
   
-  .section-icon {
-    @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
+  /* Quitar sombras en impresión */
+  * {
+    box-shadow: none !important;
   }
   
-  .section-title {
-    @apply text-2xl font-bold ml-3;
+  /* Saltos de página */
+  section {
+    page-break-inside: avoid;
   }
-}
 
-@layer utilities {
-  .text-gradient-brand {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-red to-orange-500;
-  }
-  
-  .hover-lift {
-    @apply transition-transform duration-300 hover:-translate-y-2;
-  }
-  
-  .hover-glow:hover {
-    box-shadow: 0 0 15px rgba(211, 58, 44, 0.3);
+  /* Ocultar elementos interactivos */
+  button:not(#cv-download-button),
+  .no-print {
+    display: none !important;
   }
 }
