@@ -9,8 +9,9 @@ const Navbar = () => {
     const [theme, setTheme] = useState('dark');
     const [isLanguageOpen, setIsLanguageOpen] = useState(false);
     const languageDropdownRef = useRef(null);
+    const navbarHeight = 80; // estimated navbar height for offset
 
-    // Elements de navegación with correct order (Education before Languages)
+    // Elements de navegación with correct order (About, Experience, Skills, Education, Languages, Projects)
     const navItems = [
         { name: 'About', href: '#about', id: 'about' },
         { name: 'Experience', href: '#experience', id: 'experience' },
@@ -33,7 +34,7 @@ const Navbar = () => {
         };
     }, [languageDropdownRef]);
 
-    // Initialize component
+    // Initialize component and set up intersection observers
     useEffect(() => {
         setMounted(true);
 
@@ -41,32 +42,68 @@ const Navbar = () => {
         const storedTheme = localStorage.getItem('theme') || 'dark';
         setTheme(storedTheme);
 
-        // Initial detection of active section
-        updateActiveSection();
+        // Set up intersection observers for each section
+        setupIntersectionObservers();
 
-        // Set up scroll listener with debouncing
+        // Set up scroll listener for navbar effects
         const handleScroll = () => {
             setScrollY(window.scrollY);
-
-            // Use requestAnimationFrame for better performance
-            window.requestAnimationFrame(updateActiveSection);
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // Also update active section on page load and resize
-        window.addEventListener('load', updateActiveSection);
-        window.addEventListener('resize', updateActiveSection);
-
-        // Cleanup listeners
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('load', updateActiveSection);
-            window.removeEventListener('resize', updateActiveSection);
         };
     }, []);
 
-    // Added: Handle click on navigation item
+    // Setup intersection observers for all sections
+    const setupIntersectionObservers = () => {
+        // Options for the observer
+        const options = {
+            root: null, // viewport
+            rootMargin: `-${navbarHeight}px 0px 0px 0px`, // offset for navbar height
+            threshold: 0.2 // 20% of the element must be visible
+        };
+
+        // Create observer
+        const observer = new IntersectionObserver((entries) => {
+            // Sort entries by their current Y position to get the topmost
+            const visibleEntries = entries
+                .filter(entry => entry.isIntersecting)
+                .sort((a, b) => {
+                    const rectA = a.boundingClientRect;
+                    const rectB = b.boundingClientRect;
+                    return rectA.top - rectB.top;
+                });
+
+            if (visibleEntries.length > 0) {
+                // Get the ID of the topmost visible section
+                const sectionId = visibleEntries[0].target.id;
+                setActiveSection(sectionId);
+            }
+        }, options);
+
+        // Observe all sections
+        navItems.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // Return cleanup function
+        return () => {
+            navItems.forEach(item => {
+                const element = document.getElementById(item.id);
+                if (element) {
+                    observer.unobserve(element);
+                }
+            });
+        };
+    };
+
+    // Improved: Handle click on navigation item
     const handleNavClick = (e, targetId) => {
         e.preventDefault();
         const targetElement = document.getElementById(targetId);
@@ -75,10 +112,13 @@ const Navbar = () => {
             // Update active section immediately
             setActiveSection(targetId);
 
+            // Calculate scroll position with navbar offset
+            const position = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+
             // Scroll to the target element
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            window.scrollTo({
+                top: position,
+                behavior: 'smooth'
             });
 
             // Close mobile menu if open
@@ -91,73 +131,45 @@ const Navbar = () => {
         }
     };
 
-    // Improved section detection
-    const updateActiveSection = () => {
-        // Get all section elements with their positions
-        const sections = navItems
-            .map(item => {
-                const element = document.getElementById(item.id);
-                if (!element) return null;
+    // Handle click on logo or name to scroll to top
+    const handleLogoClick = (e) => {
+        e.preventDefault();
 
-                // Get the position of the section
-                const rect = element.getBoundingClientRect();
-                return {
-                    id: item.id,
-                    top: rect.top + window.scrollY,
-                    bottom: rect.bottom + window.scrollY,
-                    height: rect.height
-                };
-            })
-            .filter(section => section !== null);
+        // Scroll to top smoothly
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
 
-        if (sections.length === 0) return;
+        // Set active section to about
+        setActiveSection('about');
 
-        // Current scroll position with offset for navbar
-        const scrollPosition = window.scrollY + 100;
-
-        // Find the section that's currently in view
-        let currentSection = sections[0].id; // Default to first section
-
-        // Loop through sections from top to bottom
-        for (let i = 0; i < sections.length; i++) {
-            const section = sections[i];
-            const nextSection = sections[i + 1];
-
-            // If we're at the top of the section or between this section and the next
-            if (
-                scrollPosition >= section.top &&
-                (nextSection === undefined || scrollPosition < nextSection.top)
-            ) {
-                currentSection = section.id;
-                break;
-            }
-        }
-
-        // Only update state if the active section has changed
-        if (activeSection !== currentSection) {
-            setActiveSection(currentSection);
-        }
+        // Update URL hash
+        window.history.pushState(null, '', '#about');
     };
 
-    // Toggle theme function - faster transition
+    // Toggle theme function - even faster transition (50ms)
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
 
-        // Add transitioning class for smoother transitions
+        // Add transitioning class for smoother transitions - much faster now (50ms)
         document.documentElement.classList.add('theme-transitioning');
 
-        // Update document classes
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add(newTheme);
+        // Batch DOM operations to minimize reflow/repaint
+        requestAnimationFrame(() => {
+            // Update document classes
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(newTheme);
 
-        // Save to localStorage
-        localStorage.setItem('theme', newTheme);
+            // Save to localStorage
+            localStorage.setItem('theme', newTheme);
 
-        // Remove transitioning class after animation completes - faster now
-        setTimeout(() => {
-            document.documentElement.classList.remove('theme-transitioning');
-        }, 150); // Faster transition
+            // Remove transitioning class after animation completes - much faster now
+            setTimeout(() => {
+                document.documentElement.classList.remove('theme-transitioning');
+            }, 75); // Ultra-fast transition (75ms)
+        });
     };
 
     // Determine if navbar should be elevated based on scroll position
@@ -186,15 +198,15 @@ const Navbar = () => {
     }
 
     return (
-        <nav className={`py-4 sticky top-0 z-50 transition-all duration-150 theme-transition-bg
+        <nav className={`py-4 sticky top-0 z-50 transition-all duration-75 theme-transition-bg
       ${isScrolled
                 ? 'bg-white/95 dark:bg-dark-primary/95 shadow-md backdrop-blur-md'
                 : 'bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border'
             }`}>
             <div className="container mx-auto px-4 flex justify-between items-center max-w-5xl">
-                {/* Logo and social links */}
+                {/* Logo and social links - Now clickable */}
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center">
+                    <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
                         <div className="w-8 h-8 flex items-center justify-center bg-brand-red text-white font-bold rounded-none">
                             OM
                         </div>
@@ -233,7 +245,7 @@ const Navbar = () => {
                                 <li key={item.name}>
                                     <a
                                         href={item.href}
-                                        className={`relative text-sm font-medium transition-colors duration-150 ${isActive
+                                        className={`relative text-sm font-medium transition-colors duration-100 ${isActive
                                             ? 'text-brand-red dark:text-brand-red'
                                             : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                                             }`}
@@ -263,7 +275,7 @@ const Navbar = () => {
                         >
                             <span className="font-medium text-xs">EN</span>
                             <svg
-                                className={`w-4 h-4 transition-transform duration-150 ${isLanguageOpen ? 'rotate-180' : ''}`}
+                                className={`w-4 h-4 transition-transform duration-100 ${isLanguageOpen ? 'rotate-180' : ''}`}
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"

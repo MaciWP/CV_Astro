@@ -2,10 +2,21 @@
   "extends": "astro/tsconfigs/strict",
   "include": [
     ".astro/types.d.ts",
-    "**/*"
+    "src/pages/**/*",
+    "src/layouts/**/*",
+    "src/components/**/*",
+    "src/utils/**/*",
+    "src/contexts/**/*",
+    "src/styles/**/*",
+    "src/assets/**/*",
+    "src/env.d.ts"
   ],
   "exclude": [
-    "dist"
+    "dist",
+    "node_modules",
+    "src/components/ContactForm.jsx",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",

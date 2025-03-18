@@ -5,7 +5,7 @@
 
 @layer base {
     body {
-        @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-150;
+        @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -46,36 +46,86 @@
     }
 }
 
-/* ===== ANIMATION AND TRANSITION ENHANCEMENTS ===== */
-/* Standardized animation settings */
+/* ===== OPTIMIZED ANIMATION AND TRANSITION ENHANCEMENTS ===== */
+/* Standardized animation settings - FASTER */
 :root {
-    --animation-duration-fast: 150ms;
-    --animation-duration-normal: 300ms;
-    --animation-duration-slow: 500ms;
+    --animation-duration-fast: 75ms;
+    --animation-duration-normal: 150ms;
+    --animation-duration-slow: 300ms;
     --animation-easing: cubic-bezier(0.16, 1, 0.3, 1);
-    --animation-delay-step: 50ms;
+    --animation-delay-step: 30ms;
 }
 
 @layer components {
 
-    /* Theme transition classes for better control - FASTER */
+    /* Theme transition classes for better control - MUCH FASTER */
     .theme-transition {
-        @apply transition-all duration-150;
+        @apply transition-all duration-75;
     }
 
-    /* Fast text color transitions */
+    /* Ultra-fast text color transitions */
     .theme-transition-text {
-        @apply transition-colors duration-100;
+        @apply transition-colors duration-75;
     }
 
-    /* Medium transitions for backgrounds and borders */
+    /* Fast background transitions */
     .theme-transition-bg {
-        @apply transition-colors duration-150;
+        @apply transition-colors duration-75;
     }
 
-    /* Apply these classes to the HTML element when the theme changes - FASTER */
+    /* Apply these classes to the HTML element when the theme changes - ULTRA FAST */
     html.theme-transitioning * {
-        transition-duration: 150ms !important;
+        transition-duration: 75ms !important;
+    }
+
+    /* Only transition necessary properties */
+    html.theme-transitioning .text-light-text,
+    html.theme-transitioning .text-dark-text,
+    html.theme-transitioning .text-light-text-secondary,
+    html.theme-transitioning .text-dark-text-secondary,
+    html.theme-transitioning .bg-light-primary,
+    html.theme-transitioning .bg-dark-primary,
+    html.theme-transitioning .bg-light-secondary,
+    html.theme-transitioning .bg-dark-secondary,
+    html.theme-transitioning .bg-light-surface,
+    html.theme-transitioning .bg-dark-surface,
+    html.theme-transitioning .border-light-border,
+    html.theme-transitioning .border-dark-border {
+        transition-property: color, background-color, border-color;
+        transition-duration: 75ms;
+        transition-timing-function: ease-out;
+    }
+
+    /* Project card link styles */
+    .project-card {
+        @apply relative cursor-pointer;
+    }
+
+    .project-card-link {
+        @apply absolute inset-0 z-10;
+    }
+
+    .project-card-link~* {
+        @apply relative z-20;
+    }
+
+    /* Skill bar with year tag */
+    .skill-bar-with-years {
+        @apply relative;
+    }
+
+    .skill-year-tag {
+        @apply absolute right-0 top-0 px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-sm;
+    }
+
+    /* Percentage bubble for skills */
+    .percent-bubble {
+        @apply absolute right-1 -mt-2 h-5 w-10 flex items-center justify-center text-xs text-white bg-brand-red rounded-sm font-semibold z-10;
+    }
+
+    .percent-bubble:after {
+        content: '';
+        @apply absolute -bottom-1 right-1 w-0 h-0 border-t-4 border-r-4 border-l-4 border-t-brand-red border-r-transparent border-l-transparent;
     }
 }
 
@@ -299,4 +349,141 @@
     .no-print {
         display: none !important;
     }
+}
+
+/* Responsive Enhancements for Swiss CV */
+
+/* Base responsive improvements */
+@media (max-width: 768px) {
+
+    /* Improved spacing on mobile */
+    section {
+        margin-bottom: 3rem !important;
+    }
+
+    /* Adjust header spacing */
+    #about {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Make sure headlines are readable on small screens */
+    h1 {
+        font-size: 2.25rem !important;
+        line-height: 2.5rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+        line-height: 2rem !important;
+    }
+
+    /* Improve readability for skill bars */
+    .skill-bar {
+        margin-bottom: 1rem;
+    }
+
+    /* Better card spacing */
+    .experience-card,
+    .project-card,
+    .education-card {
+        padding: 1rem !important;
+    }
+
+    /* Ensure photo has correct proportions */
+    .profile-photo {
+        width: 160px !important;
+        height: 160px !important;
+        margin: 0 auto 1.5rem auto;
+    }
+
+    /* Adjust the skill bar layout for better visibility */
+    .skill-year-tag {
+        position: static;
+        display: inline-flex;
+        margin-left: 0.5rem;
+    }
+
+    /* Make percent bubbles more visible */
+    .percent-bubble {
+        height: 1.25rem;
+        line-height: 1.25rem;
+        margin-top: -0.5rem;
+    }
+}
+
+/* Specific adjustments for very small screens */
+@media (max-width: 480px) {
+
+    /* Further spacing adjustments */
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Stack contact info */
+    .contact-item {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Make icons visible and clickable */
+    .skill-icon,
+    .social-icon {
+        font-size: 1.25rem !important;
+        padding: 0.5rem !important;
+    }
+
+    /* Ensure buttons are large enough to tap */
+    button,
+    .button,
+    a.button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Make project cards easier to interact with on mobile */
+    .project-card {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Improve spacing in experience cards */
+    .timeline-item {
+        padding-left: 0;
+    }
+
+    .timeline-line {
+        display: none;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Extra classes to help with spacing */
+.py-safe {
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.px-safe {
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+}
+
+/* Classes for consistent touch targets */
+.touch-target {
+    min-height: 44px;
+    min-width: 44px;
 }

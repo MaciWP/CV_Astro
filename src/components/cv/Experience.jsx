@@ -29,7 +29,9 @@ const Experience = () => {
             period: "Jan 2020 - Present", // More specific date format according to Swiss standards
             responsibilities: [
                 "Design, development, and maintenance of integration software",
-                "Requirements gathering and implementation",
+                "Requirements gathering and implementation"
+            ],
+            achievements: [
                 "Improved application performance by 30% through code optimization",
                 "Collaborated with cross-functional teams to deliver high-quality software solutions"
             ]
@@ -40,7 +42,9 @@ const Experience = () => {
             period: "Mar 2019 - Dec 2020", // More specific dates
             responsibilities: [
                 "Mentored junior developers and trainees",
-                "Developed training materials and conducted technical workshops",
+                "Developed training materials and conducted technical workshops"
+            ],
+            achievements: [
                 "Provided code reviews and technical guidance"
             ]
         },
@@ -50,7 +54,9 @@ const Experience = () => {
             period: "Jun 2016 - Feb 2018", // More specific dates
             responsibilities: [
                 "Developed mobile applications for Android platform",
-                "Managed database integration and API connections",
+                "Managed database integration and API connections"
+            ],
+            achievements: [
                 "Implemented responsive UI designs and user-friendly interfaces"
             ]
         }
@@ -103,12 +109,26 @@ const Experience = () => {
 
                         {/* Job description with enhanced hover effects */}
                         <div className="bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 transition-all duration-150 hover:shadow-md">
-                            <ul className="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150">
+                            {/* Responsibilities section */}
+                            <h4 className="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider">Responsibilities</h4>
+                            <ul className="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150 mb-5">
                                 {job.responsibilities.map((responsibility, i) => (
                                     <li key={i} className="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150">
                                         {/* Square bullet instead of check */}
                                         <span className="w-1.5 h-1.5 bg-brand-red flex-shrink-0 mt-2 transition-all duration-150 group-hover/item:scale-125"></span>
                                         <span>{responsibility}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Achievements section with trophy icons */}
+                            <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-3 tracking-wider">Key Achievements</h4>
+                            <ul className="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150">
+                                {job.achievements.map((achievement, i) => (
+                                    <li key={i} className="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150">
+                                        {/* Trophy icon for achievements */}
+                                        <i className="fas fa-trophy text-brand-red flex-shrink-0 mt-1 transition-all duration-150 group-hover/item:scale-125"></i>
+                                        <span>{achievement}</span>
                                     </li>
                                 ))}
                             </ul>

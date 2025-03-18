@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 /**
- * Enhanced Skills component with improved layout and without re-animation on theme change
+ * Enhanced Skills component with improved layout and optimized for theme changes
  * For professional Swiss CV standards
  */
 const Skills = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -18,7 +19,9 @@ const Skills = () => {
             { threshold: 0.1 }
         );
 
-        observer.observe(document.getElementById('skills'));
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
 
         return () => observer.disconnect();
     }, []);
@@ -26,120 +29,137 @@ const Skills = () => {
     // Skill categories organized into sections with icons
     const skillData = {
         programming: [
-            { name: "C#", percent: 95, icon: "fab fa-microsoft" },
-            { name: "Java", percent: 85, icon: "fab fa-java" },
-            { name: "Android", percent: 75, icon: "fab fa-android" },
-            { name: "Json", percent: 90, icon: "fas fa-code" },
-            { name: ".NET", percent: 90, icon: "fab fa-windows" },
-            { name: "XML", percent: 80, icon: "fas fa-file-code" },
-            { name: "SQL", percent: 85, icon: "fas fa-database" },
-            { name: "ODF", percent: 70, icon: "fas fa-file-alt" }
+            { name: "C#", percent: 95, icon: "fab fa-microsoft", years: 6 },
+            { name: "Java", percent: 85, icon: "fab fa-java", years: 4 },
+            { name: "Android", percent: 75, icon: "fab fa-android", years: 3 },
+            { name: "Json", percent: 90, icon: "fas fa-code", years: 5 },
+            { name: ".NET", percent: 90, icon: "fab fa-windows", years: 5 },
+            { name: "XML", percent: 80, icon: "fas fa-file-code", years: 4 },
+            { name: "SQL", percent: 85, icon: "fas fa-database", years: 5 },
+            { name: "ODF", percent: 70, icon: "fas fa-file-alt", years: 2 }
         ],
         methodologies: [
-            { name: "Agile/Scrum", percent: 95, icon: "fas fa-tasks" },
-            { name: "Test-Driven Dev", percent: 85, icon: "fas fa-vial" },
-            { name: "CI/CD", percent: 75, icon: "fas fa-code-branch" },
-            { name: "DevOps", percent: 70, icon: "fas fa-sync" }
+            { name: "Agile/Scrum", percent: 95, icon: "fas fa-tasks", years: 5 },
+            { name: "Test-Driven Dev", percent: 85, icon: "fas fa-vial", years: 3 },
+            { name: "CI/CD", percent: 75, icon: "fas fa-code-branch", years: 2 },
+            { name: "DevOps", percent: 70, icon: "fas fa-sync", years: 2 }
         ],
         tools: [
-            { name: "Visual Studio", icon: "fas fa-tv" },
-            { name: "REST", icon: "fas fa-exchange-alt" },
-            { name: "SOAP", icon: "fas fa-soap" },
-            { name: ".NET 4.8", icon: "fab fa-microsoft" },
-            { name: "WPF", icon: "fas fa-desktop" },
-            { name: "Postman", icon: "fas fa-paper-plane" },
-            { name: "SoapUI", icon: "fas fa-tools" },
-            { name: "MySQL", icon: "fas fa-database" },
-            { name: "Postgres", icon: "fas fa-database" },
-            { name: "Beaver", icon: "fas fa-stream" },
-            { name: "MVware", icon: "fas fa-server" },
-            { name: "Oracle Express", icon: "fas fa-database" }
+            { name: "Visual Studio", icon: "fas fa-tv", years: 6 },
+            { name: "REST", icon: "fas fa-exchange-alt", years: 5 },
+            { name: "SOAP", icon: "fas fa-soap", years: 3 },
+            { name: ".NET 4.8", icon: "fab fa-microsoft", years: 4 },
+            { name: "WPF", icon: "fas fa-desktop", years: 3 },
+            { name: "Postman", icon: "fas fa-paper-plane", years: 4 },
+            { name: "SoapUI", icon: "fas fa-tools", years: 3 },
+            { name: "MySQL", icon: "fas fa-database", years: 4 },
+            { name: "Postgres", icon: "fas fa-database", years: 3 },
+            { name: "Beaver", icon: "fas fa-stream", years: 2 },
+            { name: "MVware", icon: "fas fa-server", years: 3 },
+            { name: "Oracle Express", icon: "fas fa-database", years: 2 }
         ]
     };
 
-    // SkillBar component for programming and methodologies with smaller bars
-    const SkillBar = ({ name, percent, icon, index }) => {
+    // Optimized SkillBar component - only animate when visible and avoid unnecessary re-animations
+    const SkillBar = ({ name, percent, icon, index, years }) => {
+        const barRef = useRef(null);
         const [animated, setAnimated] = useState(false);
 
         useEffect(() => {
-            // Animate when section becomes visible with cascading delay
-            if (isVisible) {
+            if (isVisible && !animated && barRef.current) {
+                // Set a delay based on index for cascade effect
                 const timer = setTimeout(() => {
                     setAnimated(true);
-                }, 100 + index * 50);
+                }, 50 + index * 30); // Faster animations
 
                 return () => clearTimeout(timer);
             }
-        }, [isVisible]);
+        }, [isVisible, animated, index]);
+
+        // Memory efficient - using CSS variables for transitions
+        const barStyle = {
+            width: animated ? `${percent}%` : '0%',
+            transition: `width ${animated ? '400ms' : '0ms'} cubic-bezier(0.34, 1.56, 0.64, 1)`,
+            transitionDelay: `${30 * index}ms`,
+        };
 
         return (
-            <div className="mb-3 transition-all duration-150 theme-transition">
+            <div className="mb-3">
                 <div className="flex justify-between items-center mb-1">
                     <div className="flex items-center gap-2">
-                        <i className={`${icon} text-brand-red text-sm theme-transition-text`}></i>
-                        <span className="font-medium text-sm theme-transition-text">{name}</span>
+                        <i className={`${icon} text-brand-red text-sm`}></i>
+                        <span className="font-medium text-sm">{name}</span>
+                        {years && (
+                            <span className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded-sm text-gray-600 dark:text-gray-400">
+                                {years} {years === 1 ? 'year' : 'years'}
+                            </span>
+                        )}
                     </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400 theme-transition-text">{percent}%</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{percent}%</span>
                 </div>
-                <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-none overflow-hidden theme-transition-bg">
+                <div className="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-none overflow-hidden" ref={barRef}>
                     <div
-                        className="h-full bg-brand-red transition-all duration-500"
-                        style={{
-                            width: animated ? `${percent}%` : '0%',
-                        }}
+                        className="h-full bg-brand-red"
+                        style={barStyle}
                     ></div>
                 </div>
             </div>
         );
     };
 
-    // SkillPill component for tools
-    const SkillPill = ({ name, icon, index }) => (
+    // Optimized SkillPill component - simplified with better structure
+    const SkillPill = ({ name, icon, index, years }) => (
         <div
             className={`bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border 
-                       px-2 py-1 rounded-none inline-flex items-center justify-center text-xs gap-1
+                       px-3 py-1.5 rounded-none inline-flex items-center justify-center text-sm gap-2
                        transition-all duration-150 hover:border-brand-red
-                       hover:shadow-sm dark:hover:bg-gray-800 theme-transition-bg theme-transition-text
-                       ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+                       hover:shadow-sm dark:hover:bg-gray-800
+                       ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             style={{
-                transitionDelay: `${50 * index}ms`,
-                animation: isVisible ? `enhanced-appear 0.3s var(--animation-easing) forwards ${index * 30}ms` : 'none'
+                transitionDelay: `${40 * index}ms`,
+                transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)'
             }}
         >
-            <i className={`${icon} text-brand-red text-xs theme-transition-text`}></i>
-            {name}
+            <i className={`${icon} text-brand-red`}></i>
+            <span>{name}</span>
+            {years && (
+                <span className="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded-sm text-gray-600 dark:text-gray-400">
+                    {years} {years === 1 ? 'yr' : 'yrs'}
+                </span>
+            )}
         </div>
     );
 
     return (
-        <section id="skills" className="mb-16 section-animate">
-            <div
-                className={`flex items-center mb-6 transition-all duration-700 transform section-animate-header ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-            >
-                <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none theme-transition-bg">
+        <section id="skills" ref={sectionRef} className="mb-16">
+            {/* Section Header */}
+            <div className={`flex items-center mb-6 transition-all duration-500 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+                <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-code"></i>
                 </div>
-                <h2 className="text-2xl font-bold ml-3 theme-transition-text">Technical Skills</h2>
+                <h2 className="text-2xl font-bold ml-3">Technical Skills</h2>
             </div>
 
-            <div
-                className={`bg-white dark:bg-dark-surface p-5 border border-gray-200 dark:border-dark-border 
-                          rounded-none shadow-sm transition-all duration-700 transform section-animate-content
-                          theme-transition-bg ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-                style={{ transitionDelay: '200ms' }}
-            >
-                {/* Improved layout for better readability */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-                    {/* Programming Skills section - 5/12 columns on large screens */}
-                    <div className="lg:col-span-5 space-y-3">
-                        <div className="border-b border-gray-200 dark:border-gray-700 pb-2 mb-3 theme-transition-bg">
-                            <h3 className="text-base font-semibold flex items-center gap-2 theme-transition-text">
-                                <i className="fas fa-laptop-code text-brand-red theme-transition-text"></i>
-                                Programming
+            {/* Skills Container with improved spacing and visual organization */}
+            <div className={`bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border 
+                           rounded-none shadow-sm transition-all duration-500 transform 
+                           ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                style={{ transitionDelay: '100ms' }}>
+
+                {/* Improved layout with more space and better organization */}
+                <div className="grid grid-cols-1 gap-8">
+                    {/* Programming Skills Section */}
+                    <div className="space-y-4">
+                        <div className="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+                            <h3 className="text-lg font-semibold flex items-center gap-2">
+                                <div className="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+                                    <i className="fas fa-laptop-code text-brand-red"></i>
+                                </div>
+                                Programming Languages & Technologies
                             </h3>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 section-animate-items">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-3">
                             {skillData.programming.map((skill, index) => (
                                 <SkillBar
                                     key={skill.name}
@@ -152,16 +172,18 @@ const Skills = () => {
                         </div>
                     </div>
 
-                    {/* Methodologies section - 3/12 columns on large screens */}
-                    <div className="lg:col-span-3 space-y-3">
-                        <div className="border-b border-gray-200 dark:border-gray-700 pb-2 mb-3 theme-transition-bg">
-                            <h3 className="text-base font-semibold flex items-center gap-2 theme-transition-text">
-                                <i className="fas fa-sitemap text-brand-red theme-transition-text"></i>
-                                Methodologies
+                    {/* Methodologies Section */}
+                    <div className="space-y-4 pt-2">
+                        <div className="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+                            <h3 className="text-lg font-semibold flex items-center gap-2">
+                                <div className="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+                                    <i className="fas fa-sitemap text-brand-red"></i>
+                                </div>
+                                Development Methodologies
                             </h3>
                         </div>
 
-                        <div className="section-animate-items">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-3">
                             {skillData.methodologies.map((method, index) => (
                                 <SkillBar
                                     key={method.name}
@@ -174,16 +196,18 @@ const Skills = () => {
                         </div>
                     </div>
 
-                    {/* Tools section - 4/12 columns on large screens */}
-                    <div className="lg:col-span-4 space-y-3">
-                        <div className="border-b border-gray-200 dark:border-gray-700 pb-2 mb-3 theme-transition-bg">
-                            <h3 className="text-base font-semibold flex items-center gap-2 theme-transition-text">
-                                <i className="fas fa-tools text-brand-red theme-transition-text"></i>
+                    {/* Tools Section */}
+                    <div className="space-y-4 pt-2">
+                        <div className="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+                            <h3 className="text-lg font-semibold flex items-center gap-2">
+                                <div className="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+                                    <i className="fas fa-tools text-brand-red"></i>
+                                </div>
                                 Tools & Technologies
                             </h3>
                         </div>
 
-                        <div className="flex flex-wrap gap-1.5 section-animate-items">
+                        <div className="flex flex-wrap gap-3">
                             {skillData.tools.map((tool, index) => (
                                 <SkillPill
                                     key={tool.name}

@@ -40,8 +40,8 @@ const Header = () => {
                     <div className="flex flex-wrap gap-6">
                         {/* Email */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <div className="p-2 bg-gray-100 dark:bg-gray-800 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                                <i className="fas fa-envelope text-brand-red"></i>
+                            <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                <i className="fas fa-envelope"></i>
                             </div>
                             <a href="mailto:email@example.com" className="hover:text-brand-red dark:hover:text-brand-red transition-colors">
                                 email@example.com
@@ -50,8 +50,8 @@ const Header = () => {
 
                         {/* Phone */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <div className="p-2 bg-gray-100 dark:bg-gray-800 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                                <i className="fas fa-phone text-brand-red"></i>
+                            <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                <i className="fas fa-phone"></i>
                             </div>
                             <a href="tel:+1234567890" className="hover:text-brand-red dark:hover:text-brand-red transition-colors">
                                 +1234567890
@@ -60,8 +60,8 @@ const Header = () => {
 
                         {/* LinkedIn */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <div className="p-2 bg-gray-100 dark:bg-gray-800 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                                <i className="fab fa-linkedin text-brand-red"></i>
+                            <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                <i className="fab fa-linkedin"></i>
                             </div>
                             <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-red dark:hover:text-brand-red transition-colors">
                                 LinkedIn
@@ -70,23 +70,32 @@ const Header = () => {
                     </div>
                 </div>
 
-                {/* Profile picture - professionally styled placeholder */}
+                {/* Profile picture - professionally styled placeholder with consistent aspect ratio */}
                 <div className="md:col-span-4 flex justify-center md:justify-end">
-                    <div
-                        className={`relative w-40 h-40 md:w-48 md:h-48 overflow-hidden 
-              border-4 border-white dark:border-gray-800 shadow-lg 
-              transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                        style={{ transitionDelay: '200ms' }}
-                    >
-                        {/* Enhanced Placeholder for the image */}
-                        <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center relative">
-                            <div className="absolute inset-0 opacity-10 bg-grid-pattern"></div>
+                    <div className="relative w-44 h-44 md:w-48 md:h-48 overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg transition-all duration-700 flex items-center justify-center">
+                        {/* Grey border for structure */}
+                        <div className="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
+
+                        {/* Placeholder or actual image */}
+                        <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
                             <i className="fas fa-user text-4xl text-gray-400 dark:text-gray-500"></i>
+
+                            {/* Uncomment when you have a real image */}
+                            {/* <img 
+                                src="/path-to-your-professional-photo.jpg" 
+                                alt="Oriol Macias" 
+                                className="w-full h-full object-cover"
+                            /> */}
                         </div>
 
-                        {/* Additional visual elements for a more professional look */}
-                        <div className="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
-                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-brand-red"></div>
+                        {/* Red accent on the bottom */}
+                        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-brand-red"></div>
+
+                        {/* Upload photo button - Corregido el conflicto de clases CSS */}
+                        <button className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity items-center justify-center" style={{ display: 'none' }}>
+                            <i className="fas fa-camera mr-2"></i>
+                            Upload Photo
+                        </button>
                     </div>
                 </div>
             </div>

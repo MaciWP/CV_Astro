@@ -63,7 +63,6 @@ const Languages = () => {
                     >
                         <div className="flex justify-between items-center mb-4">
                             <span className="font-medium text-lg">{lang.language}</span>
-                            {/* TODOS los badges ahora tienen el mismo color rojo (brand-red) */}
                             <span className="px-2 py-0.5 rounded-none text-xs font-semibold bg-brand-red text-white">
                                 {lang.badge}
                             </span>
@@ -84,8 +83,7 @@ const Languages = () => {
                             </div>
                         </div>
 
-                        {/* Animación de hover */}
-                        <div className="h-0.5 w-0 bg-brand-red mt-3 transition-all duration-300 group-hover:w-full"></div>
+                        {/* Eliminamos la línea que aparecía en el hover */}
                     </div>
                 ))}
             </div>
