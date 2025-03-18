@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const [scrollY, setScrollY] = useState(0);
 
-  // Solo intentar acceder al contexto después de montarse en el cliente
+  // Handle scroll effects and active section tracking
   useEffect(() => {
-    setMounted(true);
-    
     const handleScroll = () => {
       setScrollY(window.scrollY);
       
-      // Optional: update active section based on scroll position
+      // Update active section based on scroll position
       const sections = ['about', 'experience', 'skills', 'education', 'projects'];
       
       for (const section of sections) {
@@ -33,7 +30,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Navegación
+  // Navigation items
   const navItems = [
     { name: 'About', href: '#about' },
     { name: 'Experience', href: '#experience' },
@@ -41,19 +38,6 @@ const Navbar = () => {
     { name: 'Education', href: '#education' },
     { name: 'Projects', href: '#projects' }
   ];
-
-  // Render un placeholder en el servidor, luego actualizar en el cliente
-  let theme = 'light';
-  let toggleTheme = () => {
-    console.log('Theme toggle not yet available');
-  };
-
-  // Solo accede al contexto si estamos montados en el cliente
-  if (mounted) {
-    const themeContext = useTheme();
-    theme = themeContext.theme;
-    toggleTheme = themeContext.toggleTheme;
-  }
 
   const isScrolled = scrollY > 50;
 
@@ -93,22 +77,12 @@ const Navbar = () => {
         {/* Controls */}
         <div className="flex items-center space-x-3">
           {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-none hover:bg-light-secondary dark:hover:bg-dark-secondary focus:outline-none transition-all duration-300 ease-in-out transform hover:scale-110"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <i className="fas fa-sun text-dark-text"></i>
-            ) : (
-              <i className="fas fa-moon text-light-text"></i>
-            )}
-          </button>
+          <ThemeToggle />
 
           {/* Download CV Button */}
           <a
             href="#"
-            className="hidden md:inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-opacity-90 transition-all duration-300 ease-in-out transform hover:translate-y-[-2px]"
+            className="hidden md:inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-opacity-90 transition-all duration-300 hover:-translate-y-0.5"
           >
             <i className="fas fa-download mr-1.5"></i>
             <span>Download CV</span>

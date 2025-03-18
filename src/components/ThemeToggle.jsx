@@ -1,57 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme, themes } from '../contexts/ThemeContext';
 
 const ThemeToggle = () => {
-  // Use useState to prevent SSR issues
-  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState('light');
   
-  // Wait until component is mounted to access the theme context
+  // Initialize theme from localStorage on mount
   useEffect(() => {
-    setMounted(true);
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    document.documentElement.classList.add(savedTheme);
   }, []);
-
-  // If not mounted yet, render a placeholder button
-  if (!mounted) {
-    return (
-      <button 
-        aria-label="Toggle theme"
-        className="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        <span className="text-xl" aria-hidden="true">🌞</span>
-      </button>
-    );
-  }
   
-  // Now we can safely use the theme context
-  const { theme, toggleTheme } = useTheme();
-  
-  // Determine the icon to use based on the current theme
-  const getIcon = () => {
-    switch (theme) {
-      case themes.LIGHT:
-        return '🌞'; // Sun icon for light theme
-      case themes.DARK:
-        return '🌙'; // Moon icon for dark theme
-      case themes.HIGH_CONTRAST:
-        return '🔍'; // Magnifying glass for high contrast
-      default:
-        return '🌞';
-    }
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    
+    // Update state
+    setTheme(newTheme);
+    
+    // Update DOM
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(newTheme);
+    
+    // Save to localStorage
+    localStorage.setItem('theme', newTheme);
+    
+    console.log('Theme toggled to:', newTheme);
   };
-
+  
   return (
     <button 
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="p-2 rounded-none hover:bg-light-secondary dark:hover:bg-dark-secondary focus:outline-none transition-all duration-300 ease-in-out transform hover:scale-110"
     >
-      <span className="text-xl" aria-hidden="true">{getIcon()}</span>
+      {theme === 'dark' ? (
+        <span className="text-xl dark:text-dark-text" aria-hidden="true">☀️</span>
+      ) : (
+        <span className="text-xl text-light-text" aria-hidden="true">🌙</span>
+      )}
       <span className="sr-only">
-        {theme === themes.LIGHT 
-          ? 'Switch to dark mode' 
-          : theme === themes.DARK 
-            ? 'Switch to high contrast mode' 
-            : 'Switch to light mode'}
+        Switch to {theme === 'light' ? 'dark' : 'light'} mode
       </span>
     </button>
   );

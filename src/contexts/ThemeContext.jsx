@@ -6,76 +6,57 @@ export const themes = {
   DARK: 'dark'
 };
 
-// Create the theme context with default values to prevent SSR issues
-const defaultContextValue = {
-  theme: themes.LIGHT,
-  setTheme: () => {},
-  toggleTheme: () => {}
-};
-
-const ThemeContext = createContext(defaultContextValue);
+// Create the context
+const ThemeContext = createContext(null);
 
 // Custom hook for using the theme context
 export const useTheme = () => {
-  return useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
 };
 
 // Theme provider component
 export function ThemeProvider({ children }) {
-  // Use state for client-side rendering
-  const [theme, setTheme] = useState(themes.LIGHT);
-  const [isClient, setIsClient] = useState(false);
+  // Initialize with null to avoid hydration mismatch
+  const [theme, setTheme] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
   
-  // After component mounts, set isClient to true and get initial theme
+  // Once mounted, set the theme from localStorage or default to light
   useEffect(() => {
-    setIsClient(true);
+    const initialTheme = localStorage.getItem('theme') || themes.LIGHT;
+    setTheme(initialTheme);
+    setIsMounted(true);
     
-    // Get initial theme from localStorage or default to light
-    const getInitialTheme = () => {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        const storedTheme = window.localStorage.getItem('theme');
-        if (storedTheme) {
-          return storedTheme;
-        }
-      }
-      return themes.LIGHT; // Default to light theme
-    };
-    
-    setTheme(getInitialTheme());
+    // Also ensure the class is applied to html element
+    document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
+    document.documentElement.classList.add(initialTheme);
   }, []);
-
-  // Apply theme to document - only run on client and when theme changes
-  useEffect(() => {
-    if (!isClient) return;
-    
-    const root = window.document.documentElement;
-    
-    // Remove all theme classes first
-    root.classList.remove(themes.LIGHT, themes.DARK);
-    
-    // Add the current theme class
-    root.classList.add(theme);
-    
-    // Store in localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme, isClient]);
 
   // Toggle between themes
   const toggleTheme = () => {
-    setTheme(prevTheme => {
-      return prevTheme === themes.LIGHT ? themes.DARK : themes.LIGHT;
-    });
+    const newTheme = theme === themes.LIGHT ? themes.DARK : themes.LIGHT;
+    setTheme(newTheme);
+    
+    // Update the document classes
+    document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
+    document.documentElement.classList.add(newTheme);
+    
+    // Store the theme preference
+    localStorage.setItem('theme', newTheme);
+    
+    console.log('Theme toggled to:', newTheme); // Debugging
   };
 
-  // Only provide the actual value on the client side
-  const value = {
-    theme,
-    setTheme,
-    toggleTheme
-  };
+  // Don't render anything until mounting is complete
+  if (!isMounted) {
+    return <>{children}</>;
+  }
 
   return (
-    <ThemeContext.Provider value={value}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
