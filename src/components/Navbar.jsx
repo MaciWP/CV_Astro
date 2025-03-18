@@ -10,7 +10,7 @@ const Navbar = () => {
     const [isLanguageOpen, setIsLanguageOpen] = useState(false);
     const languageDropdownRef = useRef(null);
 
-    // Elementos de navegación con IDs correctos
+    // Elements de navegación with correct order (Education before Languages)
     const navItems = [
         { name: 'About', href: '#about', id: 'about' },
         { name: 'Experience', href: '#experience', id: 'experience' },
@@ -20,7 +20,7 @@ const Navbar = () => {
         { name: 'Projects', href: '#projects', id: 'projects' }
     ];
 
-    // Cerrar el dropdown de idioma al hacer clic fuera
+    // Close language dropdown when clicking outside
     useEffect(() => {
         function handleClickOutside(event) {
             if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
@@ -48,7 +48,7 @@ const Navbar = () => {
         const handleScroll = () => {
             setScrollY(window.scrollY);
 
-            // Usar requestAnimationFrame para mejor rendimiento
+            // Use requestAnimationFrame for better performance
             window.requestAnimationFrame(updateActiveSection);
         };
 
@@ -66,43 +66,86 @@ const Navbar = () => {
         };
     }, []);
 
-    // Improved section detection
-    const updateActiveSection = () => {
-        // Get all section elements
-        const sections = navItems.map(item => ({
-            id: item.id,
-            element: document.getElementById(item.id)
-        })).filter(section => section.element !== null);
+    // Added: Handle click on navigation item
+    const handleNavClick = (e, targetId) => {
+        e.preventDefault();
+        const targetElement = document.getElementById(targetId);
 
-        if (sections.length === 0) return;
+        if (targetElement) {
+            // Update active section immediately
+            setActiveSection(targetId);
 
-        // Get current scroll position with a buffer for the navbar
-        const scrollPosition = window.scrollY + 100;
+            // Scroll to the target element
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
 
-        // Find the section that's currently in view
-        for (let i = sections.length - 1; i >= 0; i--) {
-            const section = sections[i];
-            const sectionTop = section.element.offsetTop;
-
-            if (scrollPosition >= sectionTop) {
-                if (activeSection !== section.id) {
-                    console.log("Detected active section:", section.id);
-                    setActiveSection(section.id);
-                }
-                return;
+            // Close mobile menu if open
+            if (isMenuOpen) {
+                setIsMenuOpen(false);
             }
-        }
 
-        // If we've scrolled above all sections, set the first one as active
-        if (sections.length > 0 && scrollPosition < sections[0].element.offsetTop) {
-            setActiveSection(sections[0].id);
+            // Update URL hash
+            window.history.pushState(null, '', `#${targetId}`);
         }
     };
 
-    // Toggle theme function
+    // Improved section detection
+    const updateActiveSection = () => {
+        // Get all section elements with their positions
+        const sections = navItems
+            .map(item => {
+                const element = document.getElementById(item.id);
+                if (!element) return null;
+
+                // Get the position of the section
+                const rect = element.getBoundingClientRect();
+                return {
+                    id: item.id,
+                    top: rect.top + window.scrollY,
+                    bottom: rect.bottom + window.scrollY,
+                    height: rect.height
+                };
+            })
+            .filter(section => section !== null);
+
+        if (sections.length === 0) return;
+
+        // Current scroll position with offset for navbar
+        const scrollPosition = window.scrollY + 100;
+
+        // Find the section that's currently in view
+        let currentSection = sections[0].id; // Default to first section
+
+        // Loop through sections from top to bottom
+        for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            const nextSection = sections[i + 1];
+
+            // If we're at the top of the section or between this section and the next
+            if (
+                scrollPosition >= section.top &&
+                (nextSection === undefined || scrollPosition < nextSection.top)
+            ) {
+                currentSection = section.id;
+                break;
+            }
+        }
+
+        // Only update state if the active section has changed
+        if (activeSection !== currentSection) {
+            setActiveSection(currentSection);
+        }
+    };
+
+    // Toggle theme function - faster transition
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
+
+        // Add transitioning class for smoother transitions
+        document.documentElement.classList.add('theme-transitioning');
 
         // Update document classes
         document.documentElement.classList.remove('light', 'dark');
@@ -110,6 +153,11 @@ const Navbar = () => {
 
         // Save to localStorage
         localStorage.setItem('theme', newTheme);
+
+        // Remove transitioning class after animation completes - faster now
+        setTimeout(() => {
+            document.documentElement.classList.remove('theme-transitioning');
+        }, 150); // Faster transition
     };
 
     // Determine if navbar should be elevated based on scroll position
@@ -138,7 +186,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className={`py-4 sticky top-0 z-50 transition-all duration-300 
+        <nav className={`py-4 sticky top-0 z-50 transition-all duration-150 theme-transition-bg
       ${isScrolled
                 ? 'bg-white/95 dark:bg-dark-primary/95 shadow-md backdrop-blur-md'
                 : 'bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border'
@@ -150,16 +198,16 @@ const Navbar = () => {
                         <div className="w-8 h-8 flex items-center justify-center bg-brand-red text-white font-bold rounded-none">
                             OM
                         </div>
-                        <div className="ml-2 font-medium tracking-tight">Oriol Macias</div>
+                        <div className="ml-2 font-medium tracking-tight theme-transition-text">Oriol Macias</div>
                     </div>
 
-                    {/* Social links (GitHub, LinkedIn) */}
+                    {/* Social links (GitHub, LinkedIn) with brand-red color */}
                     <div className="hidden md:flex items-center gap-3 ml-4">
                         <a
                             href="https://github.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-500 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                            className="text-brand-red hover:text-brand-red/80 transition-colors"
                             aria-label="GitHub Profile"
                         >
                             <i className="fab fa-github text-lg"></i>
@@ -168,7 +216,7 @@ const Navbar = () => {
                             href="https://linkedin.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-500 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                            className="text-brand-red hover:text-brand-red/80 transition-colors"
                             aria-label="LinkedIn Profile"
                         >
                             <i className="fab fa-linkedin text-lg"></i>
@@ -185,24 +233,14 @@ const Navbar = () => {
                                 <li key={item.name}>
                                     <a
                                         href={item.href}
-                                        className={`relative text-sm font-medium transition-colors duration-300 ${isActive
-                                                ? 'text-brand-red dark:text-brand-red'
-                                                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                                        className={`relative text-sm font-medium transition-colors duration-150 ${isActive
+                                            ? 'text-brand-red dark:text-brand-red'
+                                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                                             }`}
-                                        onClick={(e) => {
-                                            const targetId = item.id;
-                                            const targetElement = document.getElementById(targetId);
-                                            if (targetElement) {
-                                                e.preventDefault();
-                                                setActiveSection(targetId);
-                                                targetElement.scrollIntoView({
-                                                    behavior: 'smooth',
-                                                    block: 'start'
-                                                });
-                                            }
-                                        }}
+                                        onClick={(e) => handleNavClick(e, item.id)}
                                     >
                                         {item.name}
+
                                         {isActive && (
                                             <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-red dark:bg-brand-red"></span>
                                         )}
@@ -219,13 +257,13 @@ const Navbar = () => {
                     <div className="relative" ref={languageDropdownRef}>
                         <button
                             onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                            className="flex items-center gap-1 p-2 rounded-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                            className="flex items-center gap-1 p-2 rounded-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 theme-transition-text"
                             aria-expanded={isLanguageOpen}
                             aria-haspopup="true"
                         >
                             <span className="font-medium text-xs">EN</span>
                             <svg
-                                className={`w-4 h-4 transition-transform duration-200 ${isLanguageOpen ? 'rotate-180' : ''}`}
+                                className={`w-4 h-4 transition-transform duration-150 ${isLanguageOpen ? 'rotate-180' : ''}`}
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -238,16 +276,16 @@ const Navbar = () => {
                         {isLanguageOpen && (
                             <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-none shadow-lg z-10">
                                 <div className="py-1">
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 theme-transition-text theme-transition-bg">
                                         English
                                     </a>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 theme-transition-text theme-transition-bg">
                                         Español
                                     </a>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 theme-transition-text theme-transition-bg">
                                         Français
                                     </a>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 theme-transition-text theme-transition-bg">
                                         Deutsch
                                     </a>
                                 </div>
@@ -290,7 +328,7 @@ const Navbar = () => {
 
             {/* Mobile Navigation */}
             {isMenuOpen && (
-                <div className="md:hidden absolute left-0 right-0 px-4 pt-2 pb-4 bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border shadow-lg">
+                <div className="md:hidden absolute left-0 right-0 px-4 pt-2 pb-4 bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border shadow-lg theme-transition-bg">
                     <div className="flex flex-col space-y-3">
                         {navItems.map((item) => {
                             const isActive = activeSection === item.id;
@@ -298,36 +336,24 @@ const Navbar = () => {
                                 <a
                                     key={item.name}
                                     href={item.href}
-                                    className={`text-sm font-medium py-2 px-3 ${isActive
-                                            ? 'text-brand-red dark:text-brand-red bg-gray-100 dark:bg-gray-800'
-                                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                                    className={`text-sm font-medium py-2 px-3 theme-transition-text theme-transition-bg ${isActive
+                                        ? 'text-brand-red dark:text-brand-red bg-gray-100 dark:bg-gray-800'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                                         }`}
-                                    onClick={(e) => {
-                                        setIsMenuOpen(false);
-                                        const targetId = item.id;
-                                        const targetElement = document.getElementById(targetId);
-                                        if (targetElement) {
-                                            e.preventDefault();
-                                            setActiveSection(targetId);
-                                            targetElement.scrollIntoView({
-                                                behavior: 'smooth',
-                                                block: 'start'
-                                            });
-                                        }
-                                    }}
+                                    onClick={(e) => handleNavClick(e, item.id)}
                                 >
                                     {item.name}
                                 </a>
                             );
                         })}
 
-                        {/* Social links in mobile menu */}
+                        {/* Social links in mobile menu with brand-red color */}
                         <div className="flex items-center gap-4 py-2 px-3 border-t border-gray-200 dark:border-gray-700 mt-2">
                             <a
                                 href="https://github.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                                className="text-brand-red hover:text-brand-red/80 transition-colors"
                             >
                                 <i className="fab fa-github text-lg"></i>
                             </a>
@@ -335,7 +361,7 @@ const Navbar = () => {
                                 href="https://linkedin.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                                className="text-brand-red hover:text-brand-red/80 transition-colors"
                             >
                                 <i className="fab fa-linkedin text-lg"></i>
                             </a>

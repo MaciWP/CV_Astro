@@ -4,127 +4,299 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  /* Mejora de tipografía */
-  h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.02em;
-  }
+    body {
+        @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-150;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-  /* Sección con mejor espaciado para scroll */
-  section {
-    scroll-margin-top: 80px;
-    @apply mb-24;
-  }
-  
-  /* Accesibilidad */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
+    /* Better typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        letter-spacing: -0.02em;
+    }
+
+    /* Better scroll section spacing */
+    section {
+        scroll-margin-top: 80px;
+        @apply mb-24;
+    }
+
+    /* Accessibility */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    /* Improved focus states for accessibility */
+    :focus-visible {
+        outline: 2px solid #D83333 !important;
+        outline-offset: 2px !important;
+    }
+}
+
+/* ===== ANIMATION AND TRANSITION ENHANCEMENTS ===== */
+/* Standardized animation settings */
+:root {
+    --animation-duration-fast: 150ms;
+    --animation-duration-normal: 300ms;
+    --animation-duration-slow: 500ms;
+    --animation-easing: cubic-bezier(0.16, 1, 0.3, 1);
+    --animation-delay-step: 50ms;
 }
 
 @layer components {
-  /* Estilos para PDF */
-  .print-mode {
-    font-size: 10pt !important;
-  }
 
-  .print-mode h1 {
-    font-size: 18pt !important;
-  }
+    /* Theme transition classes for better control - FASTER */
+    .theme-transition {
+        @apply transition-all duration-150;
+    }
 
-  .print-mode h2 {
-    font-size: 14pt !important;
-  }
+    /* Fast text color transitions */
+    .theme-transition-text {
+        @apply transition-colors duration-100;
+    }
 
-  .print-mode h3 {
-    font-size: 12pt !important;
-  }
+    /* Medium transitions for backgrounds and borders */
+    .theme-transition-bg {
+        @apply transition-colors duration-150;
+    }
 
-  .print-mode .container {
-    max-width: none !important;
-    padding: 0 !important;
-  }
-
-  .print-mode section {
-    margin-bottom: 15mm !important;
-  }
-
-  /* Transiciones suaves */
-  .transition-all {
-    transition-property: all;
-  }
-
-  /* Scroll suave */
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 70px;
-  }
-
-  /* Estilos de scrollbar personalizados */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-800;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-gray-600;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400 dark:bg-gray-500;
-  }
+    /* Apply these classes to the HTML element when the theme changes - FASTER */
+    html.theme-transitioning * {
+        transition-duration: 150ms !important;
+    }
 }
 
-/* Estilos específicos para impresión */
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  nav, 
-  footer {
-    display: none !important;
-  }
-  
-  body {
-    background-color: white !important;
-    color: black !important;
-  }
-  
-  main {
-    padding: 0 !important;
-  }
-  
-  /* Quitar sombras en impresión */
-  * {
-    box-shadow: none !important;
-  }
-  
-  /* Saltos de página */
-  section {
-    page-break-inside: avoid;
-  }
+/* Enhanced appear animation with standardized timing */
+@keyframes enhanced-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 
-  /* Ocultar elementos interactivos */
-  button:not(#cv-download-button),
-  .no-print {
-    display: none !important;
-  }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Define section-specific animation behavior */
+.section-animate {
+    animation: enhanced-appear var(--animation-duration-normal) var(--animation-easing) forwards;
+    opacity: 0;
+}
+
+.section-animate-header {
+    animation-delay: calc(var(--animation-delay-step) * 1);
+}
+
+.section-animate-content {
+    animation-delay: calc(var(--animation-delay-step) * 3);
+}
+
+.section-animate-items>*:nth-child(1) {
+    animation-delay: calc(var(--animation-delay-step) * 4);
+}
+
+.section-animate-items>*:nth-child(2) {
+    animation-delay: calc(var(--animation-delay-step) * 5);
+}
+
+.section-animate-items>*:nth-child(3) {
+    animation-delay: calc(var(--animation-delay-step) * 6);
+}
+
+.section-animate-items>*:nth-child(4) {
+    animation-delay: calc(var(--animation-delay-step) * 7);
+}
+
+.section-animate-items>*:nth-child(5) {
+    animation-delay: calc(var(--animation-delay-step) * 8);
+}
+
+/* Bar filling animation for skills */
+@keyframes fill-bar {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.animate-fill-bar {
+    animation: fill-bar 1s var(--animation-easing) forwards;
+}
+
+@layer components {
+
+    /* Print mode styles */
+    .print-mode {
+        font-size: 10pt !important;
+    }
+
+    .print-mode h1 {
+        font-size: 18pt !important;
+    }
+
+    .print-mode h2 {
+        font-size: 14pt !important;
+    }
+
+    .print-mode h3 {
+        font-size: 12pt !important;
+    }
+
+    .print-mode .container {
+        max-width: none !important;
+        padding: 0 !important;
+    }
+
+    .print-mode section {
+        margin-bottom: 15mm !important;
+    }
+
+    /* Smooth transitions */
+    .transition-all {
+        transition-property: all;
+    }
+
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 70px;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 dark:bg-gray-600;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400 dark:bg-gray-500;
+    }
+}
+
+/* Print-specific styles */
+@media print {
+    .printing {
+        /* Remove scrollbars in print */
+        overflow: visible !important;
+    }
+
+    /* Hide what's not needed */
+    .printing nav,
+    .printing footer,
+    .printing .no-print {
+        display: none !important;
+    }
+
+    /* Ensure all content is visible */
+    .printing .opacity-0 {
+        opacity: 1 !important;
+    }
+
+    /* Remove animations in print */
+    .printing * {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+
+    /* Force black text on white background */
+    .printing body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Remove shadows and complex backgrounds */
+    .printing * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Ensure no page breaks within sections */
+    .printing section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Make sure all section content is visible regardless of viewport */
+    .printing .section-animate,
+    .printing .section-animate-header,
+    .printing .section-animate-content,
+    .printing .section-animate-items>* {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Force section margins to be consistent */
+    .printing section {
+        margin-bottom: 1.5cm !important;
+    }
+
+    /* Ensure important brand colors still show */
+    .printing .text-brand-red {
+        color: #D83333 !important;
+    }
+
+    .printing .bg-brand-red {
+        background-color: #D83333 !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    nav,
+    footer {
+        display: none !important;
+    }
+
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    main {
+        padding: 0 !important;
+    }
+
+    /* Remove shadows when printing */
+    * {
+        box-shadow: none !important;
+    }
+
+    /* Page breaks */
+    section {
+        page-break-inside: avoid;
+    }
+
+    /* Hide interactive elements */
+    button:not(#cv-download-button),
+    .no-print {
+        display: none !important;
+    }
 }
