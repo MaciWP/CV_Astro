@@ -1,35 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/cv/Header';
-import Summary from '../components/cv/Summary';
+import Hero from '../components/cv/Hero';
 import Experience from '../components/cv/Experience';
-import Education from '../components/cv/Education';
 import Skills from '../components/cv/Skills';
 import Languages from '../components/cv/Languages';
+import Education from '../components/cv/Education';
+import Projects from '../components/cv/Projects';
 
 // This will be replaced by i18n values
-const pageTitle = "Professional CV";
-const pageDescription = "My professional CV built with Astro, React and Tailwind CSS following Swiss standards";
+const pageTitle = "Oriol Macias - CV";
+const pageDescription = "Professional CV for Oriol Macias, Software Developer";
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <div class="space-y-8 print:space-y-4">
-    <!-- Personal information and photo -->
-    <Header client:load />
-    
-    <!-- Professional summary -->
-    <Summary client:load />
+  <div class="space-y-16">
+    <!-- Hero section with personal info and summary -->
+    <Hero client:load />
     
     <!-- Work Experience -->
     <Experience client:load />
-    
-    <!-- Education and Training -->
-    <Education client:load />
     
     <!-- Technical Skills -->
     <Skills client:load />
     
     <!-- Languages -->
     <Languages client:load />
+    
+    <!-- Education and Certifications -->
+    <Education client:load />
+    
+    <!-- Projects -->
+    <Projects client:load />
   </div>
 </Layout>

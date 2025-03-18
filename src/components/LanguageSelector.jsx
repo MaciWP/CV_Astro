@@ -1,11 +1,6 @@
 import React from 'react';
-// Temporarily comment out i18n since it's not fully set up yet
-// import { useTranslation } from 'react-i18next';
 
 const LanguageSelector = () => {
-  // Placeholder for i18n integration
-  // const { i18n } = useTranslation();
-  
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'de', name: 'Deutsch', flag: '🇨🇭' },
@@ -15,17 +10,14 @@ const LanguageSelector = () => {
   ];
 
   const changeLanguage = (lng) => {
-    // TODO: Implement when i18n is ready
-    // i18n.changeLanguage(lng);
     console.log(`Changed language to: ${lng}`);
-    // Update html lang attribute
     document.documentElement.setAttribute('lang', lng);
   };
 
   return (
     <div className="relative">
       <select
-        className="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 high-contrast:border-black rounded-md px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-light-accent dark:focus:ring-dark-accent"
+        className="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
         defaultValue="en"
         onChange={(e) => changeLanguage(e.target.value)}
         aria-label="Select language"

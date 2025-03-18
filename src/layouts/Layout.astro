@@ -1,11 +1,7 @@
 ---
 // Import the required components
-// Import React components
-// Note: These are client-side components that will be hydrated
 import { ThemeProvider } from '../contexts/ThemeContext';
-import ThemeToggle from '../components/ThemeToggle';
-import LanguageSelector from '../components/LanguageSelector';
-import PDFDownload from '../components/PDFDownload';
+import Navbar from '../components/Navbar';
 
 // Define props interface
 export interface Props {
@@ -16,8 +12,8 @@ export interface Props {
 
 // Destructure props with defaults
 const { 
-  title = "Professional CV - Swiss Standards", 
-  description = "A professional CV/portfolio following Swiss standards",
+  title = "Oriol Macias - CV", 
+  description = "Professional CV for Oriol Macias, Software Developer",
   lang = "en"
 } = Astro.props;
 ---
@@ -35,25 +31,58 @@ const {
     <meta name="theme-color" content="#ffffff" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Font Awesome for icons (loaded from CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Set initial theme class -->
+    <script is:inline>
+      // Get initial theme from localStorage or default to light
+      function getInitialTheme() {
+        if (localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        // Default to light theme instead of checking system preference
+        return 'light';
+      }
+      
+      // Apply theme class to html element
+      document.documentElement.classList.add(getInitialTheme());
+    </script>
   </head>
-  <body class="min-h-screen bg-light-primary dark:bg-dark-primary high-contrast:bg-hc-primary text-light-text dark:text-dark-text high-contrast:text-hc-text">
+  <body class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text transition-colors duration-300">
     <ThemeProvider client:load>
-      <header class="p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 high-contrast:border-black">
-        <div class="font-bold text-xl">My CV</div>
-        <div class="flex gap-4 items-center">
-          <LanguageSelector client:load />
-          <ThemeToggle client:load />
-          <PDFDownload client:load />
-        </div>
-      </header>
+      <div id="app-root">
+        <Navbar client:load />
 
-      <main class="container mx-auto p-4 max-w-4xl">
-        <slot />
-      </main>
+        <main class="container mx-auto px-4 py-8 max-w-5xl">
+          <slot />
+        </main>
 
-      <footer class="p-4 text-center border-t border-gray-200 dark:border-gray-700 high-contrast:border-black mt-8">
-        <p>&copy; 2025 - Created with Astro, React, and Tailwind CSS</p>
-      </footer>
+        <footer class="py-6 mt-16 border-t border-light-border dark:border-dark-border">
+          <div class="container mx-auto px-4 max-w-5xl flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 flex items-center justify-center bg-brand-red text-white font-bold rounded-none">
+                OM
+              </div>
+              <p class="text-sm">© 2025 Oriol Macias</p>
+            </div>
+            <div class="flex space-x-3">
+              <a href="#top" class="text-sm flex items-center space-x-1 hover:text-brand-red transition-colors">
+                <span>Back to top</span>
+                <i class="fas fa-arrow-up text-xs"></i>
+              </a>
+              <a 
+                href="#" 
+                class="inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-opacity-90 transition-opacity"
+              >
+                <i class="fas fa-download mr-1.5"></i>
+                <span>Download CV</span>
+              </a>
+            </div>
+          </div>
+        </footer>
+      </div>
     </ThemeProvider>
   </body>
 </html>

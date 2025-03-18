@@ -1,30 +1,70 @@
 /* Base Tailwind directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@layer theme {
+  :root {
+    /* Base token */
+    --spacing: 0.25rem;
+    
+    /* Primary colors */
+    --brand-red: oklch(0.6 0.25 25);
+    
+    /* Light theme colors */
+    --light-primary: oklch(1 0 0);
+    --light-secondary: oklch(0.98 0 0);
+    --light-surface: oklch(0.99 0 0);
+    --light-border: oklch(0.9 0 0);
+    --light-text: oklch(0.25 0 0);
+    --light-text-secondary: oklch(0.55 0 0);
+    
+    /* Dark theme colors */
+    --dark-primary: oklch(0.1 0 0);
+    --dark-secondary: oklch(0.15 0 0);
+    --dark-surface: oklch(0.2 0 0);
+    --dark-border: oklch(0.3 0 0);
+    --dark-text: oklch(0.95 0 0);
+    --dark-text-secondary: oklch(0.75 0 0);
+  }
+}
 
 /* Global custom styles */
 @layer base {
-  /* Light theme (default) */
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* For anchor links - accommodates fixed header */
   }
   
   body {
-    @apply antialiased;
+    @apply antialiased font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
-  /* High contrast theme overrides */
-  html.high-contrast {
-    @apply bg-white;
+  /* Smooth theme transitions */
+  body, 
+  nav, 
+  header, 
+  main, 
+  section, 
+  footer, 
+  div, 
+  a, 
+  button, 
+  h1, 
+  h2, 
+  h3, 
+  h4, 
+  h5, 
+  h6, 
+  p, 
+  span {
+    @apply transition-colors duration-300;
   }
-  
-  html.high-contrast body {
-    @apply bg-white text-black;
-  }
-  
-  html.high-contrast a {
-    @apply text-blue-700 underline;
+
+  /* Section style for better scrolling */
+  section {
+    scroll-margin-top: 80px;
+    @apply mb-24;
   }
   
   /* Accessibility */
@@ -45,5 +85,70 @@
     .no-print {
       display: none;
     }
+    
+    nav, 
+    footer {
+      display: none;
+    }
+    
+    body {
+      background-color: white !important;
+      color: black !important;
+    }
+    
+    main {
+      padding: 0 !important;
+    }
+    
+    /* Remove shadows in print */
+    * {
+      box-shadow: none !important;
+    }
+    
+    /* Page breaks */
+    section {
+      page-break-inside: avoid;
+    }
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .rounded-none {
+    border-radius: 0 !important;
+  }
+  
+  .transition-all {
+    transition-property: all;
+  }
+
+  .scale-0 {
+    transform: scale(0);
+  }
+}
+
+/* Override Styles */
+@layer override {
+  /* Apply custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--light-secondary);
+  }
+  
+  .dark ::-webkit-scrollbar-track {
+    background: var(--dark-secondary);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--brand-red) 50%, transparent);
+    border-radius: 0;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-red);
   }
 }
