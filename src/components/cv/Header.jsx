@@ -70,18 +70,25 @@ const Header = () => {
                     </div>
                 </div>
 
-                {/* Profile picture - professionally styled placeholder with consistent aspect ratio */}
+                {/* Professional photo - properly sized and styled according to Swiss standards */}
                 <div className="md:col-span-4 flex justify-center md:justify-end">
-                    <div className="relative w-85 h-85 md:w-80 md:h-80 overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg transition-all duration-700 flex items-center justify-center">
+                    <div className="relative w-auto h-auto md:w-auto md:h-auto overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg transition-all duration-700">
                         {/* Grey border for structure */}
                         <div className="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
 
-                        {/* Profile image */}
-                        <img
-                            src="/images/oriol_macias.jpg"
-                            alt="Oriol Macias"
-                            className="w-full h-full object-cover"
-                        />
+                        {/* Professional photo with proper sizing and no distortion */}
+                        <div className="w-full h-full bg-white dark:bg-gray-800">
+                            <img
+                                src="/images/oriol_macias.jpg"
+                                alt="Oriol Macias"
+                                className="w-full h-full object-contain"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.style.display = 'none';
+                                    e.target.parentNode.innerHTML += '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-800"><i class="fas fa-user text-4xl text-gray-400 dark:text-gray-500"></i></div>';
+                                }}
+                            />
+                        </div>
 
                         {/* Red accent on the bottom */}
                         <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-brand-red"></div>

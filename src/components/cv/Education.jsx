@@ -24,12 +24,6 @@ const Education = () => {
 
     const educationItems = [
         {
-            title: "SP2 EcoStruxure IT Advanced Technical Certification",
-            institution: "Schneider Electric",
-            period: "2019",
-            details: "Professional certification in advanced IT infrastructure management and monitoring systems."
-        },
-        {
             title: "UNIR - FP Superior in Multiplatform Application Development",
             institution: "Universidad Internacional de La Rioja",
             period: "2024 - 2025",
@@ -40,6 +34,12 @@ const Education = () => {
             institution: "IBOUX",
             period: "2024",
             details: "Improving English language skills for professional environments."
+        },
+        {
+            title: "SP2 EcoStruxure IT Advanced Technical Certification",
+            institution: "Schneider Electric",
+            period: "2019",
+            details: "Professional certification in advanced IT infrastructure management and monitoring systems."
         },
         {
             title: "Technical Degree in Multiplatform Application Development",

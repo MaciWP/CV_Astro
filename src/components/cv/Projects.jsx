@@ -59,8 +59,8 @@ const Projects = () => {
 
     const projects = [
         {
-            title: "ThinkData Backend Platform",
-            description: "Advanced data center management platform with multitenancy architecture, advanced querying capabilities, and comprehensive data visualization.",
+            title: "ThinkData Backend",
+            description: "Platform for data center management and monitoring with asset analysis and capacity planning through AI integration. Improved operational efficiency and real-time decision making.",
             technologies: ["Python", "Django", "REST API", "PostgreSQL", "Docker"],
             icon: "fas fa-server",
             githubUrl: "https://github.com/oriol-macias",
@@ -69,33 +69,33 @@ const Projects = () => {
             inProgress: false
         },
         {
-            title: "iTRACS Integration System",
-            description: "Integration platform connecting various industrial protocols (SNMP, DCE, MODBUS) with iTRACS DCIM platform for real-time monitoring of critical infrastructure.",
-            technologies: ["C#", ".NET", "REST API", "SNMP", "SOAP"],
-            icon: "fas fa-cogs",
+            title: "Standard Integration System",
+            description: "Integration solution between industrial protocols (SNMP, MODBUS) and iTRACS platform for centralized monitoring and infrastructure optimization. Reduced incident response time by 70%.",
+            technologies: ["C#", ".NET", "Windows Service", "SQL"],
+            icon: "fas fa-network-wired",
             githubUrl: "https://github.com/oriol-macias",
             demoUrl: null,
             highlight: true,
             inProgress: false
         },
         {
-            title: "RDR Transport Card System",
-            description: "Android application for managing public transport cards using NFC technology, including initialization, recharge, and balance check operations.",
-            technologies: ["Java", "Android", "NFC", "SOAP"],
-            icon: "fas fa-ticket-alt",
+            title: "ThinkData DCIM ETL",
+            description: "ETL system in Python for extracting, transforming, and loading data from multiple DCIM systems to the ThinkData platform. Reduced data integration time by 85%.",
+            technologies: ["Python", "Django", "ETL", "Pandas", "PyArrow"],
+            icon: "fas fa-random",
             githubUrl: "https://github.com/oriol-macias",
             demoUrl: null,
             highlight: false,
             inProgress: false
         },
         {
-            title: "Police Database Management System",
-            description: "Comprehensive database system for the Salt City Council Police Department with intuitive interface and efficient data management.",
-            technologies: ["C#", "WPF", "SQL", "Access"],
-            icon: "fas fa-shield-alt",
+            title: "DCO BJUMPER TOOLS",
+            description: "Client and device management tool for data centers, with CSV import/export functionality and a modern WPF interface. Improved asset inventory accuracy by 80%.",
+            technologies: ["C#", "WPF", ".NET", "SQL"],
+            icon: "fas fa-tools",
             githubUrl: "https://github.com/oriol-macias",
             demoUrl: null,
-            highlight: true,
+            highlight: false,
             inProgress: false
         }
     ];

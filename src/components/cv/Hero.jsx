@@ -30,10 +30,10 @@ const Hero = () => {
                     style={{ transitionDelay: '300ms' }}
                 >
                     <p className="mb-4">
-                        Experienced Software Developer with a strong background in application development,
-                        problem-solving, and software design. Skilled in creating efficient solutions and
-                        implementing technical requirements. Currently expanding knowledge in AI through
-                        specialized training programs.
+                        Senior Software Developer with extensive experience in data center infrastructure integration and monitoring.
+                        Combining .NET (C#) and Python (Django) solutions to design scalable architectures, automate ETL processes,
+                        and deploy critical services using agile methodologies. Focused on operational optimization and continuous improvement,
+                        delivering measurable results and high reliability.
                     </p>
 
                     <div className="flex flex-wrap gap-4">

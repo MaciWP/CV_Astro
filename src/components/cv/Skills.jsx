@@ -26,40 +26,41 @@ const Skills = () => {
         return () => observer.disconnect();
     }, []);
 
-    // Skill categories organized into sections with icons
+    // Skill categories organized into sections with icons - updated with Bjumper experience
     const skillData = {
         programming: [
-            { name: "C#", percent: 95, icon: "fab fa-microsoft", years: 6 },
-            { name: "Java", percent: 85, icon: "fab fa-java", years: 4 },
-            { name: "Android", percent: 75, icon: "fab fa-android", years: 3 },
-            { name: "Json", percent: 90, icon: "fas fa-code", years: 5 },
-            { name: ".NET", percent: 90, icon: "fab fa-windows", years: 5 },
-            { name: "XML", percent: 80, icon: "fas fa-file-code", years: 4 },
-            { name: "SQL", percent: 85, icon: "fas fa-database", years: 5 },
-            { name: "ODF", percent: 70, icon: "fas fa-file-alt", years: 2 }
+            { name: "C#", percent: 90, icon: "fab fa-microsoft", years: 7 },
+            { name: "Python", percent: 85, icon: "fab fa-python", years: 2 },
+            { name: "Django", percent: 85, icon: "fas fa-fire", years: 2 },
+            { name: "REST API", percent: 95, icon: "fas fa-exchange-alt", years: 6 },
+            { name: "SQL", percent: 85, icon: "fas fa-database", years: 8 },
         ],
         methodologies: [
-            { name: "Agile/Scrum", percent: 95, icon: "fas fa-tasks", years: 5 },
-            { name: "Test-Driven Dev", percent: 85, icon: "fas fa-vial", years: 3 },
-            { name: "CI/CD", percent: 75, icon: "fas fa-code-branch", years: 2 },
-            { name: "DevOps", percent: 70, icon: "fas fa-sync", years: 2 }
+            { name: "Scrum", percent: 70, icon: "fas fa-tasks", years: 1 },
+            { name: "Kanban", percent: 80, icon: "fas fa-clipboard-list", years: 1 },
+            { name: "CI/CD", percent: 70, icon: "fas fa-code-branch", years: 1 },
+            { name: "DevOps", percent: 50, icon: "fas fa-sync", years: 1 }
         ],
         tools: [
-            { name: "Visual Studio", icon: "fas fa-tv", years: 6 },
-            { name: "REST", icon: "fas fa-exchange-alt", years: 5 },
-            { name: "SOAP", icon: "fas fa-soap", years: 3 },
-            { name: ".NET 4.8", icon: "fab fa-microsoft", years: 4 },
-            { name: "WPF", icon: "fas fa-desktop", years: 3 },
-            { name: "Postman", icon: "fas fa-paper-plane", years: 4 },
-            { name: "SoapUI", icon: "fas fa-tools", years: 3 },
-            { name: "MySQL", icon: "fas fa-database", years: 4 },
-            { name: "Postgres", icon: "fas fa-database", years: 3 },
-            { name: "Beaver", icon: "fas fa-stream", years: 2 },
-            { name: "MVware", icon: "fas fa-server", years: 3 },
-            { name: "Oracle Express", icon: "fas fa-database", years: 2 }
+            { name: "Django REST", icon: "fas fa-fire", years: 7 },
+            { name: "Docker", icon: "fab fa-docker", years: 5 },
+            { name: "Docker Compose", icon: "fab fa-docker", years: 5 },
+            { name: "GitHub Actions", icon: "fab fa-github", years: 4 },
+            { name: "PostgreSQL", icon: "fas fa-database", years: 7 },
+            { name: "MySQL", icon: "fas fa-database", years: 7 },
+            { name: "Pytest", icon: "fas fa-vial", years: 6 },
+            { name: "NUnit", icon: "fas fa-check-square", years: 5 },
+            { name: "Black", icon: "fas fa-code", years: 4 },
+            { name: "Flake8", icon: "fas fa-bug", years: 4 },
+            { name: "Mypy", icon: "fas fa-check-circle", years: 4 },
+            { name: "Pre-commit hooks", icon: "fas fa-code-branch", years: 4 },
+            { name: "Jira", icon: "fab fa-jira", years: 7 },
+            { name: "Slack", icon: "fab fa-slack", years: 7 },
+            { name: "Windows Forms", icon: "fab fa-windows", years: 6 },
+            { name: "WPF", icon: "fab fa-windows", years: 6 },
+            { name: "AWS S3", icon: "fab fa-aws", years: 3 }
         ]
     };
-
     // Optimized SkillBar component - only animate when visible and avoid unnecessary re-animations
     const SkillBar = ({ name, percent, icon, index, years }) => {
         const barRef = useRef(null);

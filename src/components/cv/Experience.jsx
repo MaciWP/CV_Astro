@@ -25,51 +25,73 @@ const Experience = () => {
     const experiences = [
         {
             title: "Senior Backend Developer",
-            company: "Bjumper Madrid",
-            period: "Mar 2018 - Present",
+            company: "Bjumper",
+            period: "2018 - Present",
             responsibilities: [
-                "Design and development of integration systems between industrial protocols (SNMP, DCE, MODBUS) and data center infrastructure management platforms",
-                "Development of RESTful APIs for multiple Python projects using Django and Django REST Framework",
-                "Implementation of ETL processes for data center infrastructure monitoring and management",
-                "Architecture design for multitenancy systems with complex data hierarchies",
-                "Development of authentication and authorization systems with JWT and 2FA"
+                "Design, development, and maintenance of integration solutions between industrial protocols (SNMP, MODBUS, BACnet, etc.) or external applications (PowerIQ, HPE IMC, Invision, VMware, etc.) and DCIM platforms (iTRACS, ITA, DCE, etc.)",
+                "Design and development of scalable, agnostic microservices responsible for data extraction, transformation, and loading (ETL) between applications using REST API queries, PostgreSQL, and Django",
+                "Utilized agile methodologies (Kanban and currently Scrum) for continuous improvement",
+                "Participated in at least 8 projects, all of which are currently operational",
+                "Languages/Frameworks/Libraries: C#, Python, JavaScript, .NET (Framework & Core), Django, Django REST Framework",
+                "Databases/DevOps/Tools: PostgreSQL, Docker, GitHub, AWS"
             ],
             achievements: [
-                "Implemented integration solutions that reduced incident response time by 75% in critical infrastructures",
-                "Developed a Django backend boilerplate that reduced development time of new projects by 60-70%",
-                "Created multiple ETL systems that automate data collection with 90% time reduction",
-                "Implemented RAG systems for natural language querying of technical infrastructure data",
-                "Led development of several core systems used by major enterprise clients"
+                "Independently developed an SNMP monitoring tool in my spare time, inventing an autodiscovery method that reduced discovery time by 80% and enabled initial auto-configuration using a repository of thousands of MIBs",
+                "Proactively created an application to generate DDF documents (configuration files for DCE) using MIBs and SNMP walks, reducing development time by 90% for initial versions",
+                "Created a robust ETL solution that achieved a 90% reduction in data collection errors",
+                "Led the development of several core systems used by major enterprise clients"
             ]
         },
         {
             title: "Junior Developer (Android/C#)",
             company: "Busmatick",
-            period: "Jun 2016 - Feb 2018",
+            period: "2018",
             responsibilities: [
-                "Developed mobile applications for Android platform focused on public transport card management",
-                "Created applications using NFC technology for MIFARE Classic 1K card operations",
-                "Implemented secure communication with backend services via SOAP",
-                "Developed card lifecycle management features (initialization, recharge, query, cancellation)"
+                "Developed mobile applications for the Android platform and desktop application for Windows focused on public transport card management (initialization, recharge, query, cancellation)",
+                "Built a SOAP API to manage the backend for both applications",
+                "Implemented NFC technology for MIFARE Classic 1K card operations in both applications"
             ],
             achievements: [
-                "Successfully implemented the complete RDR (Reload/Download/Reloader) application for public transport cards",
+                "Successfully implemented the complete RDR application for public transport cards",
                 "Created a secure system for handling encrypted sensitive card operations",
                 "Developed Bluetooth printing functionality for transaction receipts"
             ]
         },
         {
+            title: "Support Technician",
+            company: "SERES",
+            period: "2017",
+            responsibilities: [
+                "Provided bilingual customer support for electronic invoicing in EDI, XML, and proprietary formats",
+                "Assisted clients in troubleshooting invoicing and data exchange issues",
+                "Developed small internal applications to streamline invoice processing workflows"
+            ],
+            achievements: [
+                "Helped improve overall client satisfaction with faster and more accurate issue resolution"
+            ]
+        },
+        {
+            title: "IT Technician",
+            company: "Educand SCCL",
+            period: "2015 - 2017",
+            responsibilities: [
+                "Installed, configured, and maintained computer equipment and network infrastructure",
+                "Mentored an intern and guided practical IT training"
+            ],
+            achievements: [
+                "Increased operational efficiency by implementing structured maintenance schedules"
+            ]
+        },
+        {
             title: "Development Intern",
             company: "Salt City Council",
-            period: "Sep 2014 - Jun 2015",
+            period: "2014 - 2015",
             responsibilities: [
-                "Developed applications using Visual Studio, Access, and Excel",
-                "Created a database management application for the local police using WPF and C#",
-                "Utilized C#, SQL, and XML for various programming tasks"
+                "Developed a database management application for the local police using WPF and C#",
             ],
             achievements: [
                 "Successfully delivered a comprehensive database management system for the local police department",
-                "Completed tasks as part of Superior Degree professional internship program"
+                "Completed tasks as part of a Superior Degree professional internship program"
             ]
         }
     ];
