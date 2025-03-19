@@ -82,8 +82,6 @@ const Languages = () => {
                                 ></div>
                             </div>
                         </div>
-
-                        {/* Eliminamos la línea que aparecía en el hover */}
                     </div>
                 ))}
             </div>

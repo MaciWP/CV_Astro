@@ -32,13 +32,22 @@ const Projects = () => {
         'Android': 'fab fa-android',
         'SQLite': 'fas fa-database',
         'React': 'fab fa-react',
+        'Python': 'fab fa-python',
+        'Django': 'fab fa-python',
         'Node.js': 'fab fa-node-js',
         'JavaScript': 'fab fa-js',
         'HTML': 'fab fa-html5',
         'CSS': 'fab fa-css3-alt',
-        'Python': 'fab fa-python',
         'Git': 'fab fa-git-alt',
         'Docker': 'fab fa-docker',
+        'WPF': 'fas fa-desktop',
+        'XML': 'fas fa-file-code',
+        'JSON': 'fas fa-code',
+        'Access': 'fas fa-table',
+        'Excel': 'fas fa-file-excel',
+        'PostgreSQL': 'fas fa-database',
+        'SOAP': 'fas fa-soap',
+        'SNMP': 'fas fa-network-wired',
         // Default icon for any unlisted technology
         'default': 'fas fa-code'
     };
@@ -50,9 +59,19 @@ const Projects = () => {
 
     const projects = [
         {
-            title: "Integration Platform",
-            description: "Developed a comprehensive integration platform that connects various systems and applications, enabling seamless data flow and process automation.",
-            technologies: ["C#", ".NET", "REST API", "SQL"],
+            title: "ThinkData Backend Platform",
+            description: "Advanced data center management platform with multitenancy architecture, advanced querying capabilities, and comprehensive data visualization.",
+            technologies: ["Python", "Django", "REST API", "PostgreSQL", "Docker"],
+            icon: "fas fa-server",
+            githubUrl: "https://github.com/oriol-macias",
+            demoUrl: null,
+            highlight: true,
+            inProgress: false
+        },
+        {
+            title: "iTRACS Integration System",
+            description: "Integration platform connecting various industrial protocols (SNMP, DCE, MODBUS) with iTRACS DCIM platform for real-time monitoring of critical infrastructure.",
+            technologies: ["C#", ".NET", "REST API", "SNMP", "SOAP"],
             icon: "fas fa-cogs",
             githubUrl: "https://github.com/oriol-macias",
             demoUrl: null,
@@ -60,14 +79,24 @@ const Projects = () => {
             inProgress: false
         },
         {
-            title: "Mobile Application for Data Collection",
-            description: "Created an Android application for field data collection, featuring offline capabilities and synchronization with central database.",
-            technologies: ["Java", "Android", "SQLite", "REST API"],
-            icon: "fas fa-mobile-alt",
+            title: "RDR Transport Card System",
+            description: "Android application for managing public transport cards using NFC technology, including initialization, recharge, and balance check operations.",
+            technologies: ["Java", "Android", "NFC", "SOAP"],
+            icon: "fas fa-ticket-alt",
             githubUrl: "https://github.com/oriol-macias",
             demoUrl: null,
             highlight: false,
-            inProgress: true
+            inProgress: false
+        },
+        {
+            title: "Police Database Management System",
+            description: "Comprehensive database system for the Salt City Council Police Department with intuitive interface and efficient data management.",
+            technologies: ["C#", "WPF", "SQL", "Access"],
+            icon: "fas fa-shield-alt",
+            githubUrl: "https://github.com/oriol-macias",
+            demoUrl: null,
+            highlight: true,
+            inProgress: false
         }
     ];
 

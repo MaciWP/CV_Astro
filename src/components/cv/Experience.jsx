@@ -24,40 +24,52 @@ const Experience = () => {
 
     const experiences = [
         {
-            title: "Software Developer",
-            company: "Schneider Electric",
-            period: "Jan 2020 - Present", // More specific date format according to Swiss standards
-            responsibilities: [
-                "Design, development, and maintenance of integration software",
-                "Requirements gathering and implementation"
-            ],
-            achievements: [
-                "Improved application performance by 30% through code optimization",
-                "Collaborated with cross-functional teams to deliver high-quality software solutions"
-            ]
-        },
-        {
-            title: "Trainee Mentor",
+            title: "Senior Backend Developer",
             company: "Bjumper Madrid",
-            period: "Mar 2019 - Dec 2020", // More specific dates
+            period: "Mar 2018 - Present",
             responsibilities: [
-                "Mentored junior developers and trainees",
-                "Developed training materials and conducted technical workshops"
+                "Design and development of integration systems between industrial protocols (SNMP, DCE, MODBUS) and data center infrastructure management platforms",
+                "Development of RESTful APIs for multiple Python projects using Django and Django REST Framework",
+                "Implementation of ETL processes for data center infrastructure monitoring and management",
+                "Architecture design for multitenancy systems with complex data hierarchies",
+                "Development of authentication and authorization systems with JWT and 2FA"
             ],
             achievements: [
-                "Provided code reviews and technical guidance"
+                "Implemented integration solutions that reduced incident response time by 75% in critical infrastructures",
+                "Developed a Django backend boilerplate that reduced development time of new projects by 60-70%",
+                "Created multiple ETL systems that automate data collection with 90% time reduction",
+                "Implemented RAG systems for natural language querying of technical infrastructure data",
+                "Led development of several core systems used by major enterprise clients"
             ]
         },
         {
-            title: "Android Developer",
-            company: "Freelance",
-            period: "Jun 2016 - Feb 2018", // More specific dates
+            title: "Junior Developer (Android/C#)",
+            company: "Busmatick",
+            period: "Jun 2016 - Feb 2018",
             responsibilities: [
-                "Developed mobile applications for Android platform",
-                "Managed database integration and API connections"
+                "Developed mobile applications for Android platform focused on public transport card management",
+                "Created applications using NFC technology for MIFARE Classic 1K card operations",
+                "Implemented secure communication with backend services via SOAP",
+                "Developed card lifecycle management features (initialization, recharge, query, cancellation)"
             ],
             achievements: [
-                "Implemented responsive UI designs and user-friendly interfaces"
+                "Successfully implemented the complete RDR (Reload/Download/Reloader) application for public transport cards",
+                "Created a secure system for handling encrypted sensitive card operations",
+                "Developed Bluetooth printing functionality for transaction receipts"
+            ]
+        },
+        {
+            title: "Development Intern",
+            company: "Salt City Council",
+            period: "Sep 2014 - Jun 2015",
+            responsibilities: [
+                "Developed applications using Visual Studio, Access, and Excel",
+                "Created a database management application for the local police using WPF and C#",
+                "Utilized C#, SQL, and XML for various programming tasks"
+            ],
+            achievements: [
+                "Successfully delivered a comprehensive database management system for the local police department",
+                "Completed tasks as part of Superior Degree professional internship program"
             ]
         }
     ];
