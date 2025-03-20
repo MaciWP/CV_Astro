@@ -53,13 +53,76 @@ const fullCanonicalUrl = canonicalUrl === "https://oriolmacias.dev/"
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/favicon.svg" />
     
-    <!-- Font Awesome - load local minimal version first as a fallback -->
-    <link rel="stylesheet" href="/styles/font-awesome-minimal.css" />
-    
-    <!-- Then load from CDN with integrity and cross-origin attributes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- DIRECT INLINE ICONS: The most reliable approach -->
+    <style is:inline>
+      /* Essential Font Awesome icons used throughout the site */
+      @font-face {
+        font-family: 'FontAwesome';
+        font-display: block;
+        src: url('/styles/fonts/fa-solid-900.woff2') format('woff2');
+        font-weight: 900;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: 'FontAwesome Brands';
+        font-display: block;
+        src: url('/styles/fonts/fa-brands-400.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+      }
+      
+      /* Base styles for icons */
+      .fas, .fab {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+      
+      /* Solid icons */
+      .fas {
+        font-family: 'FontAwesome';
+        font-weight: 900;
+      }
+      
+      /* Brand icons */
+      .fab {
+        font-family: 'FontAwesome Brands';
+        font-weight: 400;
+      }
+      
+      /* Individual icons used in the site */
+      .fa-user:before { content: "\f007"; }
+      .fa-envelope:before { content: "\f0e0"; }
+      .fa-linkedin:before { content: "\f08c"; }
+      .fa-github:before { content: "\f09b"; }
+      .fa-download:before { content: "\f019"; }
+      .fa-arrow-up:before { content: "\f062"; }
+      .fa-briefcase:before { content: "\f0b1"; }
+      .fa-graduation-cap:before { content: "\f19d"; }
+      .fa-code:before { content: "\f121"; }
+      .fa-language:before { content: "\f1ab"; }
+      .fa-project-diagram:before { content: "\f542"; }
+      .fa-trophy:before { content: "\f091"; }
+      .fa-check:before { content: "\f00c"; }
+      .fa-building:before { content: "\f1ad"; }
+      .fa-calendar-alt:before { content: "\f073"; }
+      .fa-file-alt:before { content: "\f15c"; }
+      .fa-user-tie:before { content: "\f508"; }
+      .fa-phone:before { content: "\f095"; }
+      .fa-external-link-alt:before { content: "\f35d"; }
+      .fa-chevron-up:before { content: "\f077"; }
+      .fa-chevron-down:before { content: "\f078"; }
+      .fa-award:before { content: "\f559"; }
+      .fa-map-marker-alt:before { content: "\f3c5"; }
+      .fa-sun:before { content: "\f185"; }
+      .fa-moon:before { content: "\f186"; }
+      .fa-home:before { content: "\f015"; }
+    </style>
     
     <!-- Simple theme initialization - always use dark mode for consistency -->
     <script is:inline>
@@ -187,20 +250,23 @@ const fullCanonicalUrl = canonicalUrl === "https://oriolmacias.dev/"
       });
     </script>
     
-    <!-- Service Worker Registration - Register after page loads for better performance -->
+    <!-- Service Worker Registration - Only register in production mode -->
     <script is:inline>
-      // Register service worker when the page is completely loaded
-      window.addEventListener('load', () => {
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/sw.js')
+      // Only register service worker in production environment
+      if (window.location.hostname !== 'localhost' && 
+          window.location.hostname !== '127.0.0.1' &&
+          'serviceWorker' in navigator) {
+          
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js?v=' + new Date().getTime())
             .then((registration) => {
               console.log('Service Worker registered successfully');
             })
             .catch((error) => {
               console.error('Service Worker registration failed:', error);
             });
-        }
-      });
+        });
+      }
     </script>
   </body>
 </html>
