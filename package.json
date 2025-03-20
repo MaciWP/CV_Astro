@@ -1,24 +1,36 @@
 {
-  "name": "swiss-cv-portfolio",
+  "name": "oriol-macias-portfolio",
   "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/copy-styles.js && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "copy:styles": "node scripts/copy-styles.js",
+    "generate:favicons": "node scripts/generate-favicons.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "optimize:images": "node scripts/optimize-images.js",
+    "seo:audit": "lighthouse https://oriolmacias.dev --output=html --output-path=./lighthouse-report.html",
+    "analyze:bundle": "astro build --analyze"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.9",
+    "@astrojs/sitemap": "^3.3.0",
     "@astrojs/tailwind": "^5.1.0",
     "@vite-pwa/astro": "^0.5.0",
     "@vitejs/plugin-react": "^4.2.1",
     "astro": "^5.5.2",
+    "astro-compress": "^2.3.6",
+    "fs-extra": "^11.3.0",
+    "globby": "^14.1.0",
     "html2pdf.js": "^0.10.3",
+    "prettier": "^3.5.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "eslint": "^8.56.0",

@@ -1,0 +1,489 @@
+/* Base Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Better typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        letter-spacing: -0.02em;
+    }
+
+    /* Better scroll section spacing */
+    section {
+        scroll-margin-top: 80px;
+        @apply mb-24;
+    }
+
+    /* Accessibility */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    /* Improved focus states for accessibility */
+    :focus-visible {
+        outline: 2px solid #D83333 !important;
+        outline-offset: 2px !important;
+    }
+}
+
+/* ===== OPTIMIZED ANIMATION AND TRANSITION ENHANCEMENTS ===== */
+/* Standardized animation settings - FASTER */
+:root {
+    --animation-duration-fast: 75ms;
+    --animation-duration-normal: 150ms;
+    --animation-duration-slow: 300ms;
+    --animation-easing: cubic-bezier(0.16, 1, 0.3, 1);
+    --animation-delay-step: 30ms;
+}
+
+@layer components {
+
+    /* Theme transition classes for better control - MUCH FASTER */
+    .theme-transition {
+        @apply transition-all duration-75;
+    }
+
+    /* Ultra-fast text color transitions */
+    .theme-transition-text {
+        @apply transition-colors duration-75;
+    }
+
+    /* Fast background transitions */
+    .theme-transition-bg {
+        @apply transition-colors duration-75;
+    }
+
+    /* Apply these classes to the HTML element when the theme changes - ULTRA FAST */
+    html.theme-transitioning * {
+        transition-duration: 75ms !important;
+    }
+
+    /* Only transition necessary properties */
+    html.theme-transitioning .text-light-text,
+    html.theme-transitioning .text-dark-text,
+    html.theme-transitioning .text-light-text-secondary,
+    html.theme-transitioning .text-dark-text-secondary,
+    html.theme-transitioning .bg-light-primary,
+    html.theme-transitioning .bg-dark-primary,
+    html.theme-transitioning .bg-light-secondary,
+    html.theme-transitioning .bg-dark-secondary,
+    html.theme-transitioning .bg-light-surface,
+    html.theme-transitioning .bg-dark-surface,
+    html.theme-transitioning .border-light-border,
+    html.theme-transitioning .border-dark-border {
+        transition-property: color, background-color, border-color;
+        transition-duration: 75ms;
+        transition-timing-function: ease-out;
+    }
+
+    /* Project card link styles */
+    .project-card {
+        @apply relative cursor-pointer;
+    }
+
+    .project-card-link {
+        @apply absolute inset-0 z-10;
+    }
+
+    .project-card-link~* {
+        @apply relative z-20;
+    }
+
+    /* Skill bar with year tag */
+    .skill-bar-with-years {
+        @apply relative;
+    }
+
+    .skill-year-tag {
+        @apply absolute right-0 top-0 px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-sm;
+    }
+
+    /* Percentage bubble for skills */
+    .percent-bubble {
+        @apply absolute right-1 -mt-2 h-5 w-10 flex items-center justify-center text-xs text-white bg-brand-red rounded-sm font-semibold z-10;
+    }
+
+    .percent-bubble:after {
+        content: '';
+        @apply absolute -bottom-1 right-1 w-0 h-0 border-t-4 border-r-4 border-l-4 border-t-brand-red border-r-transparent border-l-transparent;
+    }
+}
+
+/* Enhanced appear animation with standardized timing */
+@keyframes enhanced-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Define section-specific animation behavior */
+.section-animate {
+    animation: enhanced-appear var(--animation-duration-normal) var(--animation-easing) forwards;
+    opacity: 0;
+}
+
+.section-animate-header {
+    animation-delay: calc(var(--animation-delay-step) * 1);
+}
+
+.section-animate-content {
+    animation-delay: calc(var(--animation-delay-step) * 3);
+}
+
+.section-animate-items>*:nth-child(1) {
+    animation-delay: calc(var(--animation-delay-step) * 4);
+}
+
+.section-animate-items>*:nth-child(2) {
+    animation-delay: calc(var(--animation-delay-step) * 5);
+}
+
+.section-animate-items>*:nth-child(3) {
+    animation-delay: calc(var(--animation-delay-step) * 6);
+}
+
+.section-animate-items>*:nth-child(4) {
+    animation-delay: calc(var(--animation-delay-step) * 7);
+}
+
+.section-animate-items>*:nth-child(5) {
+    animation-delay: calc(var(--animation-delay-step) * 8);
+}
+
+/* Bar filling animation for skills */
+@keyframes fill-bar {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.animate-fill-bar {
+    animation: fill-bar 1s var(--animation-easing) forwards;
+}
+
+@layer components {
+
+    /* Print mode styles */
+    .print-mode {
+        font-size: 10pt !important;
+    }
+
+    .print-mode h1 {
+        font-size: 18pt !important;
+    }
+
+    .print-mode h2 {
+        font-size: 14pt !important;
+    }
+
+    .print-mode h3 {
+        font-size: 12pt !important;
+    }
+
+    .print-mode .container {
+        max-width: none !important;
+        padding: 0 !important;
+    }
+
+    .print-mode section {
+        margin-bottom: 15mm !important;
+    }
+
+    /* Smooth transitions */
+    .transition-all {
+        transition-property: all;
+    }
+
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 70px;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 dark:bg-gray-600;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400 dark:bg-gray-500;
+    }
+}
+
+/* Print-specific styles */
+@media print {
+    .printing {
+        /* Remove scrollbars in print */
+        overflow: visible !important;
+    }
+
+    /* Hide what's not needed */
+    .printing nav,
+    .printing footer,
+    .printing .no-print {
+        display: none !important;
+    }
+
+    /* Ensure all content is visible */
+    .printing .opacity-0 {
+        opacity: 1 !important;
+    }
+
+    /* Remove animations in print */
+    .printing * {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+
+    /* Force black text on white background */
+    .printing body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Remove shadows and complex backgrounds */
+    .printing * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Ensure no page breaks within sections */
+    .printing section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Make sure all section content is visible regardless of viewport */
+    .printing .section-animate,
+    .printing .section-animate-header,
+    .printing .section-animate-content,
+    .printing .section-animate-items>* {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Force section margins to be consistent */
+    .printing section {
+        margin-bottom: 1.5cm !important;
+    }
+
+    /* Ensure important brand colors still show */
+    .printing .text-brand-red {
+        color: #D83333 !important;
+    }
+
+    .printing .bg-brand-red {
+        background-color: #D83333 !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    nav,
+    footer {
+        display: none !important;
+    }
+
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    main {
+        padding: 0 !important;
+    }
+
+    /* Remove shadows when printing */
+    * {
+        box-shadow: none !important;
+    }
+
+    /* Page breaks */
+    section {
+        page-break-inside: avoid;
+    }
+
+    /* Hide interactive elements */
+    button:not(#cv-download-button),
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* Responsive Enhancements for Swiss CV */
+
+/* Base responsive improvements */
+@media (max-width: 768px) {
+
+    /* Improved spacing on mobile */
+    section {
+        margin-bottom: 3rem !important;
+    }
+
+    /* Adjust header spacing */
+    #about {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Make sure headlines are readable on small screens */
+    h1 {
+        font-size: 2.25rem !important;
+        line-height: 2.5rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+        line-height: 2rem !important;
+    }
+
+    /* Improve readability for skill bars */
+    .skill-bar {
+        margin-bottom: 1rem;
+    }
+
+    /* Better card spacing */
+    .experience-card,
+    .project-card,
+    .education-card {
+        padding: 1rem !important;
+    }
+
+    /* Ensure photo has correct proportions */
+    .profile-photo {
+        width: 160px !important;
+        height: 160px !important;
+        margin: 0 auto 1.5rem auto;
+    }
+
+    /* Adjust the skill bar layout for better visibility */
+    .skill-year-tag {
+        position: static;
+        display: inline-flex;
+        margin-left: 0.5rem;
+    }
+
+    /* Make percent bubbles more visible */
+    .percent-bubble {
+        height: 1.25rem;
+        line-height: 1.25rem;
+        margin-top: -0.5rem;
+    }
+}
+
+/* Specific adjustments for very small screens */
+@media (max-width: 480px) {
+
+    /* Further spacing adjustments */
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Stack contact info */
+    .contact-item {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Make icons visible and clickable */
+    .skill-icon,
+    .social-icon {
+        font-size: 1.25rem !important;
+        padding: 0.5rem !important;
+    }
+
+    /* Ensure buttons are large enough to tap */
+    button,
+    .button,
+    a.button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Make project cards easier to interact with on mobile */
+    .project-card {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Improve spacing in experience cards */
+    .timeline-item {
+        padding-left: 0;
+    }
+
+    .timeline-line {
+        display: none;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Extra classes to help with spacing */
+.py-safe {
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.px-safe {
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+}
+
+/* Classes for consistent touch targets */
+.touch-target {
+    min-height: 44px;
+    min-width: 44px;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ResponsiveImage from '../ResponsiveImage';
 
 /**
  * Enhanced Header component with better photo sizing and improved contact section
@@ -58,7 +59,7 @@ const Header = () => {
                             </a>
                         </div>
 
-                        {/* GitHub - Added as requested */}
+                        {/* GitHub */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
                             <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
                                 <i className="fab fa-github"></i>
@@ -79,10 +80,14 @@ const Header = () => {
 
                         {/* Professional photo with proper sizing to fill container */}
                         <div className="w-full h-full bg-white dark:bg-gray-800">
-                            <img
+                            <ResponsiveImage
                                 src="/images/oriol_macias.jpg"
-                                alt="Oriol Macias"
-                                className="w-full h-full object-cover" /* Changed from object-contain to object-cover */
+                                alt="Oriol Macias - Software Developer"
+                                className="w-full h-full object-cover"
+                                width={400}
+                                height={400}
+                                loading="eager"
+                                fetchpriority="high"
                                 onError={(e) => {
                                     e.target.onerror = null;
                                     e.target.style.display = 'none';

@@ -115,7 +115,7 @@ const Projects = () => {
             technologies: ["Python", "Kivy", "ONNX", "NumPy"],
             icon: "fas fa-calculator",
             githubUrl: "https://github.com/oriolmaciasbadosa/pelusas-calculator",
-            highlight: false,
+            highlight: true,
             keyFeatures: [
                 "Cross-platform interface built with Kivy",
                 "Computer vision for automatic card detection (>90% accuracy)",
@@ -171,7 +171,7 @@ const Projects = () => {
             longDescription: "This integration service automates the collection and processing of network performance metrics from HPE IMC, facilitating centralized monitoring and optimizing IT infrastructure management. The system implements a comprehensive ETL process with robust error handling and retry mechanisms to ensure data reliability and consistency.",
             technologies: ["Python", "Django", "PostgreSQL", "Docker", "REST API"],
             icon: "fas fa-network-wired",
-            highlight: false,
+            highlight: true,
             keyFeatures: [
                 "Efficient data collection from 1,000+ network devices in under 5 minutes",
                 "95% reduction in infrastructure problem detection time",
@@ -224,7 +224,7 @@ const Projects = () => {
             longDescription: "This integration solution enables bidirectional synchronization of devices, configurations, and states between DCO/ITA and PowerIQ systems. The project created a unified system for monitoring, control, and efficient management of datacenter infrastructure, with special focus on energy management.",
             technologies: ["C#", ".NET", "REST API", "PostgreSQL", "XML"],
             icon: "fas fa-bolt",
-            highlight: false,
+            highlight: true,
             keyFeatures: [
                 "Bidirectional synchronization with object mapping system",
                 "85% reduction in energy infrastructure management time",

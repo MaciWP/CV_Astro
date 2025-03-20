@@ -1,48 +1,108 @@
-# Astro Starter Kit: Basics
+# Oriol Macias - CV Portfolio
 
-```sh
-npm create astro@latest -- --template basics
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-netlify-id/deploy-status)](https://app.netlify.com/sites/oriolmacias/deploys)
+![License](https://img.shields.io/github/license/MaciWP/CV_Astro)
+![Technologies](https://img.shields.io/badge/Tech-Astro%20%7C%20React%20%7C%20TailwindCSS-blue)
+
+A professional CV/portfolio website following Swiss design standards. This project showcases my skills and experience as a software developer, built with modern web technologies.
+
+## 🌐 [View Live Site](https://oriolmacias.dev)
+
+![Oriol Macias CV Portfolio](public/screenshots/desktop.jpg)
+
+## 🚀 Features
+
+- 🎨 **Modern, Clean Design**: Following Swiss design principles with clean typography and structured layout
+- 🌙 **Dark/Light Theme**: Toggle between themes with smooth transitions
+- 🌍 **Multilingual Support**: Available in English, Spanish, and French
+- 📱 **Fully Responsive**: Optimized for all screen sizes and devices
+- ⚡ **Performance Optimized**: Fast loading, with 90+ scores on Lighthouse
+- 📊 **SEO Ready**: Structured data, meta tags, and sitemap for better search engine visibility
+- 📄 **CV Download**: Direct PDF export of resume
+- 🔄 **PWA Support**: Can be installed as a Progressive Web App for offline access
+
+## 🧰 Tech Stack
+
+- **[Astro](https://astro.build/)**: Core framework for static site generation
+- **[React](https://reactjs.org/)**: For interactive components
+- **[TailwindCSS](https://tailwindcss.com/)**: Utility-first CSS framework
+- **[Netlify](https://www.netlify.com/)**: Hosting and continuous deployment
+
+## 🛠️ Development
+
+### Prerequisites
+
+- Node.js 18 or higher
+- npm 9.5 or higher
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/MaciWP/CV_Astro.git
+cd CV_Astro
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+### Build
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+```bash
+# Build for production
+npm run build
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+# Preview production build
+npm run preview
+```
 
-## 🚀 Project Structure
+### Scripts
 
-Inside of your Astro project, you'll see the following folders and files:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run generate:favicons` - Generate favicons
+- `npm run generate:sitemap` - Generate sitemap
+- `npm run optimize:images` - Optimize images
+- `npm run seo:audit` - Run Lighthouse audit
+- `npm run analyze:bundle` - Analyze bundle size
 
-```text
+## 📂 Project Structure
+
+```
 /
-├── public/
-│   └── favicon.svg
+├── public/              # Public assets
+│   ├── icons/           # Favicons and app icons
+│   ├── images/          # Images and photos
+│   └── locales/         # Translation files
 ├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/      # React components
+│   │   └── cv/          # CV section components
+│   ├── contexts/        # React contexts
+│   ├── layouts/         # Astro layouts
+│   ├── pages/           # Astro pages
+│   ├── styles/          # Global styles
+│   └── utils/           # Utility functions
+├── scripts/             # Build and optimization scripts
+├── astro.config.mjs     # Astro configuration
+└── tailwind.config.js   # Tailwind CSS configuration
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 📄 License
 
-## 🧞 Commands
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-All commands are run from the root of the project, from a terminal:
+## 📧 Contact
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Oriol Macias - [oriolomb@gmail.com](mailto:oriolomb@gmail.com)
 
-## 👀 Want to learn more?
+Portfolio: [oriolmacias.dev](https://oriolmacias.dev)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+LinkedIn: [linkedin.com/in/oriolmaciasbadosa](https://linkedin.com/in/oriolmaciasbadosa)
+
+---
+
+❤️ Thanks for checking out my project!

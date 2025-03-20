@@ -1,56 +1,72 @@
 ---
-// Import the required components
+// Import components
 import Navbar from '../components/Navbar';
+import SEO from '../components/SEO';
+import StructuredData from '../components/StructuredData';
 
 // Define props interface
 export interface Props {
   title: string;
   description: string;
   lang: string;
+  ogImage?: string;
+  canonicalUrl?: string;
 }
 
 // Destructure props with defaults
 const { 
-  title = "Oriol Macias - CV", 
-  description = "Professional CV for Oriol Macias, Software Developer",
-  lang = "en"
+  title = "Oriol Macias - Software Developer CV & Portfolio", 
+  description = "Professional CV for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
+  lang = "en",
+  ogImage = "/images/oriol_macias.jpg",
+  canonicalUrl = "https://oriolmacias.dev/"
 } = Astro.props;
+
+// Construct full canonical URL based on current page path
+const fullCanonicalUrl = canonicalUrl === "https://oriolmacias.dev/" 
+  ? canonicalUrl 
+  : new URL(Astro.url.pathname, canonicalUrl).href;
 ---
 
 <!DOCTYPE html>
-<html lang={lang}>
+<html lang={lang} class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    
+    <!-- SEO Component for comprehensive meta tags -->
+    <SEO 
+      title={title}
+      description={description}
+      canonicalUrl={fullCanonicalUrl}
+      ogImage={ogImage}
+    />
+    
+    <!-- Structured Data for rich search results -->
+    <StructuredData />
+    
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#121620" />
+    <meta name="theme-color" content="#D83333" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/favicon.svg" />
     
-    <!-- Font Awesome for icons (loaded from CDN) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Font Awesome - load local minimal version first as a fallback -->
+    <link rel="stylesheet" href="/styles/font-awesome-minimal.css" />
     
-    <!-- Set initial theme class to prevent flash of unstyled content -->
+    <!-- Then load from CDN with integrity and cross-origin attributes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Simple theme initialization - always use dark mode for consistency -->
     <script is:inline>
-      // Get initial theme from localStorage or default to dark
-      function getInitialTheme() {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        // Default to dark theme
-        return 'dark';
-      }
-      
-      // Apply theme class to html element immediately
-      document.documentElement.classList.add(getInitialTheme());
+      document.documentElement.classList.add('dark');
     </script>
 
-    <!-- Print styles for PDF download -->
+    <!-- Print styles for PDF download capability -->
     <style is:inline>
       @media print {
         nav, footer, button, .no-print {
@@ -62,7 +78,7 @@ const {
           color: black !important;
         }
         
-        /* Asegurar que el contenido se ajuste para impresión */
+        /* Ensure content fits for printing */
         @page {
           size: A4 portrait;
           margin: 1.5cm;
@@ -72,13 +88,13 @@ const {
           padding: 0 !important;
         }
         
-        /* Quitar sombras y efectos hover */
+        /* Remove shadows and hover effects */
         * {
           box-shadow: none !important;
           transition: none !important;
         }
         
-        /* Ajustar colores para impresión */
+        /* Adjust colors for printing */
         .dark\:text-dark-text,
         .dark\:text-dark-text-secondary,
         .text-light-text,
@@ -93,12 +109,12 @@ const {
           background-color: #fff !important;
         }
         
-        /* Asegurar que todas las secciones sean visibles */
+        /* Ensure all sections are visible */
         .opacity-0 {
           opacity: 1 !important;
         }
         
-        /* Mantener el borde rojo característico para mantener la identidad visual */
+        /* Maintain the red border characteristic for visual identity */
         .border-brand-red {
           border-color: #D83333 !important;
         }
@@ -107,14 +123,14 @@ const {
   </head>
   <body class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300">
     <div id="app-root">
-      <!-- Navbar con client:load para asegurar carga inmediata -->
+      <!-- Navbar with client:load for immediate rendering -->
       <Navbar client:load />
 
       <main class="container mx-auto px-4 py-8 max-w-5xl">
         <slot />
       </main>
 
-      <!-- Footer inline porque el componente parece tener problemas -->
+      <!-- Footer component embedded for reliability -->
       <footer class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300">
         <div class="container mx-auto px-4 max-w-5xl">
           <div class="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -148,31 +164,42 @@ const {
       </footer>
     </div>
 
-    <!-- Script para mejorar scroll suave a secciones -->
+    <!-- Script for smooth scrolling to sections -->
     <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {
-        // Smooth scroll para anclas
+        // Smooth scroll for anchors
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href').substring(1);
-            if (!targetId) return; // Evitar errores con href="#"
+            if (!targetId) return; // Avoid errors with href="#"
             
             const targetElement = document.getElementById(targetId);
             
             if (targetElement) {
               e.preventDefault();
               window.scrollTo({
-                top: targetElement.offsetTop - 80, // Offset para el navbar
+                top: targetElement.offsetTop - 80, // Offset for navbar
                 behavior: 'smooth'
               });
             }
           });
         });
-
-        // Detectar errores
-        window.addEventListener('error', function(e) {
-          console.error('Global error caught:', e.error);
-        });
+      });
+    </script>
+    
+    <!-- Service Worker Registration - Register after page loads for better performance -->
+    <script is:inline>
+      // Register service worker when the page is completely loaded
+      window.addEventListener('load', () => {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('Service Worker registered successfully');
+            })
+            .catch((error) => {
+              console.error('Service Worker registration failed:', error);
+            });
+        }
       });
     </script>
   </body>

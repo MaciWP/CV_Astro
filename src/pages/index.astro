@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Importamos el componente Header simplificado
+// Import CV components
 import Header from '../components/cv/Header';
 import Experience from '../components/cv/Experience';
 import Skills from '../components/cv/Skills';
@@ -9,36 +9,40 @@ import Languages from '../components/cv/Languages';
 import Education from '../components/cv/Education';
 import Projects from '../components/cv/Projects';
 
-// Metadata de la página
-const pageTitle = "Oriol Macias - CV";
-const pageDescription = "Professional CV for Oriol Macias, Software Developer";
+// Enhanced metadata for SEO
+const pageTitle = "Oriol Macias - Software Developer CV & Portfolio";
+const pageDescription = "Professional CV and portfolio for Oriol Macias, a Backend Developer with 8+ years of experience in industrial protocol integration (SNMP, MODBUS, BACnet) and data center infrastructure.";
+const ogImage = "/images/oriol_macias.jpg";
+const canonicalUrl = "https://oriolmacias.dev/";
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <div id="cv-content" class="space-y-16">
-    <!-- IMPORTANTE: cambiamos client:load para asegurar que se hidrate completamente -->
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  lang="en"
+  ogImage={ogImage}
+  canonicalUrl={canonicalUrl}
+>
+  <div id="cv-content" class="space-y-16" itemscope itemtype="https://schema.org/Person">
+    <!-- Header with immediate hydration -->
     <Header client:load />
     
-    <!-- El resto de secciones con client:visible -->
+    <!-- Sections with lazy hydration for better performance -->
     <Experience client:visible />
     <Skills client:visible />
     <Education client:visible />
-	<Languages client:visible />
+    <Languages client:visible />
     <Projects client:visible />
+
+    <!-- Hidden metadata to improve SEO -->
+    <div class="sr-only">
+      <div itemprop="name">Oriol Macias</div>
+      <div itemprop="jobTitle">Software Developer</div>
+      <div itemprop="description">Solutions-driven Backend Developer specializing in industrial protocol integration (SNMP, MODBUS, BACKnet) with 8+ years of delivering high-performance applications.</div>
+      <div itemprop="email">oriolomb@gmail.com</div>
+      <a itemprop="url" href="https://oriolmacias.dev">https://oriolmacias.dev</a>
+      <a itemprop="sameAs" href="https://github.com/MaciWP">GitHub</a>
+      <a itemprop="sameAs" href="https://linkedin.com/in/oriolmaciasbadosa">LinkedIn</a>
+    </div>
   </div>
 </Layout>
-
-<script>
-  // Pequeño script para detectar problemas de carga
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('CV content loaded');
-    
-    // Verificar que el header existe y es visible
-    const header = document.getElementById('about');
-    if (header) {
-      console.log('Header found in DOM');
-    } else {
-      console.error('Header not found in DOM');
-    }
-  });
-</script>

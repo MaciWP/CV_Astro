@@ -1,0 +1,144 @@
+# Apache Server Configs for oriolmacias.dev
+
+# Enable rewrite engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Set the base URL
+  RewriteBase /
+  
+  # Redirect to HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Redirect www to non-www
+  RewriteCond %{HTTP_HOST} ^www\.oriolmacias\.dev [NC]
+  RewriteRule ^ https://oriolmacias.dev%{REQUEST_URI} [L,R=301]
+  
+  # Prevent directory listing
+  Options -Indexes
+  
+  # Handle 404 errors
+  ErrorDocument 404 /404.html
+  
+  # SPA Fallback - serves index.html for routes that don't exist
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Set Cache-Control headers
+<IfModule mod_expires.c>
+  ExpiresActive on
+  
+  # CSS, JavaScript, and JSON
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/json "access plus 1 hour"
+  
+  # Images, Video, Audio
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType video/webm "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
+  ExpiresByType audio/mpeg "access plus 1 year"
+  
+  # Fonts
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  
+  # Data interchange
+  ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType application/rss+xml "access plus 1 hour"
+  
+  # Web feeds
+  ExpiresByType application/atom+xml "access plus 1 hour"
+  
+  # Service worker (No caching)
+  <FilesMatch "sw\.js$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+  </FilesMatch>
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  # XSS Protection
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # MIME type sniffing security protection
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Prevent clickjacking
+  Header set X-Frame-Options "SAMEORIGIN"
+  
+  # Referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Content Security Policy (CSP)
+  Header set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; manifest-src 'self';"
+  
+  # Permissions Policy
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+</IfModule>
+
+# Compress text files
+<IfModule mod_deflate.c>
+  # Force compression for mangled headers
+  <IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+      SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+      RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+    </IfModule>
+  </IfModule>
+  
+  # Compress all output labeled with one of the following MIME-types
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE application/atom+xml \
+                                  application/javascript \
+                                  application/json \
+                                  application/ld+json \
+                                  application/manifest+json \
+                                  application/rdf+xml \
+                                  application/rss+xml \
+                                  application/schema+json \
+                                  application/vnd.geo+json \
+                                  application/vnd.ms-fontobject \
+                                  application/x-font-ttf \
+                                  application/x-javascript \
+                                  application/x-web-app-manifest+json \
+                                  application/xhtml+xml \
+                                  application/xml \
+                                  font/eot \
+                                  font/opentype \
+                                  font/otf \
+                                  font/ttf \
+                                  image/bmp \
+                                  image/svg+xml \
+                                  image/vnd.microsoft.icon \
+                                  image/x-icon \
+                                  text/cache-manifest \
+                                  text/calendar \
+                                  text/css \
+                                  text/html \
+                                  text/javascript \
+                                  text/plain \
+                                  text/markdown \
+                                  text/vcard \
+                                  text/vnd.rim.location.xloc \
+                                  text/vtt \
+                                  text/x-component \
+                                  text/x-cross-domain-policy \
+                                  text/xml
+  </IfModule>
+</IfModule>
