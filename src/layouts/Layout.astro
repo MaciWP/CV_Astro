@@ -53,76 +53,128 @@ const fullCanonicalUrl = canonicalUrl === "https://oriolmacias.dev/"
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/favicon.svg" />
     
-    <!-- DIRECT INLINE ICONS: The most reliable approach -->
+    <!-- Critical Font Awesome Font Files - Preload for performance -->
+    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    
+    <!-- Font Awesome Fallback CSS - This ensures icons still work if main CSS fails -->
+    <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
+    
+    <!-- Main Font Awesome CSS -->
+    <link rel="stylesheet" href="/styles/font-awesome.min.css" />
+    
+    <!-- Inline essential Font Awesome definitions as a last resort fallback -->
     <style is:inline>
-      /* Essential Font Awesome icons used throughout the site */
+      /* Critical Font Awesome rules to ensure icons always display */
       @font-face {
-        font-family: 'FontAwesome';
+        font-family: 'Font Awesome 5 Free';
+        font-style: normal;
+        font-weight: 900;
         font-display: block;
         src: url('/styles/fonts/fa-solid-900.woff2') format('woff2');
-        font-weight: 900;
-        font-style: normal;
       }
-      
+
       @font-face {
-        font-family: 'FontAwesome Brands';
+        font-family: 'Font Awesome 5 Brands';
+        font-style: normal;
+        font-weight: 400;
         font-display: block;
         src: url('/styles/fonts/fa-brands-400.woff2') format('woff2');
-        font-weight: 400;
-        font-style: normal;
       }
-      
-      /* Base styles for icons */
-      .fas, .fab {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        line-height: 1;
+
+      .fas,
+      .fa-solid {
+        font-family: 'Font Awesome 5 Free' !important;
+        font-weight: 900 !important;
       }
-      
-      /* Solid icons */
-      .fas {
-        font-family: 'FontAwesome';
-        font-weight: 900;
+
+      .fab,
+      .fa-brands {
+        font-family: 'Font Awesome 5 Brands' !important;
+        font-weight: 400 !important;
       }
-      
-      /* Brand icons */
-      .fab {
-        font-family: 'FontAwesome Brands';
-        font-weight: 400;
-      }
-      
-      /* Individual icons used in the site */
-      .fa-user:before { content: "\f007"; }
-      .fa-envelope:before { content: "\f0e0"; }
-      .fa-linkedin:before { content: "\f08c"; }
-      .fa-github:before { content: "\f09b"; }
-      .fa-download:before { content: "\f019"; }
-      .fa-arrow-up:before { content: "\f062"; }
-      .fa-briefcase:before { content: "\f0b1"; }
-      .fa-graduation-cap:before { content: "\f19d"; }
-      .fa-code:before { content: "\f121"; }
-      .fa-language:before { content: "\f1ab"; }
-      .fa-project-diagram:before { content: "\f542"; }
-      .fa-trophy:before { content: "\f091"; }
-      .fa-check:before { content: "\f00c"; }
-      .fa-building:before { content: "\f1ad"; }
-      .fa-calendar-alt:before { content: "\f073"; }
-      .fa-file-alt:before { content: "\f15c"; }
-      .fa-user-tie:before { content: "\f508"; }
-      .fa-phone:before { content: "\f095"; }
-      .fa-external-link-alt:before { content: "\f35d"; }
-      .fa-chevron-up:before { content: "\f077"; }
-      .fa-chevron-down:before { content: "\f078"; }
-      .fa-award:before { content: "\f559"; }
-      .fa-map-marker-alt:before { content: "\f3c5"; }
-      .fa-sun:before { content: "\f185"; }
-      .fa-moon:before { content: "\f186"; }
-      .fa-home:before { content: "\f015"; }
     </style>
+    
+    <!-- Script to check and fix Font Awesome loading issues -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Function to check if Font Awesome is loaded correctly
+        function isFontAwesomeLoaded() {
+          const testIcon = document.createElement('i');
+          testIcon.className = 'fas fa-user';
+          testIcon.style.visibility = 'hidden';
+          document.body.appendChild(testIcon);
+          
+          // Get computed style
+          const style = window.getComputedStyle(testIcon);
+          const fontFamily = style.getPropertyValue('font-family');
+          
+          // Clean up test element
+          document.body.removeChild(testIcon);
+          
+          // Check if proper font family is applied
+          return fontFamily.includes('Font') && fontFamily.includes('Awesome');
+        }
+        
+        // If Font Awesome isn't loaded properly, try to fix it
+        if (!isFontAwesomeLoaded()) {
+          console.log('Font Awesome not loaded properly, applying emergency fix...');
+          
+          // Create a new style element with base Font Awesome definitions
+          const style = document.createElement('style');
+          style.textContent = `
+            @font-face {
+              font-family: 'Font Awesome 5 Free';
+              font-style: normal;
+              font-weight: 900;
+              font-display: block;
+              src: url('/styles/fonts/fa-solid-900.woff2') format('woff2');
+            }
+            
+            @font-face {
+              font-family: 'Font Awesome 5 Brands';
+              font-style: normal;
+              font-weight: 400;
+              font-display: block;
+              src: url('/styles/fonts/fa-brands-400.woff2') format('woff2');
+            }
+            
+            .fas,
+            .fa-solid {
+              font-family: 'Font Awesome 5 Free' !important;
+              font-weight: 900 !important;
+              -moz-osx-font-smoothing: grayscale;
+              -webkit-font-smoothing: antialiased;
+              display: inline-block;
+              font-style: normal;
+              font-variant: normal;
+              text-rendering: auto;
+              line-height: 1;
+            }
+            
+            .fab,
+            .fa-brands {
+              font-family: 'Font Awesome 5 Brands' !important;
+              font-weight: 400 !important;
+              -moz-osx-font-smoothing: grayscale;
+              -webkit-font-smoothing: antialiased;
+              display: inline-block;
+              font-style: normal;
+              font-variant: normal;
+              text-rendering: auto;
+              line-height: 1;
+            }
+          `;
+          document.head.appendChild(style);
+          
+          // Try to reload the Font Awesome CSS with a cache busting parameter
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = '/styles/font-awesome.min.css?t=' + new Date().getTime();
+          document.head.appendChild(link);
+        }
+      });
+    </script>
     
     <!-- Simple theme initialization - always use dark mode for consistency -->
     <script is:inline>
@@ -250,14 +302,15 @@ const fullCanonicalUrl = canonicalUrl === "https://oriolmacias.dev/"
       });
     </script>
     
-    <!-- Service Worker Registration - Only register in production mode -->
+    <!-- Service Worker Registration - Only for production -->
     <script is:inline>
-      // Only register service worker in production environment
+      // Only register in production (not local)
       if (window.location.hostname !== 'localhost' && 
-          window.location.hostname !== '127.0.0.1' &&
+          window.location.hostname !== '127.0.0.1' && 
           'serviceWorker' in navigator) {
-          
+        
         window.addEventListener('load', () => {
+          // Add cache busting parameter to avoid caching issues
           navigator.serviceWorker.register('/sw.js?v=' + new Date().getTime())
             .then((registration) => {
               console.log('Service Worker registered successfully');

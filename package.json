@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/dev.js",
-    "start": "node scripts/dev.js",
+    "dev": "node scripts/setup-font-awesome.js && astro dev",
+    "start": "node scripts/setup-font-awesome.js && astro dev",
     "build": "node scripts/setup-font-awesome.js && node scripts/copy-styles.js && astro build",
-    "preview": "node scripts/setup-font-awesome.js && astro preview",
+    "preview": "astro preview",
     "astro": "astro",
     "copy:styles": "node scripts/copy-styles.js",
     "setup:fonts": "node scripts/setup-font-awesome.js",

@@ -1,6 +1,5 @@
 // Service Worker for Oriol Macias CV Portfolio
-const CACHE_NAME = 'oriol-macias-cv-v2'; // Incremented version
-const FONT_AWESOME_URL = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+const CACHE_NAME = 'oriol-macias-cv-v2';
 
 // Core assets that must be cached for offline functionality
 const CORE_ASSETS = [
@@ -9,15 +8,16 @@ const CORE_ASSETS = [
     '/manifest.json',
     '/favicon.svg',
     '/styles/font-awesome.min.css',
+    '/styles/font-awesome-fallback.css',
     '/styles/global.css',
-    '/images/oriol_macias.jpg',
     '/styles/fonts/fa-solid-900.woff2',
-    '/styles/fonts/fa-brands-400.woff2'
+    '/styles/fonts/fa-brands-400.woff2',
+    '/styles/fonts/fa-regular-400.woff2',
+    '/images/oriol_macias.jpg'
 ];
 
-// Assets that should be cached but aren't critical
-const SECONDARY_ASSETS = [
-    FONT_AWESOME_URL,
+// Additional assets to cache if available
+const ADDITIONAL_ASSETS = [
     '/404.html'
 ];
 
@@ -29,26 +29,16 @@ self.addEventListener('install', (event) => {
     self.skipWaiting();
 
     event.waitUntil(
-        Promise.all([
-            // Cache core assets first
-            caches.open(CACHE_NAME).then((cache) => {
+        caches.open(CACHE_NAME)
+            .then((cache) => {
                 console.log('[ServiceWorker] Caching core assets');
-                return cache.addAll(CORE_ASSETS);
-            }),
-
-            // Then cache secondary assets
-            caches.open(CACHE_NAME).then((cache) => {
-                console.log('[ServiceWorker] Caching secondary assets');
-                // Use Promise.allSettled to continue even if some assets fail to cache
-                return Promise.allSettled(
-                    SECONDARY_ASSETS.map(url =>
-                        fetch(url, { mode: 'no-cors' })
-                            .then(response => cache.put(url, response))
-                            .catch(error => console.log(`Failed to cache: ${url}`, error))
-                    )
-                );
+                return cache.addAll(CORE_ASSETS)
+                    .then(() => {
+                        // Try to cache additional assets, but don't fail if some are missing
+                        return cache.addAll(ADDITIONAL_ASSETS)
+                            .catch(err => console.log('[ServiceWorker] Some additional assets failed to cache:', err));
+                    });
             })
-        ])
     );
 });
 
@@ -56,10 +46,9 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
     console.log('[ServiceWorker] Activate');
 
-    // Claim control instantly, rather than waiting for reload
+    // Claim control immediately
     event.waitUntil(self.clients.claim());
 
-    // Clean up old caches
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
@@ -79,67 +68,79 @@ self.addEventListener('fetch', (event) => {
     // Parse the URL
     const requestURL = new URL(event.request.url);
 
-    // Special handling for Font Awesome
-    if (event.request.url.includes('font-awesome') ||
-        event.request.url.includes('cdnjs.cloudflare.com')) {
+    // Special handling for font files - top priority
+    if (requestURL.pathname.includes('/fonts/') ||
+        requestURL.pathname.includes('font-awesome')) {
+
         event.respondWith(
             caches.match(event.request)
                 .then((cachedResponse) => {
+                    // If we have it in cache, return it immediately
                     if (cachedResponse) {
-                        // Return the cached version
                         return cachedResponse;
                     }
 
-                    // If not in cache, try to fetch and cache it
-                    return fetch(event.request, { mode: 'no-cors' })
-                        .then((response) => {
-                            // Cache the fetched response
-                            const responseToCache = response.clone();
-                            caches.open(CACHE_NAME).then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
-                            return response;
+                    // Otherwise fetch from network and cache
+                    return fetch(event.request)
+                        .then((networkResponse) => {
+                            // Clone the response to cache it
+                            const responseToCache = networkResponse.clone();
+
+                            caches.open(CACHE_NAME)
+                                .then((cache) => {
+                                    cache.put(event.request, responseToCache);
+                                });
+
+                            return networkResponse;
                         })
                         .catch(() => {
-                            // If specific Font Awesome CDN fails, try local version
-                            if (event.request.url.includes('cdnjs.cloudflare.com')) {
-                                return caches.match('/styles/font-awesome.min.css');
+                            // If specific font file fails, try to return a fallback
+                            if (requestURL.pathname.includes('fa-solid-900.woff2')) {
+                                return caches.match('/styles/fonts/fa-solid-900.woff2');
                             }
-                            return new Response('Font could not be fetched', { status: 503 });
+                            if (requestURL.pathname.includes('fa-brands-400.woff2')) {
+                                return caches.match('/styles/fonts/fa-brands-400.woff2');
+                            }
+                            return new Response('Font resource not found', { status: 404 });
                         });
                 })
         );
         return;
     }
 
-    // For all other requests, use a "stale-while-revalidate" strategy
+    // For all other requests, use a "network first, falling back to cache" strategy
     event.respondWith(
-        caches.match(event.request)
-            .then((cachedResponse) => {
-                // Even if we found a match in the cache, we fetch to update the cache for next time
-                const fetchPromise = fetch(event.request)
-                    .then((networkResponse) => {
-                        // Don't cache responses from external domains
-                        if (requestURL.origin === location.origin) {
-                            caches.open(CACHE_NAME)
-                                .then((cache) => {
-                                    cache.put(event.request, networkResponse.clone());
-                                });
+        fetch(event.request)
+            .then((networkResponse) => {
+                // If we get a valid response, clone it and update the cache
+                if (networkResponse && networkResponse.status === 200 &&
+                    (requestURL.origin === location.origin || requestURL.hostname.includes('cdnjs.cloudflare.com'))) {
+
+                    const clonedResponse = networkResponse.clone();
+
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, clonedResponse);
+                    });
+                }
+
+                return networkResponse;
+            })
+            .catch(() => {
+                // Network failed, try the cache
+                return caches.match(event.request)
+                    .then((cachedResponse) => {
+                        if (cachedResponse) {
+                            return cachedResponse;
                         }
-                        return networkResponse;
-                    })
-                    .catch(() => {
-                        // If fetch fails (offline) and we're trying to navigate to a page
+
+                        // If it's a navigation request and no cached version exists, return the homepage
                         if (event.request.mode === 'navigate') {
                             return caches.match('/');
                         }
 
-                        // Return nothing (will trigger appropriate error handling in the app)
-                        return null;
+                        // Otherwise, just fail
+                        return new Response('Network error and no cached version available', { status: 503 });
                     });
-
-                // Return the cached response immediately, or wait for network if nothing cached
-                return cachedResponse || fetchPromise;
             })
     );
 });

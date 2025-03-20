@@ -1,6 +1,8 @@
 /**
- * Script to download and configure Font Awesome locally
- * This ensures consistent icon rendering in all environments
+ * Minimal Font Awesome Setup Script
+ * 
+ * This script downloads just the essential Font Awesome files for the
+ * website, without changing any of the existing components.
  */
 
 import fs from 'fs/promises';
@@ -17,16 +19,12 @@ const __dirname = path.dirname(__filename);
 const PUBLIC_STYLES_DIR = path.join(__dirname, '../public/styles');
 const PUBLIC_FONTS_DIR = path.join(__dirname, '../public/styles/fonts');
 
-// Font Awesome CDN URLs
+// Font Awesome CDN URLs - only the essential files
 const FA_CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
 const FONT_FILES = [
     {
         name: 'fa-brands-400.woff2',
         url: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2'
-    },
-    {
-        name: 'fa-regular-400.woff2',
-        url: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2'
     },
     {
         name: 'fa-solid-900.woff2',
@@ -72,70 +70,22 @@ function downloadFile(url, destPath) {
  * Update CSS file paths to point to local files
  */
 async function fixCssPaths(cssPath) {
-    let cssContent = await fs.readFile(cssPath, 'utf-8');
+    try {
+        let cssContent = await fs.readFile(cssPath, 'utf-8');
 
-    // Update font URLs to point to local files
-    cssContent = cssContent.replace(
-        /url\(['"]?\.\.\/webfonts\//g,
-        'url(\'./fonts/'
-    );
+        // Update font URLs to point to local files
+        cssContent = cssContent.replace(
+            /url\(['"]?\.\.\/webfonts\//g,
+            'url(\'./fonts/'
+        );
 
-    await fs.writeFile(cssPath, cssContent, 'utf-8');
-    console.log('✓ Updated font paths in CSS file');
-}
-
-/**
- * Create a font face fallback CSS file with the most essential icons
- */
-async function createFallbackCss() {
-    const fallbackCss = `
-/* Font Awesome Font Face Declarations */
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url('./fonts/fa-solid-900.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Font Awesome 5 Brands';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url('./fonts/fa-brands-400.woff2') format('woff2');
-}
-
-.fas,
-.fa-solid {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1;
-}
-
-.fab,
-.fa-brands {
-  font-family: 'Font Awesome 5 Brands';
-  font-weight: 400;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1;
-}
-`;
-
-    const fallbackPath = path.join(PUBLIC_STYLES_DIR, 'font-awesome-fallback.css');
-    await fs.writeFile(fallbackPath, fallbackCss, 'utf-8');
-    console.log('✓ Created Font Awesome fallback CSS file');
+        await fs.writeFile(cssPath, cssContent, 'utf-8');
+        console.log('✓ Updated font paths in CSS file');
+        return true;
+    } catch (error) {
+        console.error('Error updating CSS file:', error);
+        return false;
+    }
 }
 
 /**
@@ -162,20 +112,18 @@ async function setupFontAwesome() {
             await downloadFile(font.url, fontPath);
             console.log(`✓ Downloaded ${font.name}`);
 
-            // Set appropriate permissions for font files
-            await fs.chmod(fontPath, 0o644).catch(err => {
-                console.log(`Warning: Unable to set permissions for ${font.name}: ${err.message}`);
-            });
+            // Make sure file has proper permissions
+            await fs.chmod(fontPath, 0o644);
         }
 
         // Fix paths in the CSS file
-        await fixCssPaths(cssPath);
+        const fixedCss = await fixCssPaths(cssPath);
+        if (!fixedCss) {
+            throw new Error('Failed to update CSS file paths');
+        }
 
-        // Create fallback CSS
-        await createFallbackCss();
-
-        console.log('\n✅ Font Awesome setup completed successfully!');
-        console.log('Font Awesome files are now available locally and will work offline.');
+        console.log('\n✅ Font Awesome minimal setup completed successfully!');
+        console.log('Your site should now work correctly in all environments.');
 
     } catch (error) {
         console.error('Error setting up Font Awesome:', error);
