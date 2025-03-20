@@ -1,5 +1,9 @@
+# Allow all crawlers
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap location
 Sitemap: https://oriolmacias.dev/sitemap.xml
+
+# Optimization: Decrease crawl rate to prevent server overload
+# Crawl-delay: 1

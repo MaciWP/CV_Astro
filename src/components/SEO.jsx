@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * SEO component that handles all meta tags for better search engine optimization
+ * Enhanced SEO component with improved metadata for better search engine visibility
  * @param {Object} props - Component properties
  * @param {string} props.title - Page title
  * @param {string} props.description - Page description
@@ -12,7 +12,7 @@ import React from 'react';
  */
 const SEO = ({
     title = "Oriol Macias - Software Developer CV & Portfolio",
-    description = "Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
+    description = "Portfolio and CV for Oriol Macias, experienced Software Developer specialized in backend development, industrial protocols integration (SNMP, MODBUS, BACnet), and data center infrastructure.",
     canonicalUrl = "https://oriolmacias.dev/",
     ogImage = "/images/oriol_macias.jpg",
     ogType = "website",
@@ -42,6 +42,7 @@ const SEO = ({
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={ogImage} />
+            <meta property="og:site_name" content="Oriol Macias - Developer" />
 
             {/* Twitter */}
             <meta name="twitter:card" content={twitterCard} />
@@ -50,9 +51,13 @@ const SEO = ({
             <meta name="twitter:description" content={description} />
             <meta name="twitter:image" content={ogImage} />
 
-            {/* Additional SEO meta tags */}
+            {/* Enhanced SEO meta tags */}
             <meta name="author" content="Oriol Macias" />
-            <meta name="keywords" content="Oriol Macias, Software Developer, Backend Developer, CV, Portfolio, Python, Django, C#, .NET, SNMP, MODBUS, BACnet, Data Center Infrastructure" />
+            <meta name="keywords" content="Oriol Macias, Oriol, Macias, Software Developer, Backend Developer, CV, Portfolio, Python, Django, C#, .NET, SNMP, MODBUS, BACnet, Data Center Infrastructure, Web Developer, Developer, Software Engineer, Programming, Coding, oriol dev, macias dev, oriol macias dev" />
+
+            {/* Geo tags for local SEO */}
+            <meta name="geo.region" content="ES" />
+            <meta name="geo.placename" content="Spain" />
 
             {/* Language alternates for multilingual support */}
             <link rel="alternate" hrefLang="en" href="https://oriolmacias.dev/" />
