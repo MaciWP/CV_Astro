@@ -35,18 +35,14 @@ const Skills = () => {
             { name: "Java", icon: "fab fa-java" },
             { name: ".NET", icon: "fab fa-windows" },
             { name: "JavaScript", icon: "fab fa-js" },
-            { name: "TypeScript", icon: "fab fa-js" },
             { name: "HTML", icon: "fab fa-html5" },
-            { name: "CSS", icon: "fab fa-css3-alt" },
             { name: "XML", icon: "fas fa-file-code" },
             { name: "JSON", icon: "fas fa-file-code" },
-            { name: "YAML", icon: "fas fa-file-code" },
         ],
 
         // Libraries and Frameworks
         libraries: [
             { name: "Django", icon: "fas fa-cubes" },
-            { name: "Django REST", icon: "fas fa-exchange-alt" },
             { name: "FastAPI", icon: "fas fa-bolt" },
             { name: "Flask", icon: "fas fa-flask" },
             { name: "React", icon: "fab fa-react" },
@@ -57,17 +53,11 @@ const Skills = () => {
             { name: "Alembic", icon: "fas fa-code-branch" },
             { name: "Celery", icon: "fas fa-tasks" },
             { name: "WPF", icon: "fas fa-desktop" },
-            { name: "Windows Forms", icon: "fas fa-window-maximize" },
-            { name: "PyVmomi", icon: "fab fa-vmware" },
-            { name: "NumPy", icon: "fas fa-calculator" },
             { name: "Pandas", icon: "fas fa-table" },
             { name: "Kivy", icon: "fas fa-mobile-alt" },
-            { name: "ONNX", icon: "fas fa-brain" },
             { name: "Black", icon: "fas fa-check" },
             { name: "Flake8", icon: "fas fa-ruler" },
             { name: "Mypy", icon: "fas fa-check-circle" },
-            { name: "Nox", icon: "fas fa-tools" },
-            { name: "pre-commit", icon: "fas fa-code-branch" },
         ],
 
         // Technologies and Databases
@@ -84,11 +74,7 @@ const Skills = () => {
             { name: "REST API", icon: "fas fa-exchange-alt" },
             { name: "SOAP API", icon: "fas fa-envelope-open-text" },
             { name: "JWT", icon: "fas fa-key" },
-            { name: "OTP/2FA", icon: "fas fa-shield-alt" },
-            { name: "Windows Services", icon: "fab fa-windows" },
             { name: "VMware", icon: "fab fa-vmware" },
-            { name: "i18n", icon: "fas fa-language" },
-            { name: "PWA", icon: "fas fa-globe" },
             { name: "NFC", icon: "fas fa-wifi" },
         ],
 
@@ -117,13 +103,6 @@ const Skills = () => {
             { name: "MODBUS", icon: "fas fa-plug" },
             { name: "BACnet", icon: "fas fa-building" },
         ],
-
-        // Methodologies
-        methodologies: [
-            { name: "Scrum", icon: "fas fa-users" },
-            { name: "Kanban", icon: "fas fa-columns" },
-            { name: "DevOps", icon: "fas fa-infinity" },
-        ]
     };
 
     // Optimized SkillPill component - simplified with better structure
@@ -243,21 +222,6 @@ const Skills = () => {
                                     key={protocol.name}
                                     name={protocol.name}
                                     icon={protocol.icon}
-                                    index={index}
-                                />
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Methodologies Section */}
-                    <div className="space-y-4 pt-2">
-                        <SectionHeader icon="fas fa-sitemap" title="Methodologies" />
-                        <div className="flex flex-wrap gap-3">
-                            {skillData.methodologies.map((methodology, index) => (
-                                <SkillPill
-                                    key={methodology.name}
-                                    name={methodology.name}
-                                    icon={methodology.icon}
                                     index={index}
                                 />
                             ))}

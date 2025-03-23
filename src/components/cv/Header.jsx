@@ -39,34 +39,40 @@ const Header = () => {
                     <div className="flex flex-wrap gap-4 mt-2">
                         {/* Email */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                <i className="fas fa-envelope"></i>
-                            </div>
-                            <a href="mailto:oriolomb@gmail.com" className="hover:text-brand-red dark:hover:text-brand-red transition-colors">
-                                <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">Email</span>
-                                oriolomb@gmail.com
+                            <a href="mailto:oriolomb@gmail.com" className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors">
+                                <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                    <i className="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">Email</span>
+                                    oriolomb@gmail.com
+                                </div>
                             </a>
                         </div>
 
                         {/* LinkedIn */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                <i className="fab fa-linkedin"></i>
-                            </div>
-                            <a href="https://linkedin.com/in/oriolmaciasbadosa" target="_blank" rel="noopener noreferrer" className="hover:text-brand-red dark:hover:text-brand-red transition-colors">
-                                <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">LinkedIn</span>
-                                oriolmaciasbadosa
+                            <a href="https://linkedin.com/in/oriolmaciasbadosa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors">
+                                <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                    <i className="fab fa-linkedin"></i>
+                                </div>
+                                <div>
+                                    <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">LinkedIn</span>
+                                    oriolmaciasbadosa
+                                </div>
                             </a>
                         </div>
 
                         {/* GitHub */}
                         <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                <i className="fab fa-github"></i>
-                            </div>
-                            <a href="https://github.com/MaciWP" target="_blank" rel="noopener noreferrer" className="hover:text-brand-red dark:hover:text-brand-red transition-colors">
-                                <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">GitHub</span>
-                                oriolmaciasbadosa
+                            <a href="https://github.com/MaciWP" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors">
+                                <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                    <i className="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">GitHub</span>
+                                    MaciWP
+                                </div>
                             </a>
                         </div>
                     </div>

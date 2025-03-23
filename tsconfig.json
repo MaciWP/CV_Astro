@@ -2,24 +2,28 @@
   "extends": "astro/tsconfigs/strict",
   "include": [
     ".astro/types.d.ts",
-    "src/pages/**/*",
-    "src/layouts/**/*",
-    "src/components/**/*",
-    "src/utils/**/*",
-    "src/contexts/**/*",
-    "src/styles/**/*",
-    "src/assets/**/*",
+    "src/pages/**/*.{ts,tsx,js,jsx,astro}",
+    "src/layouts/**/*.{ts,tsx,js,jsx,astro}",
+    "src/components/**/*.{ts,tsx,js,jsx,astro}",
+    "src/utils/**/*.{ts,tsx,js,jsx,astro}",
+    "src/contexts/**/*.{ts,tsx,js,jsx,astro}",
+    "src/styles/**/*.{ts,tsx,js,jsx,astro}",
+    "src/assets/**/*.{ts,tsx,js,jsx,astro}",
     "src/env.d.ts"
   ],
   "exclude": [
     "dist",
     "node_modules",
     "src/components/ContactForm.jsx",
+    "src/components/Icon.jsx",
+    "src/components/Icons.jsx",
     "**/*.spec.ts",
     "**/*.test.ts"
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

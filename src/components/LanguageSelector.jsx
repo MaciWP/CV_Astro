@@ -1,22 +1,37 @@
 import React from 'react';
 import { useLanguage, languages } from '../contexts/LanguageContext';
 
+/**
+ * Language Selector component that allows switching between available languages
+ * Uses the LanguageContext to manage language state
+ */
 const LanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
 
-  // Esta versión solo muestra los idiomas pero no cambia realmente la traducción
+  // Language options with flags and names
   const languageOptions = [
     { code: languages.EN, name: 'English', flag: '🇬🇧' },
     { code: languages.ES, name: 'Español', flag: '🇪🇸' },
     { code: languages.FR, name: 'Français', flag: '🇨🇭' }
   ];
 
+  /**
+   * Handle language change and update the language context
+   * @param {Event} e - The select change event
+   */
+  const handleLanguageChange = (e) => {
+    const newLanguage = e.target.value;
+    setLanguage(newLanguage);
+  };
+
   return (
     <div className="relative">
+      <label htmlFor="language-select" className="sr-only">Select language</label>
       <select
-        className="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        id="language-select"
+        className="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 rounded-none px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
         value={language}
-        onChange={(e) => setLanguage(e.target.value)}
+        onChange={handleLanguageChange}
         aria-label="Select language"
       >
         {languageOptions.map((lang) => (

@@ -1,38 +1,33 @@
-/**
- * Script para optimizar imágenes
- * Versión corregida para ES Modules
- */
-
-// Usar console.log para mostrar información mientras se desarrolla el script
-console.log('Este script optimizaría automáticamente las imágenes para tu sitio web.');
-console.log('Para utilizarlo, es necesario instalar las dependencias:');
-console.log('npm install sharp fs-extra glob');
-
-// Importaciones ES Modules (en lugar de require)
+// This script automatically optimizes images for your website
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// En ES Modules no existe __dirname, así que lo creamos:
+// Use console.log to show information during script development
+console.log('This script would automatically optimize images for your website.');
+console.log('To use it, you need to install the dependencies:');
+console.log('npm install sharp fs-extra glob');
+
+// In ES Modules __dirname doesn't exist, so we create it:
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Crear directorios necesarios para imágenes
+// Create necessary directories for images
 async function createImageDirectories() {
     try {
-        // Definir rutas
+        // Define paths
         const imagesDir = path.join(__dirname, '../public/images');
         const optimizedDir = path.join(imagesDir, 'optimized');
 
-        // Verificar y crear directorios
+        // Check and create directories
         await fs.mkdir(imagesDir, { recursive: true });
         await fs.mkdir(optimizedDir, { recursive: true });
 
-        console.log(`✓ Directorios de imágenes creados:`);
+        console.log(`✓ Image directories created:`);
         console.log(`  - ${imagesDir}`);
         console.log(`  - ${optimizedDir}`);
 
-        // Verificar si hay imágenes en el directorio
+        // Check if there are images in the directory
         try {
             const files = await fs.readdir(imagesDir);
             const imageFiles = files.filter(file =>
@@ -42,25 +37,25 @@ async function createImageDirectories() {
             );
 
             if (imageFiles.length > 0) {
-                console.log(`\n✓ Encontradas ${imageFiles.length} imágenes para optimizar:`);
+                console.log(`\n✓ Found ${imageFiles.length} images to optimize:`);
                 imageFiles.forEach(file => console.log(`  - ${file}`));
             } else {
-                console.log('\n⚠️ No se encontraron imágenes para optimizar.');
-                console.log('  Coloca tus imágenes en /public/images/');
+                console.log('\n⚠️ No images found to optimize.');
+                console.log('  Place your images in /public/images/');
             }
         } catch (error) {
-            console.error('Error al buscar imágenes:', error);
+            console.error('Error looking for images:', error);
         }
 
-        console.log('\n✓ Preparación para optimización de imágenes completada');
-        console.log('\nPara optimizar todas las imágenes, necesitarás:');
-        console.log('1. Instalar sharp: npm install sharp');
-        console.log('2. Colocar tus imágenes en /public/images/');
-        console.log('3. Ejecutar un script más complejo que procese cada imagen');
+        console.log('\n✓ Preparation for image optimization completed');
+        console.log('\nTo optimize all images, you will need:');
+        console.log('1. Install sharp: npm install sharp');
+        console.log('2. Place your images in /public/images/');
+        console.log('3. Run a more complex script that processes each image');
     } catch (error) {
-        console.error('Error al crear directorios de imágenes:', error);
+        console.error('Error creating image directories:', error);
     }
 }
 
-// Ejecutar la función principal
+// Run the main function
 createImageDirectories();

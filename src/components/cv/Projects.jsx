@@ -74,13 +74,13 @@ const Projects = () => {
     // Personal projects
     const personalProjects = [
         {
-            id: "swiss-cv",
+            id: "cv",
             title: "CV Portfolio",
             description: "Professional CV/portfolio website built with a clean, minimalist aesthetic, strong typography and structured layout for optimal presentation of credentials.",
             longDescription: "This project is a responsive web application designed for optimal presentation of professional credentials. It features theme switching between light and dark modes, multilingual support, responsive design for all devices, and the ability to export the CV as PDF with a single click. The design follows international style principles with sharp corners, strong typography, and strategic use of accent colors.",
             technologies: ["Astro", "React", "Tailwind CSS", "i18n", "PWA"],
             icon: "fas fa-id-card",
-            githubUrl: "https://github.com/oriolmaciasbadosa/swiss-cv",
+            githubUrl: "https://github.com/MaciWP/CV_Astro",
             highlight: true,
             keyFeatures: [
                 "Responsive design optimized for all devices",
@@ -92,12 +92,12 @@ const Projects = () => {
         },
         {
             id: "snmp-monitor",
-            title: "SNMP Monitor",
+            title: "SNMP monitor",
             description: "Comprehensive platform for network device monitoring via SNMP protocol, featuring automated discovery, real-time visualization, and MIB management for infrastructure tracking.",
             longDescription: "SNMP Monitor is a specialized web platform for managing and monitoring network devices using the SNMP Protocol. The system automates the discovery, monitoring, and real-time visualization, significantly reducing problem detection time and improving incident response capability. The application is based on Django with asynchronous processing for intensive tasks.",
             technologies: ["Python", "Django", "PostgreSQL", "Celery", "Redis", "SNMP"],
             icon: "fas fa-network-wired",
-            githubUrl: "https://github.com/oriolmaciasbadosa/snmp-monitor",
+            githubUrl: "https://github.com/MaciWP/TrackData",
             highlight: true,
             keyFeatures: [
                 "Automatic network device discovery",
@@ -114,7 +114,7 @@ const Projects = () => {
             longDescription: "This application was developed to automate the calculation and tracking of scores for the card game 'Pelusas'. It provides a versatile tool that allows both manual score entry and automatic card detection using computer vision. The system includes player management, score calculation, image processing, and game history tracking components. The computer vision component uses a trained model to recognize specific numbered cards (values 1-10).",
             technologies: ["Python", "Kivy", "ONNX", "NumPy"],
             icon: "fas fa-calculator",
-            githubUrl: "https://github.com/oriolmaciasbadosa/pelusas-calculator",
+            githubUrl: "https://github.com/MaciWP/SnapScore",
             highlight: true,
             keyFeatures: [
                 "Cross-platform interface built with Kivy",
