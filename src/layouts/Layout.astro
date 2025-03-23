@@ -1,14 +1,12 @@
 ---
 // Import components
 import Navbar from "../components/Navbar";
-import SEO from "../components/SEO";
-import StructuredData from "../components/StructuredData";
 
 // Define props interface
 export interface Props {
-  title: string;
-  description: string;
-  lang: string;
+  title?: string;
+  description?: string;
+  lang?: string;
   ogImage?: string;
   canonicalUrl?: string;
 }
@@ -35,29 +33,33 @@ const fullCanonicalUrl =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO Component for comprehensive meta tags -->
-    <SEO
-      title={title}
-      description={description}
-      canonicalUrl={fullCanonicalUrl}
-      ogImage={ogImage}
-      ogType="website"
-      twitterCard="summary_large_image"
-    />
+    <!-- Basic meta tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Oriol Macias" />
+    <link rel="canonical" href={fullCanonicalUrl} />
 
-    <!-- Structured Data for rich search results -->
-    <StructuredData />
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={fullCanonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon and PWA -->
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#D83333" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/favicon.svg" />
 
-    <!-- Font Awesome Optimization -->
-    <!-- Preload essential font files -->
+    <!-- Preload critical assets -->
     <link
       rel="preload"
       href="/styles/fonts/fa-solid-900.woff2"
@@ -73,7 +75,8 @@ const fullCanonicalUrl =
       crossorigin="anonymous"
     />
 
-    <!-- Single Font Awesome CSS loading strategy -->
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
     <link rel="stylesheet" href="/styles/font-awesome.min.css" />
 
     <!-- Critical Font Awesome styles inlined for faster rendering -->
@@ -122,9 +125,15 @@ const fullCanonicalUrl =
       }
     </style>
 
-    <!-- Simple theme initialization - always use dark mode for consistency -->
+    <!-- Theme initialization script -->
     <script is:inline>
-      document.documentElement.classList.add("dark");
+      (function () {
+        // Get stored theme or default to dark
+        const storedTheme = localStorage.getItem("theme") || "dark";
+
+        // Apply theme class
+        document.documentElement.classList.add(storedTheme);
+      })();
     </script>
 
     <!-- Print styles for PDF download capability -->
@@ -132,7 +141,7 @@ const fullCanonicalUrl =
       @media print {
         nav,
         footer,
-        button,
+        button:not(#cv-download-button),
         .no-print {
           display: none !important;
         }
@@ -142,7 +151,6 @@ const fullCanonicalUrl =
           color: black !important;
         }
 
-        /* Ensure content fits for printing */
         @page {
           size: A4 portrait;
           margin: 1.5cm;
@@ -178,9 +186,19 @@ const fullCanonicalUrl =
           opacity: 1 !important;
         }
 
-        /* Maintain the red border characteristic for visual identity */
+        /* Maintain the red accent for visual identity */
         .border-brand-red {
           border-color: #d83333 !important;
+        }
+
+        /* Ensure all text is visible */
+        .text-brand-red {
+          color: #d83333 !important;
+        }
+
+        /* Ensure backgrounds print correctly */
+        .bg-brand-red {
+          background-color: #d83333 !important;
         }
       }
     </style>
@@ -196,7 +214,7 @@ const fullCanonicalUrl =
         <slot />
       </main>
 
-      <!-- Footer component embedded for reliability -->
+      <!-- Simple Footer -->
       <footer
         class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
       >
@@ -251,8 +269,14 @@ const fullCanonicalUrl =
 
             if (targetElement) {
               e.preventDefault();
+              const navbarHeight = 80; // Estimated navbar height
+              const position =
+                targetElement.getBoundingClientRect().top +
+                window.pageYOffset -
+                navbarHeight;
+
               window.scrollTo({
-                top: targetElement.offsetTop - 80, // Offset for navbar
+                top: position,
                 behavior: "smooth",
               });
             }
@@ -270,7 +294,6 @@ const fullCanonicalUrl =
         "serviceWorker" in navigator
       ) {
         window.addEventListener("load", () => {
-          // Add cache busting parameter to avoid caching issues
           navigator.serviceWorker
             .register("/sw.js?v=" + new Date().getTime())
             .then((registration) => {

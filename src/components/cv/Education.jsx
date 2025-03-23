@@ -1,3 +1,7 @@
+/**
+ * Education component with fixed calendar icon
+ * File: src/components/cv/Education.jsx
+ */
 import React, { useEffect, useState } from 'react';
 
 const Education = () => {
@@ -91,7 +95,8 @@ const Education = () => {
                                 <p className="text-light-text-secondary dark:text-dark-text-secondary italic mb-2">{item.institution}</p>
                             </div>
                             <div className="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white transition-colors duration-300">
-                                <i className="far fa-calendar-alt mr-2"></i>
+                                {/* Corregido: Icono de calendario explícito con prefijo fas */}
+                                <i className="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
                                 {item.period}
                             </div>
                         </div>
