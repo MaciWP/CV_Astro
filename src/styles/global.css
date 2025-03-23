@@ -1,16 +1,24 @@
+/**
+ * Global CSS Styles - Corrected Version
+ * File: src/styles/global.css
+ */
+
 /* Base Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===== BASE STYLES ===== */
 @layer base {
     body {
-        @apply antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+        @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: "kern";
+        text-rendering: optimizeLegibility;
     }
 
-    /* Better typography */
+    /* Typography enhancements */
     h1,
     h2,
     h3,
@@ -18,6 +26,7 @@
     h5,
     h6 {
         letter-spacing: -0.02em;
+        @apply font-bold;
     }
 
     /* Better scroll section spacing */
@@ -46,39 +55,27 @@
     }
 }
 
-/* ===== OPTIMIZED ANIMATION AND TRANSITION ENHANCEMENTS ===== */
-/* Standardized animation settings - FASTER */
-:root {
-    --animation-duration-fast: 75ms;
-    --animation-duration-normal: 150ms;
-    --animation-duration-slow: 300ms;
-    --animation-easing: cubic-bezier(0.16, 1, 0.3, 1);
-    --animation-delay-step: 30ms;
-}
-
+/* ===== COMPONENT STYLES ===== */
 @layer components {
 
-    /* Theme transition classes for better control - MUCH FASTER */
+    /* Theme transition classes for better control */
     .theme-transition {
         @apply transition-all duration-75;
     }
 
-    /* Ultra-fast text color transitions */
     .theme-transition-text {
         @apply transition-colors duration-75;
     }
 
-    /* Fast background transitions */
     .theme-transition-bg {
         @apply transition-colors duration-75;
     }
 
-    /* Apply these classes to the HTML element when the theme changes - ULTRA FAST */
+    /* Only transition necessary properties */
     html.theme-transitioning * {
         transition-duration: 75ms !important;
     }
 
-    /* Only transition necessary properties */
     html.theme-transitioning .text-light-text,
     html.theme-transitioning .text-dark-text,
     html.theme-transitioning .text-light-text-secondary,
@@ -96,138 +93,31 @@
         transition-timing-function: ease-out;
     }
 
-    /* Project card link styles */
-    .project-card {
-        @apply relative cursor-pointer;
+    /* Button styles */
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
     }
 
-    .project-card-link {
-        @apply absolute inset-0 z-10;
+    .btn-primary {
+        @apply bg-brand-red text-white hover:bg-red-700;
     }
 
-    .project-card-link~* {
-        @apply relative z-20;
+    .btn-secondary {
+        @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
     }
 
-    /* Skill bar with year tag */
-    .skill-bar-with-years {
-        @apply relative;
+    /* Card styles */
+    .card {
+        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
     }
 
-    .skill-year-tag {
-        @apply absolute right-0 top-0 px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-sm;
+    /* Section header with icon */
+    .section-header {
+        @apply flex items-center gap-3 mb-6;
     }
 
-    /* Percentage bubble for skills */
-    .percent-bubble {
-        @apply absolute right-1 -mt-2 h-5 w-10 flex items-center justify-center text-xs text-white bg-brand-red rounded-sm font-semibold z-10;
-    }
-
-    .percent-bubble:after {
-        content: '';
-        @apply absolute -bottom-1 right-1 w-0 h-0 border-t-4 border-r-4 border-l-4 border-t-brand-red border-r-transparent border-l-transparent;
-    }
-}
-
-/* Enhanced appear animation with standardized timing */
-@keyframes enhanced-appear {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Define section-specific animation behavior */
-.section-animate {
-    animation: enhanced-appear var(--animation-duration-normal) var(--animation-easing) forwards;
-    opacity: 0;
-}
-
-.section-animate-header {
-    animation-delay: calc(var(--animation-delay-step) * 1);
-}
-
-.section-animate-content {
-    animation-delay: calc(var(--animation-delay-step) * 3);
-}
-
-.section-animate-items>*:nth-child(1) {
-    animation-delay: calc(var(--animation-delay-step) * 4);
-}
-
-.section-animate-items>*:nth-child(2) {
-    animation-delay: calc(var(--animation-delay-step) * 5);
-}
-
-.section-animate-items>*:nth-child(3) {
-    animation-delay: calc(var(--animation-delay-step) * 6);
-}
-
-.section-animate-items>*:nth-child(4) {
-    animation-delay: calc(var(--animation-delay-step) * 7);
-}
-
-.section-animate-items>*:nth-child(5) {
-    animation-delay: calc(var(--animation-delay-step) * 8);
-}
-
-/* Bar filling animation for skills */
-@keyframes fill-bar {
-    0% {
-        width: 0;
-    }
-
-    100% {
-        width: 100%;
-    }
-}
-
-.animate-fill-bar {
-    animation: fill-bar 1s var(--animation-easing) forwards;
-}
-
-@layer components {
-
-    /* Print mode styles */
-    .print-mode {
-        font-size: 10pt !important;
-    }
-
-    .print-mode h1 {
-        font-size: 18pt !important;
-    }
-
-    .print-mode h2 {
-        font-size: 14pt !important;
-    }
-
-    .print-mode h3 {
-        font-size: 12pt !important;
-    }
-
-    .print-mode .container {
-        max-width: none !important;
-        padding: 0 !important;
-    }
-
-    .print-mode section {
-        margin-bottom: 15mm !important;
-    }
-
-    /* Smooth transitions */
-    .transition-all {
-        transition-property: all;
-    }
-
-    /* Smooth scroll */
-    html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 70px;
+    .section-icon {
+        @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
     }
 
     /* Custom scrollbar */
@@ -249,125 +139,91 @@
     }
 }
 
-/* Print-specific styles */
+/* ===== ANIMATIONS ===== */
+/* Enhanced appear animation */
+@keyframes enhanced-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-animate {
+    animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+}
+
+/* ===== PRINT STYLES ===== */
 @media print {
-    .printing {
-        /* Remove scrollbars in print */
-        overflow: visible !important;
-    }
-
-    /* Hide what's not needed */
-    .printing nav,
-    .printing footer,
-    .printing .no-print {
-        display: none !important;
-    }
-
-    /* Ensure all content is visible */
-    .printing .opacity-0 {
-        opacity: 1 !important;
-    }
-
-    /* Remove animations in print */
-    .printing * {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-    }
-
-    /* Force black text on white background */
-    .printing body {
-        background-color: white !important;
-        color: black !important;
-    }
-
-    /* Remove shadows and complex backgrounds */
-    .printing * {
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
-
-    /* Ensure no page breaks within sections */
-    .printing section {
-        page-break-inside: avoid;
-        break-inside: avoid;
-    }
-
-    /* Make sure all section content is visible regardless of viewport */
-    .printing .section-animate,
-    .printing .section-animate-header,
-    .printing .section-animate-content,
-    .printing .section-animate-items>* {
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-
-    /* Force section margins to be consistent */
-    .printing section {
-        margin-bottom: 1.5cm !important;
-    }
-
-    /* Ensure important brand colors still show */
-    .printing .text-brand-red {
-        color: #D83333 !important;
-    }
-
-    .printing .bg-brand-red {
-        background-color: #D83333 !important;
-    }
-
-    .no-print {
-        display: none !important;
-    }
-
-    nav,
-    footer {
-        display: none !important;
-    }
-
     body {
         background-color: white !important;
         color: black !important;
     }
 
-    main {
-        padding: 0 !important;
-    }
-
-    /* Remove shadows when printing */
-    * {
-        box-shadow: none !important;
-    }
-
-    /* Page breaks */
-    section {
-        page-break-inside: avoid;
-    }
-
-    /* Hide interactive elements */
+    /* Hide elements not needed for print */
+    nav,
+    footer,
     button:not(#cv-download-button),
     .no-print {
         display: none !important;
     }
+
+    /* Ensure all content is visible */
+    .opacity-0,
+    .translate-y-10 {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Remove visual effects */
+    * {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Ensure brand colors print correctly */
+    .text-brand-red {
+        color: #D83333 !important;
+    }
+
+    .bg-brand-red {
+        background-color: #D83333 !important;
+    }
 }
 
-/* Responsive Enhancements for Swiss CV */
-
-/* Base responsive improvements */
+/* ===== RESPONSIVE STYLES ===== */
 @media (max-width: 768px) {
-
-    /* Improved spacing on mobile */
     section {
         margin-bottom: 3rem !important;
     }
 
-    /* Adjust header spacing */
     #about {
         padding-top: 1rem;
         padding-bottom: 2rem;
     }
 
-    /* Make sure headlines are readable on small screens */
     h1 {
         font-size: 2.25rem !important;
         line-height: 2.5rem !important;
@@ -377,91 +233,9 @@
         font-size: 1.5rem !important;
         line-height: 2rem !important;
     }
-
-    /* Improve readability for skill bars */
-    .skill-bar {
-        margin-bottom: 1rem;
-    }
-
-    /* Better card spacing */
-    .experience-card,
-    .project-card,
-    .education-card {
-        padding: 1rem !important;
-    }
-
-    /* Ensure photo has correct proportions */
-    .profile-photo {
-        width: 160px !important;
-        height: 160px !important;
-        margin: 0 auto 1.5rem auto;
-    }
-
-    /* Adjust the skill bar layout for better visibility */
-    .skill-year-tag {
-        position: static;
-        display: inline-flex;
-        margin-left: 0.5rem;
-    }
-
-    /* Make percent bubbles more visible */
-    .percent-bubble {
-        height: 1.25rem;
-        line-height: 1.25rem;
-        margin-top: -0.5rem;
-    }
 }
 
-/* Specific adjustments for very small screens */
-@media (max-width: 480px) {
-
-    /* Further spacing adjustments */
-    .container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-
-    /* Stack contact info */
-    .contact-item {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-
-    /* Make icons visible and clickable */
-    .skill-icon,
-    .social-icon {
-        font-size: 1.25rem !important;
-        padding: 0.5rem !important;
-    }
-
-    /* Ensure buttons are large enough to tap */
-    button,
-    .button,
-    a.button {
-        min-height: 44px;
-        min-width: 44px;
-        padding: 0.5rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* Make project cards easier to interact with on mobile */
-    .project-card {
-        margin-bottom: 1.5rem;
-    }
-
-    /* Improve spacing in experience cards */
-    .timeline-item {
-        padding-left: 0;
-    }
-
-    .timeline-line {
-        display: none;
-    }
-}
-
-/* Accessibility improvements */
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -471,18 +245,7 @@
     }
 }
 
-/* Extra classes to help with spacing */
-.py-safe {
-    padding-top: max(1.5rem, env(safe-area-inset-top));
-    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
-}
-
-.px-safe {
-    padding-left: max(1.5rem, env(safe-area-inset-left));
-    padding-right: max(1.5rem, env(safe-area-inset-right));
-}
-
-/* Classes for consistent touch targets */
+/* Proper touch targets for accessibility */
 .touch-target {
     min-height: 44px;
     min-width: 44px;

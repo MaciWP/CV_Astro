@@ -82,6 +82,7 @@ npm run preview
 │   ├── components/      # React components
 │   │   └── cv/          # CV section components
 │   ├── contexts/        # React contexts
+│   ├── data/            # Data files for CV sections
 │   ├── layouts/         # Astro layouts
 │   ├── pages/           # Astro pages
 │   ├── styles/          # Global styles
@@ -90,6 +91,41 @@ npm run preview
 ├── astro.config.mjs     # Astro configuration
 └── tailwind.config.js   # Tailwind CSS configuration
 ```
+
+## 📚 Key Components
+
+- **Responsive Design**: Adapts to all device sizes
+- **Theme Switching**: Smooth transition between light and dark modes
+- **CV Sections**:
+  - Summary
+  - Experience
+  - Skills
+  - Education
+  - Languages
+  - Projects
+- **SEO Optimization**: Rich metadata and structured data
+- **Performance**: Optimized asset loading strategies
+
+## 🔍 SEO Features
+
+- Complete meta tags
+- Structured data (JSON-LD)
+- Sitemap generation
+- Optimized for keywords such as:
+  - oriol
+  - oriol macias
+  - oriol dev
+  - macias dev
+  - oriol macias dev
+  - developer
+  - software developer
+
+## 📋 Future Improvements
+
+- Add blog section
+- Enhance multilingual support
+- Add more interactive elements
+- Improve accessibility features
 
 ## 📄 License
 
@@ -102,6 +138,8 @@ Oriol Macias - [oriolomb@gmail.com](mailto:oriolomb@gmail.com)
 Portfolio: [oriolmacias.dev](https://oriolmacias.dev)
 
 LinkedIn: [linkedin.com/in/oriolmaciasbadosa](https://linkedin.com/in/oriolmaciasbadosa)
+
+GitHub: [github.com/MaciWP](https://github.com/MaciWP)
 
 ---
 

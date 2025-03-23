@@ -122,7 +122,7 @@ export const professionalProjects = [
         description: "Backend service for collecting, storing and exposing VMware infrastructure data, including hypervisors and virtual machines, through RESTful APIs.",
         longDescription: "This project provides an abstraction layer for monitoring virtualized resources and facilitating integration with other enterprise systems. The service implements asynchronous ETL processes to extract data from VMware, transform it according to the domain model, and load it into the database. It includes a synchronization service with external systems and features robust error handling and logging.",
         technologies: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
-        icon: "fab fa-vmware",
+        icon: "fab fa-vmware",  // Fixed VMware icon
         highlight: true,
         keyFeatures: [
             "Asynchronous ETL for VMware infrastructure data",

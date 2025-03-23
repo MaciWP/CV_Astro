@@ -1,56 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
+/**
+ * ThemeToggle con transiciones naturales y fluidas entre temas
+ */
 const ThemeToggle = () => {
     const [theme, setTheme] = useState('light');
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const buttonRef = useRef(null);
+    const iconRef = useRef(null);
 
-    // Initialize theme from localStorage on mount
     useEffect(() => {
+        // Inicializar tema desde localStorage
         const savedTheme = localStorage.getItem('theme') || 'light';
         setTheme(savedTheme);
         document.documentElement.classList.add(savedTheme);
+
+        // Preparar elementos para efectos de transición
+        if (!document.querySelector('.theme-wave')) {
+            const waveElement = document.createElement('div');
+            waveElement.className = 'theme-wave';
+            document.body.appendChild(waveElement);
+        }
+
+        return () => {
+            const waveElement = document.querySelector('.theme-wave');
+            if (waveElement) document.body.removeChild(waveElement);
+        };
     }, []);
 
+    // Función mejorada para toggle de tema con animaciones naturales
     const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
+        if (isTransitioning) return;
 
-        // Add transitioning class for smoother transitions
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setIsTransitioning(true);
+
+        // Animar el icono del botón
+        if (iconRef.current) {
+            iconRef.current.classList.add('animate-spin-once');
+            setTimeout(() => {
+                iconRef.current?.classList.remove('animate-spin-once');
+            }, 300);
+        }
+
+        // Crear blocker de eventos temporalmente
+        const blocker = document.createElement('div');
+        blocker.className = 'theme-transition-blocker';
+        document.body.appendChild(blocker);
+
+        // Aplicar clase para transición
         document.documentElement.classList.add('theme-transitioning');
 
-        // Update state
-        setTheme(newTheme);
+        // Iniciar secuencia de cambio con microtareas para suavidad
+        requestAnimationFrame(() => {
+            // Actualizar estado
+            setTheme(newTheme);
 
-        // Update DOM
-        document.documentElement.classList.remove('light', 'dark');
-        document.documentElement.classList.add(newTheme);
+            // Pequeño retraso para sincronizar con efectos visuales
+            setTimeout(() => {
+                // Actualizar DOM
+                document.documentElement.classList.remove('light', 'dark');
+                document.documentElement.classList.add(newTheme);
 
-        // Save to localStorage
-        localStorage.setItem('theme', newTheme);
+                // Guardar en localStorage
+                localStorage.setItem('theme', newTheme);
 
-        // Remove transitioning class after animation completes
-        setTimeout(() => {
-            document.documentElement.classList.remove('theme-transitioning');
-        }, 300);
+                // Eliminar clase de transición después de completar
+                setTimeout(() => {
+                    document.documentElement.classList.remove('theme-transitioning');
 
-        console.log('Theme toggled to:', newTheme);
+                    // Limpiar blocker
+                    document.body.removeChild(blocker);
+
+                    // Completar transición
+                    setIsTransitioning(false);
+                }, 220); // Ligeramente más que la duración base para asegurar que termine
+            }, 10);
+        });
     };
 
     return (
         <button
+            ref={buttonRef}
             onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="p-2 rounded-none hover:bg-light-secondary dark:hover:bg-dark-secondary focus:outline-none transition-all duration-300 ease-in-out transform hover:scale-110 focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            aria-label={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
+            disabled={isTransitioning}
+            className={`group p-2 rounded-none hover:bg-light-secondary dark:hover:bg-dark-secondary 
+                      focus:outline-none transition-all duration-300 ease-out transform 
+                      ${isTransitioning ? 'cursor-wait' : 'hover:scale-110'} 
+                      focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900`}
         >
-            {theme === 'dark' ? (
-                <span className="text-xl dark:text-dark-text theme-transition-text" aria-hidden="true">
-                    <i className="fas fa-sun"></i>
-                </span>
-            ) : (
-                <span className="text-xl text-light-text theme-transition-text" aria-hidden="true">
-                    <i className="fas fa-moon"></i>
-                </span>
-            )}
+            <span
+                ref={iconRef}
+                className={`text-xl theme-transition-text relative overflow-hidden
+                           ${theme === 'dark' ? 'dark:text-dark-text' : 'text-light-text'}`}
+                aria-hidden="true"
+            >
+                {theme === 'dark' ? (
+                    <i className="fas fa-sun transform transition-transform duration-300 group-hover:scale-110"></i>
+                ) : (
+                    <i className="fas fa-moon transform transition-transform duration-300 group-hover:scale-110"></i>
+                )}
+            </span>
             <span className="sr-only">
-                Switch to {theme === 'light' ? 'dark' : 'light'} mode
+                Cambiar a modo {theme === 'light' ? 'oscuro' : 'claro'}
             </span>
         </button>
     );

@@ -48,8 +48,15 @@ const StructuredData = () => {
             "SNMP",
             "MODBUS",
             "BACnet",
-            "Data Center Infrastructure"
+            "Data Center Infrastructure",
+            "Software Development",
+            "Backend Development",
+            "Web Development"
         ],
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://oriolmacias.dev/"
+        },
         "alumniOf": [
             {
                 "@type": "EducationalOrganization",
@@ -61,6 +68,20 @@ const StructuredData = () => {
                 "name": "IES Montilivi",
                 "sameAs": "https://institutmontilivi.cat/"
             }
+        ],
+        "keywords": [
+            "Oriol",
+            "Macias",
+            "Oriol Macias",
+            "Developer",
+            "Software Developer",
+            "Backend Developer",
+            "oriol dev",
+            "macias dev",
+            "oriol macias dev",
+            "desarrollador",
+            "programador",
+            "desarrollo"
         ]
     };
 

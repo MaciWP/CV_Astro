@@ -1,0 +1,149 @@
+/* Optimized Theme Transitions
+ * Archivo dedicado para mejorar las transiciones entre temas
+ * src/styles/theme-transitions.css
+ */
+
+/* Variables globales para transiciones */
+:root {
+    --theme-transition-duration: 300ms;
+    --theme-transition-timing: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Alta calidad para color y opacidad, menos prioridad para transformaciones */
+    --theme-transition-props-high: color, background-color, border-color, opacity, fill, stroke;
+    --theme-transition-props-medium: box-shadow, text-shadow;
+    --theme-transition-props-low: transform;
+}
+
+/* Base de transiciones para elementos DOM */
+html.theme-transitioning * {
+    /* Transición base más suave */
+    transition-property: var(--theme-transition-props-high);
+    transition-duration: var(--theme-transition-duration) !important;
+    transition-timing-function: var(--theme-transition-timing) !important;
+    /* Evitar saltos durante la transición */
+    backface-visibility: hidden;
+    will-change: color, background-color, border-color, opacity;
+}
+
+/* Transiciones específicas para propiedades de alto impacto visual */
+html.theme-transitioning .text-light-text,
+html.theme-transitioning .text-dark-text,
+html.theme-transitioning .text-light-text-secondary,
+html.theme-transitioning .text-dark-text-secondary,
+html.theme-transitioning .text-brand-red {
+    transition-property: color;
+    transition-duration: calc(var(--theme-transition-duration) * 0.8);
+    transition-timing-function: var(--theme-transition-timing);
+    will-change: color;
+}
+
+/* Transiciones para fondos */
+html.theme-transitioning .bg-light-primary,
+html.theme-transitioning .bg-dark-primary,
+html.theme-transitioning .bg-light-secondary,
+html.theme-transitioning .bg-dark-secondary,
+html.theme-transitioning .bg-light-surface,
+html.theme-transitioning .bg-dark-surface,
+html.theme-transitioning .bg-brand-red {
+    transition-property: background-color;
+    transition-duration: calc(var(--theme-transition-duration) * 0.9);
+    transition-timing-function: var(--theme-transition-timing);
+    will-change: background-color;
+}
+
+/* Transiciones para bordes */
+html.theme-transitioning .border-light-border,
+html.theme-transitioning .border-dark-border,
+html.theme-transitioning .border-brand-red {
+    transition-property: border-color;
+    transition-duration: calc(var(--theme-transition-duration) * 0.75);
+    transition-timing-function: var(--theme-transition-timing);
+    will-change: border-color;
+}
+
+/* Transiciones para sombras */
+html.theme-transitioning .shadow-sm,
+html.theme-transitioning .shadow-md,
+html.theme-transitioning .shadow-lg,
+html.theme-transitioning .shadow-xl {
+    transition-property: box-shadow;
+    transition-duration: calc(var(--theme-transition-duration) * 1.2);
+    transition-timing-function: var(--theme-transition-timing);
+    will-change: box-shadow;
+}
+
+/* Elemento para bloquear interacciones durante la transición */
+.theme-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    pointer-events: all;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-transition-overlay.active {
+    opacity: 0.01;
+    /* Apenas visible pero presente */
+}
+
+/* Utility classes for components */
+.theme-transition-all {
+    transition-property: all;
+    transition-duration: var(--theme-transition-duration);
+    transition-timing-function: var(--theme-transition-timing);
+}
+
+.theme-transition-text {
+    transition-property: color;
+    transition-duration: calc(var(--theme-transition-duration) * 0.7);
+    transition-timing-function: var(--theme-transition-timing);
+}
+
+.theme-transition-bg {
+    transition-property: background-color;
+    transition-duration: calc(var(--theme-transition-duration) * 0.8);
+    transition-timing-function: var(--theme-transition-timing);
+}
+
+.theme-transition-border {
+    transition-property: border-color;
+    transition-duration: calc(var(--theme-transition-duration) * 0.65);
+    transition-timing-function: var(--theme-transition-timing);
+}
+
+/* Pseudo-elemento para añadir una transición de flash para cambio de temas */
+#theme-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: opacity 150ms ease-in-out;
+}
+
+#theme-flash.flash {
+    opacity: 0.15;
+    animation: theme-flash 300ms ease-out forwards;
+}
+
+@keyframes theme-flash {
+    0% {
+        opacity: 0.15;
+    }
+
+    60% {
+        opacity: 0.05;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

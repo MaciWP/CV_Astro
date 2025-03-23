@@ -53,7 +53,7 @@ const SEO = ({
 
             {/* Enhanced SEO meta tags */}
             <meta name="author" content="Oriol Macias" />
-            <meta name="keywords" content="Oriol Macias, Oriol, Macias, Software Developer, Backend Developer, CV, Portfolio, Python, Django, C#, .NET, SNMP, MODBUS, BACnet, Data Center Infrastructure, Web Developer, Developer, Software Engineer, Programming, Coding, oriol dev, macias dev, oriol macias dev" />
+            <meta name="keywords" content="Oriol Macias, Oriol, Macias, Software Developer, Backend Developer, CV, Portfolio, Python, Django, C#, .NET, SNMP, MODBUS, BACnet, Data Center Infrastructure, Web Developer, Developer, Software Engineer, Programming, Coding, oriol dev, macias dev, oriol macias dev, desarrollo, desarrollador, programador" />
 
             {/* Geo tags for local SEO */}
             <meta name="geo.region" content="ES" />

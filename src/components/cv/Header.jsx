@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ResponsiveImage from '../ResponsiveImage';
+import headerData from '../../data/header';
 
 /**
- * Enhanced Header component with better photo sizing and improved contact section
+ * Enhanced Header component with extracted data and better animation
  */
 const Header = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -23,58 +24,35 @@ const Header = () => {
                 {/* Personal information - takes more space on medium screens */}
                 <div className="md:col-span-8 space-y-6">
                     <div>
-                        <h1 className="text-4xl md:text-5xl font-bold mb-2">Oriol Macias</h1>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-2">{headerData.fullName}</h1>
                         <h2 className="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium">
-                            Software Developer
+                            {headerData.jobTitle}
                         </h2>
                     </div>
 
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-2xl">
-                        Solutions-driven Backend Developer specializing in industrial protocol integration (SNMP, MODBUS, BACKnet)
-                        with 8+ years of delivering high-performance applications. Known for transforming complex requirements
-                        into elegant code architecture and reducing system response times by up to 45%. Currently expanding expertise
-                        in AI and machine learning to drive next-generation automation solutions.
+                        {headerData.summary}
                     </p>
 
                     <div className="flex flex-wrap gap-4 mt-2">
-                        {/* Email */}
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <a href="mailto:oriolomb@gmail.com" className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors">
-                                <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                    <i className="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">Email</span>
-                                    oriolomb@gmail.com
-                                </div>
-                            </a>
-                        </div>
-
-                        {/* LinkedIn */}
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <a href="https://linkedin.com/in/oriolmaciasbadosa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors">
-                                <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                    <i className="fab fa-linkedin"></i>
-                                </div>
-                                <div>
-                                    <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">LinkedIn</span>
-                                    oriolmaciasbadosa
-                                </div>
-                            </a>
-                        </div>
-
-                        {/* GitHub */}
-                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                            <a href="https://github.com/MaciWP" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors">
-                                <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                    <i className="fab fa-github"></i>
-                                </div>
-                                <div>
-                                    <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">GitHub</span>
-                                    MaciWP
-                                </div>
-                            </a>
-                        </div>
+                        {headerData.contactInfo.map((contact, index) => (
+                            <div key={index} className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
+                                <a
+                                    href={contact.type === 'email' ? `mailto:${contact.value}` : contact.url}
+                                    target={contact.type !== 'email' ? "_blank" : undefined}
+                                    rel={contact.type !== 'email' ? "noopener noreferrer" : undefined}
+                                    className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                                >
+                                    <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                        <i className={contact.icon}></i>
+                                    </div>
+                                    <div>
+                                        <span className="text-xs block text-light-text-secondary dark:text-dark-text-secondary">{contact.label}</span>
+                                        {contact.value}
+                                    </div>
+                                </a>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -87,8 +65,8 @@ const Header = () => {
                         {/* Professional photo with proper sizing to fill container */}
                         <div className="w-full h-full bg-white dark:bg-gray-800">
                             <ResponsiveImage
-                                src="/images/oriol_macias.jpg"
-                                alt="Oriol Macias - Software Developer"
+                                src={headerData.photoUrl}
+                                alt={headerData.photoAlt}
                                 className="w-full h-full object-cover"
                                 width={400}
                                 height={400}

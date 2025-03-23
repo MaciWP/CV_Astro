@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import summaryData from '../../data/summary';
 
 const Summary = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -38,38 +39,20 @@ const Summary = () => {
                 style={{ transitionDelay: '200ms' }}
             >
                 <p className="text-base leading-relaxed">
-                    Experienced web developer with over 8 years of expertise in front-end and back-end development.
-                    Specialized in creating responsive and performant web applications using React, Node.js, and modern JavaScript.
-                    Successfully delivered projects for financial and healthcare sectors with a focus on accessibility and security.
+                    {summaryData.text}
                 </p>
 
                 <div className="flex flex-wrap gap-4 mt-5">
-                    <div className="flex items-center group">
-                        <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                            <i className="fas fa-graduation-cap"></i>
+                    {summaryData.highlights.map((highlight, index) => (
+                        <div key={index} className="flex items-center group">
+                            <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                <i className={highlight.icon}></i>
+                            </div>
+                            <span className="text-light-text-secondary dark:text-dark-text-secondary">
+                                {highlight.text}
+                            </span>
                         </div>
-                        <span className="text-light-text-secondary dark:text-dark-text-secondary">
-                            Technical Degree in Software Development
-                        </span>
-                    </div>
-
-                    <div className="flex items-center group">
-                        <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                            <i className="fas fa-award"></i>
-                        </div>
-                        <span className="text-light-text-secondary dark:text-dark-text-secondary">
-                            8+ Years Professional Experience
-                        </span>
-                    </div>
-
-                    <div className="flex items-center group">
-                        <div className="w-9 h-9 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                            <i className="fas fa-map-marker-alt"></i>
-                        </div>
-                        <span className="text-light-text-secondary dark:text-dark-text-secondary">
-                            Available for remote work
-                        </span>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>
