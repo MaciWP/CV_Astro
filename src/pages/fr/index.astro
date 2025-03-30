@@ -1,0 +1,73 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// Import CV components
+import ProfileHeader from "../../components/cv/ProfileHeader";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills";
+import Languages from "../../components/cv/Languages";
+import Education from "../../components/cv/Education";
+import Projects from "../../components/cv/Projects";
+
+// Enhanced metadata for SEO (French version)
+const pageTitle = "Oriol Macias - Portfolio de Développeur Logiciel";
+const pageDescription =
+    "CV et portfolio professionnel d'Oriol Macias, Développeur Backend avec plus de 8 ans d'expérience en intégration de protocoles industriels (SNMP, MODBUS, BACnet) et infrastructure de centres de données.";
+const ogImage = "/images/oriol_macias.jpg";
+const canonicalUrl = "https://oriolmacias.dev/fr/";
+
+// Enlaces a versiones en otros idiomas
+const enUrl = getRelativeLocaleUrl("en", "");
+const esUrl = getRelativeLocaleUrl("es", "");
+---
+
+<Layout
+    title={pageTitle}
+    description={pageDescription}
+    lang="fr"
+    ogImage={ogImage}
+    canonicalUrl={canonicalUrl}
+    alternateUrls={{
+        en: enUrl,
+        es: esUrl,
+    }}
+>
+    <div
+        id="cv-content"
+        class="space-y-16"
+        itemscope
+        itemtype="https://schema.org/Person"
+    >
+        <!-- ProfileHeader with immediate hydration -->
+        <ProfileHeader client:load />
+
+        <!-- Sections with lazy hydration for better performance -->
+        <Experience client:visible />
+        <Skills client:visible />
+        <Education client:visible />
+        <Languages client:visible />
+        <Projects client:visible />
+
+        <!-- Hidden metadata to improve SEO -->
+        <div class="sr-only">
+            <div itemprop="name">Oriol Macias</div>
+            <div itemprop="jobTitle">Développeur Logiciel</div>
+            <div itemprop="description">
+                Développeur Backend axé sur les solutions, spécialisé dans
+                l'intégration de protocoles industriels (SNMP, MODBUS, BACKnet)
+                avec plus de 8 ans d'expérience dans les applications à haute
+                performance.
+            </div>
+            <div itemprop="email">oriolomb@gmail.com</div>
+            <a itemprop="url" href="https://oriolmacias.dev"
+                >https://oriolmacias.dev</a
+            >
+            <a itemprop="sameAs" href="https://github.com/MaciWP">GitHub</a>
+            <a
+                itemprop="sameAs"
+                href="https://linkedin.com/in/oriolmaciasbadosa">LinkedIn</a
+            >
+        </div>
+    </div>
+</Layout>
