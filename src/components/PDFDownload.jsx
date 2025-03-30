@@ -1,10 +1,11 @@
-import React from 'react';
-
 /**
  * PDFDownload component - Downloads a pre-created PDF file
  * Swiss CV standards emphasize downloadable PDF versions
+ * File: src/components/PDFDownload.jsx
  */
-const PDFDownload = () => {
+import React from 'react';
+
+const PDFDownload = ({ label = 'Download CV', className = '' }) => {
     // Function to handle PDF download
     const handleDownload = () => {
         // URL to the pre-created PDF file in the public folder
@@ -26,11 +27,11 @@ const PDFDownload = () => {
         <button
             id="cv-download-button"
             onClick={handleDownload}
-            className="hidden md:inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label="Download CV as PDF"
+            className={`inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${className}`}
+            aria-label={label}
         >
             <i className="fas fa-download mr-1.5"></i>
-            <span>Download CV</span>
+            <span>{label}</span>
         </button>
     );
 };

@@ -1,14 +1,50 @@
+/**
+ * Projects component with simplified animations and multilingual support
+ * File: src/components/cv/Projects.jsx
+ */
 import React, { useEffect, useState } from 'react';
-import { personalProjects, professionalProjects } from '../../data/projects';
+import {
+    getCurrentLanguagePersonalProjects,
+    getCurrentLanguageProfessionalProjects
+} from '../../data/projects';
 import { getTechIcon } from '../../data/techIcons';
 
-/**
- * Projects component with simplified animations for reliability
- */
 const Projects = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [showAllDetails, setShowAllDetails] = useState(false);
     const [activeTab, setActiveTab] = useState('personal'); // 'personal' or 'professional'
+    const [personalProjects, setPersonalProjects] = useState([]);
+    const [professionalProjects, setProfessionalProjects] = useState([]);
+    const [translations, setTranslations] = useState({
+        title: 'Key Projects',
+        technologies: 'Technologies',
+        keyFeatures: 'Key Features',
+        viewOnGithub: 'View on GitHub',
+        showAllDetails: 'Show all details',
+        showLessDetails: 'Show less details',
+        personalProjects: 'Personal Projects',
+        professionalWork: 'Professional Work',
+        personalProjectsNote: 'These are personal projects I\'ve developed to explore technologies and solve specific challenges.',
+        professionalProjectsNote: 'These are just some of the professional projects developed during my work at Bjumper. Repositories are private due to confidentiality agreements.'
+    });
+
+    // Load translations for UI elements
+    const loadTranslations = () => {
+        if (typeof window !== 'undefined' && typeof window.t === 'function') {
+            setTranslations({
+                title: window.t('projects.title') || 'Key Projects',
+                technologies: window.t('projects.technologies') || 'Technologies',
+                keyFeatures: window.t('projects.keyFeatures') || 'Key Features',
+                viewOnGithub: window.t('projects.viewOnGithub') || 'View on GitHub',
+                showAllDetails: window.t('projects.showAllDetails') || 'Show all details',
+                showLessDetails: window.t('projects.showLessDetails') || 'Show less details',
+                personalProjects: window.t('projects.personalProjects') || 'Personal Projects',
+                professionalWork: window.t('projects.professionalWork') || 'Professional Work',
+                personalProjectsNote: window.t('projects.personalProjectsNote') || 'These are personal projects I\'ve developed to explore technologies and solve specific challenges.',
+                professionalProjectsNote: window.t('projects.professionalProjectsNote') || 'These are just some of the professional projects developed during my work at Bjumper. Repositories are private due to confidentiality agreements.'
+            });
+        }
+    };
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -26,7 +62,26 @@ const Projects = () => {
             observer.observe(element);
         }
 
-        return () => observer.disconnect();
+        // Load initial project data and translations
+        setPersonalProjects(getCurrentLanguagePersonalProjects());
+        setProfessionalProjects(getCurrentLanguageProfessionalProjects());
+        loadTranslations();
+
+        // Listen for language changes
+        const handleLanguageChanged = () => {
+            setPersonalProjects(getCurrentLanguagePersonalProjects());
+            setProfessionalProjects(getCurrentLanguageProfessionalProjects());
+            loadTranslations();
+        };
+
+        document.addEventListener('languageChanged', handleLanguageChanged);
+        document.addEventListener('translationsLoaded', handleLanguageChanged);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('languageChanged', handleLanguageChanged);
+            document.removeEventListener('translationsLoaded', handleLanguageChanged);
+        };
     }, []);
 
     // Toggle show all project descriptions
@@ -56,7 +111,7 @@ const Projects = () => {
             }}
             tabIndex={0}
             role="link"
-            aria-label={`View ${project.title} on GitHub`}
+            aria-label={`${translations.viewOnGithub}: ${project.title}`}
         >
             {/* Red header bar with icon */}
             <div className="bg-brand-red p-3 flex items-center justify-between gap-3 text-white z-20 relative">
@@ -67,12 +122,12 @@ const Projects = () => {
 
                 {/* GitHub link */}
                 {project.githubUrl && (
-                    <a
-                        href={project.githubUrl}
+
+                    <a href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-white/80 transition-colors z-30 relative"
-                        aria-label={`GitHub repository for ${project.title}`}
+                        aria-label={`GitHub: ${project.title}`}
                         onClick={(e) => e.stopPropagation()}
                     >
                         <i className="fab fa-github text-lg"></i>
@@ -88,7 +143,9 @@ const Projects = () => {
                 {/* Key Features - only visible when expanded */}
                 {showAllDetails && (
                     <div className="mb-4 animate-fade-in">
-                        <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider">Key Features</h4>
+                        <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider" data-i18n="projects.keyFeatures">
+                            {translations.keyFeatures}
+                        </h4>
                         <ul className="space-y-2 text-sm">
                             {project.keyFeatures.map((feature, featureIndex) => (
                                 <li key={featureIndex} className="flex items-start gap-2">
@@ -102,7 +159,9 @@ const Projects = () => {
 
                 {/* Technologies used */}
                 <div className="mt-auto">
-                    <h4 className="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">Technologies</h4>
+                    <h4 className="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2" data-i18n="projects.technologies">
+                        {translations.technologies}
+                    </h4>
                     <div className="flex flex-wrap gap-2 mt-2">
                         {project.technologies.map((tech, techIndex) => (
                             <span
@@ -122,7 +181,7 @@ const Projects = () => {
                 {/* Click indicator */}
                 <div className="mt-3 flex items-center text-xs text-light-text-secondary dark:text-dark-text-secondary opacity-0 group-hover:opacity-100 transition-opacity z-20 relative">
                     <i className="fas fa-external-link-alt mr-1 text-brand-red"></i>
-                    Click to view on GitHub
+                    {translations.viewOnGithub}
                 </div>
 
                 {/* Bottom indicator line */}
@@ -139,7 +198,7 @@ const Projects = () => {
             style={{ transitionDelay: `${200 * index}ms` }}
             tabIndex={0}
             role="article"
-            aria-label={`Project: ${project.title}`}
+            aria-label={`${project.title}`}
         >
             {/* Red header bar with icon */}
             <div className="bg-brand-red p-3 flex items-center justify-between gap-3 text-white z-20 relative">
@@ -161,7 +220,9 @@ const Projects = () => {
                 {/* Key Features - only visible when expanded */}
                 {showAllDetails && (
                     <div className="mb-4 animate-fade-in">
-                        <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider">Key Features</h4>
+                        <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider" data-i18n="projects.keyFeatures">
+                            {translations.keyFeatures}
+                        </h4>
                         <ul className="space-y-2 text-sm">
                             {project.keyFeatures.map((feature, featureIndex) => (
                                 <li key={featureIndex} className="flex items-start gap-2">
@@ -175,7 +236,9 @@ const Projects = () => {
 
                 {/* Technologies used */}
                 <div className="mt-auto">
-                    <h4 className="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">Technologies</h4>
+                    <h4 className="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2" data-i18n="projects.technologies">
+                        {translations.technologies}
+                    </h4>
                     <div className="flex flex-wrap gap-2 mt-2">
                         {project.technologies.map((tech, techIndex) => (
                             <span
@@ -203,7 +266,7 @@ const Projects = () => {
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-project-diagram"></i>
                 </div>
-                <h2 className="text-2xl font-bold ml-3">Key Projects</h2>
+                <h2 className="text-2xl font-bold ml-3" data-i18n="projects.title">{translations.title}</h2>
 
                 {/* Toggle all projects details button */}
                 <button
@@ -213,12 +276,12 @@ const Projects = () => {
                     {showAllDetails ? (
                         <>
                             <i className="fas fa-chevron-up text-xs"></i>
-                            Show less details
+                            {translations.showLessDetails}
                         </>
                     ) : (
                         <>
                             <i className="fas fa-chevron-down text-xs"></i>
-                            Show all details
+                            {translations.showAllDetails}
                         </>
                     )}
                 </button>
@@ -231,16 +294,18 @@ const Projects = () => {
                     className={`py-2 px-4 font-medium text-sm ${activeTab === 'personal'
                         ? 'text-brand-red border-b-2 border-brand-red'
                         : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70'}`}
+                    data-i18n="projects.personalProjects"
                 >
-                    Personal Projects
+                    {translations.personalProjects}
                 </button>
                 <button
                     onClick={() => setActiveTab('professional')}
                     className={`py-2 px-4 font-medium text-sm ${activeTab === 'professional'
                         ? 'text-brand-red border-b-2 border-brand-red'
                         : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70'}`}
+                    data-i18n="projects.professionalWork"
                 >
-                    Professional Work
+                    {translations.professionalWork}
                 </button>
             </div>
 
@@ -259,12 +324,12 @@ const Projects = () => {
                 style={{ transitionDelay: '500ms' }}
             >
                 {activeTab === 'personal' ? (
-                    <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-                        These are personal projects I've developed to explore technologies and solve specific challenges.
+                    <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary" data-i18n="projects.personalProjectsNote">
+                        {translations.personalProjectsNote}
                     </p>
                 ) : (
-                    <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-                        These are just some of the professional projects developed during my work at Bjumper. Repositories are private due to confidentiality agreements.
+                    <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary" data-i18n="projects.professionalProjectsNote">
+                        {translations.professionalProjectsNote}
                     </p>
                 )}
             </div>

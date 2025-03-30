@@ -4,6 +4,15 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  // Configuración de i18n nativo de Astro
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "es", "fr"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   integrations: [
     tailwind({
       // Configuración personalizada de Tailwind
@@ -13,6 +22,7 @@ export default defineConfig({
     }),
     react(),
   ],
+
   // Optimizar para desarrollo
   vite: {
     // Opciones para mejorar el tiempo de compilación

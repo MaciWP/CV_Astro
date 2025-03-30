@@ -1,17 +1,21 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
+import i18next from 'i18next';
+import { localizePath } from 'astro-i18next';
 
-// Opciones de idioma disponibles (aunque no se usen activamente)
+// Opciones de idioma disponibles
 export const languages = {
   EN: 'en',
   ES: 'es',
   FR: 'fr'
 };
 
-// Crear contexto con valores por defecto simplificados
+// Contexto con valores por defecto mejorados
 const defaultContextValue = {
   language: languages.EN,
-  setLanguage: () => {}, // Función vacía
-  t: (key) => key // Función de traducción simplificada que devuelve la clave
+  setLanguage: () => { },
+  t: (key) => key,
+  localizePath: (path) => path
 };
 
 const LanguageContext = createContext(defaultContextValue);
@@ -21,28 +25,42 @@ export const useLanguage = () => {
   return useContext(LanguageContext);
 };
 
-// Proveedor de idioma simplificado
+// Proveedor de idioma mejorado que utiliza i18next
 export function LanguageProvider({ children }) {
-  // Simplemente devolvemos el valor por defecto (sin estado)
-  // Esto evita llamadas a i18n pero mantiene la estructura del código
-  const value = {
-    language: languages.EN,
-    setLanguage: (newLang) => {
-      console.log(`Would change language to: ${newLang}`);
-    },
-    t: (key) => {
-      // Algunas traducciones básicas para UI
-      const translations = {
-        'buttons.downloadPDF': 'Download PDF',
-        'buttons.switchTheme': 'Change Theme',
-        'header.address': 'Address',
-        'header.phone': 'Phone',
-        'header.email': 'Email',
-        'header.nationality': 'Nationality',
-      };
-      
-      return translations[key] || key;
+  const [language, setLanguageState] = useState(languages.EN);
+  const { t, i18n } = useTranslation();
+
+  // Al montar el componente, detectar el idioma actual
+  useEffect(() => {
+    const currentLang = i18n.language || languages.EN;
+    setLanguageState(currentLang);
+  }, [i18n.language]);
+
+  // Función para cambiar el idioma
+  const setLanguage = async (newLang) => {
+    if (newLang !== language) {
+      await i18n.changeLanguage(newLang);
+      setLanguageState(newLang);
+
+      // Almacenar preferencia en cookies
+      document.cookie = `i18next=${newLang}; path=/; max-age=31536000; SameSite=Lax`;
+
+      // Determinar si necesitamos redireccionar
+      const currentPath = window.location.pathname;
+      const targetPath = localizePath(currentPath, newLang);
+
+      if (currentPath !== targetPath) {
+        window.location.href = targetPath;
+      }
     }
+  };
+
+  // Valores del contexto
+  const value = {
+    language,
+    setLanguage,
+    t,
+    localizePath: (path) => localizePath(path, language)
   };
 
   return (

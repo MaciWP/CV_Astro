@@ -1,52 +1,77 @@
 {
-    "meta": {
-      "title": "CV Professionnel - Normes Suisses",
-      "description": "Un CV/portfolio professionnel suivant les normes suisses"
-    },
-    "header": {
-      "address": "Adresse",
-      "phone": "Téléphone",
-      "email": "E-mail",
-      "nationality": "Nationalité",
-      "dateOfBirth": "Date de Naissance",
-      "workPermit": "Permis de Travail"
-    },
-    "sections": {
-      "summary": "Résumé Professionnel",
-      "experience": "Expérience Professionnelle",
-      "education": "Formation & Éducation",
-      "skills": "Compétences Techniques",
-      "languages": "Langues",
-      "projects": "Projets Principaux"
-    },
-    "buttons": {
-      "downloadPDF": "Télécharger PDF",
-      "switchLanguage": "Changer de Langue",
-      "switchTheme": "Changer de Thème"
-    },
-    "languageLevels": {
-      "native": "Langue Maternelle",
-      "fluent": "Courant (C2)",
-      "advanced": "Avancé (C1)",
-      "intermediate": "Intermédiaire (B2)",
-      "basic": "Élémentaire (A1/A2)"
-    },
-    "months": {
-      "jan": "Janvier",
-      "feb": "Février",
-      "mar": "Mars",
-      "apr": "Avril",
-      "may": "Mai",
-      "jun": "Juin",
-      "jul": "Juillet",
-      "aug": "Août",
-      "sep": "Septembre",
-      "oct": "Octobre",
-      "nov": "Novembre",
-      "dec": "Décembre"
-    },
-    "present": "Présent",
-    "footer": {
-      "copyright": "© 2025 - Créé avec Astro, React, et Tailwind CSS"
-    }
+  "meta": {
+    "title": "Oriol Macias - Portfolio de Desarrollador de Software",
+    "description": "CV y portfolio profesional de Oriol Macias, Desarrollador de Software especializado en desarrollo backend, integración de protocolos industriales e infraestructura de centros de datos."
+  },
+  "header": {
+    "fullName": "Oriol Macias",
+    "jobTitle": "Desarrollador de Software",
+    "summary": "Desarrollador Backend orientado a soluciones, especializado en integración de protocolos industriales (SNMP, MODBUS, BACKnet) con más de 8 años creando aplicaciones de alto rendimiento. Conocido por transformar requisitos complejos en arquitecturas de código elegantes y reducir los tiempos de respuesta del sistema hasta en un 45%. Actualmente ampliando conocimientos en IA y machine learning para impulsar soluciones de automatización de próxima generación.",
+    "photoAlt": "Oriol Macias - Desarrollador de Software",
+    "email": "Correo",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "sections": {
+    "about": "Acerca de",
+    "experience": "Experiencia Laboral",
+    "skills": "Habilidades Técnicas",
+    "education": "Formación Académica",
+    "languages": "Idiomas",
+    "projects": "Proyectos Destacados"
+  },
+  "experience": {
+    "title": "Experiencia Laboral",
+    "responsibilities": "Responsabilidades",
+    "keyAchievements": "Logros Principales",
+    "showMore": "Mostrar más",
+    "showLess": "Mostrar menos"
+  },
+  "skills": {
+    "title": "Habilidades Técnicas",
+    "languages": "Lenguajes de Programación",
+    "libraries": "Bibliotecas y Frameworks",
+    "technologies": "Tecnologías y Bases de Datos",
+    "tools": "Herramientas y Aplicaciones",
+    "protocols": "Protocolos"
+  },
+  "education": {
+    "title": "Formación Académica",
+    "institution": "Institución",
+    "period": "Período",
+    "details": "Detalles"
+  },
+  "languages": {
+    "title": "Idiomas",
+    "native": "Nativo",
+    "fluent": "Fluido (C2)",
+    "advanced": "Avanzado (C1)",
+    "intermediate": "Intermedio (B2)",
+    "basic": "Básico (A1/A2)"
+  },
+  "projects": {
+    "title": "Proyectos Destacados",
+    "personalProjects": "Proyectos Personales",
+    "professionalWork": "Proyectos Profesionales",
+    "technologies": "Tecnologías",
+    "keyFeatures": "Características Principales",
+    "viewOnGithub": "Ver en GitHub",
+    "showAllDetails": "Mostrar todos los detalles",
+    "showLessDetails": "Mostrar menos detalles",
+    "personalProjectsNote": "Estos son proyectos personales que he desarrollado para explorar tecnologías y resolver desafíos específicos.",
+    "professionalProjectsNote": "Estos son solo algunos de los proyectos profesionales desarrollados durante mi trabajo en Bjumper. Los repositorios son privados debido a acuerdos de confidencialidad."
+  },
+  "buttons": {
+    "downloadCV": "Descargar CV",
+    "backToTop": "Volver arriba",
+    "switchLanguage": "Cambiar Idioma",
+    "switchTheme": "Cambiar Tema",
+    "downloadCoverLetter": "Descargar Carta"
+  },
+  "footer": {
+    "copyright": "© 2025 Oriol Macias. Todos los derechos reservados."
+  },
+  "navbar": {
+    "topLink": "↑ Inicio"
   }
+}

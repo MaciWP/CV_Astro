@@ -1,52 +1,145 @@
 /**
- * Education data for CV
- * Extracted from Education component for better maintainability
+ * Education data for CV with multilingual support
  * File: src/data/education.js
  */
 
-const educationItems = [
+// Base education data structure with translations
+const educationData = [
     {
-        title: "UNIR - FP Superior in Multiplatform Application Development",
+        id: "unir-dev",
+        title: {
+            en: "UNIR - FP Superior in Multiplatform Application Development",
+            es: "UNIR - FP Superior en Desarrollo de Aplicaciones Multiplataforma",
+            fr: "UNIR - FP Supérieur en Développement d'Applications Multiplateforme"
+        },
         institution: "Universidad Internacional de La Rioja",
         period: "2024 - 2025",
-        details: "Currently expanding knowledge in application development focusing on cross-platform solutions."
+        details: {
+            en: "Currently expanding knowledge in application development focusing on cross-platform solutions.",
+            es: "Actualmente ampliando conocimientos en desarrollo de aplicaciones centrándome en soluciones multiplataforma.",
+            fr: "Élargissement actuel des connaissances en développement d'applications axé sur les solutions multiplateforme."
+        }
     },
     {
-        title: "English Course B1-B2",
+        id: "english-course",
+        title: {
+            en: "English Course B1-B2",
+            es: "Curso de Inglés B1-B2",
+            fr: "Cours d'Anglais B1-B2"
+        },
         institution: "IBOUX",
         period: "2024",
-        details: "Improving English language skills for professional environments."
+        details: {
+            en: "Improving English language skills for professional environments.",
+            es: "Mejorando habilidades de inglés para entornos profesionales.",
+            fr: "Amélioration des compétences en anglais pour les environnements professionnels."
+        }
     },
     {
-        title: "SP2 EcoStruxure IT Advanced Technical Certification",
+        id: "schneider-cert",
+        title: {
+            en: "SP2 EcoStruxure IT Advanced Technical Certification",
+            es: "Certificación Técnica Avanzada SP2 EcoStruxure IT",
+            fr: "Certification Technique Avancée SP2 EcoStruxure IT"
+        },
         institution: "Schneider Electric",
         period: "2019",
-        details: "Professional certification in advanced IT infrastructure management and monitoring systems."
+        details: {
+            en: "Professional certification in advanced IT infrastructure management and monitoring systems.",
+            es: "Certificación profesional en gestión de infraestructura de TI avanzada y sistemas de monitorización.",
+            fr: "Certification professionnelle en gestion d'infrastructure IT avancée et systèmes de surveillance."
+        }
     },
     {
-        title: "Technical Degree in Multiplatform Application Development",
+        id: "tech-degree",
+        title: {
+            en: "Technical Degree in Multiplatform Application Development",
+            es: "Grado Superior en Desarrollo de Aplicaciones Multiplataforma",
+            fr: "Diplôme Technique en Développement d'Applications Multiplateforme"
+        },
         institution: "IES Montilivi",
         period: "2015",
-        details: "Specialized in web and mobile application development, database design, and software architecture."
+        details: {
+            en: "Specialized in web and mobile application development, database design, and software architecture.",
+            es: "Especializado en desarrollo de aplicaciones web y móviles, diseño de bases de datos y arquitectura de software.",
+            fr: "Spécialisé dans le développement d'applications web et mobiles, la conception de bases de données et l'architecture logicielle."
+        }
     },
     {
-        title: "Access Course to Higher Technical Education (CAS)",
+        id: "cas-course",
+        title: {
+            en: "Access Course to Higher Technical Education (CAS)",
+            es: "Curso de Acceso a Grado Superior (CAS)",
+            fr: "Cours d'Accès à l'Enseignement Technique Supérieur (CAS)"
+        },
         institution: "IES Santa Eugènia",
         period: "2013",
-        details: "Preparatory course for higher technical education."
+        details: {
+            en: "Preparatory course for higher technical education.",
+            es: "Curso preparatorio para educación técnica superior.",
+            fr: "Cours préparatoire pour l'enseignement technique supérieur."
+        }
     },
     {
-        title: "Microcomputer Systems and Networks",
+        id: "micro-systems",
+        title: {
+            en: "Microcomputer Systems and Networks",
+            es: "Sistemas Microinformáticos y Redes",
+            fr: "Systèmes Micro-informatiques et Réseaux"
+        },
         institution: "IES Salvador Espriu",
         period: "2012",
-        details: "Medium-grade training in computer systems and networking."
+        details: {
+            en: "Medium-grade training in computer systems and networking.",
+            es: "Formación de grado medio en sistemas informáticos y redes.",
+            fr: "Formation de niveau moyen en systèmes informatiques et réseaux."
+        }
     },
     {
-        title: "Secondary Education (ESO)",
+        id: "secondary",
+        title: {
+            en: "Secondary Education (ESO)",
+            es: "Educación Secundaria Obligatoria (ESO)",
+            fr: "Enseignement Secondaire Obligatoire (ESO)"
+        },
         institution: "IES Josep Brugulat",
         period: "2010",
-        details: "Focus on technology and computer science."
+        details: {
+            en: "Focus on technology and computer science.",
+            es: "Enfoque en tecnología e informática.",
+            fr: "Accent sur la technologie et l'informatique."
+        }
     }
 ];
 
+/**
+ * Get education items in the specified language
+ * @param {string} lang - Language code (en, es, fr)
+ * @returns {Array} Education items with texts in the specified language
+ */
+export const getEducation = (lang = 'en') => {
+    // Default to English if language not supported
+    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+
+    // Transform data structure to use the specified language
+    return educationData.map(edu => ({
+        title: edu.title[language] || edu.title.en,
+        institution: edu.institution,
+        period: edu.period,
+        details: edu.details[language] || edu.details.en
+    }));
+};
+
+/**
+ * Get education items for the current UI language
+ * @returns {Array} Education items with texts in the current UI language
+ */
+export const getCurrentLanguageEducation = () => {
+    // Get current language from window object if available
+    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
+    return getEducation(currentLang);
+};
+
+// Fallback: export default Education items in English for compatibility
+const educationItems = getEducation('en');
 export default educationItems;

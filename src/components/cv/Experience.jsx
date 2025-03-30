@@ -1,16 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import experiences from '../../data/experiences';
+/**
+ * Experience component with internationalization support
+ * File: src/components/cv/Experience.jsx
+ */
+import React, { useEffect, useState, useCallback } from 'react';
+import { getCurrentLanguageExperiences } from '../../data/experiences';
 
 /**
  * Experience component displays work history in a timeline format
- * Uses data from an external file for better maintainability
- * File: src/components/cv/Experience.jsx
+ * Uses multilingual data and supports language switching
  */
 const Experience = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [expandedJobs, setExpandedJobs] = useState({});
+    const [experiences, setExperiences] = useState([]);
+    const [translations, setTranslations] = useState({
+        title: 'Work Experience',
+        responsibilities: 'Responsibilities',
+        keyAchievements: 'Key Achievements',
+        showMore: 'Show more',
+        showLess: 'Show less'
+    });
+
+    // Load translations and experiences data safely
+    const loadTranslations = useCallback(() => {
+        // Get current language experiences data
+        setExperiences(getCurrentLanguageExperiences());
+
+        // Get UI translations safely
+        if (typeof window !== 'undefined' && typeof window.t === 'function') {
+            setTranslations({
+                title: window.t('experience.title') || 'Work Experience',
+                responsibilities: window.t('experience.responsibilities') || 'Responsibilities',
+                keyAchievements: window.t('experience.keyAchievements') || 'Key Achievements',
+                showMore: window.t('experience.showMore') || 'Show more',
+                showLess: window.t('experience.showLess') || 'Show less'
+            });
+        }
+    }, []);
 
     useEffect(() => {
+        // Set up intersection observer for animation
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -26,8 +55,21 @@ const Experience = () => {
             observer.observe(element);
         }
 
-        return () => observer.disconnect();
-    }, []);
+        // Load initial translations and data
+        loadTranslations();
+
+        // Listen for language changes
+        const handleLanguageChange = () => {
+            loadTranslations();
+        };
+
+        document.addEventListener('languageChanged', handleLanguageChange);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('languageChanged', handleLanguageChange);
+        };
+    }, [loadTranslations]);
 
     /**
      * Toggle expand/collapse for a specific job
@@ -48,7 +90,7 @@ const Experience = () => {
                 <div className="h-10 w-10 bg-brand-red dark:bg-brand-red rounded-none flex items-center justify-center flex-shrink-0 transition-colors duration-150">
                     <i className="fas fa-briefcase text-white"></i>
                 </div>
-                <h2 className="text-3xl font-bold tracking-tight">Work Experience</h2>
+                <h2 className="text-3xl font-bold tracking-tight" data-i18n="experience.title">{translations.title}</h2>
             </div>
 
             <div className="relative pl-5 md:pl-8">
@@ -77,8 +119,8 @@ const Experience = () => {
                                 <p className="text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-150 flex items-center">
                                     <i className="fas fa-building mr-2 text-brand-red/70"></i>
                                     {job.companyUrl ? (
-                                        <a
-                                            href={job.companyUrl}
+
+                                        <a href={job.companyUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="hover:text-brand-red dark:hover:text-brand-red transition-colors"
@@ -100,9 +142,11 @@ const Experience = () => {
                         {/* Job description with enhanced hover effects */}
                         <div className="bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 transition-all duration-150 hover:shadow-md">
                             {/* Responsibilities section - condensed */}
-                            <h4 className="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider">Responsibilities</h4>
+                            <h4 className="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider" data-i18n="experience.responsibilities">
+                                {translations.responsibilities}
+                            </h4>
                             <ul className="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150 mb-3">
-                                {job.keyResponsibilities.map((responsibility, i) => (
+                                {job.keyResponsibilities && job.keyResponsibilities.map((responsibility, i) => (
                                     <li key={i} className="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150">
                                         <span className="w-1.5 h-1.5 bg-brand-red flex-shrink-0 mt-2 transition-all duration-150 group-hover/item:scale-125"></span>
                                         <span>{responsibility}</span>
@@ -130,15 +174,17 @@ const Experience = () => {
                                         aria-expanded={!!expandedJobs[job.id]}
                                     >
                                         <i className={`fas fa-chevron-${expandedJobs[job.id] ? 'up' : 'down'} text-xs`}></i>
-                                        {expandedJobs[job.id] ? 'Show less' : 'Show more'}
+                                        {expandedJobs[job.id] ? translations.showLess : translations.showMore}
                                     </button>
                                 </>
                             )}
 
                             {/* Achievements section with trophy icons */}
-                            <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-3 tracking-wider">Key Achievements</h4>
+                            <h4 className="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-3 tracking-wider" data-i18n="experience.keyAchievements">
+                                {translations.keyAchievements}
+                            </h4>
                             <ul className="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150">
-                                {job.achievements.map((achievement, i) => (
+                                {job.achievements && job.achievements.map((achievement, i) => (
                                     <li key={i} className="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150">
                                         <i className="fas fa-trophy text-brand-red flex-shrink-0 mt-1 transition-all duration-150 group-hover/item:scale-125"></i>
                                         <span>{achievement}</span>

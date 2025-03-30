@@ -1,52 +1,77 @@
 {
-    "meta": {
-      "title": "Professional CV - Swiss Standards",
-      "description": "A professional CV/portfolio following Swiss standards"
-    },
-    "header": {
-      "address": "Address",
-      "phone": "Phone",
-      "email": "Email",
-      "nationality": "Nationality",
-      "dateOfBirth": "Date of Birth",
-      "workPermit": "Work Permit"
-    },
-    "sections": {
-      "summary": "Professional Summary",
-      "experience": "Work Experience",
-      "education": "Education & Training",
-      "skills": "Technical Skills",
-      "languages": "Languages",
-      "projects": "Key Projects"
-    },
-    "buttons": {
-      "downloadPDF": "Download PDF",
-      "switchLanguage": "Change Language",
-      "switchTheme": "Change Theme"
-    },
-    "languageLevels": {
-      "native": "Native",
-      "fluent": "Fluent (C2)",
-      "advanced": "Advanced (C1)",
-      "intermediate": "Intermediate (B2)",
-      "basic": "Basic (A1/A2)"
-    },
-    "months": {
-      "jan": "January",
-      "feb": "February",
-      "mar": "March",
-      "apr": "April",
-      "may": "May",
-      "jun": "June",
-      "jul": "July",
-      "aug": "August",
-      "sep": "September",
-      "oct": "October",
-      "nov": "November",
-      "dec": "December"
-    },
-    "present": "Present",
-    "footer": {
-      "copyright": "© 2025 - Created with Astro, React, and Tailwind CSS"
-    }
+  "meta": {
+    "title": "Oriol Macias - Software Developer CV & Portfolio",
+    "description": "Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure."
+  },
+  "header": {
+    "fullName": "Oriol Macias",
+    "jobTitle": "Software Developer",
+    "summary": "Solutions-driven Backend Developer specializing in industrial protocol integration (SNMP, MODBUS, BACKnet) with 8+ years of delivering high-performance applications. Known for transforming complex requirements into elegant code architecture and reducing system response times by up to 45%. Currently expanding expertise in AI and machine learning to drive next-generation automation solutions.",
+    "photoAlt": "Oriol Macias - Software Developer",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "sections": {
+    "about": "About",
+    "experience": "Work Experience",
+    "skills": "Technical Skills",
+    "education": "Education & Training",
+    "languages": "Languages",
+    "projects": "Key Projects"
+  },
+  "experience": {
+    "title": "Work Experience",
+    "responsibilities": "Responsibilities",
+    "keyAchievements": "Key Achievements",
+    "showMore": "Show more",
+    "showLess": "Show less"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "languages": "Programming Languages",
+    "libraries": "Libraries & Frameworks",
+    "technologies": "Technologies & Databases",
+    "tools": "Tools & Applications",
+    "protocols": "Protocols"
+  },
+  "education": {
+    "title": "Education & Certifications",
+    "institution": "Institution",
+    "period": "Period",
+    "details": "Details"
+  },
+  "languages": {
+    "title": "Languages",
+    "native": "Native",
+    "fluent": "Fluent (C2)",
+    "advanced": "Advanced (C1)",
+    "intermediate": "Intermediate (B2)",
+    "basic": "Basic (A1/A2)"
+  },
+  "projects": {
+    "title": "Key Projects",
+    "personalProjects": "Personal Projects",
+    "professionalWork": "Professional Work",
+    "technologies": "Technologies",
+    "keyFeatures": "Key Features",
+    "viewOnGithub": "View on GitHub",
+    "showAllDetails": "Show all details",
+    "showLessDetails": "Show less details",
+    "personalProjectsNote": "These are personal projects I've developed to explore technologies and solve specific challenges.",
+    "professionalProjectsNote": "These are just some of the professional projects developed during my work at Bjumper. Repositories are private due to confidentiality agreements."
+  },
+  "buttons": {
+    "downloadCV": "Download CV",
+    "backToTop": "Back to top",
+    "switchLanguage": "Change Language",
+    "switchTheme": "Change Theme",
+    "downloadCoverLetter": "Download Cover Letter"
+  },
+  "footer": {
+    "copyright": "© 2025 Oriol Macias. All rights reserved."
+  },
+  "navbar": {
+    "topLink": "↑ Top"
   }
+}

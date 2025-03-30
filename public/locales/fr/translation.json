@@ -1,52 +1,111 @@
 {
-    "meta": {
-      "title": "CV Professionnel - Normes Suisses",
-      "description": "Un CV/portfolio professionnel suivant les normes suisses"
-    },
-    "header": {
-      "address": "Adresse",
-      "phone": "Téléphone",
-      "email": "E-mail",
-      "nationality": "Nationalité",
-      "dateOfBirth": "Date de Naissance",
-      "workPermit": "Permis de Travail"
-    },
-    "sections": {
-      "summary": "Résumé Professionnel",
-      "experience": "Expérience Professionnelle",
-      "education": "Formation & Éducation",
-      "skills": "Compétences Techniques",
-      "languages": "Langues",
-      "projects": "Projets Principaux"
-    },
-    "buttons": {
-      "downloadPDF": "Télécharger PDF",
-      "switchLanguage": "Changer de Langue",
-      "switchTheme": "Changer de Thème"
-    },
-    "languageLevels": {
-      "native": "Langue Maternelle",
-      "fluent": "Courant (C2)",
-      "advanced": "Avancé (C1)",
-      "intermediate": "Intermédiaire (B2)",
-      "basic": "Élémentaire (A1/A2)"
-    },
-    "months": {
-      "jan": "Janvier",
-      "feb": "Février",
-      "mar": "Mars",
-      "apr": "Avril",
-      "may": "Mai",
-      "jun": "Juin",
-      "jul": "Juillet",
-      "aug": "Août",
-      "sep": "Septembre",
-      "oct": "Octobre",
-      "nov": "Novembre",
-      "dec": "Décembre"
-    },
-    "present": "Présent",
-    "footer": {
-      "copyright": "© 2025 - Créé avec Astro, React, et Tailwind CSS"
-    }
+  "meta": {
+    "title": "CV Professionnel - Normes Suisses",
+    "description": "Un CV/portfolio professionnel suivant les normes suisses"
+  },
+  "header": {
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "nationality": "Nationalité",
+    "dateOfBirth": "Date de Naissance",
+    "workPermit": "Permis de Travail",
+    "fullName": "Oriol Macias",
+    "jobTitle": "Développeur Logiciel",
+    "summary": "Développeur Backend orienté solutions, spécialisé dans l'intégration de protocoles industriels (SNMP, MODBUS, BACnet) avec plus de 8 ans d'expérience dans le développement d'applications haute performance. Reconnu pour transformer des exigences complexes en architectures de code élégantes et réduire les temps de réponse système jusqu'à 45%. Actuellement en train d'élargir son expertise en IA et apprentissage automatique pour développer des solutions d'automatisation de nouvelle génération."
+  },
+  "contact": {
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "sections": {
+    "summary": "Résumé Professionnel",
+    "experience": "Expérience Professionnelle",
+    "education": "Formation & Éducation",
+    "skills": "Compétences Techniques",
+    "languages": "Langues",
+    "projects": "Projets Principaux"
+  },
+  "experience": {
+    "title": "Expérience Professionnelle",
+    "company": "Entreprise",
+    "period": "Période",
+    "responsibilities": "Responsabilités",
+    "keyAchievements": "Réalisations Clés",
+    "showMore": "Afficher plus",
+    "showLess": "Afficher moins"
+  },
+  "education": {
+    "title": "Formation & Certifications",
+    "institution": "Institution",
+    "period": "Période",
+    "details": "Détails"
+  },
+  "skills": {
+    "title": "Compétences Techniques",
+    "languages": "Langages de Programmation",
+    "libraries": "Bibliothèques & Frameworks",
+    "technologies": "Technologies & Bases de Données",
+    "tools": "Outils & Applications",
+    "protocols": "Protocoles"
+  },
+  "languages": {
+    "title": "Langues",
+    "native": "Langue Maternelle",
+    "fluent": "Courant (C2)",
+    "advanced": "Avancé (C1)",
+    "intermediate": "Intermédiaire (B2)",
+    "basic": "Élémentaire (A1/A2)"
+  },
+  "projects": {
+    "title": "Projets Clés",
+    "personalProjects": "Projets Personnels",
+    "professionalWork": "Projets Professionnels",
+    "technologies": "Technologies",
+    "keyFeatures": "Fonctionnalités Clés",
+    "viewOnGithub": "Voir sur GitHub",
+    "showAllDetails": "Afficher tous les détails",
+    "showLessDetails": "Afficher moins de détails",
+    "personalProjectsNote": "Voici des projets personnels que j'ai développés pour explorer des technologies et résoudre des défis spécifiques.",
+    "professionalProjectsNote": "Voici quelques-uns des projets professionnels développés pendant mon travail chez Bjumper. Les dépôts sont privés en raison d'accords de confidentialité."
+  },
+  "buttons": {
+    "downloadPDF": "Télécharger PDF",
+    "switchLanguage": "Changer de Langue",
+    "switchTheme": "Changer de Thème",
+    "backToTop": "Retour en haut",
+    "downloadCoverLetter": "Télécharger Lettre"
+  },
+  "languageLevels": {
+    "native": "Langue Maternelle",
+    "fluent": "Courant (C2)",
+    "advanced": "Avancé (C1)",
+    "intermediate": "Intermédiaire (B2)",
+    "basic": "Élémentaire (A1/A2)"
+  },
+  "months": {
+    "jan": "Janvier",
+    "feb": "Février",
+    "mar": "Mars",
+    "apr": "Avril",
+    "may": "Mai",
+    "jun": "Juin",
+    "jul": "Juillet",
+    "aug": "Août",
+    "sep": "Septembre",
+    "oct": "Octobre",
+    "nov": "Novembre",
+    "dec": "Décembre"
+  },
+  "present": "Présent",
+  "footer": {
+    "copyright": "© 2025 - Créé avec Astro, React, et Tailwind CSS"
+  },
+  "navbar": {
+    "topLink": "↑ Haut"
   }
+}

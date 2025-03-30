@@ -11,23 +11,23 @@ const headerData = {
     contactInfo: [
         {
             type: "email",
+            label: "Email",
             value: "oriolomb@gmail.com",
             icon: "fas fa-envelope",
-            label: "Email"
         },
         {
             type: "linkedin",
+            label: "LinkedIn",
             value: "oriolmaciasbadosa",
-            icon: "fab fa-linkedin",
             url: "https://linkedin.com/in/oriolmaciasbadosa",
-            label: "LinkedIn"
+            icon: "fab fa-linkedin",
         },
         {
             type: "github",
+            label: "GitHub",
             value: "MaciWP",
-            icon: "fab fa-github",
             url: "https://github.com/MaciWP",
-            label: "GitHub"
+            icon: "fab fa-github",
         }
     ],
     photoUrl: "/images/oriol_macias.jpg",

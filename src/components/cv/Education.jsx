@@ -3,11 +3,13 @@
  * File: src/components/cv/Education.jsx
  */
 import React, { useEffect, useState } from 'react';
-import educationItems from '../../data/education';
+import { getCurrentLanguageEducation } from '../../data/education';
 
 const Education = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [animatedItems, setAnimatedItems] = useState([]);
+    const [educationItems, setEducationItems] = useState([]);
+    const [title, setTitle] = useState('Education & Certifications');
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -15,9 +17,12 @@ const Education = () => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
 
+                    // Load education items in current language
+                    const items = getCurrentLanguageEducation();
+                    setEducationItems(items);
+
                     // Start staggered animation sequence for education items
-                    // with timing similar to Experience component
-                    educationItems.forEach((_, index) => {
+                    items.forEach((_, index) => {
                         setTimeout(() => {
                             setAnimatedItems(prev => [...prev, index]);
                         }, 500 + (index * 200)); // Slower animation similar to Experience
@@ -34,7 +39,30 @@ const Education = () => {
             observer.observe(element);
         }
 
-        return () => observer.disconnect();
+        // Load education items initially
+        setEducationItems(getCurrentLanguageEducation());
+
+        // Update title based on current language
+        if (typeof window !== 'undefined' && typeof window.t === 'function') {
+            setTitle(window.t('education.title') || 'Education & Certifications');
+        }
+
+        // Listen for language changes
+        const handleLanguageChanged = () => {
+            setEducationItems(getCurrentLanguageEducation());
+            if (typeof window !== 'undefined' && typeof window.t === 'function') {
+                setTitle(window.t('education.title') || 'Education & Certifications');
+            }
+        };
+
+        document.addEventListener('languageChanged', handleLanguageChanged);
+        document.addEventListener('translationsLoaded', handleLanguageChanged);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('languageChanged', handleLanguageChanged);
+            document.removeEventListener('translationsLoaded', handleLanguageChanged);
+        };
     }, []);
 
     return (
@@ -45,7 +73,7 @@ const Education = () => {
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-graduation-cap"></i>
                 </div>
-                <h2 className="text-2xl font-bold ml-3">Education & Certifications</h2>
+                <h2 className="text-2xl font-bold ml-3" data-i18n="education.title">{title}</h2>
             </div>
 
             <div className="space-y-6">

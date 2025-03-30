@@ -1,19 +1,25 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 // Import CV components
-import Header from '../components/cv/Header';
-import Experience from '../components/cv/Experience';
-import Skills from '../components/cv/Skills';
-import Languages from '../components/cv/Languages';
-import Education from '../components/cv/Education';
-import Projects from '../components/cv/Projects';
+import ProfileHeader from "../components/cv/ProfileHeader";
+import Experience from "../components/cv/Experience";
+import Skills from "../components/cv/Skills";
+import Languages from "../components/cv/Languages";
+import Education from "../components/cv/Education";
+import Projects from "../components/cv/Projects";
 
 // Enhanced metadata for SEO
 const pageTitle = "Oriol Macias - Software Developer CV & Portfolio";
-const pageDescription = "Professional CV and portfolio for Oriol Macias, a Backend Developer with 8+ years of experience in industrial protocol integration (SNMP, MODBUS, BACnet) and data center infrastructure.";
+const pageDescription =
+  "Professional CV and portfolio for Oriol Macias, a Backend Developer with 8+ years of experience in industrial protocol integration (SNMP, MODBUS, BACnet) and data center infrastructure.";
 const ogImage = "/images/oriol_macias.jpg";
 const canonicalUrl = "https://oriolmacias.dev/";
+
+// Enlaces a versiones en otros idiomas
+const esUrl = getRelativeLocaleUrl("es", "");
+const frUrl = getRelativeLocaleUrl("fr", "");
 ---
 
 <Layout
@@ -22,11 +28,20 @@ const canonicalUrl = "https://oriolmacias.dev/";
   lang="en"
   ogImage={ogImage}
   canonicalUrl={canonicalUrl}
+  alternateUrls={{
+    es: esUrl,
+    fr: frUrl,
+  }}
 >
-  <div id="cv-content" class="space-y-16" itemscope itemtype="https://schema.org/Person">
-    <!-- Header with immediate hydration -->
-    <Header client:load />
-    
+  <div
+    id="cv-content"
+    class="space-y-16"
+    itemscope
+    itemtype="https://schema.org/Person"
+  >
+    <!-- ProfileHeader with immediate hydration -->
+    <ProfileHeader client:load />
+
     <!-- Sections with lazy hydration for better performance -->
     <Experience client:visible />
     <Skills client:visible />
@@ -38,11 +53,19 @@ const canonicalUrl = "https://oriolmacias.dev/";
     <div class="sr-only">
       <div itemprop="name">Oriol Macias</div>
       <div itemprop="jobTitle">Software Developer</div>
-      <div itemprop="description">Solutions-driven Backend Developer specializing in industrial protocol integration (SNMP, MODBUS, BACKnet) with 8+ years of delivering high-performance applications.</div>
+      <div itemprop="description">
+        Solutions-driven Backend Developer specializing in industrial protocol
+        integration (SNMP, MODBUS, BACKnet) with 8+ years of delivering
+        high-performance applications.
+      </div>
       <div itemprop="email">oriolomb@gmail.com</div>
-      <a itemprop="url" href="https://oriolmacias.dev">https://oriolmacias.dev</a>
+      <a itemprop="url" href="https://oriolmacias.dev"
+        >https://oriolmacias.dev</a
+      >
       <a itemprop="sameAs" href="https://github.com/MaciWP">GitHub</a>
-      <a itemprop="sameAs" href="https://linkedin.com/in/oriolmaciasbadosa">LinkedIn</a>
+      <a itemprop="sameAs" href="https://linkedin.com/in/oriolmaciasbadosa"
+        >LinkedIn</a
+      >
     </div>
   </div>
 </Layout>

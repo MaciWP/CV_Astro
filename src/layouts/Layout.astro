@@ -1,6 +1,7 @@
 ---
 // Import components
 import Navbar from "../components/Navbar";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 // Define props interface
 export interface Props {
@@ -9,6 +10,11 @@ export interface Props {
   lang?: string;
   ogImage?: string;
   canonicalUrl?: string;
+  alternateUrls?: {
+    en?: string;
+    es?: string;
+    fr?: string;
+  };
 }
 
 // Destructure props with defaults
@@ -18,13 +24,13 @@ const {
   lang = "en",
   ogImage = "/images/oriol_macias.jpg",
   canonicalUrl = "https://oriolmacias.dev/",
+  alternateUrls = {},
 } = Astro.props;
 
 // Construct full canonical URL based on current page path
-const fullCanonicalUrl =
-  canonicalUrl === "https://oriolmacias.dev/"
-    ? canonicalUrl
-    : new URL(Astro.url.pathname, canonicalUrl).href;
+const fullCanonicalUrl = canonicalUrl.startsWith("http")
+  ? canonicalUrl
+  : new URL(Astro.url.pathname, "https://oriolmacias.dev").href;
 ---
 
 <!doctype html>
@@ -39,12 +45,37 @@ const fullCanonicalUrl =
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
 
+    <!-- Alternate language versions -->
+    {
+      alternateUrls.en && (
+        <link rel="alternate" hreflang="en" href={alternateUrls.en} />
+      )
+    }
+    {
+      alternateUrls.es && (
+        <link rel="alternate" hreflang="es" href={alternateUrls.es} />
+      )
+    }
+    {
+      alternateUrls.fr && (
+        <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />
+      )
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://oriolmacias.dev/"
+    />
+
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={fullCanonicalUrl} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang} />
+    {lang === "es" && <meta property="og:locale:alternate" content="es_ES" />}
+    {lang === "fr" && <meta property="og:locale:alternate" content="fr_FR" />}
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -125,6 +156,23 @@ const fullCanonicalUrl =
       }
     </style>
 
+    <!-- Establecer idioma actual para scripts cliente y depuración -->
+    <script is:inline define:vars={{ currentLang: lang }}>
+      // Establecer el idioma actual en una variable global
+      window.CURRENT_LANGUAGE = currentLang;
+      console.log("Current language set to:", window.CURRENT_LANGUAGE);
+
+      // Función simplificada para buscar traducciones
+      window.t = function (key) {
+        // Esta función será reemplazada por la implementación completa más adelante
+        // Pero proporcionamos una versión básica para evitar errores antes de que se cargue
+        return key.split(".").pop();
+      };
+
+      // Objeto global para almacenar traducciones una vez cargadas
+      window.TRANSLATIONS = {};
+    </script>
+
     <!-- Theme initialization script -->
     <script is:inline>
       (function () {
@@ -202,6 +250,72 @@ const fullCanonicalUrl =
         }
       }
     </style>
+
+    <!-- Script para cargar traducciones en cliente -->
+    <script>
+      // Función para cargar traducciones al inicio
+      async function loadTranslations() {
+        // Asegurarnos de que la propiedad exista
+        const currentLanguage =
+          typeof window !== "undefined" && window.CURRENT_LANGUAGE
+            ? window.CURRENT_LANGUAGE
+            : "en";
+
+        try {
+          const response = await fetch(
+            `/locales/${currentLanguage}/translation.json?v=${Date.now()}`,
+          );
+          if (response.ok) {
+            const data = await response.json();
+
+            // Asegurarnos de que las propiedades estén inicializadas
+            if (typeof window !== "undefined") {
+              window.TRANSLATIONS = window.TRANSLATIONS || {};
+              if (window.TRANSLATIONS) {
+                window.TRANSLATIONS[currentLanguage] = data;
+              }
+            }
+
+            // Reimplementar la función t() con las traducciones cargadas
+            if (typeof window !== "undefined") {
+              window.t = function (key) {
+                // Verificar que TRANSLATIONS exista
+                const translations =
+                  window.TRANSLATIONS && window.TRANSLATIONS[currentLanguage]
+                    ? window.TRANSLATIONS[currentLanguage]
+                    : {};
+
+                const keys = key.split(".");
+                let result = translations;
+
+                for (const k of keys) {
+                  if (result && typeof result === "object" && k in result) {
+                    result = result[k];
+                  } else {
+                    // Fallback a la última parte de la clave
+                    return keys[keys.length - 1];
+                  }
+                }
+
+                return result || keys[keys.length - 1];
+              };
+            }
+
+            console.log(
+              `Translations for ${currentLanguage} loaded successfully`,
+            );
+
+            // Actualizar texto visible en la página
+            document.dispatchEvent(new CustomEvent("translationsLoaded"));
+          }
+        } catch (error) {
+          console.error("Error loading translations:", error);
+        }
+      }
+
+      // Cargar traducciones en cuanto el DOM esté listo
+      document.addEventListener("DOMContentLoaded", loadTranslations);
+    </script>
   </head>
   <body
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
@@ -240,7 +354,13 @@ const fullCanonicalUrl =
                 class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
               >
                 <i class="fas fa-arrow-up mr-2 text-xs"></i>
-                Back to top
+                {
+                  lang === "es"
+                    ? "Volver arriba"
+                    : lang === "fr"
+                      ? "Retour en haut"
+                      : "Back to top"
+                }
               </a>
               <button
                 id="cv-download-button"
@@ -248,7 +368,13 @@ const fullCanonicalUrl =
                 onclick="window.print()"
               >
                 <i class="fas fa-download mr-2"></i>
-                Download CV
+                {
+                  lang === "es"
+                    ? "Descargar CV"
+                    : lang === "fr"
+                      ? "Télécharger CV"
+                      : "Download CV"
+                }
               </button>
             </div>
           </div>
@@ -304,6 +430,18 @@ const fullCanonicalUrl =
             });
         });
       }
+    </script>
+    <!-- Actualizar textos cuando se carguen las traducciones -->
+    <script is:inline>
+      document.addEventListener("translationsLoaded", function () {
+        // Buscar elementos con atributos data-i18n y actualizarlos
+        document.querySelectorAll("[data-i18n]").forEach(function (element) {
+          const key = element.getAttribute("data-i18n");
+          if (key && window.t) {
+            element.textContent = window.t(key);
+          }
+        });
+      });
     </script>
   </body>
 </html>

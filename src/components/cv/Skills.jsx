@@ -1,18 +1,26 @@
-import React, { useEffect, useState, useRef } from 'react';
-import skillsData, { techIcons } from '../../data/skills';
-
 /**
- * Skills component con animaciones fluidas inspiradas en principios de diseño de movimiento
+ * Skills component with fluid animations and multilingual support
+ * File: src/components/cv/Skills.jsx
  */
+import React, { useEffect, useState, useRef } from 'react';
+import skillsData, { techIcons, getCurrentLanguageSkills } from '../../data/skills';
+
 const Skills = () => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef(null);
     const [categories, setCategories] = useState({});
+    const [titles, setTitles] = useState({
+        main: 'Technical Skills',
+        languages: 'Programming Languages',
+        libraries: 'Libraries & Frameworks',
+        technologies: 'Technologies & Databases',
+        tools: 'Tools & Applications',
+        protocols: 'Protocols'
+    });
 
-    // Retrasos personalizados para cada tipo de elemento
+    // Custom delays for each type of element
     const getStaggerDelay = (index, type) => {
         const baseDelay = {
-            // Delays personalizados por tipo para un efecto más natural
             'header': 30,
             'languages': 10,
             'libraries': 12,
@@ -21,40 +29,43 @@ const Skills = () => {
             'protocols': 20
         };
 
-        // Añadir ligeras variaciones aleatorias para un efecto más orgánico
-        const variation = Math.random() * 10 - 5; // Entre -5ms y +5ms
+        // Add slight random variations for a more organic effect
+        const variation = Math.random() * 10 - 5; // Between -5ms and +5ms
         return (baseDelay[type] || 20) * index + variation;
     };
 
     useEffect(() => {
-        // Configuración de observer con opciones de threshold para detección más precisa
+        // Load initial titles based on current language
+        updateTitles();
+
+        // IntersectionObserver configuration
         const observer = new IntersectionObserver(
             (entries) => {
                 const [entry] = entries;
 
                 if (entry.isIntersecting) {
-                    // Animación fluida escalonada para diferentes categorías
+                    // Fluid staggered animation for different categories
                     setIsVisible(true);
 
-                    // Secuencia de activación para categorías con retrasos naturales
+                    // Sequence of activation for categories with natural delays
                     const sequence = ['languages', 'libraries', 'technologies', 'tools', 'protocols'];
 
-                    // Activar categorías con timing más natural
+                    // Activate categories with natural timing
                     sequence.forEach((category, i) => {
                         setTimeout(() => {
                             setCategories(prev => ({
                                 ...prev,
                                 [category]: true
                             }));
-                        }, 150 + i * 100); // Espaciado natural entre categorías
+                        }, 150 + i * 100); // Natural spacing between categories
                     });
 
                     observer.disconnect();
                 }
             },
             {
-                threshold: 0.15, // Umbral más bajo para activar antes
-                rootMargin: "-50px 0px" // Margen negativo para activar antes de estar completamente visible
+                threshold: 0.15,
+                rootMargin: "-50px 0px"
             }
         );
 
@@ -62,18 +73,40 @@ const Skills = () => {
             observer.observe(sectionRef.current);
         }
 
-        return () => observer.disconnect();
+        // Listen for language changes
+        const handleLanguageChanged = () => {
+            updateTitles();
+        };
+
+        document.addEventListener('languageChanged', handleLanguageChanged);
+        document.addEventListener('translationsLoaded', handleLanguageChanged);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('languageChanged', handleLanguageChanged);
+            document.removeEventListener('translationsLoaded', handleLanguageChanged);
+        };
     }, []);
 
-    // SkillPill con animaciones más fluidas basadas en principios de física
+    // Update section titles based on current language
+    const updateTitles = () => {
+        const localizedData = getCurrentLanguageSkills();
+
+        setTitles({
+            main: localizedData.title,
+            languages: localizedData.languages.title,
+            libraries: localizedData.libraries.title,
+            technologies: localizedData.technologies.title,
+            tools: localizedData.tools.title,
+            protocols: localizedData.protocols.title
+        });
+    };
+
+    // SkillPill with fluid animations based on physics principles
     const SkillPill = ({ name, icon, index, category }) => {
-        // Retrasos y duraciones variables para movimiento más orgánico
         const isActive = categories[category] || false;
         const delay = getStaggerDelay(index, category);
-
-        // Calcular probabilidades para animación personalizada
-        const direction = index % 2 === 0 ? -1 : 1; // Alternar dirección
-        const hasBounce = index % 3 === 0; // Algunos elementos tendrán rebote
+        const hasBounce = index % 3 === 0; // Some elements will have bounce
 
         return (
             <div
@@ -88,8 +121,8 @@ const Skills = () => {
                     transitionDuration: `${280 + index % 120}ms`,
                     transitionDelay: `${delay}ms`,
                     transitionTimingFunction: hasBounce
-                        ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' // Con rebote
-                        : 'cubic-bezier(0.33, 1, 0.68, 1)', // Sin rebote
+                        ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' // With bounce
+                        : 'cubic-bezier(0.33, 1, 0.68, 1)', // Without bounce
                     transformOrigin: index % 2 === 0 ? 'left center' : 'right center'
                 }}
             >
@@ -99,10 +132,10 @@ const Skills = () => {
         );
     };
 
-    // Sección header con animación fluida
+    // Section header with fluid animation
     const SectionHeader = ({ icon, title, index, category }) => {
         const isActive = categories[category] || false;
-        const delay = 50 + index * 80; // Retraso progresivo para headers
+        const delay = 50 + index * 80; // Progressive delay for headers
 
         return (
             <div
@@ -128,7 +161,7 @@ const Skills = () => {
 
     return (
         <section id="skills" ref={sectionRef} className="mb-16">
-            {/* Section Header con animación optimizada */}
+            {/* Section Header with optimized animation */}
             <div
                 className="flex items-center mb-6"
                 style={{
@@ -140,10 +173,10 @@ const Skills = () => {
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-code"></i>
                 </div>
-                <h2 className="text-2xl font-bold ml-3">Technical Skills</h2>
+                <h2 className="text-2xl font-bold ml-3" data-i18n="skills.title">{titles.main}</h2>
             </div>
 
-            {/* Container principal con efecto de aparición optimizado */}
+            {/* Main container with optimized appearance effect */}
             <div
                 className="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm"
                 style={{
@@ -153,20 +186,20 @@ const Skills = () => {
                     transitionDelay: '100ms'
                 }}
             >
-                {/* Layout con gap natural */}
+                {/* Layout with natural gap */}
                 <div className="grid grid-cols-1 gap-8">
                     {/* Programming Languages */}
                     <div className="space-y-4">
                         <SectionHeader
                             icon="fas fa-code"
-                            title="Programming Languages"
+                            title={titles.languages}
                             index={0}
                             category="languages"
                         />
                         <div className="flex flex-wrap gap-3">
                             {skillsData.languages.map((skill, index) => (
                                 <SkillPill
-                                    key={skill.name}
+                                    key={skill.id}
                                     name={skill.name}
                                     icon={skill.icon}
                                     index={index}
@@ -180,14 +213,14 @@ const Skills = () => {
                     <div className="space-y-4 pt-2">
                         <SectionHeader
                             icon="fas fa-puzzle-piece"
-                            title="Libraries & Frameworks"
+                            title={titles.libraries}
                             index={1}
                             category="libraries"
                         />
                         <div className="flex flex-wrap gap-3">
                             {skillsData.libraries.map((lib, index) => (
                                 <SkillPill
-                                    key={lib.name}
+                                    key={lib.id}
                                     name={lib.name}
                                     icon={lib.icon}
                                     index={index}
@@ -201,14 +234,14 @@ const Skills = () => {
                     <div className="space-y-4 pt-2">
                         <SectionHeader
                             icon="fas fa-server"
-                            title="Technologies & Databases"
+                            title={titles.technologies}
                             index={2}
                             category="technologies"
                         />
                         <div className="flex flex-wrap gap-3">
                             {skillsData.technologies.map((tech, index) => (
                                 <SkillPill
-                                    key={tech.name}
+                                    key={tech.id}
                                     name={tech.name}
                                     icon={tech.icon}
                                     index={index}
@@ -222,14 +255,14 @@ const Skills = () => {
                     <div className="space-y-4 pt-2">
                         <SectionHeader
                             icon="fas fa-tools"
-                            title="Tools & Applications"
+                            title={titles.tools}
                             index={3}
                             category="tools"
                         />
                         <div className="flex flex-wrap gap-3">
                             {skillsData.tools.map((tool, index) => (
                                 <SkillPill
-                                    key={tool.name}
+                                    key={tool.id}
                                     name={tool.name}
                                     icon={tool.icon}
                                     index={index}
@@ -243,14 +276,14 @@ const Skills = () => {
                     <div className="space-y-4 pt-2">
                         <SectionHeader
                             icon="fas fa-network-wired"
-                            title="Protocols"
+                            title={titles.protocols}
                             index={4}
                             category="protocols"
                         />
                         <div className="flex flex-wrap gap-3">
                             {skillsData.protocols.map((protocol, index) => (
                                 <SkillPill
-                                    key={protocol.name}
+                                    key={protocol.id}
                                     name={protocol.name}
                                     icon={protocol.icon}
                                     index={index}

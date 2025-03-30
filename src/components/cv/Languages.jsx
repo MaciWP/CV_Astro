@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import languagesData from '../../data/languages';
-
 /**
- * Languages component with animations similar to Experience
- * (Removed percentages and adjusted animation speed)
+ * Languages component with animations and multilingual support
+ * File: src/components/cv/Languages.jsx
  */
+import React, { useEffect, useState } from 'react';
+import { getCurrentLanguageLanguages } from '../../data/languages';
+
 const Languages = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [progressAnimation, setProgressAnimation] = useState({});
+    const [languagesData, setLanguagesData] = useState([]);
+    const [title, setTitle] = useState('Languages');
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -15,8 +17,12 @@ const Languages = () => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
 
+                    // Get languages in current UI language
+                    const languages = getCurrentLanguageLanguages();
+                    setLanguagesData(languages);
+
                     // Start progress bar animations with natural staggering
-                    languagesData.forEach((lang, index) => {
+                    languages.forEach((lang, index) => {
                         setTimeout(() => {
                             setProgressAnimation(prev => ({
                                 ...prev,
@@ -36,7 +42,44 @@ const Languages = () => {
             observer.observe(element);
         }
 
-        return () => observer.disconnect();
+        // Initial load of languages data
+        setLanguagesData(getCurrentLanguageLanguages());
+
+        // Update title based on current language
+        if (typeof window !== 'undefined' && typeof window.t === 'function') {
+            setTitle(window.t('languages.title') || 'Languages');
+        }
+
+        // Listen for language changes
+        const handleLanguageChanged = () => {
+            const newLanguages = getCurrentLanguageLanguages();
+            setLanguagesData(newLanguages);
+
+            // Reset and restart progress animations
+            setProgressAnimation({});
+            newLanguages.forEach((lang, index) => {
+                setTimeout(() => {
+                    setProgressAnimation(prev => ({
+                        ...prev,
+                        [lang.language]: true
+                    }));
+                }, 300 + (index * 150));
+            });
+
+            // Update title
+            if (typeof window !== 'undefined' && typeof window.t === 'function') {
+                setTitle(window.t('languages.title') || 'Languages');
+            }
+        };
+
+        document.addEventListener('languageChanged', handleLanguageChanged);
+        document.addEventListener('translationsLoaded', handleLanguageChanged);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('languageChanged', handleLanguageChanged);
+            document.removeEventListener('translationsLoaded', handleLanguageChanged);
+        };
     }, []);
 
     return (
@@ -47,7 +90,7 @@ const Languages = () => {
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-language"></i>
                 </div>
-                <h2 className="text-2xl font-bold ml-3">Languages</h2>
+                <h2 className="text-2xl font-bold ml-3" data-i18n="languages.title">{title}</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -80,8 +123,6 @@ const Languages = () => {
                                     }}
                                 ></div>
                             </div>
-
-                            {/* Removed percentage indicator */}
                         </div>
                     </div>
                 ))}
