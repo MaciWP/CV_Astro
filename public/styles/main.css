@@ -4,12 +4,715 @@
  */
 
 /* Core styles */
-@import './global.css';
+/**
+ * Global CSS Styles - Corrected Version
+ * File: src/styles/global.css
+ */
+
+/* Base Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+@layer base {
+    body {
+        @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: "kern";
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Typography enhancements */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        letter-spacing: -0.02em;
+        @apply font-bold;
+    }
+
+    /* Better scroll section spacing */
+    section {
+        scroll-margin-top: 80px;
+        @apply mb-24;
+    }
+
+    /* Accessibility */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    /* Improved focus states for accessibility */
+    :focus-visible {
+        outline: 2px solid #D83333 !important;
+        outline-offset: 2px !important;
+    }
+}
+
+/* ===== COMPONENT STYLES ===== */
+@layer components {
+
+    /* Theme transition classes for better control */
+    .theme-transition {
+        @apply transition-all duration-75;
+    }
+
+    .theme-transition-text {
+        @apply transition-colors duration-75;
+    }
+
+    .theme-transition-bg {
+        @apply transition-colors duration-75;
+    }
+
+    /* Only transition necessary properties */
+    html.theme-transitioning * {
+        transition-duration: 75ms !important;
+    }
+
+    html.theme-transitioning .text-light-text,
+    html.theme-transitioning .text-dark-text,
+    html.theme-transitioning .text-light-text-secondary,
+    html.theme-transitioning .text-dark-text-secondary,
+    html.theme-transitioning .bg-light-primary,
+    html.theme-transitioning .bg-dark-primary,
+    html.theme-transitioning .bg-light-secondary,
+    html.theme-transitioning .bg-dark-secondary,
+    html.theme-transitioning .bg-light-surface,
+    html.theme-transitioning .bg-dark-surface,
+    html.theme-transitioning .border-light-border,
+    html.theme-transitioning .border-dark-border {
+        transition-property: color, background-color, border-color;
+        transition-duration: 75ms;
+        transition-timing-function: ease-out;
+    }
+
+    /* Button styles */
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
+    }
+
+    .btn-primary {
+        @apply bg-brand-red text-white hover:bg-red-700;
+    }
+
+    .btn-secondary {
+        @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
+    }
+
+    /* Card styles */
+    .card {
+        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
+    }
+
+    /* Section header with icon */
+    .section-header {
+        @apply flex items-center gap-3 mb-6;
+    }
+
+    .section-icon {
+        @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-gray-800;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 dark:bg-gray-600;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400 dark:bg-gray-500;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+/* Enhanced appear animation */
+@keyframes enhanced-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-animate {
+    animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Hide elements not needed for print */
+    nav,
+    footer,
+    button:not(#cv-download-button),
+    .no-print {
+        display: none !important;
+    }
+
+    /* Ensure all content is visible */
+    .opacity-0,
+    .translate-y-10 {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Remove visual effects */
+    * {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Ensure brand colors print correctly */
+    .text-brand-red {
+        color: #D83333 !important;
+    }
+
+    .bg-brand-red {
+        background-color: #D83333 !important;
+    }
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+@media (max-width: 768px) {
+    section {
+        margin-bottom: 3rem !important;
+    }
+
+    #about {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    h1 {
+        font-size: 2.25rem !important;
+        line-height: 2.5rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+        line-height: 2rem !important;
+    }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Proper touch targets for accessibility */
+.touch-target {
+    min-height: 44px;
+    min-width: 44px;
+}
 
 /* Animation system */
-@import './animation-system.css';
-@import './natural-theme-transitions.css';
-@import './theme-toggle.css';
+/* 
+ * Unified Animation System
+ * This file defines animation standards across the application
+ * src/styles/animation-system.css
+ */
+
+:root {
+    /* 
+     * STANDARD DURATIONS
+     * -----------------
+     * Unified time system for different types of animations
+     */
+    --duration-micro: 100ms;
+    /* For minimal changes (simple hovers) */
+    --duration-fast: 150ms;
+    /* For most interactions */
+    --duration-standard: 250ms;
+    /* For standard transitions and entrances */
+    --duration-emphasis: 400ms;
+    /* For more dramatic movements */
+    --duration-complex: 600ms;
+    /* For complex/sequential animations */
+
+    /* 
+     * TIMING CURVES
+     * --------------
+     * Standard timing functions for different types of movement
+     */
+    /* For regular movements with natural acceleration */
+    --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+
+    /* For entrances with slight bounce */
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* For entrances with elastic effect */
+    --ease-elastic: cubic-bezier(0.22, 1.75, 0.46, 0.92);
+
+    /* For quick accelerations */
+    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+    /* For smooth decelerations */
+    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+
+    /* 
+     * BASIC DELAYS
+     * -------------
+     * Base values for staggered effects
+     */
+    --delay-minimum: 20ms;
+    --delay-fast: 50ms;
+    --delay-standard: 100ms;
+    --delay-stagger: 30ms;
+    /* For sequential elements */
+}
+
+/* 
+   * UTILITY CLASSES FOR TRANSITIONS
+   * ---------------------------------
+   * Classes to apply directly in components
+   */
+
+/* Transitions for basic properties */
+.transition-standard {
+    transition-property: transform, opacity, color, background-color, border-color;
+    transition-duration: var(--duration-standard);
+    transition-timing-function: var(--ease-standard);
+}
+
+.transition-fast {
+    transition-property: transform, opacity, color, background-color, border-color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+}
+
+/* Specific transitions */
+.transition-color {
+    transition-property: color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+}
+
+.transition-bg {
+    transition-property: background-color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+}
+
+.transition-transform {
+    transition-property: transform;
+    transition-duration: var(--duration-standard);
+    transition-timing-function: var(--ease-bounce);
+}
+
+.transition-fade {
+    transition-property: opacity;
+    transition-duration: var(--duration-standard);
+    transition-timing-function: var(--ease-standard);
+}
+
+/* Classes for hover effects on interactive elements */
+.hover-lift {
+    transition: transform var(--duration-fast) var(--ease-bounce);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+}
+
+.hover-scale {
+    transition: transform var(--duration-fast) var(--ease-bounce);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-bright {
+    transition: filter var(--duration-fast) var(--ease-standard);
+}
+
+.hover-bright:hover {
+    filter: brightness(1.1);
+}
+
+/* 
+   * KEYFRAME ANIMATIONS
+   * ----------------
+   * Reusable animations
+   */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseOnce {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Classes to apply animations */
+.animate-fadeIn {
+    animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
+}
+
+.animate-fadeInLeft {
+    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-fadeInRight {
+    animation: fadeInRight var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-scaleIn {
+    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+}
+
+.animate-pulseOnce {
+    animation: pulseOnce 600ms var(--ease-elastic) forwards;
+}
+
+/* Staggering system with classes */
+.stagger-container>* {
+    opacity: 0;
+}
+
+.stagger-visible.stagger-container>*:nth-child(1) {
+    animation-delay: calc(var(--delay-stagger) * 1);
+}
+
+.stagger-visible.stagger-container>*:nth-child(2) {
+    animation-delay: calc(var(--delay-stagger) * 2);
+}
+
+.stagger-visible.stagger-container>*:nth-child(3) {
+    animation-delay: calc(var(--delay-stagger) * 3);
+}
+
+.stagger-visible.stagger-container>*:nth-child(4) {
+    animation-delay: calc(var(--delay-stagger) * 4);
+}
+
+.stagger-visible.stagger-container>*:nth-child(5) {
+    animation-delay: calc(var(--delay-stagger) * 5);
+}
+
+/* Configuration for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+/* 
+ * Natural Theme Transitions
+ * Optimized implementation for fluid and smooth theme transitions
+ */
+
+:root {
+    /* Shorter base duration for more natural feel */
+    --theme-base-duration: 180ms;
+
+    /* Optimized timing curves for different property types */
+    --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
+    /* Output easing for colors */
+    --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
+    /* Smooth easing for shadows */
+    --theme-curve-transform: cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bounce easing for movements */
+}
+
+/*
+   * Layer System - Transitions are applied by "visual layers" 
+   * instead of to the entire DOM simultaneously
+   */
+
+/* Layer 1: Main background colors - fastest */
+html.theme-transitioning body,
+html.theme-transitioning .bg-light-primary,
+html.theme-transitioning .bg-dark-primary {
+    transition: background-color var(--theme-base-duration) var(--theme-curve-color);
+    will-change: background-color;
+}
+
+/* Layer 2: Secondary containers and backgrounds - slightly delayed */
+html.theme-transitioning .bg-light-secondary,
+html.theme-transitioning .bg-dark-secondary,
+html.theme-transitioning .bg-light-surface,
+html.theme-transitioning .bg-dark-surface {
+    transition: background-color calc(var(--theme-base-duration) * 1.15) var(--theme-curve-color);
+    transition-delay: calc(var(--theme-base-duration) * 0.1);
+    will-change: background-color;
+}
+
+/* Layer 3: Main text - starts slightly after backgrounds */
+html.theme-transitioning .text-light-text,
+html.theme-transitioning .text-dark-text {
+    transition: color calc(var(--theme-base-duration) * 1.1) var(--theme-curve-color);
+    transition-delay: calc(var(--theme-base-duration) * 0.15);
+    will-change: color;
+}
+
+/* Layer 4: Secondary text and borders - after main text */
+html.theme-transitioning .text-light-text-secondary,
+html.theme-transitioning .text-dark-text-secondary,
+html.theme-transitioning .border-light-border,
+html.theme-transitioning .border-dark-border {
+    transition-property: color, border-color;
+    transition-duration: calc(var(--theme-base-duration) * 1.2);
+    transition-timing-function: var(--theme-curve-color);
+    transition-delay: calc(var(--theme-base-duration) * 0.2);
+    will-change: color, border-color;
+}
+
+/* Layer 5: Accent elements - last to transition */
+html.theme-transitioning .text-brand-red,
+html.theme-transitioning .bg-brand-red,
+html.theme-transitioning .border-brand-red {
+    transition-property: color, background-color, border-color;
+    transition-duration: calc(var(--theme-base-duration) * 1.3);
+    transition-timing-function: var(--theme-curve-color);
+    transition-delay: calc(var(--theme-base-duration) * 0.25);
+    will-change: color, background-color, border-color;
+}
+
+/* Layer 6: Shadows - transition with specialized easing */
+html.theme-transitioning .shadow-sm,
+html.theme-transitioning .shadow-md,
+html.theme-transitioning .shadow-lg,
+html.theme-transitioning .shadow-xl {
+    transition: box-shadow calc(var(--theme-base-duration) * 1.5) var(--theme-curve-shadow);
+    transition-delay: calc(var(--theme-base-duration) * 0.1);
+    will-change: box-shadow;
+}
+
+/* Temporary interaction blocking during transition */
+.theme-transition-blocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    pointer-events: all;
+    background-color: transparent;
+    opacity: 0;
+}
+
+/* Subtly animated gradient effect during theme transition */
+.theme-wave {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.015),
+            transparent);
+    transform: translateY(-100%);
+    pointer-events: none;
+    z-index: 9998;
+}
+
+html.theme-transitioning .theme-wave {
+    animation: theme-wave-animation calc(var(--theme-base-duration) * 2) ease-out forwards;
+}
+
+@keyframes theme-wave-animation {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* More natural transition utilities */
+.theme-transition-text {
+    transition: color calc(var(--theme-base-duration) * 0.8) var(--theme-curve-color);
+}
+
+.theme-transition-bg {
+    transition: background-color calc(var(--theme-base-duration) * 0.75) var(--theme-curve-color);
+}
+
+.theme-transition-transform {
+    transition: transform calc(var(--theme-base-duration) * 0.9) var(--theme-curve-transform);
+}
+/* Animaciones específicas para ThemeToggle */
+
+@keyframes spin-once {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-once {
+    animation: spin-once 300ms var(--theme-curve-transform);
+}
+
+/* Animación para el sol/luna */
+@keyframes morphIcon {
+    0% {
+        transform: scale(1) rotate(0);
+    }
+
+    50% {
+        transform: scale(0.8) rotate(180deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+/* Efecto de resplandor al cambiar tema */
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.2);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+/* Aplicar al botón de cambio de tema */
+.theme-toggle-btn:active {
+    animation: pulse-glow 600ms ease-out;
+}
 
 /* Print styles */
 @media print {

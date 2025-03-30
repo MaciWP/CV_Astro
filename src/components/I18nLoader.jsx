@@ -1,8 +1,6 @@
 /**
- * I18nLoader.jsx - Componente para precargar traducciones
- * 
- * Este componente soluciona el problema de carga de traducciones garantizando
- * que todas las traducciones estén disponibles antes de mostrar la interfaz
+ * I18nLoader.jsx - Componente optimizado para precargar traducciones
+ * Simplificado para aprovechar las funciones del nuevo sistema i18n unificado
  * 
  * File: src/components/I18nLoader.jsx
  */
@@ -25,7 +23,14 @@ const I18nLoader = ({ children, fallback = null }) => {
                     return;
                 }
 
-                // Cargar el archivo de traducciones con parámetro de tiempo para evitar caché
+                // Utilizar la API global de i18n si está disponible
+                if (window.i18n && typeof window.i18n.init === 'function') {
+                    await window.i18n.init(currentLang);
+                    setLoaded(true);
+                    return;
+                }
+
+                // Fallback: cargar traducciones directamente
                 const response = await fetch(`/locales/${currentLang}/translation.json?v=${Date.now()}`);
 
                 if (!response.ok) {
@@ -38,56 +43,30 @@ const I18nLoader = ({ children, fallback = null }) => {
                 window.TRANSLATIONS = window.TRANSLATIONS || {};
                 window.TRANSLATIONS[currentLang] = translations;
 
-                // Reimplementar la función t() para garantizar que use las traducciones correctas
-                window.t = function (key) {
-                    const translations = window.TRANSLATIONS[currentLang] || {};
-                    const keys = key.split('.');
-                    let result = translations;
+                // Asegurar que la función t() está disponible
+                if (!window.t) {
+                    window.t = function (key) {
+                        const translations = window.TRANSLATIONS[currentLang] || {};
+                        const keys = key.split('.');
+                        let result = translations;
 
-                    for (const k of keys) {
-                        if (result && typeof result === 'object' && k in result) {
-                            result = result[k];
-                        } else {
-                            // Intentar con inglés como fallback
-                            if (currentLang !== 'en' && window.TRANSLATIONS['en']) {
-                                let enResult = window.TRANSLATIONS['en'];
-                                let found = true;
-
-                                for (const k2 of keys) {
-                                    if (enResult && typeof enResult === 'object' && k2 in enResult) {
-                                        enResult = enResult[k2];
-                                    } else {
-                                        found = false;
-                                        break;
-                                    }
-                                }
-
-                                if (found) return enResult;
+                        for (const k of keys) {
+                            if (result && typeof result === 'object' && k in result) {
+                                result = result[k];
+                            } else {
+                                return key.split('.').pop();
                             }
-
-                            // Si no se encuentra, devolver la última parte de la clave
-                            return key.split('.').pop();
                         }
-                    }
 
-                    return result || key.split('.').pop();
-                };
+                        return result || key.split('.').pop();
+                    };
+                }
 
                 // Disparar evento para que los componentes sepan que las traducciones están disponibles
                 document.dispatchEvent(new CustomEvent('translationsLoaded'));
 
                 // Indicar que las traducciones están cargadas
                 setLoaded(true);
-
-                // También cargar inglés como fallback si no es el idioma actual
-                if (currentLang !== 'en') {
-                    fetch(`/locales/en/translation.json?v=${Date.now()}`)
-                        .then(res => res.json())
-                        .then(enTranslations => {
-                            window.TRANSLATIONS['en'] = enTranslations;
-                        })
-                        .catch(err => console.warn('Failed to load English fallback translations:', err));
-                }
             } catch (error) {
                 console.error('Error loading translations:', error);
                 setError(error);

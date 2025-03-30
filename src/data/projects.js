@@ -3,8 +3,8 @@
  * File: src/data/projects.js
  */
 
-// Import helper function for tech icons
-import { getTechIcon } from './techIcons';
+// Import helper function from new unified icons system
+import { getTechIcon } from './icons';
 
 // Personal projects with GitHub links and multilingual descriptions
 const personalProjectsData = [
@@ -433,7 +433,7 @@ const professionalProjectsData = [
  * @param {string} lang - Language code (en, es, fr)
  * @returns {Array} Projects with texts in the specified language
  */
-export const getPersonalProjects = (lang = 'en') => {
+export function getPersonalProjects(lang = 'en') {
     // Default to English if language not supported
     const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
 
@@ -445,14 +445,14 @@ export const getPersonalProjects = (lang = 'en') => {
         longDescription: project.longDescription[language] || project.longDescription.en,
         keyFeatures: project.keyFeatures[language] || project.keyFeatures.en
     }));
-};
+}
 
 /**
  * Get professional projects in the specified language
  * @param {string} lang - Language code (en, es, fr)
  * @returns {Array} Projects with texts in the specified language
  */
-export const getProfessionalProjects = (lang = 'en') => {
+export function getProfessionalProjects(lang = 'en') {
     // Default to English if language not supported
     const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
 
@@ -464,29 +464,32 @@ export const getProfessionalProjects = (lang = 'en') => {
         longDescription: project.longDescription[language] || project.longDescription.en,
         keyFeatures: project.keyFeatures[language] || project.keyFeatures.en
     }));
-};
+}
 
 /**
  * Get personal projects for the current UI language
  * @returns {Array} Projects with texts in the current UI language
  */
-export const getCurrentLanguagePersonalProjects = () => {
+export function getCurrentLanguagePersonalProjects() {
     // Get current language from window object if available
     const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
     return getPersonalProjects(currentLang);
-};
+}
 
 /**
  * Get professional projects for the current UI language
  * @returns {Array} Projects with texts in the current UI language
  */
-export const getCurrentLanguageProfessionalProjects = () => {
+export function getCurrentLanguageProfessionalProjects() {
     // Get current language from window object if available
     const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
     return getProfessionalProjects(currentLang);
-};
+}
 
-// For compatibility with existing code
+// Re-exportar getTechIcon para mantener compatibilidad
+export { getTechIcon };
+
+// For compatibility with existing code - ahora después de definir las funciones
 export const personalProjects = getPersonalProjects('en');
 export const professionalProjects = getProfessionalProjects('en');
 

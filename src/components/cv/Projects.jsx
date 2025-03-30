@@ -5,9 +5,9 @@
 import React, { useEffect, useState } from 'react';
 import {
     getCurrentLanguagePersonalProjects,
-    getCurrentLanguageProfessionalProjects
+    getCurrentLanguageProfessionalProjects,
+    getTechIcon
 } from '../../data/projects';
-import { getTechIcon } from '../../data/techIcons';
 
 const Projects = () => {
     const [isVisible, setIsVisible] = useState(false);

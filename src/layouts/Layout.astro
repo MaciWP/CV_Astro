@@ -157,21 +157,46 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       }
     </style>
 
+    <!-- Cargar el sistema unificado de internacionalización -->
+    <script is:inline src="/scripts/i18n.js"></script>
+
     <!-- Establecer idioma actual para scripts cliente y depuración -->
     <script is:inline define:vars={{ currentLang: lang }}>
       // Establecer el idioma actual en una variable global
       window.CURRENT_LANGUAGE = currentLang;
       console.log("Current language set to:", window.CURRENT_LANGUAGE);
 
-      // Función simplificada para buscar traducciones
-      window.t = function (key) {
-        // Esta función será reemplazada por la implementación completa más adelante
-        // Pero proporcionamos una versión básica para evitar errores antes de que se cargue
-        return key.split(".").pop();
-      };
+      // Inicializar sistema i18n si está disponible
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.i18n && typeof window.i18n.init === "function") {
+          window.i18n.init(currentLang);
+        } else {
+          // Función simplificada como fallback si el script i18n.js no se ha cargado
+          window.t = function (key) {
+            // Esta es una función de fallback mínima
+            const key_parts = key.split(".");
+            const last_part = key_parts[key_parts.length - 1];
+
+            // Si hay traducciones disponibles, intentar buscar la clave
+            if (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) {
+              let result = window.TRANSLATIONS[currentLang];
+              for (const part of key_parts) {
+                if (result && typeof result === "object" && part in result) {
+                  result = result[part];
+                } else {
+                  return last_part; // No se encontró la clave completa
+                }
+              }
+              return result || last_part;
+            }
+
+            return last_part;
+          };
+        }
+      });
 
       // Objeto global para almacenar traducciones una vez cargadas
-      window.TRANSLATIONS = {};
+      window.TRANSLATIONS = window.TRANSLATIONS || {};
     </script>
 
     <!-- Theme initialization script -->
@@ -345,6 +370,24 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
             }
           });
         });
+      });
+    </script>
+
+    <!-- Update translated elements in the DOM when translations load -->
+    <script is:inline>
+      document.addEventListener("translationsLoaded", () => {
+        // Actualizar elementos con atributo data-i18n
+        if (window.i18n && typeof window.i18n.updateElements === "function") {
+          window.i18n.updateElements();
+        } else {
+          // Fallback manual implementation
+          document.querySelectorAll("[data-i18n]").forEach((element) => {
+            const key = element.getAttribute("data-i18n");
+            if (key && typeof window.t === "function") {
+              element.textContent = window.t(key);
+            }
+          });
+        }
       });
     </script>
 

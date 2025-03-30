@@ -3,7 +3,10 @@
  * File: src/components/cv/Skills.jsx
  */
 import React, { useEffect, useState, useRef } from 'react';
-import skillsData, { techIcons, getCurrentLanguageSkills } from '../../data/skills';
+// Importamos solo lo que necesitamos
+import skillsData, { getCurrentLanguageSkills } from '../../data/skills';
+// Importamos getTechIcon desde el sistema unificado
+import { getTechIcon } from '../../data/icons';
 
 const Skills = () => {
     const [isVisible, setIsVisible] = useState(false);
