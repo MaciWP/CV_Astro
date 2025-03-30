@@ -6,16 +6,15 @@
   "scripts": {
     "dev": "node scripts/setup-font-awesome.js && astro dev",
     "start": "node scripts/setup-font-awesome.js && astro dev",
-    "build": "node scripts/setup-font-awesome.js && node scripts/copy-styles.js && astro build",
+    "build": "node scripts/build.js",
     "preview": "astro preview",
     "astro": "astro",
-    "copy:styles": "node scripts/copy-styles.js",
     "setup:fonts": "node scripts/setup-font-awesome.js",
-    "generate:favicons": "node scripts/generate-favicons.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "optimize:images": "node scripts/optimize-images.js",
     "seo:audit": "lighthouse https://oriolmacias.dev --output=html --output-path=./lighthouse-report.html",
-    "analyze:bundle": "astro build --analyze"
+    "analyze:bundle": "astro build --analyze",
+    "clean": "rimraf dist .astro public/styles/fonts public/styles/*.css"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.9",
@@ -36,6 +35,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.4.1",
+    "rimraf": "^5.0.5",
     "sharp": "^0.33.5"
   },
   "devDependencies": {

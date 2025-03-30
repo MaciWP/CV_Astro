@@ -1,5 +1,6 @@
 /**
  * ProfileHeader Component con botones debajo de la foto
+ * Versión corregida para garantizar la correcta carga de traducciones
  * 
  * File: src/components/cv/ProfileHeader.jsx
  */
@@ -10,47 +11,74 @@ import headerData from '../../data/header';
 const ProfileHeader = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [photoLoaded, setPhotoLoaded] = useState(false);
-    const [translations, setTranslations] = useState({
-        jobTitle: headerData.jobTitle,
-        summary: headerData.summary,
-        photoAlt: headerData.photoAlt,
-        email: 'Email',
-        linkedin: 'LinkedIn',
-        github: 'GitHub',
-        downloadCV: 'Download CV',
-        downloadCoverLetter: 'Download Cover Letter'
+    const [localData, setLocalData] = useState({
+        ...headerData,
+        jobTitle: headerData.jobTitle || "Software Developer",
+        summary: headerData.summary || "",
+        photoAlt: headerData.photoAlt || "Oriol Macias - Software Developer"
     });
 
-    // Función segura para obtener traducciones
-    const getTranslation = (key) => {
+    // Función segura para obtener traducciones con fallbacks robustos
+    const getTranslation = (key, defaultValue) => {
+        // Verificar si la API de traducción está disponible
         if (typeof window !== 'undefined' && typeof window.t === 'function') {
-            return window.t(key);
+            const translated = window.t(key);
+
+            // Comprobar si la traducción es válida (no es solo la clave)
+            if (translated && translated !== key.split('.').pop()) {
+                return translated;
+            }
         }
 
-        // Fallbacks
+        // Fallback 1: Buscar en TRANSLATIONS si está disponible
+        if (typeof window !== 'undefined' && window.TRANSLATIONS) {
+            const currentLang = window.CURRENT_LANGUAGE || 'en';
+            const translations = window.TRANSLATIONS[currentLang];
+
+            if (translations) {
+                const keys = key.split('.');
+                let result = translations;
+
+                for (const k of keys) {
+                    if (result && typeof result === 'object' && k in result) {
+                        result = result[k];
+                    } else {
+                        result = null;
+                        break;
+                    }
+                }
+
+                if (result) return result;
+            }
+        }
+
+        // Fallback 2: Devolver el valor de headerData si coincide con la clave
         if (key === 'header.jobTitle') return headerData.jobTitle;
         if (key === 'header.summary') return headerData.summary;
         if (key === 'header.photoAlt') return headerData.photoAlt;
-        if (key === 'header.email') return 'Email';
-        if (key === 'header.linkedin') return 'LinkedIn';
-        if (key === 'header.github') return 'GitHub';
-        if (key === 'buttons.downloadCV') return 'Download CV';
-        if (key === 'buttons.downloadCoverLetter') return 'Download Cover Letter';
 
-        return key.split('.').pop();
+        // Fallback 3: Usar el valor predeterminado proporcionado
+        return defaultValue || key.split('.').pop();
     };
 
     // Cargar traducciones
     const loadTranslations = () => {
-        setTranslations({
-            jobTitle: getTranslation('header.jobTitle'),
-            summary: getTranslation('header.summary'),
-            photoAlt: getTranslation('header.photoAlt'),
-            email: getTranslation('header.email'),
-            linkedin: getTranslation('header.linkedin'),
-            github: getTranslation('header.github'),
-            downloadCV: getTranslation('buttons.downloadCV'),
-            downloadCoverLetter: getTranslation('buttons.downloadCoverLetter')
+        setLocalData({
+            ...headerData,
+            jobTitle: getTranslation('header.jobTitle', headerData.jobTitle),
+            summary: getTranslation('header.summary', headerData.summary),
+            photoAlt: getTranslation('header.photoAlt', headerData.photoAlt),
+            email: getTranslation('header.email', 'Email'),
+            linkedin: getTranslation('header.linkedin', 'LinkedIn'),
+            github: getTranslation('header.github', 'GitHub'),
+            downloadCV: getTranslation('buttons.downloadCV', 'Download CV'),
+            downloadCoverLetter: getTranslation('buttons.downloadCoverLetter', 'Download Cover Letter')
+        });
+
+        // Registrar en consola para depuración
+        console.log('[ProfileHeader] Translations loaded:', {
+            jobTitle: getTranslation('header.jobTitle', headerData.jobTitle),
+            summary: getTranslation('header.summary', headerData.summary)
         });
     };
 
@@ -85,11 +113,13 @@ const ProfileHeader = () => {
         };
 
         document.addEventListener('languageChanged', handleLanguageChange);
+        document.addEventListener('translationsLoaded', handleLanguageChange);
 
         return () => {
             clearTimeout(timer);
             observer.disconnect();
             document.removeEventListener('languageChanged', handleLanguageChange);
+            document.removeEventListener('translationsLoaded', handleLanguageChange);
         };
     }, []);
 
@@ -135,7 +165,7 @@ const ProfileHeader = () => {
                                 className="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium"
                                 data-i18n="header.jobTitle"
                             >
-                                {translations.jobTitle}
+                                {localData.jobTitle}
                             </h2>
                         </div>
 
@@ -143,7 +173,7 @@ const ProfileHeader = () => {
                             className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-2xl"
                             data-i18n="header.summary"
                         >
-                            {translations.summary}
+                            {localData.summary}
                         </p>
 
                         {/* Información de contacto */}
@@ -154,7 +184,7 @@ const ProfileHeader = () => {
                                         target={contact.type !== 'email' ? "_blank" : undefined}
                                         rel={contact.type !== 'email' ? "noopener noreferrer" : undefined}
                                         className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                                        aria-label={getTranslation(`header.${contact.type}`)}
+                                        aria-label={localData[contact.type] || contact.label}
                                     >
                                         <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
                                             <i className={contact.icon}></i>
@@ -164,7 +194,7 @@ const ProfileHeader = () => {
                                                 className="text-xs block text-light-text-secondary dark:text-dark-text-secondary"
                                                 data-i18n={`header.${contact.type}`}
                                             >
-                                                {getTranslation(`header.${contact.type}`)}
+                                                {localData[contact.type] || contact.label}
                                             </span>
                                             {contact.value}
                                         </div>
@@ -184,7 +214,7 @@ const ProfileHeader = () => {
                             <div className="w-full h-full bg-white dark:bg-gray-800">
                                 <ResponsiveImage
                                     src={headerData.photoUrl}
-                                    alt={translations.photoAlt}
+                                    alt={localData.photoAlt}
                                     className="w-full h-full object-cover transition-opacity duration-500"
                                     width={400}
                                     height={400}
@@ -208,19 +238,19 @@ const ProfileHeader = () => {
                             <button
                                 onClick={handleCVDownload}
                                 className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                                aria-label={translations.downloadCV}
+                                aria-label={localData.downloadCV}
                             >
                                 <i className="fas fa-download mr-1.5"></i>
-                                <span>{translations.downloadCV}</span>
+                                <span>{localData.downloadCV}</span>
                             </button>
 
                             <button
                                 onClick={handleCoverLetterDownload}
                                 className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                                aria-label={translations.downloadCoverLetter}
+                                aria-label={localData.downloadCoverLetter}
                             >
                                 <i className="fas fa-file-alt mr-1.5"></i>
-                                <span>{translations.downloadCoverLetter}</span>
+                                <span>{localData.downloadCoverLetter}</span>
                             </button>
                         </div>
                     </div>

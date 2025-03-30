@@ -1,6 +1,7 @@
 ---
 // Import components
 import Navbar from "../components/Navbar";
+import I18nLoader from "../components/I18nLoader";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 // Define props interface
@@ -250,136 +251,72 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         }
       }
     </style>
-
-    <!-- Script para cargar traducciones en cliente -->
-    <script>
-      // Función para cargar traducciones al inicio
-      async function loadTranslations() {
-        // Asegurarnos de que la propiedad exista
-        const currentLanguage =
-          typeof window !== "undefined" && window.CURRENT_LANGUAGE
-            ? window.CURRENT_LANGUAGE
-            : "en";
-
-        try {
-          const response = await fetch(
-            `/locales/${currentLanguage}/translation.json?v=${Date.now()}`,
-          );
-          if (response.ok) {
-            const data = await response.json();
-
-            // Asegurarnos de que las propiedades estén inicializadas
-            if (typeof window !== "undefined") {
-              window.TRANSLATIONS = window.TRANSLATIONS || {};
-              if (window.TRANSLATIONS) {
-                window.TRANSLATIONS[currentLanguage] = data;
-              }
-            }
-
-            // Reimplementar la función t() con las traducciones cargadas
-            if (typeof window !== "undefined") {
-              window.t = function (key) {
-                // Verificar que TRANSLATIONS exista
-                const translations =
-                  window.TRANSLATIONS && window.TRANSLATIONS[currentLanguage]
-                    ? window.TRANSLATIONS[currentLanguage]
-                    : {};
-
-                const keys = key.split(".");
-                let result = translations;
-
-                for (const k of keys) {
-                  if (result && typeof result === "object" && k in result) {
-                    result = result[k];
-                  } else {
-                    // Fallback a la última parte de la clave
-                    return keys[keys.length - 1];
-                  }
-                }
-
-                return result || keys[keys.length - 1];
-              };
-            }
-
-            console.log(
-              `Translations for ${currentLanguage} loaded successfully`,
-            );
-
-            // Actualizar texto visible en la página
-            document.dispatchEvent(new CustomEvent("translationsLoaded"));
-          }
-        } catch (error) {
-          console.error("Error loading translations:", error);
-        }
-      }
-
-      // Cargar traducciones en cuanto el DOM esté listo
-      document.addEventListener("DOMContentLoaded", loadTranslations);
-    </script>
   </head>
   <body
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
   >
     <div id="app-root">
-      <!-- Navbar with client:load for immediate rendering -->
-      <Navbar client:load />
+      <I18nLoader client:only>
+        <!-- Navbar with client:load for immediate rendering -->
+        <Navbar client:load />
 
-      <main class="container mx-auto px-4 py-8 max-w-5xl">
-        <slot />
-      </main>
+        <main class="container mx-auto px-4 py-8 max-w-5xl">
+          <slot />
+        </main>
 
-      <!-- Simple Footer -->
-      <footer
-        class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
-      >
-        <div class="container mx-auto px-4 max-w-5xl">
-          <div
-            class="flex flex-col md:flex-row justify-between items-center gap-4"
-          >
-            <div class="flex items-center gap-2">
-              <div
-                class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center"
-              >
-                <span class="text-white font-bold text-xs">OM</span>
+        <!-- Simple Footer -->
+        <footer
+          class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
+        >
+          <div class="container mx-auto px-4 max-w-5xl">
+            <div
+              class="flex flex-col md:flex-row justify-between items-center gap-4"
+            >
+              <div class="flex items-center gap-2">
+                <div
+                  class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center"
+                >
+                  <span class="text-white font-bold text-xs">OM</span>
+                </div>
+                <p
+                  class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                >
+                  © {new Date().getFullYear()} Oriol Macias
+                </p>
               </div>
-              <p
-                class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
-              >
-                © {new Date().getFullYear()} Oriol Macias
-              </p>
-            </div>
-            <div class="flex items-center gap-6">
-              <a
-                href="#top"
-                class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
-              >
-                <i class="fas fa-arrow-up mr-2 text-xs"></i>
-                {
-                  lang === "es"
-                    ? "Volver arriba"
-                    : lang === "fr"
-                      ? "Retour en haut"
-                      : "Back to top"
-                }
-              </a>
-              <button
-                id="cv-download-button"
-                class="text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
-                onclick="window.print()"
-              >
-                <i class="fas fa-download mr-2"></i>
-                {
-                  lang === "es"
-                    ? "Descargar CV"
-                    : lang === "fr"
-                      ? "Télécharger CV"
-                      : "Download CV"
-                }
-              </button>
+              <div class="flex items-center gap-6">
+                <a
+                  href="#top"
+                  class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                >
+                  <i class="fas fa-arrow-up mr-2 text-xs"></i>
+                  {
+                    lang === "es"
+                      ? "Volver arriba"
+                      : lang === "fr"
+                        ? "Retour en haut"
+                        : "Back to top"
+                  }
+                </a>
+                <button
+                  id="cv-download-button"
+                  class="text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
+                  onclick="window.print()"
+                >
+                  <i class="fas fa-download mr-2"></i>
+                  {
+                    lang === "es"
+                      ? "Descargar CV"
+                      : lang === "fr"
+                        ? "Télécharger CV"
+                        : "Download CV"
+                  }
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </I18nLoader>
     </div>
 
     <!-- Script for smooth scrolling to sections -->
@@ -430,18 +367,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
             });
         });
       }
-    </script>
-    <!-- Actualizar textos cuando se carguen las traducciones -->
-    <script is:inline>
-      document.addEventListener("translationsLoaded", function () {
-        // Buscar elementos con atributos data-i18n y actualizarlos
-        document.querySelectorAll("[data-i18n]").forEach(function (element) {
-          const key = element.getAttribute("data-i18n");
-          if (key && window.t) {
-            element.textContent = window.t(key);
-          }
-        });
-      });
     </script>
   </body>
 </html>
