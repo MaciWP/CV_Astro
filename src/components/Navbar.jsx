@@ -1,11 +1,17 @@
 /**
- * Navbar component with enhanced accessibility, responsive translations, and improved layout
+ * Navbar component with enhanced accessibility and responsive design
  * File: src/components/Navbar.jsx
  */
 import React, { useState, useEffect, useRef } from 'react';
 import PDFDownload from './PDFDownload';
 import LanguageSelector from './LanguageSelector';
 import { getCurrentLanguageNavItems, getCurrentUITranslation } from '../data/navigation';
+
+// Import subcomponents
+import NavbarLogo from './navbar/NavbarLogo';
+import NavbarLinks from './navbar/NavbarLinks';
+import ThemeToggle from './navbar/ThemeToggle';
+import MobileMenu from './navbar/MobileMenu';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,27 +27,15 @@ const Navbar = () => {
         closeMenu: 'Close menu'
     });
 
-    const mobileMenuRef = useRef(null);
     const menuButtonRef = useRef(null);
     const navbarHeight = 80; // estimated navbar height for offset
 
-    /**
-     * Manage focus when mobile menu opens/closes for accessibility
-     * @param {boolean} isOpen - Whether menu is open or closed
-     */
-    const manageMobileMenuFocus = (isOpen) => {
-        setTimeout(() => {
-            if (isOpen && mobileMenuRef.current) {
-                // Al abrir el menú, enfocar el primer elemento
-                const firstFocusableElement = mobileMenuRef.current.querySelector('a, button');
-                if (firstFocusableElement) {
-                    firstFocusableElement.focus();
-                }
-            } else if (menuButtonRef.current) {
-                // Al cerrar el menú, devolver el foco al botón que lo abrió
-                menuButtonRef.current.focus();
-            }
-        }, 100);
+    // Close mobile menu
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        if (menuButtonRef.current) {
+            menuButtonRef.current.focus();
+        }
     };
 
     // Load translated navigation items and UI texts
@@ -93,23 +87,6 @@ const Navbar = () => {
             document.removeEventListener('translationsLoaded', handleLanguageChange);
         };
     }, []);
-
-    // Handle keyboard navigation in the mobile menu
-    useEffect(() => {
-        if (!isMenuOpen) return;
-
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') {
-                setIsMenuOpen(false);
-                manageMobileMenuFocus(false);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isMenuOpen]);
 
     // Setup intersection observers for all sections
     const setupIntersectionObservers = () => {
@@ -163,13 +140,10 @@ const Navbar = () => {
         };
     };
 
-    // Toggle the mobile menu with focus management
+    // Toggle the mobile menu
     const toggleMobileMenu = () => {
-        const newMenuState = !isMenuOpen;
-        setIsMenuOpen(newMenuState);
-        manageMobileMenuFocus(newMenuState);
+        setIsMenuOpen(!isMenuOpen);
     };
-
 
     // Handle click on navigation item
     const handleNavClick = (e, targetId) => {
@@ -189,13 +163,14 @@ const Navbar = () => {
                 behavior: 'smooth'
             });
 
-            // Close mobile menu if open
-            if (isMenuOpen) {
-                setIsMenuOpen(false);
-            }
-
             // Update URL hash
             window.history.pushState(null, '', `#${targetId}`);
+
+            // Announce to screen readers
+            if (window.announceToScreenReader) {
+                const sectionName = navItems.find(item => item.id === targetId)?.name || targetId;
+                window.announceToScreenReader(`Navigated to ${sectionName} section`);
+            }
         }
     };
 
@@ -214,6 +189,11 @@ const Navbar = () => {
 
         // Update URL hash
         window.history.pushState(null, '', '#about');
+
+        // Announce to screen readers
+        if (window.announceToScreenReader) {
+            window.announceToScreenReader('Returned to the top of the page');
+        }
     };
 
     // Toggle theme function
@@ -264,120 +244,42 @@ const Navbar = () => {
     }
 
     return (
-        <nav className={`py-4 sticky top-0 z-50 transition-all duration-75 theme-transition-bg
-            ${isScrolled
-                ? 'bg-white/95 dark:bg-dark-primary/95 shadow-md backdrop-blur-md'
-                : 'bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border'
-            }`}
+        <nav
+            className={`py-4 sticky top-0 z-50 transition-all duration-75 theme-transition-bg
+        ${isScrolled
+                    ? 'bg-white/95 dark:bg-dark-primary/95 shadow-md backdrop-blur-md'
+                    : 'bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border'
+                }`}
+            role="navigation"
+            aria-label="Main Navigation"
         >
             <div className="container mx-auto px-4 flex justify-between items-center max-w-5xl">
-                {/* Logo section - Increased size */}
-                <div className="flex items-center gap-4">
-                    <div
-                        className="flex items-center cursor-pointer"
-                        onClick={handleLogoClick}
-                    >
-                        {/* Logo cuadrado con márgenes equidistantes */}
-                        <div className="w-12 h-12 flex items-center justify-center bg-brand-red text-white rounded-none">
-                            <span className="text-lg font-bold">OM</span>
-                        </div>
+                {/* Logo section */}
+                <NavbarLogo onClick={handleLogoClick} />
 
-                        {/* Nombre en una sola línea */}
-                        <div className="ml-2 font-medium tracking-tight theme-transition-text">Oriol Macias</div>
-
-                    </div>
-
-                    {/* Social links */}
-                    <div className="hidden md:flex items-center gap-3 ml-2">
-
-                        <a href="https://github.com/MaciWP"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-brand-red hover:text-brand-red/80 transition-colors"
-                            aria-label="GitHub Profile"
-                        >
-                            <i className="fab fa-github text-lg"></i>
-                        </a>
-
-                        <a href="https://linkedin.com/in/oriolmaciasbadosa"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-brand-red hover:text-brand-red/80 transition-colors"
-                            aria-label="LinkedIn Profile"
-                        >
-                            <i className="fab fa-linkedin text-lg"></i>
-                        </a>
-                    </div>
+                {/* Desktop Navigation */}
+                <div className="hidden md:block">
+                    <NavbarLinks
+                        navItems={navItems}
+                        activeSection={activeSection}
+                        handleNavClick={handleNavClick}
+                    />
                 </div>
 
-                {/* Desktop Navigation - Centered with equal widths */}
-                <div className="container mx-auto px-4 w-full max-w-6xl">
-                    <ul className="flex justify-center space-x-1">
-                        {navItems.map((item) => {
-                            const isActive = activeSection === item.id;
-                            // Use icons for certain items to save space
-                            let content = item.name;
-                            let icon = null;
-
-                            // Use "↑" icon for the "About" section to save space
-                            if (item.id === 'about') {
-                                icon = <i className="fas fa-arrow-up text-xs mr-1"></i>;
-                                // If translated name is too long, just use the icon
-                                if (item.name.length > 8) {
-                                    content = '';
-                                }
-                            }
-
-                            return (
-                                <li key={item.id} className="flex-shrink-0">
-
-                                    <a href={item.href}
-                                        className={`relative px-2 py-2 text-sm font-medium transition-colors duration-100 block text-center whitespace-nowrap ${isActive
-                                            ? 'text-brand-red dark:text-brand-red'
-                                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                                            }`}
-                                        onClick={(e) => handleNavClick(e, item.id)}
-                                        data-section={item.id}
-                                    >
-                                        {icon}{content}
-                                        {isActive && (
-                                            <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-red dark:bg-brand-red"></span>
-                                        )}
-                                    </a>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-
-                {/* Controls - More evenly spaced */}
+                {/* Controls */}
                 <div className="flex items-center gap-2">
                     {/* Language Selector */}
                     <LanguageSelector />
 
                     {/* Theme Toggle */}
-                    <button
-                        onClick={toggleTheme}
-                        className="p-2 rounded-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-                        aria-label={theme === 'light' ? "Switch to dark theme" : "Switch to light theme"}
-                    >
-                        {theme === 'dark' ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                            </svg>
-                        )}
-                    </button>
+                    <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
 
-                    {/* Download CV Button - Properly translated */}
+                    {/* Download CV Button */}
                     <div className="hidden sm:block">
                         <PDFDownload label={uiTexts.downloadCV} />
                     </div>
 
-                    {/* Mobile Menu Button - Larger */}
+                    {/* Mobile Menu Button */}
                     <button
                         ref={menuButtonRef}
                         onClick={toggleMobileMenu}
@@ -386,84 +288,36 @@ const Navbar = () => {
                         aria-expanded={isMenuOpen}
                         aria-controls="mobile-menu"
                         id="mobile-menu-button"
+                        aria-haspopup="menu"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                            />
                         </svg>
                     </button>
                 </div>
             </div>
 
             {/* Mobile Navigation */}
-            {isMenuOpen && (
-                <div
-                    id="mobile-menu"
-                    ref={mobileMenuRef}
-                    className="md:hidden absolute left-0 right-0 px-4 pt-2 pb-4 bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border shadow-lg theme-transition-bg mobile-menu"
-                    role="menu"
-                    aria-labelledby="mobile-menu-button"
-                >
-                    <div className="flex flex-col space-y-3">
-                        {navItems.map((item) => {
-                            const isActive = activeSection === item.id;
-                            return (
-
-                                <a key={item.id}
-                                    href={item.href}
-                                    className={`text-sm font-medium py-2 px-3 theme-transition-text theme-transition-bg ${isActive
-                                        ? 'text-brand-red dark:text-brand-red bg-gray-100 dark:bg-gray-800'
-                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                                        }`}
-                                    onClick={(e) => handleNavClick(e, item.id)}
-                                    role="menuitem"
-                                    data-section={item.id}
-                                >
-                                    {item.name}
-                                </a>
-                            );
-                        })}
-
-                        {/* Social links */}
-                        <div className="flex items-center gap-4 py-2 px-3 border-t border-gray-200 dark:border-gray-700 mt-2">
-
-                            <a href="https://github.com/MaciWP"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-brand-red hover:text-brand-red/80 transition-colors"
-                                aria-label="GitHub Profile"
-                            >
-                                <i className="fab fa-github text-lg"></i>
-                            </a>
-
-                            <a href="https://linkedin.com/in/oriolmaciasbadosa"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-brand-red hover:text-brand-red/80 transition-colors"
-                                aria-label="LinkedIn Profile"
-                            >
-                                <i className="fab fa-linkedin text-lg"></i>
-                            </a>
-                        </div>
-
-                        {/* Download button */}
-
-                        <a href="#"
-                            className="inline-flex items-center justify-center mt-3 px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                document.getElementById('cv-download-button')?.click();
-                                setIsMenuOpen(false);
-                            }}
-                            role="menuitem"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                            <span>{uiTexts.downloadCV}</span>
-                        </a>
-                    </div>
-                </div>
-            )}
+            <MobileMenu
+                isOpen={isMenuOpen}
+                navItems={navItems}
+                activeSection={activeSection}
+                handleNavClick={handleNavClick}
+                uiTexts={uiTexts}
+                closeMenu={closeMenu}
+            />
         </nav>
     );
 };

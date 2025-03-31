@@ -1,7 +1,7 @@
-// src/components/ErrorBoundary.jsx
 /**
- * Error Boundary component to catch and handle React errors gracefully
- * Prevents entire UI from crashing when individual components fail
+ * Error Boundary component for handling React errors gracefully
+ * Prevents the entire UI from crashing when individual components fail
+ * File: src/components/ErrorBoundary.jsx
  */
 import React from 'react';
 

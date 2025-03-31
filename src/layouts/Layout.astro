@@ -171,7 +171,18 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         text-rendering: auto;
         line-height: 1;
       }
+
+      /* Estilos críticos para el navbar sticky */
+      nav {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 50 !important;
+      }
     </style>
+
+    <!-- Cargar el script de navbar fix temprano -->
+    <script is:inline src="/scripts/navbar-fix.js" defer></script>
 
     <!-- Cargar el sistema unificado de internacionalización -->
     <script is:inline src="/scripts/i18n.js"></script>
@@ -346,26 +357,25 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                   </p>
                 </div>
                 <div class="flex items-center gap-6">
-                  href="#top" class="text-sm flex items-center
-                  text-light-text-secondary dark:text-dark-text-secondary
-                  hover:text-brand-red dark:hover:text-brand-red
-                  transition-colors" aria-label={
-                    lang === "es"
+                  <a
+                    href="#top"
+                    class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                    aria-label={lang === "es"
                       ? "Volver al inicio de la página"
                       : lang === "fr"
                         ? "Retourner en haut de la page"
-                        : "Return to top of page"
-                  }
+                        : "Return to top of page"}
                   >
-                  <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
-                  ></i>
-                  {
-                    lang === "es"
-                      ? "Volver arriba"
-                      : lang === "fr"
-                        ? "Retour en haut"
-                        : "Back to top"
-                  }
+                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
+                    ></i>
+                    {
+                      lang === "es"
+                        ? "Volver arriba"
+                        : lang === "fr"
+                          ? "Retour en haut"
+                          : "Back to top"
+                    }
+                  </a>
                 </div>
                 <button
                   id="cv-download-button"

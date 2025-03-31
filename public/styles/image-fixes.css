@@ -1,16 +1,16 @@
 /**
- * Estilos adicionales para corregir el filtro de imagen
+ * Estilos adicionales para corregir el filtro de imagen en modo claro
  * File: src/styles/image-fixes.css
  */
 
-/* Remover cualquier filtro o efecto en la imagen en modo día */
+/* Eliminar cualquier filtro o efecto en la imagen en modo día */
 .light img,
 html:not(.dark) img {
     filter: none !important;
     /* Quitar cualquier filtro */
     opacity: 1 !important;
     /* Asegurar opacidad completa */
-    contrast: 100% !important;
+    contrast: 95% !important;
     /* Mantener contraste original */
 }
 
@@ -18,4 +18,16 @@ html:not(.dark) img {
 html.theme-transitioning img {
     transition: none !important;
     /* No transición para imágenes */
+}
+
+/* Corrección específica para la imagen de perfil */
+.light .profile-photo,
+html:not(.dark) .profile-photo {
+    border-color: #e5e7eb !important;
+    /* Borde claro para modo día */
+}
+
+.dark .profile-photo {
+    border-color: #374151 !important;
+    /* Borde oscuro para modo noche */
 }

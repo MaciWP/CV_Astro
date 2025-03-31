@@ -11,6 +11,10 @@
 @import './natural-theme-transitions.css';
 @import './theme-toggle.css';
 
+/* Fixes for specific issues */
+@import './image-fixes.css';
+@import './navbar-fix.css';
+
 /* Print styles */
 @media print {
 

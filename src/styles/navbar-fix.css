@@ -1,0 +1,28 @@
+/**
+ * Corrección específica para el navbar sticky
+ * File: src/styles/navbar-fix.css
+ */
+
+/* Forzar el comportamiento sticky para el navbar principal */
+nav[role="navigation"] {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+}
+
+/* Para navegadores más antiguos */
+@supports (position: sticky) or (position: -webkit-sticky) {
+    nav[role="navigation"] {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 50 !important;
+    }
+}
+
+/* Asegurar que el banner tiene menor z-index que el navbar */
+header[role="banner"] {
+    z-index: 50;
+    position: relative;
+}

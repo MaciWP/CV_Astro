@@ -1,7 +1,7 @@
-// src/components/A11yAnnouncer.jsx
 /**
  * Accessibility announcer component
  * Allows screen readers to announce dynamic content changes
+ * File: src/components/A11yAnnouncer.jsx
  */
 import React, { useState, useEffect } from 'react';
 
@@ -12,23 +12,23 @@ const A11yAnnouncer = () => {
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
-        // Crear un método global para hacer anuncios a lectores de pantalla
+        // Create a global method to make announcements to screen readers
         window.announceToScreenReader = (message, priority = 'polite') => {
             if (priority !== 'polite' && priority !== 'assertive') {
                 priority = 'polite';
             }
 
-            // Almacenar el anuncio anterior para evitar duplicados
-            setPreviousAnnouncement(announcement);
+            // Store previous announcement to avoid duplicates
+            setPreviousAnnouncement(announcement?.message || '');
             setAnnouncement({ message, priority });
 
-            // Limpiar después de un tiempo prudencial
+            // Clear after a reasonable time
             setTimeout(() => {
                 setAnnouncement('');
             }, 3000);
         };
 
-        // Evento personalizado para anuncios
+        // Custom event for announcements
         const handleAnnouncement = (event) => {
             if (event.detail && event.detail.message) {
                 window.announceToScreenReader(
@@ -45,6 +45,7 @@ const A11yAnnouncer = () => {
         };
     }, [announcement]);
 
+    // Don't render if no announcement or if it's a duplicate
     if (!announcement || announcement.message === previousAnnouncement) {
         return null;
     }

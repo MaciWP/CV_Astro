@@ -9,7 +9,38 @@ const Education = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [animatedItems, setAnimatedItems] = useState([]);
     const [educationItems, setEducationItems] = useState([]);
-    const [title, setTitle] = useState('Education & Certifications');
+    const [translations, setTranslations] = useState({
+        title: 'Education & Certifications',
+        institution: 'Institution',
+        period: 'Period',
+        details: 'Details'
+    });
+
+    // Function to safely get translations
+    const getTranslation = (key, defaultValue) => {
+        if (typeof window !== 'undefined' && typeof window.t === 'function') {
+            return window.t(key) || defaultValue;
+        }
+        return defaultValue;
+    };
+
+    // Load translations
+    const loadTranslations = () => {
+        setTranslations({
+            title: getTranslation('education.title', 'Education & Certifications'),
+            institution: getTranslation('education.institution', 'Institution'),
+            period: getTranslation('education.period', 'Period'),
+            details: getTranslation('education.details', 'Details')
+        });
+
+        // Also load education items in current language
+        const items = getCurrentLanguageEducation();
+        setEducationItems(items);
+
+        console.log('Education translations loaded:', {
+            title: getTranslation('education.title', 'Education & Certifications')
+        });
+    };
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -39,20 +70,12 @@ const Education = () => {
             observer.observe(element);
         }
 
-        // Load education items initially
-        setEducationItems(getCurrentLanguageEducation());
-
-        // Update title based on current language
-        if (typeof window !== 'undefined' && typeof window.t === 'function') {
-            setTitle(window.t('education.title') || 'Education & Certifications');
-        }
+        // Initial load of translations and data
+        loadTranslations();
 
         // Listen for language changes
         const handleLanguageChanged = () => {
-            setEducationItems(getCurrentLanguageEducation());
-            if (typeof window !== 'undefined' && typeof window.t === 'function') {
-                setTitle(window.t('education.title') || 'Education & Certifications');
-            }
+            loadTranslations();
         };
 
         document.addEventListener('languageChanged', handleLanguageChanged);
@@ -73,7 +96,7 @@ const Education = () => {
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-graduation-cap"></i>
                 </div>
-                <h2 className="text-2xl font-bold ml-3" data-i18n="education.title">{title}</h2>
+                <h2 className="text-2xl font-bold ml-3" data-i18n="education.title">{translations.title}</h2>
             </div>
 
             <div className="space-y-6">
