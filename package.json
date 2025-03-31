@@ -7,7 +7,9 @@
     "dev": "node scripts/setup-font-awesome.js && node scripts/styles.js && astro dev",
     "build": "node scripts/setup-font-awesome.js && node scripts/styles.js --optimize && astro build",
     "process:styles": "node scripts/styles.js",
-    "process:styles:optimize": "node scripts/styles.js --optimize"
+    "process:styles:optimize": "node scripts/styles.js --optimize",
+    "a11y:check-contrast": "node scripts/check-contrast.js",
+    "a11y:audit": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.9",

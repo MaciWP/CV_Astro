@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 // Import CV components
 import ProfileHeader from "../../components/cv/ProfileHeader";
@@ -39,17 +40,56 @@ const esUrl = getRelativeLocaleUrl("es", "");
         itemscope
         itemtype="https://schema.org/Person"
     >
-        <!-- ProfileHeader with immediate hydration -->
-        <ProfileHeader client:load />
+        {/* ProfileHeader con ErrorBoundary */}
+        <ErrorBoundary
+            fallbackTitle="Error loading profile"
+            fallbackMessage="Unable to load profile information. Please refresh the page."
+            showReset={true}
+        >
+            <ProfileHeader client:load />
+        </ErrorBoundary>
 
-        <!-- Sections with lazy hydration for better performance -->
-        <Experience client:visible />
-        <Skills client:visible />
-        <Education client:visible />
-        <Languages client:visible />
-        <Projects client:visible />
+        {/* Experience con ErrorBoundary */}
+        <ErrorBoundary
+            fallbackTitle="Error loading experience"
+            fallbackMessage="Unable to load work experience information."
+        >
+            <Experience client:visible />
+        </ErrorBoundary>
 
-        <!-- Hidden metadata to improve SEO -->
+        {/* Skills con ErrorBoundary */}
+        <ErrorBoundary
+            fallbackTitle="Error loading skills"
+            fallbackMessage="Unable to load technical skills information."
+        >
+            <Skills client:visible />
+        </ErrorBoundary>
+
+        {/* Education con ErrorBoundary */}
+        <ErrorBoundary
+            fallbackTitle="Error loading education"
+            fallbackMessage="Unable to load education information."
+        >
+            <Education client:visible />
+        </ErrorBoundary>
+
+        {/* Languages con ErrorBoundary */}
+        <ErrorBoundary
+            fallbackTitle="Error loading languages"
+            fallbackMessage="Unable to load language proficiency information."
+        >
+            <Languages client:visible />
+        </ErrorBoundary>
+
+        {/* Projects con ErrorBoundary */}
+        <ErrorBoundary
+            fallbackTitle="Error loading projects"
+            fallbackMessage="Unable to load project information."
+        >
+            <Projects client:visible />
+        </ErrorBoundary>
+
+        {/* Contenido SEO oculto */}
         <div class="sr-only">
             <div itemprop="name">Oriol Macias</div>
             <div itemprop="jobTitle">Développeur Logiciel</div>

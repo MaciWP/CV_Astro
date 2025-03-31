@@ -1,54 +1,46 @@
 /**
- * I18nLoader.jsx - Componente optimizado para precargar traducciones
- * Simplificado para aprovechar las funciones del nuevo sistema i18n unificado
- * 
+ * I18nLoader Component - Simplified Version
+ * Acts as a wrapper that ensures translations are loaded
  * File: src/components/I18nLoader.jsx
  */
 import React, { useState, useEffect } from 'react';
 
 const I18nLoader = ({ children, fallback = null }) => {
-    const [loaded, setLoaded] = useState(false);
-    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
-        // Determinar el idioma actual
+        // Detect current language
         const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
 
-        // Función para cargar las traducciones
+        // Function to load translations
         const loadTranslations = async () => {
             try {
-                // Verificar si ya están cargadas las traducciones
-                if (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) {
-                    setLoaded(true);
-                    return;
-                }
-
-                // Utilizar la API global de i18n si está disponible
+                // Try to use global i18n.init if available
                 if (window.i18n && typeof window.i18n.init === 'function') {
                     await window.i18n.init(currentLang);
-                    setLoaded(true);
+                    setIsLoaded(true);
                     return;
                 }
 
-                // Fallback: cargar traducciones directamente
+                // Fallback: directly load the translation file
                 const response = await fetch(`/locales/${currentLang}/translation.json?v=${Date.now()}`);
 
                 if (!response.ok) {
-                    throw new Error(`Failed to load translations for ${currentLang}, status: ${response.status}`);
+                    throw new Error(`Failed to load translations for ${currentLang}`);
                 }
 
                 const translations = await response.json();
 
-                // Almacenar traducciones
+                // Store translations in global object
                 window.TRANSLATIONS = window.TRANSLATIONS || {};
                 window.TRANSLATIONS[currentLang] = translations;
 
-                // Asegurar que la función t() está disponible
+                // Ensure t() function is available
                 if (!window.t) {
                     window.t = function (key) {
-                        const translations = window.TRANSLATIONS[currentLang] || {};
                         const keys = key.split('.');
-                        let result = translations;
+                        let result = window.TRANSLATIONS[currentLang] || {};
 
                         for (const k of keys) {
                             if (result && typeof result === 'object' && k in result) {
@@ -62,39 +54,36 @@ const I18nLoader = ({ children, fallback = null }) => {
                     };
                 }
 
-                // Disparar evento para que los componentes sepan que las traducciones están disponibles
-                document.dispatchEvent(new CustomEvent('translationsLoaded'));
+                // Signal that translations are available
+                setIsLoaded(true);
 
-                // Indicar que las traducciones están cargadas
-                setLoaded(true);
+                // Dispatch event for other components
+                document.dispatchEvent(new CustomEvent('translationsLoaded'));
             } catch (error) {
                 console.error('Error loading translations:', error);
-                setError(error);
+                setHasError(true);
 
-                // Intentar continuar con las traducciones que tengamos
-                setLoaded(true);
+                // Even if there's an error, we should show the UI
+                setIsLoaded(true);
             }
         };
 
+        // Load translations when component mounts
         loadTranslations();
     }, []);
 
-    if (!loaded) {
-        // Mostrar un indicador de carga mientras se cargan las traducciones
+    // Display loading indicator while translations are loading
+    if (!isLoaded) {
         return fallback || (
-            <div className="flex items-center justify-center min-h-screen bg-light-primary dark:bg-dark-primary">
-                <div className="p-4 text-center">
-                    <div className="w-16 h-16 border-4 border-brand-red border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-light-text-secondary dark:text-dark-text-secondary">Loading translations...</p>
+            <div className="flex items-center justify-center min-h-[200px]">
+                <div className="animate-pulse text-light-text-secondary dark:text-dark-text-secondary">
+                    Loading...
                 </div>
             </div>
         );
     }
 
-    if (error) {
-        console.warn('Continuing with partial translations due to error');
-    }
-
+    // Display content once translations are loaded (even with errors)
     return <>{children}</>;
 };
 

@@ -3,6 +3,9 @@
 import Navbar from "../components/Navbar";
 import I18nLoader from "../components/I18nLoader";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import ErrorBoundary from "../components/ErrorBoundary";
+import SkipToContent from "../components/SkipToContent";
+import A11yAnnouncer from "../components/A11yAnnouncer";
 
 // Define props interface
 export interface Props {
@@ -35,7 +38,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 ---
 
 <!doctype html>
-<html lang={lang} class="dark">
+<html lang={lang} class="dark" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,6 +69,19 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       rel="alternate"
       hreflang="x-default"
       href="https://oriolmacias.dev/"
+    />
+
+    <!-- Accessibility & Device Support -->
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#121620"
     />
 
     <!-- Open Graph / Social Media -->
@@ -281,40 +297,68 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
   >
     <div id="app-root">
-      <I18nLoader client:only>
-        <!-- Navbar with client:load for immediate rendering -->
-        <Navbar client:load />
+      <!-- Accessibility components -->
+      <SkipToContent client:load />
+      <A11yAnnouncer client:load />
 
-        <main class="container mx-auto px-4 py-8 max-w-5xl">
+      <I18nLoader client:only>
+        <!-- Navbar with ErrorBoundary -->
+        <ErrorBoundary
+          fallbackTitle="Navigation error"
+          fallbackMessage="There was a problem loading the navigation menu."
+          showReset={true}
+        >
+          <header role="banner">
+            <Navbar client:load />
+          </header>
+        </ErrorBoundary>
+
+        <!-- Main content with ARIA landmark -->
+        <main
+          id="cv-content"
+          role="main"
+          class="container mx-auto px-4 py-8 max-w-5xl"
+        >
           <slot />
         </main>
 
-        <!-- Simple Footer -->
-        <footer
-          class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
-        >
-          <div class="container mx-auto px-4 max-w-5xl">
-            <div
-              class="flex flex-col md:flex-row justify-between items-center gap-4"
-            >
-              <div class="flex items-center gap-2">
-                <div
-                  class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-xs">OM</span>
+        <!-- Footer with ErrorBoundary -->
+        <ErrorBoundary>
+          <footer
+            role="contentinfo"
+            class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
+          >
+            <div class="container mx-auto px-4 max-w-5xl">
+              <div
+                class="flex flex-col md:flex-row justify-between items-center gap-4"
+              >
+                <div class="flex items-center gap-2">
+                  <div
+                    class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    <span class="text-white font-bold text-xs">OM</span>
+                  </div>
+                  <p
+                    class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                  >
+                    © {new Date().getFullYear()} Oriol Macias
+                  </p>
                 </div>
-                <p
-                  class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
-                >
-                  © {new Date().getFullYear()} Oriol Macias
-                </p>
-              </div>
-              <div class="flex items-center gap-6">
-                <a
-                  href="#top"
-                  class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                >
-                  <i class="fas fa-arrow-up mr-2 text-xs"></i>
+                <div class="flex items-center gap-6">
+                  href="#top" class="text-sm flex items-center
+                  text-light-text-secondary dark:text-dark-text-secondary
+                  hover:text-brand-red dark:hover:text-brand-red
+                  transition-colors" aria-label={
+                    lang === "es"
+                      ? "Volver al inicio de la página"
+                      : lang === "fr"
+                        ? "Retourner en haut de la page"
+                        : "Return to top of page"
+                  }
+                  >
+                  <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
+                  ></i>
                   {
                     lang === "es"
                       ? "Volver arriba"
@@ -322,13 +366,18 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                         ? "Retour en haut"
                         : "Back to top"
                   }
-                </a>
+                </div>
                 <button
                   id="cv-download-button"
                   class="text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
                   onclick="window.print()"
+                  aria-label={lang === "es"
+                    ? "Descargar CV en formato PDF"
+                    : lang === "fr"
+                      ? "Télécharger CV en format PDF"
+                      : "Download CV in PDF format"}
                 >
-                  <i class="fas fa-download mr-2"></i>
+                  <i class="fas fa-download mr-2" aria-hidden="true"></i>
                   {
                     lang === "es"
                       ? "Descargar CV"
@@ -339,79 +388,111 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                 </button>
               </div>
             </div>
-          </div>
-        </footer>
+          </footer>
+        </ErrorBoundary>
       </I18nLoader>
     </div>
+  </body>
 
-    <!-- Script for smooth scrolling to sections -->
-    <script is:inline>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Smooth scroll for anchors
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            const targetId = this.getAttribute("href").substring(1);
-            if (!targetId) return; // Avoid errors with href="#"
+  <!-- Script for smooth scrolling to sections -->
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Smooth scroll for anchors
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href").substring(1);
+          if (!targetId) return; // Avoid errors with href="#"
 
-            const targetElement = document.getElementById(targetId);
+          const targetElement = document.getElementById(targetId);
 
-            if (targetElement) {
-              e.preventDefault();
-              const navbarHeight = 80; // Estimated navbar height
-              const position =
-                targetElement.getBoundingClientRect().top +
-                window.pageYOffset -
-                navbarHeight;
+          if (targetElement) {
+            e.preventDefault();
+            const navbarHeight = 80; // Estimated navbar height
+            const position =
+              targetElement.getBoundingClientRect().top +
+              window.pageYOffset -
+              navbarHeight;
 
-              window.scrollTo({
-                top: position,
-                behavior: "smooth",
-              });
+            window.scrollTo({
+              top: position,
+              behavior: "smooth",
+            });
+
+            // Announce to screen readers (if function is available)
+            if (window.announceToScreenReader) {
+              const elementTitle =
+                targetElement.querySelector("h2, h3")?.textContent || targetId;
+              window.announceToScreenReader(
+                `Navigated to ${elementTitle} section`,
+              );
             }
-          });
+
+            // Set focus to the target element (for keyboard accessibility)
+            targetElement.setAttribute("tabindex", "-1");
+            targetElement.focus({ preventScroll: true });
+
+            // Remove tabindex after blur to avoid persistent tab stops
+            targetElement.addEventListener("blur", function onBlur() {
+              targetElement.removeAttribute("tabindex");
+              targetElement.removeEventListener("blur", onBlur);
+            });
+          }
         });
       });
-    </script>
+    });
+  </script>
 
-    <!-- Update translated elements in the DOM when translations load -->
-    <script is:inline>
-      document.addEventListener("translationsLoaded", () => {
-        // Actualizar elementos con atributo data-i18n
-        if (window.i18n && typeof window.i18n.updateElements === "function") {
-          window.i18n.updateElements();
-        } else {
-          // Fallback manual implementation
-          document.querySelectorAll("[data-i18n]").forEach((element) => {
-            const key = element.getAttribute("data-i18n");
-            if (key && typeof window.t === "function") {
-              element.textContent = window.t(key);
-            }
-          });
-        }
-      });
-    </script>
-
-    <!-- Service Worker Registration - Only for production -->
-    <script is:inline>
-      // Only register in production (not local)
-      if (
-        window.location.hostname !== "localhost" &&
-        window.location.hostname !== "127.0.0.1" &&
-        "serviceWorker" in navigator
-      ) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js?v=" + new Date().getTime())
-            .then((registration) => {
-              console.log("Service Worker registered successfully");
-            })
-            .catch((error) => {
-              console.error("Service Worker registration failed:", error);
-            });
+  <!-- Update translated elements in the DOM when translations load -->
+  <script is:inline>
+    document.addEventListener("translationsLoaded", () => {
+      // Actualizar elementos con atributo data-i18n
+      if (window.i18n && typeof window.i18n.updateElements === "function") {
+        window.i18n.updateElements();
+      } else {
+        // Fallback manual implementation
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.getAttribute("data-i18n");
+          if (key && typeof window.t === "function") {
+            element.textContent = window.t(key);
+          }
         });
       }
-    </script>
-  </body>
+
+      // Announce to screen readers that translations are loaded
+      if (window.announceToScreenReader) {
+        const lang = window.CURRENT_LANGUAGE || "en";
+        const langNames = {
+          en: "English",
+          es: "Spanish",
+          fr: "French",
+        };
+        window.announceToScreenReader(
+          `Content now available in ${langNames[lang] || lang}`,
+        );
+      }
+    });
+  </script>
+
+  <!-- Service Worker Registration - Only for production -->
+  <script is:inline>
+    // Only register in production (not local)
+    if (
+      window.location.hostname !== "localhost" &&
+      window.location.hostname !== "127.0.0.1" &&
+      "serviceWorker" in navigator
+    ) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/sw.js?v=" + new Date().getTime())
+          .then((registration) => {
+            console.log("Service Worker registered successfully");
+          })
+          .catch((error) => {
+            console.error("Service Worker registration failed:", error);
+          });
+      });
+    }
+  </script>
 </html>
 
 <style is:global>

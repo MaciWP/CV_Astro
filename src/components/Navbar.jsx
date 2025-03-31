@@ -32,11 +32,13 @@ const Navbar = () => {
     const manageMobileMenuFocus = (isOpen) => {
         setTimeout(() => {
             if (isOpen && mobileMenuRef.current) {
+                // Al abrir el menú, enfocar el primer elemento
                 const firstFocusableElement = mobileMenuRef.current.querySelector('a, button');
                 if (firstFocusableElement) {
                     firstFocusableElement.focus();
                 }
             } else if (menuButtonRef.current) {
+                // Al cerrar el menú, devolver el foco al botón que lo abrió
                 menuButtonRef.current.focus();
             }
         }, 100);
@@ -167,6 +169,7 @@ const Navbar = () => {
         setIsMenuOpen(newMenuState);
         manageMobileMenuFocus(newMenuState);
     };
+
 
     // Handle click on navigation item
     const handleNavClick = (e, targetId) => {
