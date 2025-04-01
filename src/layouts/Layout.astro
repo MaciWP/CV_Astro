@@ -173,11 +173,27 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       }
 
       /* Estilos críticos para el navbar sticky */
-      nav {
+      nav,
+      header nav,
+      nav[role="navigation"],
+      header[role="banner"] {
         position: -webkit-sticky !important;
         position: sticky !important;
         top: 0 !important;
         z-index: 50 !important;
+      }
+
+      /* Asegurar que el header no interfiera con el posicionamiento */
+      header[role="banner"] {
+        display: block;
+        position: static;
+        z-index: auto;
+      }
+
+      /* Sin márgenes o paddings que afecten al navbar */
+      header[role="banner"] {
+        margin: 0;
+        padding: 0;
       }
     </style>
 
@@ -314,15 +330,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
       <I18nLoader client:only>
         <!-- Navbar with ErrorBoundary -->
-        <ErrorBoundary
-          fallbackTitle="Navigation error"
-          fallbackMessage="There was a problem loading the navigation menu."
-          showReset={true}
-        >
-          <header role="banner">
+        <header role="banner">
+          <ErrorBoundary>
             <Navbar client:load />
-          </header>
-        </ErrorBoundary>
+          </ErrorBoundary>
+        </header>
 
         <!-- Main content with ARIA landmark -->
         <main

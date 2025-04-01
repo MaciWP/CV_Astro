@@ -36,10 +36,6 @@ const Education = () => {
         // Also load education items in current language
         const items = getCurrentLanguageEducation();
         setEducationItems(items);
-
-        console.log('Education translations loaded:', {
-            title: getTranslation('education.title', 'Education & Certifications')
-        });
     };
 
     useEffect(() => {
