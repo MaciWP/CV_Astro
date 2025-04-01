@@ -23,6 +23,19 @@ export default defineConfig({
     react(),
   ],
 
+  // Agregar configuración para MIME types
+  server: {
+    headers: {
+      // Asegurar que los scripts JS se sirvan con el MIME type correcto
+      "*.js": [
+        {
+          key: "Content-Type",
+          value: "application/javascript"
+        }
+      ]
+    }
+  },
+
   // Optimizar para desarrollo
   vite: {
     // Opciones para mejorar el tiempo de compilación
@@ -37,6 +50,7 @@ export default defineConfig({
     // Ajustes de rendimiento
     build: {
       sourcemap: true,
+      assets: 'assets'
     },
   },
 });

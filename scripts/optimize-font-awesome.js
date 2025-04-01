@@ -7,7 +7,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import glob from 'glob-promise';
 
 // Get dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
