@@ -1,0 +1,185 @@
+/**
+ * Accessibility improvements for Oriol Macias website
+ * Fixes contrast issues and improves overall accessibility
+ * File: src/styles/a11y-improvements.css
+ */
+
+/* Fix contrast issues */
+
+/* Make the brand-red color slightly darker for better contrast */
+:root {
+    --original-brand-red: #D83333;
+    --accessible-brand-red: #C42B2B;
+    /* Darker to ensure 4.5:1 contrast ratio */
+}
+
+/* Apply the darker red to text and borders */
+.text-brand-red {
+    color: var(--accessible-brand-red) !important;
+}
+
+.border-brand-red {
+    border-color: var(--accessible-brand-red) !important;
+}
+
+/* Exception for buttons and backgrounds where we keep the original color */
+.bg-brand-red {
+    background-color: var(--original-brand-red);
+}
+
+/* Style active navigation tabs with a stronger border */
+[aria-current="page"] {
+    font-weight: 600 !important;
+}
+
+/* Make active tab text darker for better visibility */
+.text-brand-red[aria-current="page"] {
+    color: #B22222 !important;
+    /* Even darker for active navigation items */
+}
+
+/* Fix "Download CV" button contrast in the footer */
+#cv-download-button {
+    color: #FFFFFF !important;
+    background-color: var(--accessible-brand-red) !important;
+    border-color: var(--accessible-brand-red) !important;
+}
+
+#cv-download-button:hover {
+    background-color: #a81c1c !important;
+}
+
+/* Project tabs - ensure sufficient contrast */
+[data-i18n="projects.personalProjects"],
+[data-i18n="projects.professionalWork"] {
+    color: #2D3748 !important;
+    /* Dark gray for better contrast */
+}
+
+[data-i18n="projects.personalProjects"].border-brand-red,
+[data-i18n="projects.professionalWork"].border-brand-red {
+    border-color: #C42B2B !important;
+}
+
+.dark [data-i18n="projects.personalProjects"],
+.dark [data-i18n="projects.professionalWork"] {
+    color: #E2E8F0 !important;
+    /* Light gray for dark mode */
+}
+
+/* Improve contrast in footer text */
+footer,
+footer p {
+    color: #4A5568 !important;
+    /* Dark enough for light mode */
+}
+
+.dark footer,
+.dark footer p {
+    color: #CBD5E0 !important;
+    /* Light enough for dark mode */
+}
+
+/* Larger touch targets for better mobile accessibility */
+@media (max-width: 640px) {
+
+    button,
+    a[href],
+    #cv-download-button,
+    .theme-toggle-btn,
+    nav a,
+    .mobile-menu a {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        padding: 0.5rem 0.75rem !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Increase font size for mobile reading */
+    body {
+        font-size: 16px !important;
+        /* Minimum readable font size */
+    }
+}
+
+/* Focus styles improvements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--accessible-brand-red) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
+}
+
+/* Skip to content link for keyboard users */
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: 1rem;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background-color: var(--accessible-brand-red);
+    color: white;
+    text-decoration: none;
+    border-radius: 0;
+    border: none;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+}
+
+.skip-to-content:focus {
+    left: 1rem;
+    transform: translateX(0);
+}
+
+/* High contrast mode adjustments */
+@media (forced-colors: active) {
+
+    /* Ensure elements keep their visual distinction in high contrast mode */
+    .bg-brand-red {
+        background-color: CanvasText !important;
+        color: Canvas !important;
+    }
+
+    .text-brand-red {
+        color: CanvasText !important;
+    }
+
+    .border-brand-red {
+        border-color: CanvasText !important;
+    }
+
+    /* Ensure buttons have clear borders in high contrast mode */
+    button,
+    .btn {
+        border: 1px solid currentColor !important;
+    }
+}
+
+/* Ensure icon font doesn't break when unavailable */
+.fas,
+.fab,
+.far {
+    font-family: 'Font Awesome 5 Free', Arial, sans-serif;
+}
+
+.fab {
+    font-family: 'Font Awesome 5 Brands', Arial, sans-serif;
+}
+
+/* ARIA live region for announcements */
+.sr-announce {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
