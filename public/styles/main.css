@@ -5,8 +5,15 @@
 
 /* Core styles */
 /**
- * Global CSS Styles - Corrected Version
+ * CSS Global Optimizado y Unificado
  * File: src/styles/global.css
+ * 
+ * Este archivo combina el contenido esencial de:
+ * - global.css
+ * - animation-system.css
+ * - image-fixes.css
+ * - navbar-fix.css
+ * - theme-transitions.css (versión reducida)
  */
 
 /* Base Tailwind directives */
@@ -14,7 +21,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== BASE STYLES ===== */
+/* ===== VARIABLES GLOBALES ===== */
+:root {
+    /* Transiciones de tema */
+    --theme-transition-duration: 180ms;
+    --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
+    --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
+
+    /* Duraciones estándar de animación */
+    --duration-micro: 100ms;
+    --duration-fast: 150ms;
+    --duration-standard: 250ms;
+    --duration-emphasis: 400ms;
+    --duration-complex: 600ms;
+
+    /* Curvas de timing */
+    --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* ===== ESTILOS BASE ===== */
 @layer base {
     body {
         @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
@@ -24,7 +52,7 @@
         text-rendering: optimizeLegibility;
     }
 
-    /* Typography enhancements */
+    /* Mejoras de tipografía */
     h1,
     h2,
     h3,
@@ -35,13 +63,13 @@
         @apply font-bold;
     }
 
-    /* Better scroll section spacing */
+    /* Mejor espaciado para secciones de scroll */
     section {
         scroll-margin-top: 80px;
         @apply mb-24;
     }
 
-    /* Accessibility */
+    /* Accesibilidad */
     .sr-only {
         position: absolute;
         width: 1px;
@@ -54,17 +82,45 @@
         border-width: 0;
     }
 
-    /* Improved focus states for accessibility */
+    /* Estados de foco mejorados para accesibilidad */
     :focus-visible {
         outline: 2px solid #D83333 !important;
         outline-offset: 2px !important;
     }
+
+    /* Fix para que las imágenes no tengan filtros en modo claro */
+    .light img,
+    html:not(.dark) img {
+        filter: none !important;
+        opacity: 1 !important;
+    }
+
+    /* Fix sticky para el navbar */
+    nav[role="navigation"] {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 50 !important;
+    }
+
+    @supports (position: -webkit-sticky) {
+        nav[role="navigation"] {
+            position: -webkit-sticky !important;
+        }
+    }
 }
 
-/* ===== COMPONENT STYLES ===== */
+/* ===== TRANSICIONES DE TEMA ===== */
+html.theme-transitioning * {
+    transition-property: color, background-color, border-color;
+    transition-duration: var(--theme-transition-duration);
+    transition-timing-function: var(--theme-curve-color);
+    will-change: color, background-color, border-color;
+}
+
+/* ===== COMPONENTES ===== */
 @layer components {
 
-    /* Theme transition classes for better control */
+    /* Clases de transición de tema */
     .theme-transition {
         @apply transition-all duration-75;
     }
@@ -77,29 +133,7 @@
         @apply transition-colors duration-75;
     }
 
-    /* Only transition necessary properties */
-    html.theme-transitioning * {
-        transition-duration: 75ms !important;
-    }
-
-    html.theme-transitioning .text-light-text,
-    html.theme-transitioning .text-dark-text,
-    html.theme-transitioning .text-light-text-secondary,
-    html.theme-transitioning .text-dark-text-secondary,
-    html.theme-transitioning .bg-light-primary,
-    html.theme-transitioning .bg-dark-primary,
-    html.theme-transitioning .bg-light-secondary,
-    html.theme-transitioning .bg-dark-secondary,
-    html.theme-transitioning .bg-light-surface,
-    html.theme-transitioning .bg-dark-surface,
-    html.theme-transitioning .border-light-border,
-    html.theme-transitioning .border-dark-border {
-        transition-property: color, background-color, border-color;
-        transition-duration: 75ms;
-        transition-timing-function: ease-out;
-    }
-
-    /* Button styles */
+    /* Botones */
     .btn {
         @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
     }
@@ -112,12 +146,12 @@
         @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
     }
 
-    /* Card styles */
+    /* Tarjetas */
     .card {
         @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
     }
 
-    /* Section header with icon */
+    /* Encabezado de sección con icono */
     .section-header {
         @apply flex items-center gap-3 mb-6;
     }
@@ -126,7 +160,7 @@
         @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
     }
 
-    /* Custom scrollbar */
+    /* Scrollbar personalizada */
     ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -145,8 +179,7 @@
     }
 }
 
-/* ===== ANIMATIONS ===== */
-/* Enhanced appear animation */
+/* ===== ANIMACIONES ===== */
 @keyframes enhanced-appear {
     0% {
         opacity: 0;
@@ -164,7 +197,6 @@
     opacity: 0;
 }
 
-/* Fade in animation */
 @keyframes fade-in {
     0% {
         opacity: 0;
@@ -179,14 +211,91 @@
     animation: fade-in 0.5s ease-out forwards;
 }
 
-/* ===== PRINT STYLES ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInLeft {
+    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scaleIn {
+    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+}
+
+/* Sistema de animación escalonada */
+.stagger-container>* {
+    opacity: 0;
+}
+
+.stagger-visible.stagger-container>*:nth-child(1) {
+    animation-delay: 30ms;
+}
+
+.stagger-visible.stagger-container>*:nth-child(2) {
+    animation-delay: 60ms;
+}
+
+.stagger-visible.stagger-container>*:nth-child(3) {
+    animation-delay: 90ms;
+}
+
+.stagger-visible.stagger-container>*:nth-child(4) {
+    animation-delay: 120ms;
+}
+
+.stagger-visible.stagger-container>*:nth-child(5) {
+    animation-delay: 150ms;
+}
+
+.stagger-visible.stagger-container>*:nth-child(6) {
+    animation-delay: 180ms;
+}
+
+/* ===== ESTILOS DE IMPRESIÓN ===== */
 @media print {
     body {
         background-color: white !important;
         color: black !important;
     }
 
-    /* Hide elements not needed for print */
+    /* Ocultar elementos no necesarios para impresión */
     nav,
     footer,
     button:not(#cv-download-button),
@@ -194,14 +303,14 @@
         display: none !important;
     }
 
-    /* Ensure all content is visible */
+    /* Asegurar que todo el contenido sea visible */
     .opacity-0,
     .translate-y-10 {
         opacity: 1 !important;
         transform: none !important;
     }
 
-    /* Remove visual effects */
+    /* Eliminar efectos visuales */
     * {
         animation: none !important;
         transition: none !important;
@@ -209,7 +318,7 @@
         box-shadow: none !important;
     }
 
-    /* Ensure brand colors print correctly */
+    /* Asegurar colores de marca para impresión */
     .text-brand-red {
         color: #D83333 !important;
     }
@@ -217,9 +326,15 @@
     .bg-brand-red {
         background-color: #D83333 !important;
     }
+
+    /* Configuración de página para PDF */
+    @page {
+        size: A4 portrait;
+        margin: 1.5cm;
+    }
 }
 
-/* ===== RESPONSIVE STYLES ===== */
+/* ===== ESTILOS RESPONSIVOS ===== */
 @media (max-width: 768px) {
     section {
         margin-bottom: 3rem !important;
@@ -241,7 +356,7 @@
     }
 }
 
-/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+/* ===== MEJORAS DE ACCESIBILIDAD ===== */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -251,7 +366,7 @@
     }
 }
 
-/* Proper touch targets for accessibility */
+/* Objetivos táctiles adecuados para accesibilidad */
 .touch-target {
     min-height: 44px;
     min-width: 44px;
@@ -521,150 +636,105 @@
         scroll-behavior: auto !important;
     }
 }
-/* 
- * Natural Theme Transitions
- * Optimized implementation for fluid and smooth theme transitions
+/**
+ * Transiciones de tema optimizadas y unificadas
+ * File: src/styles/theme-transitions.css
+ * 
+ * Combina y mejora el código de:
+ * - src/styles/theme-transitions.css
+ * - src/styles/natural-theme-transitions.css
+ * - src/styles/theme-toggle.css
  */
 
+/* Variables globales para transiciones */
 :root {
-    /* Shorter base duration for more natural feel */
-    --theme-base-duration: 180ms;
+    /* Duración base más corta para una sensación más natural */
+    --theme-transition-duration: 180ms;
 
-    /* Optimized timing curves for different property types */
+    /* Curvas de temporización optimizadas para diferentes tipos de propiedades */
     --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
-    /* Output easing for colors */
     --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
-    /* Smooth easing for shadows */
     --theme-curve-transform: cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Bounce easing for movements */
 }
 
 /*
-   * Layer System - Transitions are applied by "visual layers" 
-   * instead of to the entire DOM simultaneously
-   */
+ * Sistema de capas - Las transiciones se aplican por "capas visuales"
+ * en lugar de simultáneamente para todo el DOM
+ */
 
-/* Layer 1: Main background colors - fastest */
+/* Capa 1: Colores de fondo principales - los más rápidos */
 html.theme-transitioning body,
 html.theme-transitioning .bg-light-primary,
 html.theme-transitioning .bg-dark-primary {
-    transition: background-color var(--theme-base-duration) var(--theme-curve-color);
+    transition: background-color var(--theme-transition-duration) var(--theme-curve-color);
     will-change: background-color;
 }
 
-/* Layer 2: Secondary containers and backgrounds - slightly delayed */
+/* Capa 2: Contenedores secundarios y fondos - ligeramente retrasados */
 html.theme-transitioning .bg-light-secondary,
 html.theme-transitioning .bg-dark-secondary,
 html.theme-transitioning .bg-light-surface,
 html.theme-transitioning .bg-dark-surface {
-    transition: background-color calc(var(--theme-base-duration) * 1.15) var(--theme-curve-color);
-    transition-delay: calc(var(--theme-base-duration) * 0.1);
+    transition: background-color calc(var(--theme-transition-duration) * 1.15) var(--theme-curve-color);
+    transition-delay: calc(var(--theme-transition-duration) * 0.1);
     will-change: background-color;
 }
 
-/* Layer 3: Main text - starts slightly after backgrounds */
+/* Capa 3: Texto principal - comienza poco después de los fondos */
 html.theme-transitioning .text-light-text,
 html.theme-transitioning .text-dark-text {
-    transition: color calc(var(--theme-base-duration) * 1.1) var(--theme-curve-color);
-    transition-delay: calc(var(--theme-base-duration) * 0.15);
+    transition: color calc(var(--theme-transition-duration) * 1.1) var(--theme-curve-color);
+    transition-delay: calc(var(--theme-transition-duration) * 0.15);
     will-change: color;
 }
 
-/* Layer 4: Secondary text and borders - after main text */
+/* Capa 4: Texto secundario y bordes - después del texto principal */
 html.theme-transitioning .text-light-text-secondary,
 html.theme-transitioning .text-dark-text-secondary,
 html.theme-transitioning .border-light-border,
 html.theme-transitioning .border-dark-border {
     transition-property: color, border-color;
-    transition-duration: calc(var(--theme-base-duration) * 1.2);
+    transition-duration: calc(var(--theme-transition-duration) * 1.2);
     transition-timing-function: var(--theme-curve-color);
-    transition-delay: calc(var(--theme-base-duration) * 0.2);
+    transition-delay: calc(var(--theme-transition-duration) * 0.2);
     will-change: color, border-color;
 }
 
-/* Layer 5: Accent elements - last to transition */
+/* Capa 5: Elementos de acento - últimos en transicionar */
 html.theme-transitioning .text-brand-red,
 html.theme-transitioning .bg-brand-red,
 html.theme-transitioning .border-brand-red {
     transition-property: color, background-color, border-color;
-    transition-duration: calc(var(--theme-base-duration) * 1.3);
+    transition-duration: calc(var(--theme-transition-duration) * 1.3);
     transition-timing-function: var(--theme-curve-color);
-    transition-delay: calc(var(--theme-base-duration) * 0.25);
+    transition-delay: calc(var(--theme-transition-duration) * 0.25);
     will-change: color, background-color, border-color;
 }
 
-/* Layer 6: Shadows - transition with specialized easing */
+/* Capa 6: Sombras - transición con temporización especializada */
 html.theme-transitioning .shadow-sm,
 html.theme-transitioning .shadow-md,
 html.theme-transitioning .shadow-lg,
 html.theme-transitioning .shadow-xl {
-    transition: box-shadow calc(var(--theme-base-duration) * 1.5) var(--theme-curve-shadow);
-    transition-delay: calc(var(--theme-base-duration) * 0.1);
+    transition: box-shadow calc(var(--theme-transition-duration) * 1.5) var(--theme-curve-shadow);
+    transition-delay: calc(var(--theme-transition-duration) * 0.1);
     will-change: box-shadow;
 }
 
-/* Temporary interaction blocking during transition */
-.theme-transition-blocker {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    pointer-events: all;
-    background-color: transparent;
-    opacity: 0;
-}
-
-/* Subtly animated gradient effect during theme transition */
-.theme-wave {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0.015),
-            transparent);
-    transform: translateY(-100%);
-    pointer-events: none;
-    z-index: 9998;
-}
-
-html.theme-transitioning .theme-wave {
-    animation: theme-wave-animation calc(var(--theme-base-duration) * 2) ease-out forwards;
-}
-
-@keyframes theme-wave-animation {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-}
-
-/* More natural transition utilities */
+/* Clases de utilidad para transiciones más naturales */
 .theme-transition-text {
-    transition: color calc(var(--theme-base-duration) * 0.8) var(--theme-curve-color);
+    transition: color calc(var(--theme-transition-duration) * 0.8) var(--theme-curve-color);
 }
 
 .theme-transition-bg {
-    transition: background-color calc(var(--theme-base-duration) * 0.75) var(--theme-curve-color);
+    transition: background-color calc(var(--theme-transition-duration) * 0.75) var(--theme-curve-color);
 }
 
 .theme-transition-transform {
-    transition: transform calc(var(--theme-base-duration) * 0.9) var(--theme-curve-transform);
+    transition: transform calc(var(--theme-transition-duration) * 0.9) var(--theme-curve-transform);
 }
-/* Animaciones específicas para ThemeToggle */
 
+/* Animaciones específicas para el ThemeToggle */
 @keyframes spin-once {
     0% {
         transform: rotate(0deg);
@@ -679,22 +749,6 @@ html.theme-transitioning .theme-wave {
     animation: spin-once 300ms var(--theme-curve-transform);
 }
 
-/* Animación para el sol/luna */
-@keyframes morphIcon {
-    0% {
-        transform: scale(1) rotate(0);
-    }
-
-    50% {
-        transform: scale(0.8) rotate(180deg);
-    }
-
-    100% {
-        transform: scale(1) rotate(360deg);
-    }
-}
-
-/* Efecto de resplandor al cambiar tema */
 @keyframes pulse-glow {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
@@ -709,101 +763,8 @@ html.theme-transitioning .theme-wave {
     }
 }
 
-/* Aplicar al botón de cambio de tema */
 .theme-toggle-btn:active {
     animation: pulse-glow 600ms ease-out;
-}
-
-/* Fixes for specific issues */
-/**
- * Estilos adicionales para corregir el filtro de imagen en modo claro
- * File: src/styles/image-fixes.css
- */
-
-/* Eliminar cualquier filtro o efecto en la imagen en modo día */
-.light img,
-html:not(.dark) img {
-    filter: none !important;
-    /* Quitar cualquier filtro */
-    opacity: 1 !important;
-    /* Asegurar opacidad completa */
-    contrast: 95% !important;
-    /* Mantener contraste original */
-}
-
-/* Asegurar que la transición entre modos no afecte a la imagen */
-html.theme-transitioning img {
-    transition: none !important;
-    /* No transición para imágenes */
-}
-
-/* Corrección específica para la imagen de perfil */
-.light .profile-photo,
-html:not(.dark) .profile-photo {
-    border-color: #e5e7eb !important;
-    /* Borde claro para modo día */
-}
-
-.dark .profile-photo {
-    border-color: #374151 !important;
-    /* Borde oscuro para modo noche */
-}
-/**
- * Comprehensive navbar fix styles
- * File: src/styles/navbar-fix.css
- */
-
-/* Base sticky styles with high specificity */
-html body nav[role="navigation"],
-html body header nav,
-html body .sticky,
-html body nav.sticky {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 999 !important;
-    will-change: transform;
-    /* Hardware acceleration hint */
-}
-
-/* For browsers with poor sticky support */
-@supports not ((position: sticky) or (position: -webkit-sticky)) {
-
-    nav[role="navigation"],
-    header nav,
-    nav.sticky {
-        position: fixed !important;
-        width: 100% !important;
-        left: 0 !important;
-    }
-
-    /* Add spacing to prevent content jump */
-    body:not([data-navbar-fixed="true"]) {
-        padding-top: var(--navbar-height, 80px);
-    }
-}
-
-/* iOS Safari fixes */
-@supports (-webkit-touch-callout: none) {
-
-    html.ios-device nav[role="navigation"],
-    html.ios-device header nav {
-        position: fixed !important;
-        width: 100% !important;
-        left: 0 !important;
-    }
-
-    /* Add spacing to body when navbar is fixed */
-    html.ios-device body {
-        padding-top: var(--navbar-height, 80px);
-    }
-}
-
-/* Ensure header has proper z-index relationship with navbar */
-header[role="banner"] {
-    position: relative;
-    z-index: 998;
-    /* Just below navbar */
 }
 
 /* Print styles */

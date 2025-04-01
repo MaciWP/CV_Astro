@@ -1,127 +1,108 @@
+/**
+ * Contexto de tema optimizado y simplificado
+ * File: src/contexts/ThemeContext.jsx
+ * 
+ * Versión simplificada que mantiene la funcionalidad clave 
+ * y elimina código innecesario.
+ */
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Define theme options
+// Define opciones de tema
 export const themes = {
     LIGHT: 'light',
     DARK: 'dark'
 };
 
-// Create the context
+// Crear el contexto
 const ThemeContext = createContext(null);
 
-// Custom hook for using the theme context
+// Hook personalizado para usar el contexto
 export const useTheme = () => {
     const context = useContext(ThemeContext);
     if (!context) {
-        throw new Error('useTheme must be used within a ThemeProvider');
+        throw new Error('useTheme debe usarse dentro de un ThemeProvider');
     }
     return context;
 };
 
-// Theme provider component with improved transitions
+// Componente proveedor de tema
 export function ThemeProvider({ children }) {
-    // Initialize with null to avoid hydration mismatch
+    // Inicializar con null para evitar problemas de hidratación
     const [theme, setTheme] = useState(null);
     const [isMounted, setIsMounted] = useState(false);
-    const [isTransitioning, setIsTransitioning] = useState(false);
 
-    // Once mounted, set the theme from localStorage or default to light
+    // Una vez montado, establecer el tema desde localStorage o preferencia del sistema
     useEffect(() => {
-        // Get initial theme from localStorage or default to light
-        const initialTheme = localStorage.getItem('theme') || themes.LIGHT;
+        // Obtener tema inicial desde localStorage o preferencia del sistema
+        const storedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = storedTheme || (systemPrefersDark ? themes.DARK : themes.LIGHT);
+
         setTheme(initialTheme);
         setIsMounted(true);
 
-        // Also ensure the class is applied to html element
+        // Asegurar que la clase se aplique al elemento html
         document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
         document.documentElement.classList.add(initialTheme);
 
-        // Crear elemento flash para transición visual
-        if (!document.getElementById('theme-flash')) {
-            const flashElement = document.createElement('div');
-            flashElement.id = 'theme-flash';
-            document.body.appendChild(flashElement);
-        }
-
-        // Listen for storage events (in case theme is changed in another tab)
-        const handleStorageChange = (e) => {
-            if (e.key === 'theme') {
-                const newTheme = e.newValue || themes.LIGHT;
+        // Escuchar cambios de preferencia del sistema
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e) => {
+            // Solo actualizar si el usuario no ha establecido una preferencia
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? themes.DARK : themes.LIGHT;
                 setTheme(newTheme);
                 document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
                 document.documentElement.classList.add(newTheme);
             }
         };
 
-        window.addEventListener('storage', handleStorageChange);
+        // Usar API moderna si está disponible
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleChange);
+        } else {
+            mediaQuery.addListener(handleChange); // Fallback para navegadores antiguos
+        }
+
         return () => {
-            window.removeEventListener('storage', handleStorageChange);
-            // Limpiar elemento flash al desmontar
-            if (document.getElementById('theme-flash')) {
-                document.body.removeChild(document.getElementById('theme-flash'));
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener('change', handleChange);
+            } else {
+                mediaQuery.removeListener(handleChange);
             }
         };
     }, []);
 
-    // Toggle between themes con mejores efectos visuales
+    // Alternar entre temas
     const toggleTheme = () => {
-        if (!isMounted || isTransitioning) return;
+        if (!isMounted) return;
 
-        setIsTransitioning(true);
         const newTheme = theme === themes.LIGHT ? themes.DARK : themes.LIGHT;
 
-        // Crear efecto de flash sutil
-        const flashElement = document.getElementById('theme-flash');
-        if (flashElement) {
-            flashElement.classList.add('flash');
-            setTimeout(() => {
-                flashElement.classList.remove('flash');
-            }, 300);
-        }
-
-        // Add transitioning class for smoother transitions
+        // Añadir clase transitioning para transiciones más suaves
         document.documentElement.classList.add('theme-transitioning');
 
-        // Crear overlay para bloquear interacciones durante la transición
-        let overlay = document.querySelector('.theme-transition-overlay');
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.className = 'theme-transition-overlay';
-            document.body.appendChild(overlay);
-        }
-        overlay.classList.add('active');
+        // Actualizar estado y DOM
+        setTheme(newTheme);
+        document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
+        document.documentElement.classList.add(newTheme);
 
-        // Update state con pequeño delay para sincronizar efectos
-        setTimeout(() => {
-            setTheme(newTheme);
+        // Guardar la preferencia de tema
+        localStorage.setItem('theme', newTheme);
 
-            // Update the document classes
-            document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
-            document.documentElement.classList.add(newTheme);
-
-            // Store the theme preference
-            localStorage.setItem('theme', newTheme);
-        }, 50);
-
-        // Remove transitioning class after animation completes
+        // Eliminar clase transitioning después de completar la animación
         setTimeout(() => {
             document.documentElement.classList.remove('theme-transitioning');
-            setIsTransitioning(false);
-
-            // Quitar overlay
-            if (overlay) {
-                overlay.classList.remove('active');
-            }
-        }, 350);
+        }, 300);
     };
 
-    // Simple loading state to avoid hydration issues
+    // Estado de carga simple para evitar problemas de hidratación
     if (!isMounted) {
         return <div className="invisible">{children}</div>;
     }
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, isTransitioning }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );

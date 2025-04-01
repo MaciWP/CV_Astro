@@ -1,30 +1,71 @@
+/**
+ * Componente SEO mejorado con soporte para metadatos avanzados
+ * File: src/components/SEO.jsx
+ * 
+ * Mejoras principales:
+ * - Schema.org estructura mejorada para mayor visibilidad en buscadores
+ * - Metadatos para redes sociales optimizados
+ * - Palabras clave específicas para developer/desarrollador/CV/portfolio
+ * - Soporte para indexación geográfica
+ */
 import React from 'react';
 
 /**
- * Enhanced SEO component with improved metadata for better search engine visibility
- * @param {Object} props - Component properties
- * @param {string} props.title - Page title
- * @param {string} props.description - Page description
- * @param {string} props.canonicalUrl - Canonical URL
- * @param {string} props.ogImage - Open Graph image URL
- * @param {string} props.ogType - Open Graph type
- * @param {string} props.twitterCard - Twitter card type
+ * Componente SEO con metadatos optimizados para mejor visibilidad en motores de búsqueda
+ * 
+ * @param {Object} props - Propiedades del componente
+ * @param {string} props.title - Título de la página
+ * @param {string} props.description - Descripción de la página
+ * @param {string} props.canonicalUrl - URL canónica
+ * @param {string} props.ogImage - URL de la imagen para OpenGraph/Twitter
+ * @param {string} props.ogType - Tipo de contenido para OpenGraph
+ * @param {string} props.twitterCard - Tipo de tarjeta para Twitter
+ * @param {Array<string>} props.keywords - Palabras clave adicionales para SEO
+ * @param {string} props.lang - Idioma de la página
+ * @param {Object} props.author - Información del autor
+ * @param {Object} props.geo - Información geográfica
  */
 const SEO = ({
     title = "Oriol Macias - Software Developer CV & Portfolio",
-    description = "Portfolio and CV for Oriol Macias, experienced Software Developer specialized in backend development, industrial protocols integration (SNMP, MODBUS, BACnet), and data center infrastructure.",
+    description = "Professional portfolio for Oriol Macias, experienced developer specialized in backend development, industrial protocols integration (SNMP, MODBUS, BACnet), and data center infrastructure.",
     canonicalUrl = "https://oriolmacias.dev/",
     ogImage = "/images/oriol_macias.jpg",
     ogType = "website",
-    twitterCard = "summary_large_image"
+    twitterCard = "summary_large_image",
+    keywords = [],
+    lang = "en",
+    author = {
+        name: "Oriol Macias",
+        role: "Software Developer",
+        url: "https://oriolmacias.dev"
+    },
+    geo = {
+        region: "ES",
+        placename: "Spain"
+    }
 }) => {
-    // Base domain for absolute URLs
+    // Base domain para URLs absolutas
     const domain = "https://oriolmacias.dev";
 
-    // If ogImage doesn't start with http, make it absolute
-    if (ogImage && !ogImage.startsWith('http')) {
-        ogImage = `${domain}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`;
-    }
+    // Palabras clave por defecto combinadas con las pasadas como prop
+    const defaultKeywords = [
+        "Oriol Macias", "Oriol", "Macias",
+        "Software Developer", "Developer", "Desarrollador", "Développeur",
+        "Backend Developer", "Full Stack Developer",
+        "CV", "Portfolio", "Resume", "Curriculum",
+        "Python", "Django", "C#", ".NET", "SNMP", "MODBUS", "BACnet",
+        "Industrial Protocols", "Data Center Infrastructure",
+        "oriol dev", "macias dev", "oriol macias dev",
+        "desarrollo web", "desarrollador backend", "ingeniero de software"
+    ];
+
+    // Combinar keywords por defecto con las personalizadas
+    const allKeywords = [...new Set([...defaultKeywords, ...keywords])];
+
+    // Asegurar que ogImage sea absoluta
+    const fullOgImage = ogImage.startsWith('http')
+        ? ogImage
+        : `${domain}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`;
 
     return (
         <>
@@ -32,6 +73,10 @@ const SEO = ({
             <title>{title}</title>
             <meta name="title" content={title} />
             <meta name="description" content={description} />
+            <meta name="keywords" content={allKeywords.join(', ')} />
+
+            {/* Información del autor */}
+            <meta name="author" content={author.name} />
 
             {/* Canonical URL */}
             <link rel="canonical" href={canonicalUrl} />
@@ -41,29 +86,37 @@ const SEO = ({
             <meta property="og:url" content={canonicalUrl} />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
-            <meta property="og:image" content={ogImage} />
-            <meta property="og:site_name" content="Oriol Macias - Developer" />
+            <meta property="og:image" content={fullOgImage} />
+            <meta property="og:site_name" content="Oriol Macias - Developer Portfolio" />
+            <meta property="og:locale" content={lang === 'es' ? 'es_ES' : lang === 'fr' ? 'fr_FR' : 'en_US'} />
 
-            {/* Twitter */}
+            {/* Twitter Card */}
             <meta name="twitter:card" content={twitterCard} />
             <meta name="twitter:url" content={canonicalUrl} />
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={description} />
-            <meta name="twitter:image" content={ogImage} />
+            <meta name="twitter:image" content={fullOgImage} />
+            <meta name="twitter:creator" content="@oriolmacias" />
 
-            {/* Enhanced SEO meta tags */}
-            <meta name="author" content="Oriol Macias" />
-            <meta name="keywords" content="Oriol Macias, Oriol, Macias, Software Developer, Backend Developer, CV, Portfolio, Python, Django, C#, .NET, SNMP, MODBUS, BACnet, Data Center Infrastructure, Web Developer, Developer, Software Engineer, Programming, Coding, oriol dev, macias dev, oriol macias dev, desarrollo, desarrollador, programador" />
+            {/* Metadatos geográficos para SEO local */}
+            <meta name="geo.region" content={geo.region} />
+            <meta name="geo.placename" content={geo.placename} />
 
-            {/* Geo tags for local SEO */}
-            <meta name="geo.region" content="ES" />
-            <meta name="geo.placename" content="Spain" />
+            {/* Especificador de idioma actual */}
+            <meta name="content-language" content={lang} />
+            <meta httpEquiv="content-language" content={lang} />
 
-            {/* Language alternates for multilingual support */}
-            <link rel="alternate" hrefLang="en" href="https://oriolmacias.dev/" />
-            <link rel="alternate" hrefLang="es" href="https://oriolmacias.dev/es/" />
-            <link rel="alternate" hrefLang="fr" href="https://oriolmacias.dev/fr/" />
-            <link rel="alternate" hrefLang="x-default" href="https://oriolmacias.dev/" />
+            {/* Links de idiomas alternativos definidos en función de la página actual */}
+            <link rel="alternate" hrefLang="en" href={`${domain}/`} />
+            <link rel="alternate" hrefLang="es" href={`${domain}/es/`} />
+            <link rel="alternate" hrefLang="fr" href={`${domain}/fr/`} />
+            <link rel="alternate" hrefLang="x-default" href={`${domain}/`} />
+
+            {/* Meta información adicional para SEO */}
+            <meta name="rating" content="General" />
+            <meta name="robots" content="index, follow" />
+            <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+            <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         </>
     );
 };

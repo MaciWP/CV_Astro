@@ -1,7 +1,5 @@
 /**
- * ProfileHeader Component con botones debajo de la foto
- * Versión corregida para garantizar la correcta carga de traducciones
- * 
+ * Componente ProfileHeader con fix para ruta de imagen
  * File: src/components/cv/ProfileHeader.jsx
  */
 import React, { useState, useEffect } from 'react';
@@ -73,12 +71,6 @@ const ProfileHeader = () => {
             github: getTranslation('header.github', 'GitHub'),
             downloadCV: getTranslation('buttons.downloadCV', 'Download CV'),
             downloadCoverLetter: getTranslation('buttons.downloadCoverLetter', 'Download Cover Letter')
-        });
-
-        // Registrar en consola para depuración
-        console.log('[ProfileHeader] Translations loaded:', {
-            jobTitle: getTranslation('header.jobTitle', headerData.jobTitle),
-            summary: getTranslation('header.summary', headerData.summary)
         });
     };
 
@@ -210,23 +202,25 @@ const ProfileHeader = () => {
                             {/* Borde para estructura */}
                             <div className="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
 
-                            {/* Foto */}
+                            {/* Foto - ARREGLO: Usamos directamente la imagen de los formatos modernos */}
                             <div className="w-full h-full bg-white dark:bg-gray-800">
-                                <ResponsiveImage
-                                    src={headerData.photoUrl}
-                                    alt={localData.photoAlt}
-                                    className="w-full h-full object-cover transition-opacity duration-500"
-                                    width={400}
-                                    height={400}
-                                    loading="eager"
-                                    fetchpriority="high"
-                                    onLoad={handleImageLoaded}
-                                    onError={(e) => {
-                                        e.target.onerror = null;
-                                        e.target.style.display = 'none';
-                                        e.target.parentNode.innerHTML += '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-800"><i class="fas fa-user text-4xl text-gray-400 dark:text-gray-500"></i></div>';
-                                    }}
-                                />
+                                {/* Usar picture para formatos modernos y fallback a placeholder si fallan */}
+                                <picture>
+                                    {/* Formato AVIF - más eficiente */}
+                                    <source srcSet="/images/oriol_macias-sm.avif" type="image/avif" />
+                                    {/* Formato WebP - amplio soporte */}
+                                    <source srcSet="/images/oriol_macias-sm.webp" type="image/webp" />
+                                    {/* Fallback a placeholder */}
+                                    <img
+                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='42' text-anchor='middle' fill='%239ca3af' dominant-baseline='middle'%3EOM%3C/text%3E%3C/svg%3E"
+                                        alt={localData.photoAlt}
+                                        width={400}
+                                        height={400}
+                                        loading="eager"
+                                        className="w-full h-full object-cover transition-opacity duration-500"
+                                        onLoad={handleImageLoaded}
+                                    />
+                                </picture>
                             </div>
 
                             {/* Acento rojo */}

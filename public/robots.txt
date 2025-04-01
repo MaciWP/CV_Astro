@@ -1,9 +1,46 @@
-# Allow all crawlers
+# robots.txt optimizado para SEO
+# https://oriolmacias.dev/robots.txt
+
+# Permitir a todos los rastreadores acceder a todo el sitio
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Indexar versiones en diferentes idiomas
+Allow: /es/
+Allow: /fr/
+
+# No indexar archivos de mantenimiento y recursos estáticos
+Disallow: /sw.js
+Disallow: /sw-register.js
+Disallow: /manifest.json
+Disallow: /*.js$
+Disallow: /*.css$
+
+# No indexar archivos serviceworker
+Disallow: /service-worker.js
+Disallow: /offline.html
+
+# Evitar rastreo de recursos dentro de estas carpetas
+Disallow: /scripts/
+Disallow: /styles/
+
+# Optimización: disminuir tasa de rastreo para evitar sobrecargar el servidor
+Crawl-delay: 10
+
+# Ubicación del sitemap
 Sitemap: https://oriolmacias.dev/sitemap.xml
 
-# Optimization: Decrease crawl rate to prevent server overload
-# Crawl-delay: 1
+# Host canónico - ayuda a resolver problemas con www vs no-www
+Host: oriolmacias.dev
+
+# Evitar rastreo de contenido duplicado (URLs alternativas para el mismo contenido)
+Disallow: /*?*
+Disallow: /*&*
+
+# Metadatos adicionales para OpenGraph
+# OG-Image: https://oriolmacias.dev/images/oriol_macias.jpg
+# OG-Description: Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.
+# OG-Type: website
+
+# Información de contacto del propietario del sitio
+# Contact: oriolomb@gmail.com

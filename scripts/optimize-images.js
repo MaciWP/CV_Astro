@@ -1,61 +1,148 @@
-// This script automatically optimizes images for your website
+/**
+ * Script mejorado para optimizar imágenes
+ * File: scripts/optimize-images.js
+ * 
+ * CORRECCIÓN: Ahora copia además la imagen original al directorio principal
+ */
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import sharp from 'sharp';
 
-// Use console.log to show information during script development
-console.log('This script would automatically optimize images for your website.');
-console.log('To use it, you need to install the dependencies:');
-console.log('npm install sharp fs-extra glob');
-
-// In ES Modules __dirname doesn't exist, so we create it:
+// En ES Modules __dirname no existe, así que lo creamos:
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create necessary directories for images
-async function createImageDirectories() {
+// Configuración
+const SOURCE_DIR = path.join(__dirname, '../public/images/original');
+const OUTPUT_DIR = path.join(__dirname, '../public/images');
+const FORMATS = ['webp', 'avif', 'jpg']; // Añadido jpg para asegurar copia del original
+const QUALITY = 80;
+const SIZES = [
+    { width: 1200, suffix: 'lg' },
+    { width: 800, suffix: 'md' },
+    { width: 400, suffix: 'sm' }
+];
+
+/**
+ * Optimiza una imagen para varios formatos y tamaños
+ * @param {string} filePath - Ruta a la imagen original
+ */
+async function optimizeImage(filePath) {
+    const fileName = path.basename(filePath);
+    const fileExt = path.extname(fileName);
+    const baseName = path.basename(fileName, fileExt);
+
     try {
-        // Define paths
-        const imagesDir = path.join(__dirname, '../public/images');
-        const optimizedDir = path.join(imagesDir, 'optimized');
+        // Cargar imagen con sharp
+        const image = sharp(filePath);
+        const metadata = await image.metadata();
 
-        // Check and create directories
-        await fs.mkdir(imagesDir, { recursive: true });
-        await fs.mkdir(optimizedDir, { recursive: true });
+        console.log(`\nOptimizando ${fileName} (${metadata.width}x${metadata.height}):`);
 
-        console.log(`✓ Image directories created:`);
-        console.log(`  - ${imagesDir}`);
-        console.log(`  - ${optimizedDir}`);
+        // IMPORTANTE: COPIAR LA IMAGEN ORIGINAL AL DIRECTORIO PRINCIPAL
+        // Esto resuelve el problema de 404 para la imagen principal
+        await fs.copyFile(
+            filePath,
+            path.join(OUTPUT_DIR, fileName)
+        );
+        console.log(`  ✓ Copiada imagen original a ${OUTPUT_DIR}/${fileName}`);
 
-        // Check if there are images in the directory
-        try {
-            const files = await fs.readdir(imagesDir);
-            const imageFiles = files.filter(file =>
-                !file.startsWith('.') &&
-                !file.includes('optimized') &&
-                /\.(jpg|jpeg|png|gif)$/i.test(file)
-            );
+        // Crear versiones en múltiples formatos y tamaños
+        for (const format of FORMATS) {
+            for (const size of SIZES) {
+                // Solo redimensionar si la imagen original es más grande
+                if (metadata.width <= size.width) continue;
 
-            if (imageFiles.length > 0) {
-                console.log(`\n✓ Found ${imageFiles.length} images to optimize:`);
-                imageFiles.forEach(file => console.log(`  - ${file}`));
-            } else {
-                console.log('\n⚠️ No images found to optimize.');
-                console.log('  Place your images in /public/images/');
+                const outputPath = path.join(OUTPUT_DIR, `${baseName}-${size.suffix}.${format}`);
+
+                if (format === 'jpg') {
+                    // Para JPG usamos el formato original guardado como JPEG
+                    await image
+                        .resize({ width: size.width })
+                        .jpeg({ quality: QUALITY, mozjpeg: true })
+                        .toFile(outputPath);
+                } else {
+                    // Para otros formatos
+                    await image
+                        .resize({ width: size.width })
+                    [format]({ quality: QUALITY })
+                        .toFile(outputPath);
+                }
+
+                console.log(`  ✓ Generada ${baseName}-${size.suffix}.${format} (${size.width}px)`);
             }
-        } catch (error) {
-            console.error('Error looking for images:', error);
         }
-
-        console.log('\n✓ Preparation for image optimization completed');
-        console.log('\nTo optimize all images, you will need:');
-        console.log('1. Install sharp: npm install sharp');
-        console.log('2. Place your images in /public/images/');
-        console.log('3. Run a more complex script that processes each image');
     } catch (error) {
-        console.error('Error creating image directories:', error);
+        console.error(`  ✗ Error optimizando ${fileName}: ${error.message}`);
     }
 }
 
-// Run the main function
-createImageDirectories();
+/**
+ * Crea directorios necesarios
+ */
+async function createDirectories() {
+    try {
+        await fs.mkdir(SOURCE_DIR, { recursive: true });
+        await fs.mkdir(OUTPUT_DIR, { recursive: true });
+        console.log('✓ Directorios creados correctamente');
+    } catch (error) {
+        console.error(`Error creando directorios: ${error.message}`);
+        throw error;
+    }
+}
+
+/**
+ * Procesa todas las imágenes en el directorio
+ */
+async function processImages() {
+    try {
+        console.log('🖼️  Iniciando optimización de imágenes...');
+
+        // Crear directorios
+        await createDirectories();
+
+        // Verificar imágenes originales
+        let files;
+        try {
+            files = await fs.readdir(SOURCE_DIR);
+        } catch (error) {
+            console.log('⚠️  El directorio de imágenes originales está vacío o no existe.');
+            console.log(`Coloque sus imágenes originales en: ${SOURCE_DIR}`);
+            return;
+        }
+
+        // Filtrar solo archivos de imagen
+        const imageFiles = files.filter(file =>
+            /\.(jpe?g|png|gif|webp)$/i.test(file)
+        );
+
+        if (imageFiles.length === 0) {
+            console.log('⚠️  No se encontraron imágenes para optimizar.');
+            return;
+        }
+
+        console.log(`Encontradas ${imageFiles.length} imágenes para optimizar.`);
+
+        // Procesar cada imagen
+        for (const file of imageFiles) {
+            await optimizeImage(path.join(SOURCE_DIR, file));
+        }
+
+        console.log('\n✅ Optimización de imágenes completada!');
+        console.log(`Imágenes optimizadas guardadas en: ${OUTPUT_DIR}`);
+
+    } catch (error) {
+        console.error(`\n❌ Error en el proceso de optimización: ${error.message}`);
+        process.exit(1);
+    }
+}
+
+// Ejecutar la función principal
+processImages();
+
+// Exportar funciones para uso en otros scripts
+export {
+    processImages,
+    optimizeImage
+};
