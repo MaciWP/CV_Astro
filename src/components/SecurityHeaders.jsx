@@ -80,22 +80,23 @@ const SecurityHeaders = () => {
     return (
         <>
             {/* CSP Header - Implemented as meta tag for static sites without server control */}
-            <meta httpEquiv="Content-Security-Policy" content={cspDirectives.join('; ')} />
+            <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; manifest-src 'self';" />
+
 
             {/* HSTS Header */}
-            <meta httpEquiv="Strict-Transport-Security" content={hstsPolicy} />
+            <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 
             {/* X-Frame-Options prevents your site from being embedded in iframes on other sites */}
-            <meta httpEquiv="X-Frame-Options" content="DENY" />
+            <meta http-equiv="X-Frame-Options" content="DENY" />
 
             {/* X-Content-Type-Options prevents MIME type sniffing */}
-            <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+            <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
             {/* Referrer-Policy controls how much referrer information is sent */}
-            <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+            <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 
             {/* Permissions-Policy (formerly Feature-Policy) limits browser features */}
-            <meta httpEquiv="Permissions-Policy" content={permissionsPolicy} />
+            <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 
             {/* X-XSS-Protection is mostly redundant with CSP, but kept for older browsers */}
             <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />

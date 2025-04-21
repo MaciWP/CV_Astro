@@ -6,6 +6,8 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
+import LanguageAlternates from "../components/LanguageAlternates";
+import SecurityHeaders from "../components/SecurityHeaders.astro";
 
 // Define props interface
 export interface Props {
@@ -48,6 +50,26 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta name="description" content={description} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
+
+    <!-- Enlaces hreflang corregidos -->
+    <LanguageAlternates
+      currentLang={lang}
+      currentPath={Astro.url.pathname}
+      client:load
+    />
+
+    <style is:inline>
+      /* Estilos críticos para prevenir CLS */
+      #skills,
+      .nav-container,
+      .profile-image-container {
+        content-visibility: auto;
+      }
+    </style>
+
+    <!-- CSS de correcciones de accesibilidad y CLS -->
+    <link rel="stylesheet" href="/styles/a11y-improvements.css" />
+    <link rel="stylesheet" href="/styles/layout-shift-fixes.css" />
 
     <!-- Alternate language versions -->
     {
@@ -411,9 +433,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         </ErrorBoundary>
       </I18nLoader>
     </div>
-  </body>
-
-  <!-- Script for smooth scrolling to sections -->
+  </body><!-- Script for smooth scrolling to sections -->
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       // Smooth scroll for anchors

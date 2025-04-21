@@ -1,10 +1,9 @@
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 
-// https://astro.build/config
 export default defineConfig({
-  // Configuración de i18n nativo de Astro
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es", "fr"],
@@ -15,42 +14,43 @@ export default defineConfig({
 
   integrations: [
     tailwind({
-      // Configuración personalizada de Tailwind
       applyBaseStyles: false,
-      // Opcionalmente especificar la ubicación del archivo config
       config: { path: './tailwind.config.js' },
     }),
     react(),
   ],
 
-  // Agregar configuración para MIME types
+  // Configuración explícita de MIME types para corregir errores
   server: {
     headers: {
-      // Asegurar que los scripts JS se sirvan con el MIME type correcto
+      // Forzar tipos MIME correctos para archivos críticos
       "*.js": [
         {
           key: "Content-Type",
-          value: "application/javascript"
+          value: "application/javascript; charset=utf-8"
+        }
+      ],
+      "*.css": [
+        {
+          key: "Content-Type",
+          value: "text/css; charset=utf-8"
         }
       ]
     }
   },
 
-  // Optimizar para desarrollo
   vite: {
-    // Opciones para mejorar el tiempo de compilación
-    optimizeDeps: {
-      exclude: ['@astrojs/upgrade-help'],
-    },
-    // Configuración de puerto personalizado
+    // Forzar MIME types correctos durante el desarrollo
     server: {
-      port: 4444, // Un puerto específico alto para evitar colisiones
-      strictPort: false, // Permitir usar el siguiente puerto disponible si está ocupado
+      fs: {
+        strict: true,
+      },
+      middlewareMode: false,
     },
-    // Ajustes de rendimiento
+    // Configuración de construcción para garantizar MIME types
     build: {
+      assetsInlineLimit: 0, // Evitar inline de assets pequeños
       sourcemap: true,
-      assets: 'assets'
     },
   },
 });

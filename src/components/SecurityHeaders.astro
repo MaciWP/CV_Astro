@@ -1,0 +1,26 @@
+<!-- Content Security Policy -->
+<meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; manifest-src 'self';"
+/>
+
+<!-- HTTP Strict Transport Security -->
+<meta
+    http-equiv="Strict-Transport-Security"
+    content="max-age=31536000; includeSubDomains; preload"
+/>
+
+<!-- Additional Security Headers -->
+<meta http-equiv="X-Frame-Options" content="DENY" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+<meta
+    http-equiv="Permissions-Policy"
+    content="camera=(), microphone=(), geolocation=(), interest-cohort=()"
+/>
+<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+<!-- Add Cross-Origin headers for enhanced security -->
+<meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
+<meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+<meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin" />

@@ -10,7 +10,7 @@
 :root {
     --original-brand-red: #D83333;
     --accessible-brand-red: #C42B2B;
-    /* Darker to ensure 4.5:1 contrast ratio */
+    /* Versión más oscura para mejor contraste */
 }
 
 /* Apply the darker red to text and borders */
@@ -25,6 +25,13 @@
 /* Exception for buttons and backgrounds where we keep the original color */
 .bg-brand-red {
     background-color: var(--original-brand-red);
+}
+
+h4.text-brand-red {
+    color: #B22222 !important;
+    /* Tono más oscuro para mejorar contraste */
+    font-weight: 600 !important;
+    /* Reforzar la negrita para mejorar legibilidad */
 }
 
 /* Style active navigation tabs with a stronger border */
