@@ -47,12 +47,6 @@ async function generateSitemap() {
             lastmod: today,
             changefreq: 'weekly',
             priority: '0.8'
-        },
-        {
-            url: '/404',
-            lastmod: today,
-            changefreq: 'yearly',
-            priority: '0.1'
         }
     ];
 

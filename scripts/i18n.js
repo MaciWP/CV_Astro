@@ -8,6 +8,9 @@
 const SUPPORTED_LANGUAGES = ['en', 'es', 'fr'];
 const DEFAULT_LANGUAGE = 'en';
 
+// Cache para almacenar traducciones cargadas
+const translationsCache = {};
+
 /**
  * Inicializar el sistema de i18n
  * @param {string} initialLang - Idioma inicial (opcional)
@@ -95,8 +98,9 @@ async function loadTranslations(lang) {
     if (typeof window === 'undefined') return null;
 
     // Evitar cargar el mismo idioma varias veces
-    if (window.TRANSLATIONS[lang]) {
-        return window.TRANSLATIONS[lang];
+    if (translationsCache[lang]) {
+        window.TRANSLATIONS[lang] = translationsCache[lang];
+        return translationsCache[lang];
     }
 
     try {
@@ -109,7 +113,8 @@ async function loadTranslations(lang) {
 
         const translations = await response.json();
 
-        // Almacenar traducciones en la variable global
+        // Almacenar traducciones en caché local y global
+        translationsCache[lang] = translations;
         window.TRANSLATIONS[lang] = translations;
 
         return translations;
@@ -195,6 +200,9 @@ async function changeLanguage(newLang) {
         await loadTranslations(newLang);
     }
 
+    // Actualizar elementos con atributo data-i18n
+    updateTranslatedElements();
+
     // Notificar del cambio de idioma
     document.dispatchEvent(new CustomEvent('languageChanged', {
         detail: { language: newLang }
@@ -212,7 +220,7 @@ function updateTranslatedElements() {
 
     document.querySelectorAll("[data-i18n]").forEach(function (element) {
         const key = element.getAttribute("data-i18n");
-        if (key && window.t) {
+        if (key && typeof window.t === "function") {
             element.textContent = window.t(key);
         }
     });
@@ -235,13 +243,3 @@ if (typeof document !== 'undefined') {
         initI18n();
     });
 }
-
-// Exportar funciones para uso en módulos
-export {
-    initI18n,
-    getTranslation,
-    changeLanguage,
-    detectLanguage,
-    loadTranslations,
-    updateTranslatedElements
-};

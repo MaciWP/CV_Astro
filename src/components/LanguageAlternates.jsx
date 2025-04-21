@@ -1,14 +1,10 @@
-// src/components/LanguageAlternates.jsx
+/**
+ * Componente de alternativas de idioma mejorado para SEO
+ * Implementa correctamente hreflang para Google
+ * File: src/components/LanguageAlternates.jsx
+ */
 import React from 'react';
 
-/**
- * LanguageAlternates component for proper hreflang implementation
- * Improves SEO by correctly signaling language alternatives to search engines
- * 
- * @param {Object} props Component properties
- * @param {string} props.currentLang Current page language code
- * @param {string} props.currentPath Current page path (without language prefix)
- */
 const LanguageAlternates = ({ currentLang = 'en', currentPath = '/' }) => {
     // Website base URL
     const baseUrl = 'https://oriolmacias.dev';

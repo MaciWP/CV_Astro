@@ -13,12 +13,6 @@ Allow: /fr/
 Disallow: /sw.js
 Disallow: /sw-register.js
 Disallow: /manifest.json
-Disallow: /*.js$
-Disallow: /*.css$
-
-# No indexar archivos serviceworker
-Disallow: /service-worker.js
-Disallow: /offline.html
 
 # Evitar rastreo de recursos dentro de estas carpetas
 Disallow: /scripts/
@@ -32,15 +26,3 @@ Sitemap: https://oriolmacias.dev/sitemap.xml
 
 # Host canónico - ayuda a resolver problemas con www vs no-www
 Host: oriolmacias.dev
-
-# Evitar rastreo de contenido duplicado (URLs alternativas para el mismo contenido)
-Disallow: /*?*
-Disallow: /*&*
-
-# Metadatos adicionales para OpenGraph
-# OG-Image: https://oriolmacias.dev/images/oriol_macias.jpg
-# OG-Description: Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.
-# OG-Type: website
-
-# Información de contacto del propietario del sitio
-# Contact: oriolomb@gmail.com

@@ -1,4 +1,4 @@
-# netlify.toml
+# netlify.toml - Versión mejorada
 [build]
   command = "npm run build"
   publish = "dist"
@@ -7,6 +7,17 @@
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+# Specific redirects for language paths
+[[redirects]]
+  from = "/es/*"
+  to = "/es/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/fr/*"
+  to = "/fr/index.html"
   status = 200
 
 # Security and performance headers
@@ -34,6 +45,13 @@
     Content-Type = "text/css; charset=utf-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Fix for i18n.js script loading issues
+[[headers]]
+  for = "/scripts/i18n.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-cache"
+    
 [[headers]]
   for = "/images/*"
   [headers.values]
@@ -45,9 +63,4 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
     Access-Control-Allow-Origin = "*"
-
-# No caching for service worker
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Cache-Control = "no-cache"
+    Content-Type = "font/woff2"
