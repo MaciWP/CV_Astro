@@ -113,6 +113,16 @@
   to = "/index.html"
   status = 200
 
+[[redirects]]
+  from = "/cdn-cgi/speculation"
+  to = "/cdn-cgi/empty-response.js"
+  status = 200
+
+[[redirects]]
+  from = "/cdn-cgi/rum"
+  to = "/cdn-cgi/empty-response.js"
+  status = 200
+
 # ===== OPCIONES DE OPTIMIZACIÓN =====
 
 [build.processing]

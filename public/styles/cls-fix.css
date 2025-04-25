@@ -1,0 +1,46 @@
+/* public/styles/cls-fix.css */
+/* Fix para evitar cambios de diseño durante la carga */
+
+/* Reservar espacio para la sección de habilidades */
+#skills {
+    min-height: 600px;
+    /* Altura mínima reservada */
+    contain: layout paint;
+    /* Mejora el rendimiento de renderizado */
+}
+
+/* Evitar cambios de diseño en skill pills */
+#skills .skill-pill {
+    opacity: 0;
+    /* Inicialmente invisible */
+    transform: translateY(0);
+    /* Posición final fija */
+    transition: opacity 0.3s ease-out;
+    /* Solo transición de opacidad */
+    height: 2.5rem;
+    /* Altura fija */
+    margin-bottom: 0.5rem;
+    /* Margen constante */
+}
+
+/* Cuando sea visible, solo cambia la opacidad */
+#skills .skill-pill[style*="opacity: 1"] {
+    transform: translateY(0) !important;
+    /* Forzar posición constante */
+}
+
+/* Estabilizar navegación */
+.hidden.md\:block {
+    height: 40px;
+    /* Altura fija para la navegación */
+    contain: layout size;
+    /* Contiene cambios de tamaño */
+}
+
+/* Más espacio para secciones principales */
+section {
+    margin-bottom: 2rem;
+    /* Margen consistente */
+    contain: layout;
+    /* Contener cambios de layout */
+}

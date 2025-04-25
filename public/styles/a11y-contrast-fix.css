@@ -1,0 +1,46 @@
+/* public/styles/a11y-contrast-fix.css */
+/* Mejoras de contraste para accesibilidad */
+
+/* Mejorar contraste de elementos KEY ACHIEVEMENTS */
+h4.text-brand-red,
+.text-brand-red[data-i18n="experience.keyAchievements"] {
+    color: #B22222 !important;
+    /* Rojo más oscuro para mejorar contraste */
+    font-weight: 700 !important;
+    /* Más negrita para mejorar visibilidad */
+}
+
+/* Mejorar contraste del menú */
+a[href="#about"],
+nav a[data-section] {
+    color: #0F172A !important;
+    /* Texto más oscuro */
+    font-weight: 600 !important;
+    /* Más negrita */
+}
+
+/* En modo oscuro */
+.dark a[href="#about"],
+.dark nav a[data-section] {
+    color: #F8FAFC !important;
+    /* Texto más claro en modo oscuro */
+}
+
+/* Mejorar contraste de texto sobre fondos diversos */
+.bg-light-surface p,
+.dark .bg-dark-surface p {
+    color: #111827 !important;
+    /* Más oscuro en modo claro */
+}
+
+.dark .bg-dark-surface p {
+    color: #F9FAFB !important;
+    /* Más claro en modo oscuro */
+}
+
+/* Tarjetas en experiencia con mayor contraste */
+.bg-light-secondary,
+.dark .bg-dark-secondary {
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    /* Borde más visible */
+}

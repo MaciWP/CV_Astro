@@ -286,7 +286,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     </style>
 
     <!-- Cargar el sistema unificado de internacionalización -->
-    <script is:inline src="/scripts/i18n.js"></script>
+    <script is:inline src="/scripts/i18n.js" onerror="window.i18nFailed = true;"
+    ></script>
+    <script is:inline src="/scripts/i18n-enhanced-fix.js"></script>
 
     <!-- Establecer idioma actual para scripts cliente y depuración -->
     <script is:inline define:vars={{ currentLang: lang }}>
@@ -482,6 +484,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         });
       })();
     </script>
+    <link rel="stylesheet" href="/styles/cls-fix.css" />
+
+    <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
+
+    <script is:inline src="/scripts/react-error-recovery.js"></script>
   </head>
   <body
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
@@ -579,6 +586,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         </ErrorBoundary>
       </I18nLoader>
     </div>
+    <script is:inline src="/scripts/react-error-recovery.js"></script>
   </body><!-- Script for smooth scrolling to sections -->
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
