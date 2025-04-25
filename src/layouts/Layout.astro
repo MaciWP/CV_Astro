@@ -42,6 +42,27 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/favicon-180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#D83333" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -271,6 +292,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         document.documentElement.classList.add(storedTheme);
       })();
     </script>
+    <script is:inline src="/scripts/font-awesome-robust.js"></script>
 
     <!-- Print styles for PDF download capability -->
     <style is:inline>
@@ -361,7 +383,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
           role="main"
           class="container mx-auto px-4 py-8 max-w-5xl"
         >
-          <slot />
+          <ErrorBoundary>
+            <slot />
+          </ErrorBoundary>
         </main>
 
         <!-- Footer with ErrorBoundary -->

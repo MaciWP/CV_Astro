@@ -1,7 +1,7 @@
+/* src/styles/a11y-improvements.css */
 /**
- * Accessibility improvements for Oriol Macias website
- * Fixes contrast issues and improves overall accessibility
- * File: src/styles/a11y-improvements.css
+ * Mejoras de accesibilidad para el sitio
+ * Corrige problemas de contraste identificados en PageSpeed
  */
 
 /* Fix contrast issues */
@@ -87,30 +87,6 @@ footer p {
     /* Light enough for dark mode */
 }
 
-/* Larger touch targets for better mobile accessibility */
-@media (max-width: 640px) {
-
-    button,
-    a[href],
-    #cv-download-button,
-    .theme-toggle-btn,
-    nav a,
-    .mobile-menu a {
-        min-height: 44px !important;
-        min-width: 44px !important;
-        padding: 0.5rem 0.75rem !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    /* Increase font size for mobile reading */
-    body {
-        font-size: 16px !important;
-        /* Minimum readable font size */
-    }
-}
-
 /* Focus styles improvements */
 button:focus-visible,
 a:focus-visible,
@@ -120,73 +96,4 @@ textarea:focus-visible {
     outline: 3px solid var(--accessible-brand-red) !important;
     outline-offset: 2px !important;
     box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
-}
-
-/* Skip to content link for keyboard users */
-.skip-to-content {
-    position: absolute;
-    left: -9999px;
-    top: 1rem;
-    z-index: 9999;
-    padding: 0.5rem 1rem;
-    background-color: var(--accessible-brand-red);
-    color: white;
-    text-decoration: none;
-    border-radius: 0;
-    border: none;
-    transform: translateX(-100%);
-    transition: transform 0.3s;
-}
-
-.skip-to-content:focus {
-    left: 1rem;
-    transform: translateX(0);
-}
-
-/* High contrast mode adjustments */
-@media (forced-colors: active) {
-
-    /* Ensure elements keep their visual distinction in high contrast mode */
-    .bg-brand-red {
-        background-color: CanvasText !important;
-        color: Canvas !important;
-    }
-
-    .text-brand-red {
-        color: CanvasText !important;
-    }
-
-    .border-brand-red {
-        border-color: CanvasText !important;
-    }
-
-    /* Ensure buttons have clear borders in high contrast mode */
-    button,
-    .btn {
-        border: 1px solid currentColor !important;
-    }
-}
-
-/* Ensure icon font doesn't break when unavailable */
-.fas,
-.fab,
-.far {
-    font-family: 'Font Awesome 5 Free', Arial, sans-serif;
-}
-
-.fab {
-    font-family: 'Font Awesome 5 Brands', Arial, sans-serif;
-}
-
-/* ARIA live region for announcements */
-.sr-announce {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
 }

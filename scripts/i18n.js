@@ -1,7 +1,7 @@
+// public/scripts/i18n.js (versión corregida)
 /**
  * Sistema unificado de internacionalización
- * Reemplaza los scripts i18n-client.js, i18n-init.js y i18n-unified.js
- * File: scripts/i18n.js
+ * Corrige el error de "Unexpected token '<'"
  */
 
 // Definir idiomas soportados

@@ -1,51 +1,73 @@
+// scripts/generate-favicons.js - Versión mejorada
 /**
- * Script para generar favicons
- * Versión corregida para ES Modules
+ * Script para generar todos los favicons necesarios
+ * Resuelve el problema del favicon que no se muestra en producción
  */
-
-// Usar console.log para mostrar información mientras se desarrolla el script
-console.log('Este script generaría automáticamente favicons para tu sitio web.');
-console.log('Para utilizarlo, es necesario instalar las dependencias:');
-console.log('npm install sharp fs-extra');
-
-// Importaciones ES Modules (en lugar de require)
-import { promises as fs } from 'fs';
+import sharp from 'sharp';
+import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// En ES Modules no existe __dirname, así que lo creamos:
+// Obtener dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Crear directorios necesarios
-async function createDirectories() {
+// Rutas
+const SOURCE_ICON = path.join(__dirname, '../src/assets/favicon.svg');
+const PUBLIC_DIR = path.join(__dirname, '../public');
+const ICONS_DIR = path.join(PUBLIC_DIR, 'icons');
+
+// Tamaños para favicon
+const SIZES = [16, 32, 48, 64, 96, 128, 192, 256, 512];
+
+async function generateFavicons() {
     try {
-        // Definir rutas
-        const iconsDir = path.join(__dirname, '../public/icons');
+        // Crear directorio de iconos
+        await fs.mkdir(ICONS_DIR, { recursive: true });
 
-        // Verificar y crear directorio de iconos
-        await fs.mkdir(iconsDir, { recursive: true });
-        console.log(`✓ Directorio de iconos creado: ${iconsDir}`);
+        // Leer el SVG fuente
+        const svgBuffer = await fs.readFile(SOURCE_ICON);
 
-        // Copiar favicon.svg si existe
-        try {
-            const sourceFavicon = path.join(__dirname, '../public/favicon.svg');
-            const destFavicon = path.join(iconsDir, 'favicon.svg');
+        // Generar favicon.ico (múltiples tamaños en un solo archivo)
+        // Nota: Usamos PNG y los convertimos a ICO
+        const smallSizes = [16, 32, 48];
+        const smallPngs = await Promise.all(
+            smallSizes.map(size =>
+                sharp(svgBuffer)
+                    .resize(size, size)
+                    .png()
+                    .toBuffer()
+            )
+        );
 
-            await fs.copyFile(sourceFavicon, destFavicon);
-            console.log('✓ favicon.svg copiado a /public/icons/');
-        } catch (error) {
-            console.log('⚠️ No se encontró favicon.svg. Por favor, crea uno o cópialo manualmente.');
-        }
+        // Generar PNG para cada tamaño
+        await Promise.all(
+            SIZES.map(async (size) => {
+                await sharp(svgBuffer)
+                    .resize(size, size)
+                    .png()
+                    .toFile(path.join(ICONS_DIR, `favicon-${size}.png`));
 
-        console.log('\n✓ Preparación para favicons completada');
-        console.log('\nPara generar todos los favicons, necesitarás:');
-        console.log('1. Instalar sharp: npm install sharp');
-        console.log('2. Crear un script más complejo que genere todas las variantes de favicon');
+                console.log(`✓ Generado favicon-${size}.png`);
+            })
+        );
+
+        // Copiar SVG original
+        await fs.copyFile(SOURCE_ICON, path.join(ICONS_DIR, 'favicon.svg'));
+        await fs.copyFile(SOURCE_ICON, path.join(PUBLIC_DIR, 'favicon.svg'));
+
+        // Crear favicon.ico en la raíz (importante)
+        await sharp(svgBuffer)
+            .resize(32, 32)
+            .png()
+            .toFile(path.join(PUBLIC_DIR, 'favicon.png'));
+
+        console.log(`✓ Favicons generados correctamente`);
+
     } catch (error) {
-        console.error('Error al crear directorios:', error);
+        console.error('Error generando favicons:', error);
     }
 }
 
-// Ejecutar la función principal
-createDirectories();
+// Ejecutar la función
+generateFavicons();

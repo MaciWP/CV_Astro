@@ -1,3 +1,4 @@
+// src/components/ErrorBoundary.jsx
 /**
  * Error Boundary component for handling React errors gracefully
  * Prevents the entire UI from crashing when individual components fail

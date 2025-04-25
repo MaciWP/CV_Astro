@@ -1,6 +1,7 @@
+// scripts/generate-sitemap.js
 /**
  * Script mejorado para generar sitemap.xml con más metadatos
- * File: scripts/generate-sitemap.js
+ * Mejora la indexación en buscadores
  */
 import { writeFile } from 'fs/promises';
 import path from 'path';
