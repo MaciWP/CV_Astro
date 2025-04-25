@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/font-awesome-setup.js && node scripts/dev.js",
-    "build": "node scripts/font-awesome-setup.js && node scripts/build.js",
+    "generate-images": "node scripts/generate-profile-images.js",
+    "dev": "node scripts/font-awesome-setup.js && node scripts/dev.js && npm run generate-images",
+    "build": "node scripts/font-awesome-setup.js && node scripts/build.js && npm run generate-images",
     "preview": "astro preview",
     "analyze": "astro build --analyze",
     "styles": "node scripts/styles.js",

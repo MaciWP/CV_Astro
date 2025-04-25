@@ -2,12 +2,10 @@
 // Import components
 import Navbar from "../components/Navbar";
 import I18nLoader from "../components/I18nLoader";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
-import SecurityHeaders from "../components/SecurityHeaders.astro";
 
 // Define props interface
 export interface Props {
@@ -44,47 +42,29 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
   <head>
     <link
       rel="preload"
-      href="/images/oriol_macias-sm.avif"
       as="image"
-      type="image/avif"
+      href="/images/oriol_macias-640.avif"
+      imagesrcset="
+      /images/oriol_macias-192.avif 192w,
+      /images/oriol_macias-320.avif 320w,
+      /images/oriol_macias-640.avif 640w,
+      /images/oriol_macias-960.avif 960w,
+      /images/oriol_macias-1280.avif 1280w
+    "
+      imagesizes="(max-width: 767px) 100vw, 400px"
       fetchpriority="high"
     />
+
     <link
       rel="preload"
-      href="/styles/fonts/fa-solid-900.woff2"
       as="font"
+      href="/styles/fonts/fa-solid-900.woff2"
       type="font/woff2"
-      crossorigin
+      crossorigin="anonymous"
     />
 
-    <script is:inline>
-      if (
-        "serviceWorker" in navigator &&
-        (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent,
-        ) ||
-          window.innerWidth < 768)
-      ) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/service-worker-mobile.js")
-            .then((registration) => {
-              console.log(
-                "Service Worker para móvil registrado:",
-                registration.scope,
-              );
-            })
-            .catch((error) => {
-              console.error(
-                "Error registrando Service Worker para móvil:",
-                error,
-              );
-            });
-        });
-      }
-    </script>
+    <script src="/mobile-optimizations.js" defer></script>
 
-    <script is:inline src="/mobile-optimizations.js"></script>
     <script is:inline>
       (function () {
         // Inyectar directamente Font Awesome desde CDN
