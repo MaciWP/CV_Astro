@@ -69,7 +69,7 @@ async function setupFontAwesome() {
 
     try {
         // Ejecutar el script existente para Font Awesome
-        execSync('node scripts/setup-font-awesome.js', { stdio: 'inherit' });
+        execSync('node scripts/font-awesome-setup.js', { stdio: 'inherit' });
         console.log('✅ Font Awesome configurado');
     } catch (error) {
         console.error('❌ Error al configurar Font Awesome:', error);

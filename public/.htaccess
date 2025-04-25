@@ -128,6 +128,27 @@
       RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
     </IfModule>
   </IfModule>
+
+
+  # Prevenir errores 404 para recursos de Cloudflare que no existen
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Ignorar solicitudes a recursos de Cloudflare para prevenir errores en consola
+RewriteRule ^cdn-cgi/(.*) - [L,R=204]
+
+# Asegurar que scripts críticos devuelvan JS correcto
+<Files "i18n.js">
+  ForceType application/javascript
+  Header set Content-Type "application/javascript; charset=utf-8"
+</Files>
+
+<Files "font-awesome-unified.js">
+  ForceType application/javascript
+  Header set Content-Type "application/javascript; charset=utf-8"
+</Files>
+</IfModule>
+
   
   # Compress all output labeled with one of the following MIME-types
   <IfModule mod_filter.c>

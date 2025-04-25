@@ -1,9 +1,8 @@
-// public/scripts/font-awesome-loader.js
 /**
  * Font Awesome Loader - Script unificado
  * Maneja la carga de Font Awesome con fallbacks robustos
  */
-(function () {
+(function() {
     // Configuración
     const FA_VERSION = '6.4.0';
     const CDN_URL = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/' + FA_VERSION + '/css/all.min.css';
@@ -56,7 +55,7 @@
         })
         .catch(error => {
             console.error('[Font Awesome] Error en carga principal, intentando CDN:', error);
-
+            
             // Intento directo desde CDN como fallback
             loadCSS(CDN_URL, INTEGRITY, 'anonymous')
                 .then(() => {
@@ -91,7 +90,7 @@
     ).then(results => {
         if (!results.every(result => result === true)) {
             console.warn('[Font Awesome] Algunas fuentes faltan, usando fuentes CDN');
-
+            
             // Fuentes CDN como fallback
             const style = document.createElement('style');
             style.textContent = `

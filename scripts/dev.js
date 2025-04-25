@@ -43,7 +43,7 @@ async function checkFontAwesome() {
         // If any files are missing, run the setup script
         if (!allFilesExist) {
             console.log('\n⚠️ Some Font Awesome files are missing. Running setup script...');
-            execSync('node scripts/setup-font-awesome.js', { stdio: 'inherit' });
+            execSync('node scripts/font-awesome-setup.js', { stdio: 'inherit' });
         }
 
         return true;
@@ -63,7 +63,7 @@ async function startDevServer() {
 
         // Copy styles to public directory (for dev server)
         console.log('\n🔄 Copying styles to public directory...');
-        execSync('node scripts/copy-styles.js', { stdio: 'inherit' });
+        execSync('node scripts/styles.js', { stdio: 'inherit' });
 
         // Start the development server
         console.log('\n🚀 Starting development server...');

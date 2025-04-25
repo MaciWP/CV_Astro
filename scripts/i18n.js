@@ -1,4 +1,4 @@
-// public/scripts/i18n.js (versión corregida)
+// public/scripts/i18n.js
 /**
  * Sistema unificado de internacionalización
  * Corrige el error de "Unexpected token '<'"
@@ -27,7 +27,7 @@ function initI18n(initialLang = null) {
         // Inicializar objeto de traducciones
         window.TRANSLATIONS = window.TRANSLATIONS || {};
 
-        // Definir función global de traducción (versión inicial)
+        // Definir función global de traducción
         window.t = function (key, defaultValue) {
             return getTranslation(key, defaultValue);
         };
@@ -40,19 +40,13 @@ function initI18n(initialLang = null) {
         // Cargar traducciones para el idioma actual
         loadTranslations(window.CURRENT_LANGUAGE)
             .then(() => {
-                console.log(`Translations loaded for: ${window.CURRENT_LANGUAGE}`);
+                console.log(`Traducciones cargadas para: ${window.CURRENT_LANGUAGE}`);
                 // Notificar que las traducciones están listas
                 document.dispatchEvent(new CustomEvent('translationsLoaded'));
             })
             .catch(error => {
-                console.error(`Error loading translations for ${window.CURRENT_LANGUAGE}:`, error);
+                console.error(`Error cargando traducciones para ${window.CURRENT_LANGUAGE}:`, error);
             });
-
-        // Precargar traducciones en inglés como fallback si no es el idioma actual
-        if (window.CURRENT_LANGUAGE !== 'en') {
-            loadTranslations('en')
-                .catch(error => console.warn('Could not load English fallback translations:', error));
-        }
     }
 }
 
@@ -64,7 +58,7 @@ function detectLanguage() {
     if (typeof window === 'undefined') return DEFAULT_LANGUAGE;
 
     // 1. Verificar localStorage
-    const storedLang = localStorage.getItem('language') || localStorage.getItem('preferred_language');
+    const storedLang = localStorage.getItem('language');
     if (storedLang && SUPPORTED_LANGUAGES.includes(storedLang)) {
         return storedLang;
     }
@@ -119,7 +113,7 @@ async function loadTranslations(lang) {
 
         return translations;
     } catch (error) {
-        console.error(`Error loading translations for ${lang}:`, error);
+        console.error(`Error cargando traducciones para ${lang}:`, error);
         return null;
     }
 }
@@ -179,7 +173,7 @@ async function changeLanguage(newLang) {
 
     // Validar el idioma
     if (!SUPPORTED_LANGUAGES.includes(newLang)) {
-        console.error(`Unsupported language: ${newLang}`);
+        console.error(`Idioma no soportado: ${newLang}`);
         return;
     }
 
@@ -193,7 +187,6 @@ async function changeLanguage(newLang) {
 
     // Guardar preferencia en localStorage
     localStorage.setItem('language', newLang);
-    localStorage.setItem('preferred_language', newLang);
 
     // Cargar traducciones si no están cargadas
     if (!window.TRANSLATIONS[newLang]) {
@@ -213,7 +206,6 @@ async function changeLanguage(newLang) {
 
 /**
  * Actualizar todos los elementos con data-i18n
- * Útil para actualizar la UI después de cambiar el idioma
  */
 function updateTranslatedElements() {
     if (typeof document === 'undefined') return;
@@ -226,7 +218,7 @@ function updateTranslatedElements() {
     });
 }
 
-// Exponer las funciones para uso global
+// Exponer funciones para uso global
 if (typeof window !== 'undefined') {
     window.i18n = {
         init: initI18n,
@@ -237,7 +229,7 @@ if (typeof window !== 'undefined') {
     };
 }
 
-// Inicializar automáticamente cuando se carga el script
+// Inicializar automáticamente
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
         initI18n();

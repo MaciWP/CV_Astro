@@ -4,15 +4,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/optimize-font-awesome.js && node scripts/styles.js && astro dev",
-    "build": "node scripts/optimize-font-awesome.js && node scripts/styles.js --optimize && astro build",
-    "a11y:check": "node scripts/check-contrast.js",
-    "analyze": "astro build --analyze",
+    "dev": "node scripts/font-awesome-setup.js && node scripts/dev.js",
+    "build": "node scripts/font-awesome-setup.js && node scripts/build.js",
     "preview": "astro preview",
-    "process:styles": "node scripts/styles.js",
-    "process:styles:optimize": "node scripts/styles.js --optimize",
-    "a11y:check-contrast": "node scripts/check-contrast.js",
-    "a11y:audit": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility"
+    "analyze": "astro build --analyze",
+    "styles": "node scripts/styles.js",
+    "styles:optimize": "node scripts/styles.js --optimize",
+    "setup:font-awesome": "node /public/scripts/font-awesome.js",
+    "check": "npm run check:contrast && npm run check:translations",
+    "check:contrast": "node scripts/check-contrast.js",
+    "check:translations": "node scripts/check-translations.js",
+    "a11y": "npm run check:contrast",
+    "a11y:audit": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
+    "clean": "rimraf dist .astro public/styles/font-awesome* public/styles/fonts"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.9",

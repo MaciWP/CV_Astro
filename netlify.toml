@@ -1,9 +1,10 @@
-# netlify.toml - Configuración mejorada para solucionar problemas de MIME
+# netlify.toml mejorado para solucionar errores MIME
+
 [build]
   command = "npm run build"
   publish = "dist"
 
-# Headers específicos para archivos críticos
+# Headers específicos para solucionar errores MIME
 [[headers]]
   for = "*.js"
   [headers.values]
@@ -11,38 +12,19 @@
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "*.css"
-  [headers.values]
-    Content-Type = "text/css; charset=utf-8"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/styles/fonts/*"
-  [headers.values]
-    Content-Type = "font/woff2"
-    Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
-# Solución específica para i18n.js
-[[headers]]
   for = "/scripts/i18n.js"
   [headers.values]
     Content-Type = "application/javascript; charset=utf-8"
     Cache-Control = "no-cache"
 
-# SPA fallback
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[[headers]]
+  for = "/scripts/font-awesome-unified.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-cache"
 
-# Specific redirects for language paths
+# Ignorar recursos Cloudflare ausentes
 [[redirects]]
-  from = "/es/*"
-  to = "/es/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/fr/*"
-  to = "/fr/index.html"
-  status = 200
+  from = "/cdn-cgi/*"
+  to = "/.netlify/functions/empty-response"
+  status = 204
