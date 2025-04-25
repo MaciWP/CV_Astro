@@ -107,6 +107,36 @@ async function buildAstro() {
     }
 }
 
+async function verifyFontFiles() {
+    console.log('🔍 Verificando archivos de fuentes...');
+
+    const fontFiles = [
+        'dist/styles/fonts/fa-solid-900.woff2',
+        'dist/styles/fonts/fa-brands-400.woff2'
+    ];
+
+    for (const fontFile of fontFiles) {
+        try {
+            await fs.access(path.join(__dirname, '..', fontFile));
+            console.log(`  ✓ Archivo presente: ${fontFile}`);
+        } catch (error) {
+            console.warn(`  ⚠️ Archivo faltante: ${fontFile}`);
+
+            // Copiar desde el directorio public si existe
+            try {
+                const sourceFile = fontFile.replace('dist/', 'public/');
+                await fs.copyFile(
+                    path.join(__dirname, '..', sourceFile),
+                    path.join(__dirname, '..', fontFile)
+                );
+                console.log(`  ✓ Copiado desde public: ${fontFile}`);
+            } catch (copyError) {
+                console.error(`  ❌ No se pudo copiar: ${fontFile}`);
+            }
+        }
+    }
+}
+
 /**
  * Función principal que ejecuta todo el proceso de compilación
  */
@@ -122,6 +152,7 @@ async function build() {
         await copyStylesToDist();
         await generateSitemap();
         await buildAstro();
+        await verifyFontFiles();
 
         const duration = ((Date.now() - startTime) / 1000).toFixed(2);
         console.log(`✨ Compilación completada en ${duration}s`);

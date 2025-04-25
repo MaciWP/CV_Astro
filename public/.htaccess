@@ -98,9 +98,10 @@
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
   
   # Ensure proper MIME types for fonts
-  <FilesMatch "\.(ttf|otf|eot|woff|woff2)$">
+  <FilesMatch "\.(woff2|woff|ttf|eot)$">
     Header set Content-Type "font/woff2"
-  </FilesMatch>
+    Header set Access-Control-Allow-Origin "*"
+ </FilesMatch>
   
   # Ensure proper MIME types for JavaScript
   <FilesMatch "\.js$">
@@ -111,6 +112,18 @@
   <FilesMatch "\.css$">
     Header set Content-Type "text/css; charset=utf-8"
   </FilesMatch>
+
+  # Específicamente para fa-solid-900.woff2
+<FilesMatch "fa-solid-900\.woff2$">
+ForceType font/woff2
+Header set Content-Type "font/woff2"
+</FilesMatch>
+
+# Específicamente para fa-brands-400.woff2
+<FilesMatch "fa-brands-400\.woff2$">
+ForceType font/woff2
+Header set Content-Type "font/woff2"
+</FilesMatch>
   
   # Fix for scripts/i18n.js error
   <FilesMatch "^scripts/i18n\.js$">
