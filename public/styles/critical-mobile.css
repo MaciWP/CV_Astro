@@ -1,0 +1,79 @@
+/* public/styles/critical-mobile.css - Estilos críticos para renderizado inicial en móvil */
+
+/* Estilos básicos del cuerpo */
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+.dark body {
+    background-color: #121620;
+    color: #f9fafb;
+}
+
+/* Estilos críticos para el header */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 0;
+}
+
+.dark header {
+    background-color: #121620;
+    border-color: #374151;
+}
+
+/* Estilos básicos de contenedor */
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Estilos básicos para la imagen de perfil */
+.profile-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Estilos de texto principales */
+h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Color de marca */
+.text-brand-red {
+    color: #D83333;
+}
+
+.bg-brand-red {
+    background-color: #D83333;
+}
+
+.dark .text-brand-red {
+    color: #FF6B6B;
+}
+
+.dark .bg-brand-red {
+    background-color: #D83333;
+}
