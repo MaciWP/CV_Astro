@@ -1,0 +1,9 @@
+---
+import Navbar from "../components/Navbar";
+import ErrorBoundary from "../components/ErrorBoundary";
+---
+<header role="banner">
+  <ErrorBoundary>
+    <Navbar client:load />
+  </ErrorBoundary>
+</header>

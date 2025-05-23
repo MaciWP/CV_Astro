@@ -1,0 +1,496 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  lang: string;
+  ogImage: string;
+  fullCanonicalUrl: string;
+  alternateUrls: {
+    en?: string;
+    es?: string;
+    fr?: string;
+  };
+}
+const { title, description, lang, ogImage, fullCanonicalUrl, alternateUrls } = Astro.props;
+import LanguageAlternates from "../components/LanguageAlternates";
+---
+  <head>
+    <link
+      rel="preload"
+      as="image"
+      href="/images/oriol_macias-640.avif"
+      imagesrcset="
+      /images/oriol_macias-192.avif 192w,
+      /images/oriol_macias-320.avif 320w,
+      /images/oriol_macias-640.avif 640w,
+      /images/oriol_macias-960.avif 960w,
+      /images/oriol_macias-1280.avif 1280w
+    "
+      imagesizes="(max-width: 767px) 100vw, 400px"
+      fetchpriority="high"
+    />
+
+    <link
+      rel="preload"
+      as="font"
+      href="/styles/fonts/fa-solid-900.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <script src="/mobile-optimizations.js" defer></script>
+
+    <script is:inline>
+      (function () {
+        // Inyectar directamente Font Awesome desde CDN
+        const linkCDN = document.createElement("link");
+        linkCDN.rel = "stylesheet";
+        linkCDN.href =
+          "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
+        linkCDN.integrity =
+          "sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==";
+        linkCDN.crossOrigin = "anonymous";
+        document.head.insertBefore(linkCDN, document.head.firstChild);
+
+        // También inyectar definiciones básicas inline (fallback de emergencia)
+        const inlineStyle = document.createElement("style");
+        inlineStyle.textContent = `
+          @font-face {
+            font-family: 'FontAwesome';
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
+            font-display: block;
+          }
+          @font-face {
+            font-family: 'FontAwesomeBrands';
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+          }
+          
+          /* Asegurar que los iconos tengan un fallback visual en caso de fallo */
+          .fas:not(:empty)::before, .fab:not(:empty)::before {
+            content: '';
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            margin-right: 0.25em;
+            background-color: currentColor;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+          }
+        `;
+        document.head.insertBefore(inlineStyle, document.head.firstChild);
+      })();
+    </script>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/favicon-180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16.png"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#D83333" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic meta tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Oriol Macias" />
+    <link rel="canonical" href={fullCanonicalUrl} />
+
+    <!-- Enlaces hreflang corregidos -->
+    <LanguageAlternates
+      currentLang={lang}
+      currentPath={Astro.url.pathname}
+      client:load
+    />
+
+    <style is:inline>
+      /* Estilos críticos para prevenir CLS */
+      #skills,
+      .nav-container,
+      .profile-image-container {
+        content-visibility: auto;
+      }
+    </style>
+
+    <!-- CSS de correcciones de accesibilidad y CLS -->
+    <link rel="stylesheet" href="/styles/a11y-improvements.css" />
+    <link rel="stylesheet" href="/styles/layout-shift-fixes.css" />
+
+    <!-- Alternate language versions -->
+    {
+      alternateUrls.en && (
+        <link rel="alternate" hreflang="en" href={alternateUrls.en} />
+      )
+    }
+    {
+      alternateUrls.es && (
+        <link rel="alternate" hreflang="es" href={alternateUrls.es} />
+      )
+    }
+    {
+      alternateUrls.fr && (
+        <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />
+      )
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://oriolmacias.dev/"
+    />
+
+    <!-- Accessibility & Device Support -->
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#121620"
+    />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={fullCanonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang} />
+    {lang === "es" && <meta property="og:locale:alternate" content="es_ES" />}
+    {lang === "fr" && <meta property="og:locale:alternate" content="fr_FR" />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon and PWA -->
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#D83333" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/favicon.svg" />
+
+    <!-- Preload critical assets -->
+    <link
+      rel="preload"
+      href="/styles/fonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/styles/fonts/fa-brands-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
+
+    <!-- Critical Font Awesome styles inlined for faster rendering -->
+    <style is:inline>
+      /* Core Font Awesome styles for immediate icon rendering */
+      @font-face {
+        font-family: "Font Awesome 5 Free";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: url("/styles/fonts/fa-solid-900.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Font Awesome 5 Brands";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/styles/fonts/fa-brands-400.woff2") format("woff2");
+      }
+
+      .fas,
+      .fa-solid {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+
+      .fab,
+      .fa-brands {
+        font-family: "Font Awesome 5 Brands";
+        font-weight: 400;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+      }
+
+      /* Estilos críticos para el navbar sticky */
+      nav,
+      header nav,
+      nav[role="navigation"],
+      header[role="banner"] {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 50 !important;
+      }
+
+      /* Asegurar que el header no interfiera con el posicionamiento */
+      header[role="banner"] {
+        display: block;
+        position: static;
+        z-index: auto;
+      }
+
+      /* Sin márgenes o paddings que afecten al navbar */
+      header[role="banner"] {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+    <!-- Cargar el sistema unificado de internacionalización -->
+    <script is:inline src="/scripts/i18n.js" onerror="window.i18nFailed = true;"
+    ></script>
+    <script is:inline src="/scripts/i18n-enhanced-fix.js"></script>
+
+    <!-- Establecer idioma actual para scripts cliente y depuración -->
+    <script is:inline define:vars={{ currentLang: lang }}>
+      // Establecer el idioma actual en una variable global
+      window.CURRENT_LANGUAGE = currentLang;
+      console.log("Current language set to:", window.CURRENT_LANGUAGE);
+
+      // Inicializar sistema i18n si está disponible
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.i18n && typeof window.i18n.init === "function") {
+          window.i18n.init(currentLang);
+        } else {
+          // Función simplificada como fallback si el script i18n.js no se ha cargado
+          window.t = function (key) {
+            // Esta es una función de fallback mínima
+            const key_parts = key.split(".");
+            const last_part = key_parts[key_parts.length - 1];
+
+            // Si hay traducciones disponibles, intentar buscar la clave
+            if (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) {
+              let result = window.TRANSLATIONS[currentLang];
+              for (const part of key_parts) {
+                if (result && typeof result === "object" && part in result) {
+                  result = result[part];
+                } else {
+                  return last_part; // No se encontró la clave completa
+                }
+              }
+              return result || last_part;
+            }
+
+            return last_part;
+          };
+        }
+      });
+
+      // Objeto global para almacenar traducciones una vez cargadas
+      window.TRANSLATIONS = window.TRANSLATIONS || {};
+    </script>
+
+    <!-- Theme initialization script -->
+    <script is:inline>
+      (function () {
+        // Get stored theme or default to dark
+        const storedTheme = localStorage.getItem("theme") || "dark";
+
+        // Apply theme class
+        document.documentElement.classList.add(storedTheme);
+      })();
+    </script>
+
+    <!-- Print styles for PDF download capability -->
+    <style is:inline>
+      @media print {
+        nav,
+        footer,
+        button:not(#cv-download-button),
+        .no-print {
+          display: none !important;
+        }
+
+        body {
+          background-color: white !important;
+          color: black !important;
+        }
+
+        @page {
+          size: A4 portrait;
+          margin: 1.5cm;
+        }
+
+        main {
+          padding: 0 !important;
+        }
+
+        /* Remove shadows and hover effects */
+        * {
+          box-shadow: none !important;
+          transition: none !important;
+        }
+
+        /* Adjust colors for printing */
+        .dark\:text-dark-text,
+        .dark\:text-dark-text-secondary,
+        .text-light-text,
+        .text-light-text-secondary {
+          color: #000 !important;
+        }
+
+        .dark\:bg-dark-surface,
+        .dark\:bg-dark-secondary,
+        .bg-light-surface,
+        .bg-light-secondary {
+          background-color: #fff !important;
+        }
+
+        /* Ensure all sections are visible */
+        .opacity-0 {
+          opacity: 1 !important;
+        }
+
+        /* Maintain the red accent for visual identity */
+        .border-brand-red {
+          border-color: #d83333 !important;
+        }
+
+        /* Ensure all text is visible */
+        .text-brand-red {
+          color: #d83333 !important;
+        }
+
+        /* Ensure backgrounds print correctly */
+        .bg-brand-red {
+          background-color: #d83333 !important;
+        }
+      }
+    </style>
+
+    <!-- Añadir al <head> de src/layouts/Layout.astro justo antes del cierre </head> -->
+    <script is:inline>
+      // Script de verificación y corrección de Font Awesome
+      (function () {
+        // Comprobar si los iconos están cargados correctamente
+        function checkIcons() {
+          // Verificar si algún icono Font Awesome está visible
+          const testIcon = document.createElement("i");
+          testIcon.className = "fas fa-user";
+          testIcon.style.visibility = "hidden";
+          document.body.appendChild(testIcon);
+
+          // Obtener el estilo computado
+          const computedStyle = window.getComputedStyle(testIcon);
+          const fontFamily = computedStyle.getPropertyValue("font-family");
+          const content = computedStyle.getPropertyValue("content");
+
+          // Limpiar elemento de prueba
+          document.body.removeChild(testIcon);
+
+          // Si no hay contenido o la fuente no es correcta, forzar carga de emergencia
+          return content !== "none" && fontFamily.includes("Font Awesome");
+        }
+
+        // Forzar carga de CDN como último recurso si los iconos no aparecen
+        window.addEventListener("DOMContentLoaded", function () {
+          // Dar tiempo a que carguen las fuentes normalmente
+          setTimeout(function () {
+            if (!checkIcons()) {
+              console.warn(
+                "Font Awesome no cargó correctamente. Aplicando solución de emergencia...",
+              );
+
+              // Inyectar definiciones de fuentes directamente
+              const style = document.createElement("style");
+              style.textContent = `
+            @font-face {
+              font-family: 'Font Awesome 5 Free';
+              font-style: normal;
+              font-weight: 900;
+              font-display: block;
+              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
+            }
+            
+            @font-face {
+              font-family: 'Font Awesome 5 Brands';
+              font-style: normal;
+              font-weight: 400;
+              font-display: block;
+              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
+            }
+            
+            /* Asegurar estilos básicos */
+            .fas, .fa-solid {
+              font-family: 'Font Awesome 5 Free' !important;
+              font-weight: 900 !important;
+            }
+            
+            .fab, .fa-brands {
+              font-family: 'Font Awesome 5 Brands' !important;
+              font-weight: 400 !important;
+            }
+          `;
+              document.head.appendChild(style);
+
+              // Cargar CSS completo desde CDN como respaldo
+              const link = document.createElement("link");
+              link.rel = "stylesheet";
+              link.href =
+                "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
+              link.crossOrigin = "anonymous";
+              document.head.appendChild(link);
+            }
+          }, 500); // Esperar 500ms para comprobar
+        });
+      })();
+    </script>
+    <link
+      rel="stylesheet"
+      href="/styles/critical-mobile.css"
+      media="(max-width: 767px)"
+    />
+
+    <link rel="stylesheet" href="/styles/cls-fix.css" />
+
+    <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
+
+    <script is:inline src="/scripts/react-error-recovery.js"></script>
+  </head>
