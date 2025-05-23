@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const pageTitle = "Page introuvable | Oriol Macias";
+const pageDescription = "La page que vous recherchez n'existe pas dans le portfolio CV d'Oriol Macias.";
+const canonicalUrl = "https://oriolmacias.dev/fr/404";
+const enUrl = getRelativeLocaleUrl("en", "404");
+const esUrl = getRelativeLocaleUrl("es", "404");
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription}
+  lang="fr"
+  canonicalUrl={canonicalUrl} alternateUrls={{ en: enUrl, es: esUrl }}
+>
+  <main class="flex flex-col items-center justify-center py-16 px-4 text-center min-h-[60vh]">
+    <div class="w-20 h-20 flex items-center justify-center bg-brand-red text-white rounded-none mb-8 animate-pulse">
+      <span class="text-4xl font-bold">404</span>
+    </div>
+
+    <h1 class="text-4xl font-bold mb-4">Page introuvable</h1>
+
+    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+        La page que vous recherchez n'existe pas ou a été déplacée.
+    </p>
+
+    <div class="space-y-4">
+      <a 
+        href="/"
+        class="inline-flex items-center px-6 py-3 bg-brand-red text-white rounded-none hover:bg-red-700 transition-colors"
+      >
+        <i class="fas fa-home mr-2"></i>
+        Retour à l'accueil
+      </a>
+
+      <div class="pt-4">
+        <p class="text-sm text-gray-500 dark:text-gray-500">
+          Vous pourriez consulter ces sections :
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center mt-4">
+          <a href="/#experience" class="text-brand-red hover:underline">Expérience</a>
+          <a href="/#skills" class="text-brand-red hover:underline">Compétences</a>
+          <a href="/#projects" class="text-brand-red hover:underline">Projets</a>
+          <a href="/#education" class="text-brand-red hover:underline">Formation</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
