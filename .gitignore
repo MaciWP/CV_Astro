@@ -1,3 +1,5 @@
+# Files: root oriolmaci
+
 # Dependencias
 node_modules/
 /.pnp
@@ -8,8 +10,8 @@ node_modules/
 
 # Build
 dist/
-.output/
-.astro/
+/.output/
+/astro/
 
 # Env files
 .env
@@ -69,6 +71,9 @@ yarn-error.log*
 
 # Reports
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Ignored HTML report files
+*.report.html
 
 # Misc
 *.tsbuildinfo
