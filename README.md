@@ -129,7 +129,8 @@ npm run preview
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The source code is licensed under the [MIT License](LICENSE).
+All text and images are provided under the [CC BY-NC 4.0](LICENSE_CONTENT) license.
 
 ## 📧 Contact
 
