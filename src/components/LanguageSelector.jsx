@@ -18,7 +18,7 @@ const LanguageSelector = () => {
   const languageOptions = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'fr', name: 'Français', flag: '🇨🇭' }
+    { code: 'fr', name: 'Français', flag: '🇫🇷' }
   ];
 
   // Encontrar el idioma actual
