@@ -17,7 +17,8 @@
     "check:translations": "node scripts/check-translations.js",
     "a11y": "npm run check:contrast",
     "a11y:audit": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
-    "clean": "rimraf dist .astro public/styles/font-awesome* public/styles/fonts"
+    "clean": "rimraf dist .astro public/styles/font-awesome* public/styles/fonts",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.9",
