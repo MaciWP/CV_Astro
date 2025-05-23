@@ -48,7 +48,7 @@ const StructuredData = ({
             "name": "Bjumper",
             "url": "https://bjumper.com"
         },
-        "description": "Solutions-driven Backend Developer specializing in industrial protocol integration (SNMP, MODBUS, BACKnet) with 8+ years of delivering high-performance applications.",
+        "description": "Solutions-driven Backend Developer specializing in industrial protocol integration (SNMP, MODBUS, BACnet) with 8+ years of delivering high-performance applications.",
         "knowsAbout": skills,
         "nationality": {
             "@type": "Country",
