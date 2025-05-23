@@ -88,18 +88,6 @@
 
 # ===== REDIRECCIONES Y MANEJO DE ERRORES =====
 
-# Ignorar recursos Cloudflare ausentes
-[[redirects]]
-  from = "/cdn-cgi/*"
-  to = "/.netlify/functions/empty-response"
-  status = 204
-
-# Manejo de páginas no encontradas
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
-
 # Forzar HTTPS
 [[redirects]]
   from = "http://*"
@@ -107,11 +95,11 @@
   status = 301
   force = true
 
-# Redirección para SPA
+# Ignorar recursos Cloudflare ausentes
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  from = "/cdn-cgi/*"
+  to = "/.netlify/functions/empty-response"
+  status = 204
 
 [[redirects]]
   from = "/cdn-cgi/speculation"
@@ -122,6 +110,12 @@
   from = "/cdn-cgi/rum"
   to = "/cdn-cgi/empty-response.js"
   status = 200
+
+# Manejo de páginas no encontradas
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
 
 # ===== OPCIONES DE OPTIMIZACIÓN =====
 
