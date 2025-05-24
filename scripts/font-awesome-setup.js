@@ -44,23 +44,36 @@ const FONT_FILES = [
 
 // Iconos utilizados realmente en el proyecto
 const USED_ICONS = [
-    // Solid icons
-    'fa-user', 'fa-envelope', 'fa-download', 'fa-arrow-up', 'fa-briefcase',
-    'fa-graduation-cap', 'fa-code', 'fa-language', 'fa-project-diagram',
-    'fa-home', 'fa-arrow-down', 'fa-times', 'fa-bars', 'fa-chevron-up',
-    'fa-chevron-down', 'fa-sun', 'fa-moon', 'fa-calendar-alt',
-    'fa-network-wired', 'fa-server', 'fa-database', 'fa-plug',
-    'fa-building', 'fa-search', 'fa-check', 'fa-trophy',
-    'fa-external-link-alt', 'fa-exclamation-circle',
-
-    // Brand icons
-    'fa-github', 'fa-linkedin', 'fa-react', 'fa-js', 'fa-html5',
-    'fa-css3-alt', 'fa-python', 'fa-java', 'fa-microsoft',
-    'fa-windows', 'fa-docker', 'fa-aws', 'fa-git-alt', 'fa-vmware'
+    'fa-python', 'fa-js', 'fa-java', 'fa-microsoft', 'fa-html5', 
+    'fa-css3-alt', 'fa-file-code', 'fa-react', 'fa-angular', 'fa-vuejs', 
+    'fa-node-js', 'fa-cubes', 'fa-bolt', 'fa-flask', 'fa-rocket', 
+    'fa-bootstrap', 'fa-windows', 'fa-vial', 'fa-database', 'fa-code-branch', 
+    'fa-tasks', 'fa-desktop', 'fa-table', 'fa-calculator', 'fa-mobile-alt', 
+    'fa-brain', 'fa-check', 'fa-ruler', 'fa-check-circle', 'fa-docker', 
+    'fa-dharmachakra', 'fa-aws', 'fa-google', 'fa-server', 'fa-project-diagram', 
+    'fa-exchange-alt', 'fa-envelope-open-text', 'fa-git-alt', 'fa-github', 
+    'fa-gitlab', 'fa-sync-alt', 'fa-key', 'fa-vmware', 'fa-linux', 
+    'fa-wifi', 'fa-globe', 'fa-language', 'fa-network-wired', 'fa-plug', 
+    'fa-building', 'fa-code', 'fa-tv', 'fa-edit', 'fa-paper-plane', 
+    'fa-terminal', 'fa-npm', 'fa-yarn', 'fa-box', 'fa-check-square', 
+    'fa-paint-brush', 'fa-i-cursor', 'fa-cube', 'fa-search', 'fa-cogs', 
+    'fa-map-marked', 'fa-user', 'fa-briefcase', 'fa-graduation-cap', 
+    'fa-envelope', 'fa-file-alt', 'fa-th', 'fa-pen', 'fa-home', 
+    'fa-star', 'fa-twitter', 'fa-facebook', 'fa-instagram', 'fa-youtube', 
+    'fa-twitch', 'fa-discord', 'fa-telegram', 'fa-medium', 'fa-dev', 
+    'fa-stack-overflow', 'fa-phone', 'fa-whatsapp', 'fa-skype', 'fa-link', 
+    'fa-download', 'fa-upload', 'fa-filter', 'fa-sort', 'fa-trash', 
+    'fa-plus', 'fa-minus', 'fa-times', 'fa-cog', 'fa-bars', 
+    'fa-lock', 'fa-unlock', 'fa-calendar-alt', 'fa-clock', 'fa-info-circle', 
+    'fa-exclamation-triangle', 'fa-exclamation-circle', 'fa-question-circle', 
+    'fa-sync', 'fa-external-link-alt', 'fa-copy', 'fa-paste', 'fa-print', 
+    'fa-save', 'fa-share-alt', 'fa-arrow-up', 'fa-arrow-down', 'fa-arrow-left', 
+    'fa-arrow-right', 'fa-chevron-up', 'fa-chevron-down', 'fa-chevron-left', 
+    'fa-chevron-right', 'fa-sun', 'fa-moon', 'fa-adjust', 'fa-circle'
 ];
 
-// Unicodes para iconos
-const ICON_UNICODES = {
+// Unicodes para iconos (can be pre-populated or dynamically filled)
+let ICON_UNICODES = {
     'fa-user': '\\f007',
     'fa-envelope': '\\f0e0',
     'fa-linkedin': '\\f08c',
@@ -155,6 +168,35 @@ async function fixCssPaths(cssPath) {
 async function generateMinimalCSS() {
     console.log('Generando CSS minimal con iconos optimizados...');
 
+    // Path to the downloaded full Font Awesome CSS
+    const fullCSSPath = path.join(PUBLIC_STYLES_DIR, 'font-awesome.min.css');
+    let fullCSSContent = '';
+    try {
+        fullCSSContent = await fs.readFile(fullCSSPath, 'utf-8');
+    } catch (error) {
+        console.error(`Error: No se pudo leer el archivo font-awesome.min.css en ${fullCSSPath}. Asegúrese de que se haya descargado.`);
+        process.exit(1);
+    }
+
+    // Pre-populate ICON_UNICODES with known values, can be extended
+    ICON_UNICODES = {
+        'fa-user': '\\f007', 'fa-envelope': '\\f0e0', 'fa-linkedin': '\\f08c',
+        'fa-github': '\\f09b', 'fa-download': '\\f019', 'fa-arrow-up': '\\f062',
+        'fa-briefcase': '\\f0b1', 'fa-graduation-cap': '\\f19d', 'fa-code': '\\f121',
+        'fa-language': '\\f1ab', 'fa-project-diagram': '\\f542', 'fa-home': '\\f015',
+        'fa-arrow-down': '\\f063', 'fa-times': '\\f00d', 'fa-bars': '\\f0c9',
+        'fa-chevron-up': '\\f077', 'fa-chevron-down': '\\f078', 'fa-sun': '\\f185',
+        'fa-moon': '\\f186', 'fa-calendar-alt': '\\f073', 'fa-network-wired': '\\f6ff',
+        'fa-server': '\\f233', 'fa-database': '\\f1c0', 'fa-plug': '\\f1e6',
+        'fa-building': '\\f1ad', 'fa-search': '\\f002', 'fa-check': '\\f00c',
+        'fa-trophy': '\\f091', 'fa-external-link-alt': '\\f35d', 'fa-exclamation-circle': '\\f06a',
+        'fa-react': '\\f41b', 'fa-js': '\\f3b8', 'fa-html5': '\\f13b',
+        'fa-css3-alt': '\\f38b', 'fa-python': '\\f3e2', 'fa-java': '\\f4e4',
+        'fa-microsoft': '\\f3ca', 'fa-windows': '\\f17a', 'fa-docker': '\\f395',
+        'fa-aws': '\\f375', 'fa-git-alt': '\\f841', 'fa-vmware': '\\f3c4'
+        // Add more known unicodes here if necessary to speed up or as fallback
+    };
+
     let css = `/* 
  * Font Awesome Minimal CSS - Solo iconos utilizados 
  */
@@ -175,7 +217,22 @@ async function generateMinimalCSS() {
 
     // Añadir cada icono
     for (const icon of USED_ICONS) {
-        const unicode = ICON_UNICODES[icon] || '\\f118'; // Default a emoji sonriente
+        let unicode = ICON_UNICODES[icon];
+        if (!unicode) {
+            // Try to find unicode in the full CSS content
+            // Regex to find: .fa-icon-name:before { content: "\fXXX"; }
+            // It needs to handle variations in spacing and quotes.
+            const iconRegex = new RegExp(`\\\.${icon}:before\\s*{\\s*content:\\s*["'](\\\\[0-9a-fA-F]+)["']`);
+            const match = fullCSSContent.match(iconRegex);
+            if (match && match[1]) {
+                unicode = match[1];
+                ICON_UNICODES[icon] = unicode; // Cache for potential future use
+                // console.log(`Found unicode for ${icon}: ${unicode}`);
+            } else {
+                unicode = '\\f118'; // Default to a generic icon (e.g., fa-smile)
+                console.warn(`Advertencia: No se encontró el código Unicode para el icono ${icon}. Usando fallback ${unicode}.`);
+            }
+        }
         css += `.${icon}:before {
     content: "${unicode}";
 }

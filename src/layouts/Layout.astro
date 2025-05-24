@@ -1,5 +1,5 @@
 ---
-import '../../styles/global.css'; // Added import for global.css
+import '../styles/global.css'; // Corrected import path for global.css
 // Import components
 import Navbar from "../components/Navbar";
 import I18nLoader from "../components/I18nLoader";
@@ -76,7 +76,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <script src="/mobile-optimizations.js" defer></script>
 
-    <script src="/scripts/font-awesome-loader.js" defer></script>
+    <!-- <script src="/scripts/font-awesome-loader.js" defer></script> --> <!-- Removed -->
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" />
@@ -195,7 +195,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
+    <!-- <link rel="stylesheet" href="/styles/font-awesome-fallback.css" /> --> <!-- Removed -->
+    <link rel="stylesheet" href="/styles/font-awesome-minimal.css" /> <!-- Added minimal CSS -->
 
     <!-- Critical Font Awesome styles inlined for faster rendering -->
     <style is:inline>
@@ -481,86 +482,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       }
     </style>
 
-    <!-- Añadir al <head> de src/layouts/Layout.astro justo antes del cierre </head> -->
-    <script is:inline>
-      // Script de verificación y corrección de Font Awesome
-      (function () {
-        // Comprobar si los iconos están cargados correctamente
-        function checkIcons() {
-          // Verificar si algún icono Font Awesome está visible
-          const testIcon = document.createElement("i");
-          testIcon.className = "fas fa-user";
-          testIcon.style.visibility = "hidden";
-          document.body.appendChild(testIcon);
-
-          // Obtener el estilo computado
-          const computedStyle = window.getComputedStyle(testIcon);
-          const fontFamily = computedStyle.getPropertyValue("font-family");
-          const content = computedStyle.getPropertyValue("content");
-
-          // Limpiar elemento de prueba
-          document.body.removeChild(testIcon);
-
-          // Si no hay contenido o la fuente no es correcta, forzar carga de emergencia
-          return content !== "none" && fontFamily.includes("Font Awesome");
-        }
-
-        // Forzar carga de CDN como último recurso si los iconos no aparecen
-        window.addEventListener("DOMContentLoaded", function () {
-          // Dar tiempo a que carguen las fuentes normalmente
-          setTimeout(function () {
-            if (!checkIcons()) {
-              console.warn(
-                "Font Awesome no cargó correctamente. Aplicando solución de emergencia...",
-              );
-
-              // Inyectar definiciones de fuentes directamente
-              const style = document.createElement("style");
-              style.textContent = `
-            @font-face {
-              font-family: 'Font Awesome 5 Free';
-              font-style: normal;
-              font-weight: 900;
-              font-display: block;
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
-            }
-            
-            @font-face {
-              font-family: 'Font Awesome 5 Brands';
-              font-style: normal;
-              font-weight: 400;
-              font-display: block;
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
-            }
-            
-            /* Asegurar estilos básicos */
-            .fas, .fa-solid {
-              font-family: 'Font Awesome 5 Free' !important;
-              font-weight: 900 !important;
-            }
-            
-            .fab, .fa-brands {
-              font-family: 'Font Awesome 5 Brands' !important;
-              font-weight: 400 !important;
-            }
-          `;
-              document.head.appendChild(style);
-
-              // Cargar versión optimizada local como respaldo
-              const link = document.createElement("link");
-              link.rel = "stylesheet";
-              link.href = "/styles/font-awesome-optimized.css";
-              document.head.appendChild(link);
-            }
-          }, 500); // Esperar 500ms para comprobar
-        });
-      })();
-    </script>
+    <!-- Removed inline script for checkIcons() and Font Awesome CDN fallback -->
     <!-- <link rel="stylesheet" href="/styles/critical-mobile.css" media="(max-width: 767px)" /> --> <!-- Removed -->
 
     <!-- <link rel="stylesheet" href="/styles/combined.css" /> --> <!-- Removed -->
 
-    <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
+    <!-- <link rel="stylesheet" href="/styles/font-awesome-optimized.css" /> --> <!-- Removed -->
     <link rel="stylesheet" href="/styles/enhanced-contrast-fix.css" /> {/* Added contrast fix CSS */}
 
     <script is:inline src="/scripts/react-error-recovery.js"></script>
