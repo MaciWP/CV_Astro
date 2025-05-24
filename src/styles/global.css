@@ -127,6 +127,11 @@ html.theme-transitioning * {
         @apply transition-colors duration-75;
     }
 
+    /* Transición limitada para el elemento body */
+    .body-transition {
+        @apply transition-opacity transition-transform duration-300;
+    }
+
     /* Botones */
     .btn {
         @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
