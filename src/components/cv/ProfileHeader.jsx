@@ -217,6 +217,7 @@ const ProfileHeader = () => {
                                         width={400}
                                         height={400}
                                         loading="eager"
+                                        fetchpriority="high"
                                         className="w-full h-full object-cover transition-opacity duration-500"
                                         onLoad={handleImageLoaded}
                                     />
