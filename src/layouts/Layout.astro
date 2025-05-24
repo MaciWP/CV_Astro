@@ -450,12 +450,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
           `;
               document.head.appendChild(style);
 
-              // Cargar CSS completo desde CDN como respaldo
+              // Cargar versión optimizada local como respaldo
               const link = document.createElement("link");
               link.rel = "stylesheet";
-              link.href =
-                "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
-              link.crossOrigin = "anonymous";
+              link.href = "/styles/font-awesome-optimized.css";
               document.head.appendChild(link);
             }
           }, 500); // Esperar 500ms para comprobar
