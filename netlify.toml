@@ -97,11 +97,6 @@
 
 # Ignorar recursos Cloudflare ausentes
 [[redirects]]
-  from = "/cdn-cgi/*"
-  to = "/.netlify/functions/empty-response"
-  status = 204
-
-[[redirects]]
   from = "/cdn-cgi/speculation"
   to = "/cdn-cgi/empty-response.js"
   status = 200
@@ -110,6 +105,11 @@
   from = "/cdn-cgi/rum"
   to = "/cdn-cgi/empty-response.js"
   status = 200
+
+[[redirects]]
+  from = "/cdn-cgi/*"
+  to = "/.netlify/functions/empty-response"
+  status = 204
 
 # Manejo de páginas no encontradas
 [[redirects]]
