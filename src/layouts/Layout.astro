@@ -65,51 +65,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <script src="/mobile-optimizations.js" defer></script>
 
-    <script is:inline>
-      (function () {
-        // Inyectar directamente Font Awesome desde CDN
-        const linkCDN = document.createElement("link");
-        linkCDN.rel = "stylesheet";
-        linkCDN.href =
-          "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
-        linkCDN.integrity =
-          "sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==";
-        linkCDN.crossOrigin = "anonymous";
-        document.head.insertBefore(linkCDN, document.head.firstChild);
-
-        // También inyectar definiciones básicas inline (fallback de emergencia)
-        const inlineStyle = document.createElement("style");
-        inlineStyle.textContent = `
-          @font-face {
-            font-family: 'FontAwesome';
-            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
-            font-weight: 900;
-            font-style: normal;
-            font-display: block;
-          }
-          @font-face {
-            font-family: 'FontAwesomeBrands';
-            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-            font-display: block;
-          }
-          
-          /* Asegurar que los iconos tengan un fallback visual en caso de fallo */
-          .fas:not(:empty)::before, .fab:not(:empty)::before {
-            content: '';
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            margin-right: 0.25em;
-            background-color: currentColor;
-            -webkit-mask-size: cover;
-            mask-size: cover;
-          }
-        `;
-        document.head.insertBefore(inlineStyle, document.head.firstChild);
-      })();
-    </script>
+    <script src="/scripts/font-awesome-loader.js" defer></script>
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" />
