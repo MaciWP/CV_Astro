@@ -13,12 +13,15 @@ import NavbarLinks from './navbar/NavbarLinks';
 import ThemeToggle from './navbar/ThemeToggle';
 import MobileMenu from './navbar/MobileMenu';
 
+import { useTheme } from '../contexts/ThemeContext'; // Import useTheme
+
 const Navbar = () => {
+    const { theme } = useTheme(); // Get theme from context
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [activeSection, setActiveSection] = useState('about');
     const [scrollY, setScrollY] = useState(0);
-    const [theme, setTheme] = useState('dark');
+    // const [theme, setTheme] = useState('dark'); // Removed local theme state
     const [navItems, setNavItems] = useState([]);
     const [uiTexts, setUiTexts] = useState({
         downloadCV: 'Download CV',
@@ -56,9 +59,7 @@ const Navbar = () => {
     useEffect(() => {
         setMounted(true);
 
-        // Get stored theme or default to dark
-        const storedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(storedTheme);
+        // Theme is now managed by ThemeContext, no need to set it here from localStorage
 
         // Initial load of translations
         loadTranslations();
@@ -196,26 +197,7 @@ const Navbar = () => {
         }
     };
 
-    // Toggle theme function
-    const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-
-        document.documentElement.classList.add('theme-transitioning');
-
-        requestAnimationFrame(() => {
-            // Update document classes
-            document.documentElement.classList.remove('light', 'dark');
-            document.documentElement.classList.add(newTheme);
-
-            // Save to localStorage
-            localStorage.setItem('theme', newTheme);
-
-            setTimeout(() => {
-                document.documentElement.classList.remove('theme-transitioning');
-            }, 75);
-        });
-    };
+    // const toggleTheme = () => { ... }; // Removed local toggleTheme function
 
     const isScrolled = scrollY > 50;
 
@@ -272,7 +254,7 @@ const Navbar = () => {
                     <LanguageSelector />
 
                     {/* Theme Toggle */}
-                    <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+                    <ThemeToggle /> {/* Props removed, as navbar/ThemeToggle now uses context */}
 
                     {/* Download CV Button */}
                     <div className="hidden sm:block">

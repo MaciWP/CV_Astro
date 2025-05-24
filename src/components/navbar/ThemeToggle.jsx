@@ -2,17 +2,20 @@
  * ThemeToggle component - Toggle between light and dark theme
  * File: src/components/navbar/ThemeToggle.jsx
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Added useEffect
+import { useTheme } from '../../contexts/ThemeContext'; // Import useTheme
 
-const ThemeToggle = ({ theme, toggleTheme }) => {
+const ThemeToggle = () => { // Removed props
+    const { theme, toggleTheme } = useTheme(); // Use context
     const [isAnimating, setIsAnimating] = useState(false);
+    // No isMounted needed here if ThemeProvider handles initial load correctly
     const isDark = theme === 'dark';
 
     const handleToggle = () => {
         // Start animation
         setIsAnimating(true);
 
-        // Toggle theme
+        // Toggle theme from context
         toggleTheme();
 
         // Announce to screen readers

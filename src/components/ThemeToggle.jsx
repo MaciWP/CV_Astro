@@ -10,7 +10,13 @@ const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
     const { effectiveTheme, prefersDark } = useColorScheme();
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isMounted, setIsMounted] = useState(false); // Added for client-side only logic
     const isDark = theme === 'dark';
+
+    // Ensure component is mounted before running localStorage logic
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const handleToggle = () => {
         // Start animation
@@ -32,14 +38,14 @@ const ThemeToggle = () => {
 
     // On initial mount, sync with system preference if no user choice
     useEffect(() => {
-        if (!localStorage.getItem('theme')) {
+        if (isMounted && !localStorage.getItem('theme')) {
             if (prefersDark && theme === 'light') {
                 toggleTheme();
             } else if (!prefersDark && theme === 'dark') {
                 toggleTheme();
             }
         }
-    }, []);
+    }, [isMounted, prefersDark, theme, toggleTheme]); // Added dependencies
 
     return (
         <button
