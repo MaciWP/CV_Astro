@@ -50,6 +50,15 @@ pnpm install
 pnpm run dev
 ```
 
+### Environment Variables
+
+Set `PUBLIC_GOOGLE_SITE_VERIFICATION` in your `.env` or CI environment with the
+value provided by Google. It will be injected into the `<meta name="google-site-verification">` tag.
+
+```bash
+PUBLIC_GOOGLE_SITE_VERIFICATION=your_verification_token
+```
+
 ### Build
 
 ```bash

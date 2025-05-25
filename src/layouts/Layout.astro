@@ -160,6 +160,12 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     <meta name="description" content={description} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
+    {import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
+      <meta
+        name="google-site-verification"
+        content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION}
+      />
+    )}
     <SecurityHeaders />
 
     <!-- Enlaces hreflang corregidos -->
