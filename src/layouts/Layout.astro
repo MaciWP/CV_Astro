@@ -6,6 +6,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
+import meta from "../data/meta.json";
 
 // Define props interface
 export interface Props {
@@ -35,6 +36,8 @@ const {
 const fullCanonicalUrl = canonicalUrl.startsWith("http")
   ? canonicalUrl
   : new URL(Astro.url.pathname, "https://oriolmacias.dev").href;
+
+const socialMedia = meta.socialMedia || [];
 ---
 
 <!doctype html>
@@ -106,6 +109,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta name="description" content={description} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
+    {socialMedia.map((sm) => (
+      <link rel="me" href={sm.url} />
+    ))}
 
     <!-- Enlaces hreflang corregidos -->
     <LanguageAlternates
@@ -533,24 +539,25 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                   </p>
                 </div>
                 <div class="flex items-center gap-6">
+                  {socialMedia.map((sm) => (
+                    <a
+                      href={sm.url}
+                      target="_blank"
+                      rel="me noopener noreferrer"
+                      class="text-lg text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                      aria-label={`${sm.platform} Profile`}
+                    >
+                      <i class={sm.icon} aria-hidden="true"></i>
+                      <span class="sr-only">{sm.platform}</span>
+                    </a>
+                  ))}
                   <a
                     href="#top"
                     class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                    aria-label={lang === "es"
-                      ? "Volver al inicio de la página"
-                      : lang === "fr"
-                        ? "Retourner en haut de la page"
-                        : "Return to top of page"}
+                    aria-label={lang === "es" ? "Volver al inicio de la página" : lang === "fr" ? "Retourner en haut de la page" : "Return to top of page"}
                   >
-                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
-                    ></i>
-                    {
-                      lang === "es"
-                        ? "Volver arriba"
-                        : lang === "fr"
-                          ? "Retour en haut"
-                          : "Back to top"
-                    }
+                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"></i>
+                    {lang === "es" ? "Volver arriba" : lang === "fr" ? "Retour en haut" : "Back to top"}
                   </a>
                 </div>
                 <button

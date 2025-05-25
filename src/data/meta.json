@@ -1,72 +1,92 @@
 {
-    "title": "Oriol Macias - Software Developer CV & Portfolio",
-    "description": "Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
-    "keywords": [
-        "Oriol Macias",
-        "Software Developer",
-        "Backend Developer",
-        "CV",
-        "Portfolio",
-        "Python",
-        "Django",
-        "C#",
-        ".NET",
-        "SNMP",
-        "MODBUS",
-        "BACnet",
-        "Data Center Infrastructure",
-        "API Development",
-        "Software Engineering",
-        "Protocol Integration"
-    ],
-    "author": "Oriol Macias",
-    "canonical": "https://oriolmacias.dev/",
-    "ogImage": "/images/oriol-macias-og.jpg",
-    "ogTitle": "Oriol Macias | Software Developer",
-    "ogDescription": "Backend Developer with 8+ years of experience in industrial protocol integration and high-performance applications.",
-    "twitterTitle": "Oriol Macias | Software Developer CV",
-    "twitterDescription": "Specialized in backend development, industrial protocols integration, and data center infrastructure.",
-    "languages": [
-        {
-            "code": "en",
-            "name": "English",
-            "url": "https://oriolmacias.dev/"
-        },
-        {
-            "code": "es",
-            "name": "Español",
-            "url": "https://oriolmacias.dev/es/"
-        },
-        {
-            "code": "fr",
-            "name": "Français",
-            "url": "https://oriolmacias.dev/fr/"
-        }
-    ],
-    "socialMedia": [
-        {
-            "platform": "LinkedIn",
-            "url": "https://linkedin.com/in/oriolmaciasbadosa",
-            "icon": "fab fa-linkedin"
-        },
-        {
-            "platform": "GitHub",
-            "url": "https://github.com/MaciWP",
-            "icon": "fab fa-github"
-        }
-    ],
-    "schema": {
-        "name": "Oriol Macias",
-        "jobTitle": "Software Developer",
-        "image": "https://oriolmacias.dev/images/oriol_macias.jpg",
-        "url": "https://oriolmacias.dev",
-        "sameAs": [
-            "https://linkedin.com/in/oriolmaciasbadosa",
-            "https://github.com/MaciWP"
-        ],
-        "worksFor": {
-            "name": "Bjumper",
-            "url": "https://bjumper.com"
-        }
+  "title": "Oriol Macias - Software Developer CV & Portfolio",
+  "description": "Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
+  "keywords": [
+    "Oriol Macias",
+    "Software Developer",
+    "Backend Developer",
+    "CV",
+    "Portfolio",
+    "Python",
+    "Django",
+    "C#",
+    ".NET",
+    "SNMP",
+    "MODBUS",
+    "BACnet",
+    "Data Center Infrastructure",
+    "API Development",
+    "Software Engineering",
+    "Protocol Integration"
+  ],
+  "author": "Oriol Macias",
+  "canonical": "https://oriolmacias.dev/",
+  "ogImage": "/images/oriol-macias-og.jpg",
+  "ogTitle": "Oriol Macias | Software Developer",
+  "ogDescription": "Backend Developer with 8+ years of experience in industrial protocol integration and high-performance applications.",
+  "twitterTitle": "Oriol Macias | Software Developer CV",
+  "twitterDescription": "Specialized in backend development, industrial protocols integration, and data center infrastructure.",
+  "languages": [
+    {
+      "code": "en",
+      "name": "English",
+      "url": "https://oriolmacias.dev/"
+    },
+    {
+      "code": "es",
+      "name": "Español",
+      "url": "https://oriolmacias.dev/es/"
+    },
+    {
+      "code": "fr",
+      "name": "Français",
+      "url": "https://oriolmacias.dev/fr/"
     }
+  ],
+  "socialMedia": [
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/oriolmaciasbadosa",
+      "icon": "fab fa-linkedin"
+    },
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/MaciWP",
+      "icon": "fab fa-github"
+    },
+    {
+      "platform": "Facebook",
+      "url": "https://facebook.com/oriolmacias",
+      "icon": "fab fa-facebook"
+    },
+    {
+      "platform": "Twitter",
+      "url": "https://twitter.com/oriolmacias",
+      "icon": "fab fa-twitter"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com/oriolmacias",
+      "icon": "fab fa-instagram"
+    },
+    {
+      "platform": "YouTube",
+      "url": "https://youtube.com/@oriolmacias",
+      "icon": "fab fa-youtube"
+    }
+  ],
+  "schema": {
+    "name": "Oriol Macias",
+    "jobTitle": "Software Developer",
+    "image": "https://oriolmacias.dev/images/oriol_macias.jpg",
+    "url": "https://oriolmacias.dev",
+    "sameAs": [
+      "https://linkedin.com/in/oriolmaciasbadosa",
+      "https://github.com/MaciWP"
+    ],
+    "worksFor": {
+      "name": "Bjumper",
+      "url": "https://bjumper.com"
+    }
+  }
 }
