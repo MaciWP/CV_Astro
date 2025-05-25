@@ -353,7 +353,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       @media print {
         nav,
         footer,
-        button:not(#cv-download-button),
+        button:not(#pdf-download-button),
         .no-print {
           display: none !important;
         }
@@ -583,7 +583,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
                   </a>
                 </div>
                 <button
-                  id="cv-download-button"
+                  id="pdf-download-button"
                   class="text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
                   onclick="window.print()"
                   aria-label={lang === "es"
@@ -711,7 +711,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
           })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
           fbq('init', pixelId);
           fbq('track', 'PageView');
-          document.getElementById('cv-download-button')?.addEventListener('click', () => {
+          document.getElementById('pdf-download-button')?.addEventListener('click', () => {
             fbq('track', 'Lead');
           });
         }

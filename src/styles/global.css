@@ -17,356 +17,355 @@
 
 /* ===== VARIABLES GLOBALES ===== */
 :root {
-    /* Transiciones de tema */
-    --theme-transition-duration: 180ms;
-    --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
-    --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
+  /* Transiciones de tema */
+  --theme-transition-duration: 180ms;
+  --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
+  --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
 
-    /* Duraciones estándar de animación */
-    --duration-micro: 100ms;
-    --duration-fast: 150ms;
-    --duration-standard: 250ms;
-    --duration-emphasis: 400ms;
-    --duration-complex: 600ms;
+  /* Duraciones estándar de animación */
+  --duration-micro: 100ms;
+  --duration-fast: 150ms;
+  --duration-standard: 250ms;
+  --duration-emphasis: 400ms;
+  --duration-complex: 600ms;
 
-    /* Curvas de timing */
-    --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
-    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
-    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  /* Curvas de timing */
+  --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* ===== ESTILOS BASE ===== */
 @layer base {
-    body {
-        @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-feature-settings: "kern";
-        text-rendering: optimizeLegibility;
-    }
+  body {
+    @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern";
+    text-rendering: optimizeLegibility;
+  }
 
-    /* Mejoras de tipografía */
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        letter-spacing: -0.02em;
-        @apply font-bold;
-    }
+  /* Mejoras de tipografía */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.02em;
+    @apply font-bold;
+  }
 
-    /* Mejor espaciado para secciones de scroll */
-    section {
-        scroll-margin-top: 80px;
-        @apply mb-24;
-    }
+  /* Mejor espaciado para secciones de scroll */
+  section {
+    scroll-margin-top: 80px;
+    @apply mb-24;
+  }
 
-    /* Accesibilidad */
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-    }
+  /* Accesibilidad */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 
-    /* Estados de foco mejorados para accesibilidad */
-    :focus-visible {
-        outline: 2px solid #D83333 !important;
-        outline-offset: 2px !important;
-    }
+  /* Estados de foco mejorados para accesibilidad */
+  :focus-visible {
+    outline: 2px solid #d83333 !important;
+    outline-offset: 2px !important;
+  }
 
-    /* Fix para que las imágenes no tengan filtros en modo claro */
-    .light img,
-    html:not(.dark) img {
-        filter: none !important;
-        opacity: 1 !important;
-    }
+  /* Fix para que las imágenes no tengan filtros en modo claro */
+  .light img,
+  html:not(.dark) img {
+    filter: none !important;
+    opacity: 1 !important;
+  }
 
-    /* Fix sticky para el navbar */
+  /* Fix sticky para el navbar */
+  nav[role="navigation"] {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+  }
+
+  @supports (position: -webkit-sticky) {
     nav[role="navigation"] {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 50 !important;
+      position: -webkit-sticky !important;
     }
-
-    @supports (position: -webkit-sticky) {
-        nav[role="navigation"] {
-            position: -webkit-sticky !important;
-        }
-    }
+  }
 }
 
 /* ===== TRANSICIONES DE TEMA ===== */
 html.theme-transitioning * {
-    transition-property: color, background-color, border-color;
-    transition-duration: var(--theme-transition-duration);
-    transition-timing-function: var(--theme-curve-color);
-    will-change: color, background-color, border-color;
+  transition-property: color, background-color, border-color;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-curve-color);
+  will-change: color, background-color, border-color;
 }
 
 /* ===== COMPONENTES ===== */
 @layer components {
+  /* Clases de transición de tema */
+  .theme-transition {
+    @apply transition-all duration-75;
+  }
 
-    /* Clases de transición de tema */
-    .theme-transition {
-        @apply transition-all duration-75;
-    }
+  .theme-transition-text {
+    @apply transition-colors duration-75;
+  }
 
-    .theme-transition-text {
-        @apply transition-colors duration-75;
-    }
+  .theme-transition-bg {
+    @apply transition-colors duration-75;
+  }
 
-    .theme-transition-bg {
-        @apply transition-colors duration-75;
-    }
+  /* Transición limitada para el elemento body */
+  .body-transition {
+    @apply transition-opacity transition-transform duration-300;
+  }
 
-    /* Transición limitada para el elemento body */
-    .body-transition {
-        @apply transition-opacity transition-transform duration-300;
-    }
+  /* Botones */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
+  }
 
-    /* Botones */
-    .btn {
-        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
-    }
+  .btn-primary {
+    @apply bg-brand-red text-white hover:bg-red-700;
+  }
 
-    .btn-primary {
-        @apply bg-brand-red text-white hover:bg-red-700;
-    }
+  .btn-secondary {
+    @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
+  }
 
-    .btn-secondary {
-        @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
-    }
+  /* Tarjetas */
+  .card {
+    @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
 
-    /* Tarjetas */
-    .card {
-        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
-    }
+  /* Encabezado de sección con icono */
+  .section-header {
+    @apply flex items-center gap-3 mb-6;
+  }
 
-    /* Encabezado de sección con icono */
-    .section-header {
-        @apply flex items-center gap-3 mb-6;
-    }
+  .section-icon {
+    @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
+  }
 
-    .section-icon {
-        @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
-    }
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-    /* Scrollbar personalizada */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
 
-    ::-webkit-scrollbar-track {
-        @apply bg-gray-100 dark:bg-gray-800;
-    }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600;
+  }
 
-    ::-webkit-scrollbar-thumb {
-        @apply bg-gray-300 dark:bg-gray-600;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        @apply bg-gray-400 dark:bg-gray-500;
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
 }
 
 /* ===== ANIMACIONES ===== */
 @keyframes enhanced-appear {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .section-animate {
-    animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
+  animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
 }
 
 @keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
-    animation: fade-in 0.5s ease-out forwards;
+  animation: fade-in 0.5s ease-out forwards;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fadeInUp {
-    animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
+  animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 @keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .animate-fadeInLeft {
-    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+  animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
 }
 
 @keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .animate-scaleIn {
-    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+  animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 /* Sistema de animación escalonada */
-.stagger-container>* {
-    opacity: 0;
+.stagger-container > * {
+  opacity: 0;
 }
 
-.stagger-visible.stagger-container>*:nth-child(1) {
-    animation-delay: 30ms;
+.stagger-visible.stagger-container > *:nth-child(1) {
+  animation-delay: 30ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(2) {
-    animation-delay: 60ms;
+.stagger-visible.stagger-container > *:nth-child(2) {
+  animation-delay: 60ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(3) {
-    animation-delay: 90ms;
+.stagger-visible.stagger-container > *:nth-child(3) {
+  animation-delay: 90ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(4) {
-    animation-delay: 120ms;
+.stagger-visible.stagger-container > *:nth-child(4) {
+  animation-delay: 120ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(5) {
-    animation-delay: 150ms;
+.stagger-visible.stagger-container > *:nth-child(5) {
+  animation-delay: 150ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(6) {
-    animation-delay: 180ms;
+.stagger-visible.stagger-container > *:nth-child(6) {
+  animation-delay: 180ms;
 }
 
 /* ===== ESTILOS DE IMPRESIÓN ===== */
 @media print {
-    body {
-        background-color: white !important;
-        color: black !important;
-    }
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
 
-    /* Ocultar elementos no necesarios para impresión */
-    nav,
-    footer,
-    button:not(#cv-download-button),
-    .no-print {
-        display: none !important;
-    }
+  /* Ocultar elementos no necesarios para impresión */
+  nav,
+  footer,
+  button:not(#pdf-download-button),
+  .no-print {
+    display: none !important;
+  }
 
-    /* Asegurar que todo el contenido sea visible */
-    .opacity-0,
-    .translate-y-10 {
-        opacity: 1 !important;
-        transform: none !important;
-    }
+  /* Asegurar que todo el contenido sea visible */
+  .opacity-0,
+  .translate-y-10 {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 
-    /* Eliminar efectos visuales */
-    * {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-        box-shadow: none !important;
-    }
+  /* Eliminar efectos visuales */
+  * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
 
-    /* Asegurar colores de marca para impresión */
-    .text-brand-red {
-        color: #D83333 !important;
-    }
+  /* Asegurar colores de marca para impresión */
+  .text-brand-red {
+    color: #d83333 !important;
+  }
 
-    .bg-brand-red {
-        background-color: #D83333 !important;
-    }
+  .bg-brand-red {
+    background-color: #d83333 !important;
+  }
 
-    /* Configuración de página para PDF */
-    @page {
-        size: A4 portrait;
-        margin: 1.5cm;
-    }
+  /* Configuración de página para PDF */
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
 }
 
 /* ===== ESTILOS RESPONSIVOS ===== */
 @media (max-width: 768px) {
-    section {
-        margin-bottom: 3rem !important;
-    }
+  section {
+    margin-bottom: 3rem !important;
+  }
 
-    #about {
-        padding-top: 1rem;
-        padding-bottom: 2rem;
-    }
+  #about {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
 
-    h1 {
-        font-size: 2.25rem !important;
-        line-height: 2.5rem !important;
-    }
+  h1 {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
 
-    h2 {
-        font-size: 1.5rem !important;
-        line-height: 2rem !important;
-    }
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
 }
 
 /* ===== MEJORAS DE ACCESIBILIDAD ===== */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Objetivos táctiles adecuados para accesibilidad */
 .touch-target {
-    min-height: 44px;
-    min-width: 44px;
+  min-height: 44px;
+  min-width: 44px;
 }

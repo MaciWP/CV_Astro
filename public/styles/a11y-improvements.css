@@ -8,83 +8,83 @@
 
 /* Make the brand-red color slightly darker for better contrast */
 :root {
-    --original-brand-red: #D83333;
-    --accessible-brand-red: #C42B2B;
-    /* Versión más oscura para mejor contraste */
+  --original-brand-red: #d83333;
+  --accessible-brand-red: #c42b2b;
+  /* Versión más oscura para mejor contraste */
 }
 
 /* Apply the darker red to text and borders */
 .text-brand-red {
-    color: var(--accessible-brand-red) !important;
+  color: var(--accessible-brand-red) !important;
 }
 
 .border-brand-red {
-    border-color: var(--accessible-brand-red) !important;
+  border-color: var(--accessible-brand-red) !important;
 }
 
 /* Exception for buttons and backgrounds where we keep the original color */
 .bg-brand-red {
-    background-color: var(--original-brand-red);
+  background-color: var(--original-brand-red);
 }
 
 h4.text-brand-red {
-    color: #B22222 !important;
-    /* Tono más oscuro para mejorar contraste */
-    font-weight: 600 !important;
-    /* Reforzar la negrita para mejorar legibilidad */
+  color: #b22222 !important;
+  /* Tono más oscuro para mejorar contraste */
+  font-weight: 600 !important;
+  /* Reforzar la negrita para mejorar legibilidad */
 }
 
 /* Style active navigation tabs with a stronger border */
 [aria-current="page"] {
-    font-weight: 600 !important;
+  font-weight: 600 !important;
 }
 
 /* Make active tab text darker for better visibility */
 .text-brand-red[aria-current="page"] {
-    color: #B22222 !important;
-    /* Even darker for active navigation items */
+  color: #b22222 !important;
+  /* Even darker for active navigation items */
 }
 
 /* Fix "Download CV" button contrast in the footer */
-#cv-download-button {
-    color: #FFFFFF !important;
-    background-color: var(--accessible-brand-red) !important;
-    border-color: var(--accessible-brand-red) !important;
+#pdf-download-button {
+  color: #ffffff !important;
+  background-color: var(--accessible-brand-red) !important;
+  border-color: var(--accessible-brand-red) !important;
 }
 
-#cv-download-button:hover {
-    background-color: #a81c1c !important;
+#pdf-download-button:hover {
+  background-color: #a81c1c !important;
 }
 
 /* Project tabs - ensure sufficient contrast */
 [data-i18n="projects.personalProjects"],
 [data-i18n="projects.professionalWork"] {
-    color: #2D3748 !important;
-    /* Dark gray for better contrast */
+  color: #2d3748 !important;
+  /* Dark gray for better contrast */
 }
 
 [data-i18n="projects.personalProjects"].border-brand-red,
 [data-i18n="projects.professionalWork"].border-brand-red {
-    border-color: #C42B2B !important;
+  border-color: #c42b2b !important;
 }
 
 .dark [data-i18n="projects.personalProjects"],
 .dark [data-i18n="projects.professionalWork"] {
-    color: #E2E8F0 !important;
-    /* Light gray for dark mode */
+  color: #e2e8f0 !important;
+  /* Light gray for dark mode */
 }
 
 /* Improve contrast in footer text */
 footer,
 footer p {
-    color: #4A5568 !important;
-    /* Dark enough for light mode */
+  color: #4a5568 !important;
+  /* Dark enough for light mode */
 }
 
 .dark footer,
 .dark footer p {
-    color: #CBD5E0 !important;
-    /* Light enough for dark mode */
+  color: #cbd5e0 !important;
+  /* Light enough for dark mode */
 }
 
 /* Focus styles improvements */
@@ -93,7 +93,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: 3px solid var(--accessible-brand-red) !important;
-    outline-offset: 2px !important;
-    box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
+  outline: 3px solid var(--accessible-brand-red) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
 }
