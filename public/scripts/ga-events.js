@@ -15,7 +15,9 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     document
-      .querySelectorAll("#cv-download-button, #pdf-download-button, .cta")
+      .querySelectorAll(
+        "#cv-download-button, #pdf-download-button, #cv-print-button, .cta",
+      )
       .forEach((el) => {
         el.addEventListener("click", () => {
           const label = el.id || el.textContent?.trim() || "cta";

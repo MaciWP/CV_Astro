@@ -291,7 +291,7 @@ html.theme-transitioning * {
   /* Ocultar elementos no necesarios para impresión */
   nav,
   footer,
-  button:not(#pdf-download-button),
+  button:not(#cv-print-button),
   .no-print {
     display: none !important;
   }
