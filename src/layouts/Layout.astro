@@ -3,6 +3,7 @@ import '../styles/global.css'; // Corrected import path for global.css
 // Import components
 import Navbar from "../components/Navbar";
 import I18nLoader from "../components/I18nLoader";
+import { ThemeProvider } from '../contexts/ThemeContext.jsx'; // Added ThemeProvider import
 import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
@@ -495,9 +496,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
   <body
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans body-transition"
   >
-    <div id="app-root">
-      <!-- Accessibility components -->
-      <SkipToContent client:load />
+    <ThemeProvider client:load> {/* Added ThemeProvider wrapper */}
+      <div id="app-root">
+        <!-- Accessibility components -->
+        <SkipToContent client:load />
       <A11yAnnouncer client:load />
 
       <I18nLoader client:only>
@@ -587,7 +589,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
           </footer>
         </ErrorBoundary>
       </I18nLoader>
-    </div>
+      </div>
+    </ThemeProvider> {/* Closed ThemeProvider wrapper */}
   </body><!-- Script for smooth scrolling to sections -->
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {

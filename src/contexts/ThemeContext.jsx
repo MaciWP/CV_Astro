@@ -1,111 +1,85 @@
-/**
- * Contexto de tema optimizado y simplificado
- * File: src/contexts/ThemeContext.jsx
- * 
- * Versión simplificada que mantiene la funcionalidad clave 
- * y elimina código innecesario.
- */
-import React, { createContext, useContext, useState, useEffect } from 'react';
+// src/contexts/ThemeContext.jsx
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
-// Define opciones de tema
 export const themes = {
     LIGHT: 'light',
     DARK: 'dark'
 };
 
-// Crear el contexto
 const ThemeContext = createContext(null);
 
-// Hook personalizado para usar el contexto
 export const useTheme = () => {
     const context = useContext(ThemeContext);
     if (!context) {
+        // This error should not be hit if ThemeProvider wraps correctly
+        // and provides a value even during SSR.
         throw new Error('useTheme debe usarse dentro de un ThemeProvider');
     }
     return context;
 };
 
-// Componente proveedor de tema
 export function ThemeProvider({ children }) {
-    // Inicializar con null para evitar problemas de hidratación
-    const [theme, setTheme] = useState(null);
+    // Provide a default theme for SSR.
+    // The inline script in Layout.astro sets the initial class on <html>.
+    // This state will be updated on the client.
+    const [theme, setTheme] = useState(themes.DARK); // Default theme for SSR
     const [isMounted, setIsMounted] = useState(false);
 
-    // Una vez montado, establecer el tema desde localStorage o preferencia del sistema
     useEffect(() => {
-        // Obtener tema inicial desde localStorage o preferencia del sistema
+        setIsMounted(true);
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = storedTheme || (systemPrefersDark ? themes.DARK : themes.LIGHT);
+        // Determine actual theme on client
+        const clientTheme = storedTheme || (systemPrefersDark ? themes.DARK : themes.LIGHT);
+        
+        setTheme(clientTheme);
+        
+        // Ensure html class matches the clientTheme,
+        // useful if inline script somehow missed or if clientTheme is different.
+        if (document.documentElement.classList.contains(themes.LIGHT) && clientTheme === themes.DARK) {
+             document.documentElement.classList.remove(themes.LIGHT);
+             document.documentElement.classList.add(themes.DARK);
+        } else if (document.documentElement.classList.contains(themes.DARK) && clientTheme === themes.LIGHT) {
+             document.documentElement.classList.remove(themes.DARK);
+             document.documentElement.classList.add(themes.LIGHT);
+        } // else, class is already correct
 
-        setTheme(initialTheme);
-        setIsMounted(true);
-
-        // Asegurar que la clase se aplique al elemento html
-        document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
-        document.documentElement.classList.add(initialTheme);
-
-        // Escuchar cambios de preferencia del sistema
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = (e) => {
-            // Solo actualizar si el usuario no ha establecido una preferencia
-            if (!localStorage.getItem('theme')) {
-                const newTheme = e.matches ? themes.DARK : themes.LIGHT;
-                setTheme(newTheme);
+            if (!localStorage.getItem('theme')) { // Only change if no manual override by user
+                const newSystemTheme = e.matches ? themes.DARK : themes.LIGHT;
+                setTheme(newSystemTheme);
                 document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
-                document.documentElement.classList.add(newTheme);
+                document.documentElement.classList.add(newSystemTheme);
             }
         };
 
-        // Usar API moderna si está disponible
-        if (mediaQuery.addEventListener) {
-            mediaQuery.addEventListener('change', handleChange);
-        } else {
-            mediaQuery.addListener(handleChange); // Fallback para navegadores antiguos
-        }
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, []); // Empty dependency array, runs once on mount
 
-        return () => {
-            if (mediaQuery.removeEventListener) {
-                mediaQuery.removeEventListener('change', handleChange);
-            } else {
-                mediaQuery.removeListener(handleChange);
-            }
-        };
-    }, []);
-
-    // Alternar entre temas
     const toggleTheme = () => {
-        if (!isMounted) return;
-
         const newTheme = theme === themes.LIGHT ? themes.DARK : themes.LIGHT;
-
-        // Añadir clase transitioning para transiciones más suaves
-        document.documentElement.classList.add('theme-transitioning');
-
-        // Actualizar estado y DOM
         setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
         document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
         document.documentElement.classList.add(newTheme);
-
-        // Guardar la preferencia de tema
-        localStorage.setItem('theme', newTheme);
-
-        // Eliminar clase transitioning después de completar la animación
-        setTimeout(() => {
-            document.documentElement.classList.remove('theme-transitioning');
-        }, 300);
+        // Optional: Add/remove theme-transitioning class for animations
+        // document.documentElement.classList.add('theme-transitioning');
+        // setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 300);
     };
 
-    // Estado de carga simple para evitar problemas de hidratación
-    if (!isMounted) {
-        return <div className="invisible">{children}</div>;
-    }
+    // Memoize context value
+    // During SSR (isMounted=false), components get the default 'dark' theme from useState.
+    // Client-side, useEffect runs, isMounted becomes true, theme state updates, and components re-render with actual theme.
+    const contextValue = useMemo(() => ({
+        theme: isMounted ? theme : themes.DARK, // Use actual theme if mounted, else default for SSR consumers
+        toggleTheme
+    }), [theme, isMounted]); // toggleTheme is stable due to no dependencies from component scope
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={contextValue}>
             {children}
         </ThemeContext.Provider>
     );
 }
-
-export default ThemeContext;
