@@ -49,13 +49,13 @@ h4.text-brand-red {
 }
 
 /* Fix "Download CV" button contrast in the footer */
-#pdf-download-button {
+#cv-print-button {
   color: #ffffff !important;
   background-color: var(--accessible-brand-red) !important;
   border-color: var(--accessible-brand-red) !important;
 }
 
-#pdf-download-button:hover {
+#cv-print-button:hover {
   background-color: #a81c1c !important;
 }
 
