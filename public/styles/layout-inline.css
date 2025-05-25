@@ -1,0 +1,131 @@
+/* Styles extracted from Layout.astro */
+#skills,
+.nav-container,
+.profile-image-container {
+  content-visibility: auto;
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/styles/fonts/fa-solid-900.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/styles/fonts/fa-brands-400.woff2") format("woff2");
+}
+
+.fas,
+.fa-solid {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+.fab,
+.fa-brands {
+  font-family: "Font Awesome 5 Brands";
+  font-weight: 400;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+/* Sticky navbar adjustments */
+nav,
+header nav,
+nav[role="navigation"],
+header[role="banner"] {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+}
+
+header[role="banner"] {
+  display: block;
+  position: static;
+  z-index: auto;
+  margin: 0;
+  padding: 0;
+}
+
+@media print {
+  nav,
+  footer,
+  button:not(#cv-download-button),
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  /* Remove shadows and hover effects */
+  * {
+    box-shadow: none !important;
+    transition: none !important;
+  }
+
+  /* Adjust colors for printing */
+  .dark\:text-dark-text,
+  .dark\:text-dark-text-secondary,
+  .text-light-text,
+  .text-light-text-secondary {
+    color: #000 !important;
+  }
+
+  .dark\:bg-dark-surface,
+  .dark\:bg-dark-secondary,
+  .bg-light-surface,
+  .bg-light-secondary {
+    background-color: #fff !important;
+  }
+
+  /* Ensure all sections are visible */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
+
+  /* Maintain the red accent for visual identity */
+  .border-brand-red {
+    border-color: #d83333 !important;
+  }
+
+  /* Ensure all text is visible */
+  .text-brand-red {
+    color: #d83333 !important;
+  }
+
+  /* Ensure backgrounds print correctly */
+  .bg-brand-red {
+    background-color: #d83333 !important;
+  }
+}

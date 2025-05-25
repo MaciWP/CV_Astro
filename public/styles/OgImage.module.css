@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #121620;
+  background-image: linear-gradient(to right bottom, #121620, #1e2433);
+  padding: 60px;
+  font-family: Helvetica, Arial, sans-serif;
+  position: relative;
+}
+
+.topAccent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 12px;
+  background-color: #d83333;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #d83333;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.urls {
+  display: flex;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.name {
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 500;
+  color: #d83333;
+  margin: 0;
+  margin-top: 16px;
+}
+
+.description {
+  font-size: 24px;
+  color: #9ca3af;
+  margin-top: 32px;
+  max-width: 650px;
+  line-height: 1.4;
+}
+
+.bottomAccent {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 8px;
+  background-color: #d83333;
+}
