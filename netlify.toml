@@ -26,13 +26,13 @@
   for = "/scripts/i18n.js"
   [headers.values]
     Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/scripts/font-awesome-loader.js"
   [headers.values]
     Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 # ===== SOLUCIÓN PARA FONT AWESOME =====
 
@@ -71,7 +71,7 @@
   for = "/styles/font-awesome*.css"
   [headers.values]
     Content-Type = "text/css; charset=utf-8"
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 # ===== HEADERS DE SEGURIDAD =====
 

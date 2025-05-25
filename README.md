@@ -27,6 +27,7 @@ A professional CV/portfolio website following Swiss design standards. This proje
 - **[React](https://reactjs.org/)**: For interactive components
 - **[TailwindCSS](https://tailwindcss.com/)**: Utility-first CSS framework
 - **[Netlify](https://www.netlify.com/)**: Hosting and continuous deployment
+- **[Cloudflare CDN](https://www.cloudflare.com/)**: Global content delivery for static assets
 
 ## 🛠️ Development
 

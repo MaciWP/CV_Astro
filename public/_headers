@@ -9,6 +9,14 @@
 
 /styles/critical-mobile.css
   Cache-Control: public, max-age=86400
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
 
 # Política CSP más efectiva
 /*
