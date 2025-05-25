@@ -148,7 +148,7 @@ const ProfileHeader = () => {
   };
 
   return (
-    <div id="about" className="pt-4 pb-8">
+    <div id="about" suppressHydrationWarning className="pt-4 pb-8">
       {/* Header / Información Personal */}
       <section>
         <div
