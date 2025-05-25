@@ -1,0 +1,257 @@
+/* src/styles/combined.css */
+/* Combined accessibility and layout shift fixes */
+
+/* src/styles/a11y-improvements.css */
+/**
+ * Mejoras de accesibilidad para el sitio
+ * Corrige problemas de contraste identificados en PageSpeed
+ */
+
+/* Fix contrast issues */
+
+/* Make the brand-red color slightly darker for better contrast */
+:root {
+  --original-brand-red: #d83333;
+  --accessible-brand-red: #c42b2b;
+  /* Versión más oscura para mejor contraste */
+}
+
+/* Apply the darker red to text and borders */
+.text-brand-red {
+  color: var(--accessible-brand-red) !important;
+}
+
+.border-brand-red {
+  border-color: var(--accessible-brand-red) !important;
+}
+
+/* Exception for buttons and backgrounds where we keep the original color */
+.bg-brand-red {
+  background-color: var(--original-brand-red);
+}
+
+h4.text-brand-red {
+  color: #b22222 !important;
+  /* Tono más oscuro para mejorar contraste */
+  font-weight: 600 !important;
+  /* Reforzar la negrita para mejorar legibilidad */
+}
+
+/* Style active navigation tabs with a stronger border */
+[aria-current="page"] {
+  font-weight: 600 !important;
+}
+
+/* Make active tab text darker for better visibility */
+.text-brand-red[aria-current="page"] {
+  color: #b22222 !important;
+  /* Even darker for active navigation items */
+}
+
+/* Fix "Download CV" button contrast in the footer */
+#cv-download-button {
+  color: #ffffff !important;
+  background-color: var(--accessible-brand-red) !important;
+  border-color: var(--accessible-brand-red) !important;
+}
+
+#cv-download-button:hover {
+  background-color: #a81c1c !important;
+}
+
+/* Project tabs - ensure sufficient contrast */
+[data-i18n="projects.personalProjects"],
+[data-i18n="projects.professionalWork"] {
+  color: #2d3748 !important;
+  /* Dark gray for better contrast */
+}
+
+[data-i18n="projects.personalProjects"].border-brand-red,
+[data-i18n="projects.professionalWork"].border-brand-red {
+  border-color: #c42b2b !important;
+}
+
+.dark [data-i18n="projects.personalProjects"],
+.dark [data-i18n="projects.professionalWork"] {
+  color: #e2e8f0 !important;
+  /* Light gray for dark mode */
+}
+
+/* Improve contrast in footer text */
+footer,
+footer p {
+  color: #4a5568 !important;
+  /* Dark enough for light mode */
+}
+
+.dark footer,
+.dark footer p {
+  color: #cbd5e0 !important;
+  /* Light enough for dark mode */
+}
+
+/* Focus styles improvements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--accessible-brand-red) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
+}
+
+/* src/styles/layout-shift-fixes.css */
+/**
+ * Correcciones específicas para eliminar Cumulative Layout Shift (CLS)
+ * Basado en las auditorías de PageSpeed Insights
+ */
+
+/* Pre-reservar espacio para la sección de Skills */
+#skills {
+  min-height: 400px;
+  /* Altura mínima para contener la sección */
+  contain: layout paint;
+  /* Mejorar rendimiento y evitar cambios de diseño */
+}
+
+/* Reservar espacio para skills expandibles */
+.skill-pill {
+  height: 32px;
+  margin-bottom: 8px;
+  contain: content;
+}
+
+/* Reservar espacio para la navegación - evitar saltos */
+nav .hidden.md\:block {
+  min-height: 40px;
+  contain: layout size;
+}
+
+/* Tamaño fijo para contenedores de iconos */
+.w-10.h-10 {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  contain: strict;
+}
+
+/* Placeholder de carga para imagen de perfil */
+[data-i18n="header.photoAlt"] {
+  min-height: 400px;
+  min-width: 400px;
+  aspect-ratio: 1;
+  contain: size layout;
+}
+
+/* Evitar cambios de diseño en secciones específicas mencionadas en el reporte */
+section#skills,
+div.hidden.md\:block {
+  contain: layout paint;
+  isolation: isolate;
+}
+
+/* Prevenir cambios de diseño en elementos Technical Skills */
+section#skills h3,
+section#skills .skill-pill {
+  transform: translateZ(0);
+  /* Forzar composición en capa separada */
+  will-change: transform;
+  /* Señalar al navegador que optimice */
+  transition: transform 0.2s ease-out;
+}
+
+/* Estabilizar elementos About, Experience, etc en la navegación */
+nav a[data-section] {
+  min-width: 70px;
+  /* Ancho mínimo basado en contenido más grande */
+  text-align: center;
+  justify-content: center;
+  display: inline-flex;
+}
+
+/* Resolución específica para los elementos identificados en el reporte */
+#skills .section-header {
+  height: 40px;
+  /* Altura fija para evitar cambios */
+  margin-bottom: 16px;
+  /* Espacio consistente */
+  contain: layout size;
+}
+
+/* Estabilizar secciones de proyectos */
+[data-i18n="projects.personalProjects"],
+[data-i18n="projects.professionalWork"] {
+  min-width: 140px;
+  /* Ancho suficiente para ambos idiomas */
+  justify-content: center;
+  text-align: center;
+}
+
+/* Mejora la estabilidad en pantallas pequeñas */
+@media (max-width: 768px) {
+  #skills,
+  .nav-container {
+    contain: strict;
+    content-visibility: auto;
+  }
+
+  /* Reserva espacio mínimo en cargas iniciales */
+  main > div > section:first-child {
+    min-height: 200px;
+  }
+
+  /* Evitar cambios posicionales en texto */
+  h1,
+  h2,
+  h3,
+  p {
+    contain: content;
+  }
+}
+
+/* public/styles/cls-fix.css */
+/* Fix para evitar cambios de diseño durante la carga */
+
+/* Reservar espacio para la sección de habilidades */
+#skills {
+  min-height: 600px;
+  /* Altura mínima reservada */
+  contain: layout paint;
+  /* Mejora el rendimiento de renderizado */
+}
+
+/* Evitar cambios de diseño en skill pills */
+#skills .skill-pill {
+  opacity: 0;
+  /* Inicialmente invisible */
+  transform: translateY(0);
+  /* Posición final fija */
+  transition: opacity 0.3s ease-out;
+  /* Solo transición de opacidad */
+  height: 2.5rem;
+  /* Altura fija */
+  margin-bottom: 0.5rem;
+  /* Margen constante */
+}
+
+/* Cuando sea visible, solo cambia la opacidad */
+#skills .skill-pill[style*="opacity: 1"] {
+  transform: translateY(0) !important;
+  /* Forzar posición constante */
+}
+
+/* Estabilizar navegación */
+.hidden.md\:block {
+  height: 40px;
+  /* Altura fija para la navegación */
+  contain: layout size;
+  /* Contiene cambios de tamaño */
+}
+
+/* Más espacio para secciones principales */
+section {
+  margin-bottom: 2rem;
+  /* Margen consistente */
+  contain: layout;
+  /* Contener cambios de layout */
+}

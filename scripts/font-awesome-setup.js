@@ -414,14 +414,14 @@ async function setupFontAwesome() {
         // Descargar CSS completo
         const cssPath = path.join(PUBLIC_STYLES_DIR, 'font-awesome.min.css');
         console.log(`Descargando Font Awesome CSS desde ${FA_CSS_URL}`);
-        await downloadFile(FA_CSS_URL, cssPath);
+        // await downloadFile(FA_CSS_URL, cssPath);
         console.log('✓ CSS descargado');
 
         // Descargar archivos de fuentes
         for (const font of FONT_FILES) {
             const fontPath = path.join(PUBLIC_FONTS_DIR, font.name);
             console.log(`Descargando ${font.name}`);
-            await downloadFile(font.url, fontPath);
+            // await downloadFile(font.url, fontPath);
             console.log(`✓ Descargado ${font.name}`);
 
             // Configurar permisos apropiados
