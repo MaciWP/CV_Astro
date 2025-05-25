@@ -7,6 +7,8 @@ import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
 import CookieBanner from "../components/CookieBanner";
+import SecurityHeaders from "../components/SecurityHeaders.astro";
+
 
 // Define props interface
 export interface Props {
@@ -108,6 +110,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     <meta name="description" content={description} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
+    <SecurityHeaders />
 
     <!-- Enlaces hreflang corregidos -->
     <LanguageAlternates

@@ -27,6 +27,7 @@ A professional CV/portfolio website following Swiss design standards. This proje
 - **[React](https://reactjs.org/)**: For interactive components
 - **[TailwindCSS](https://tailwindcss.com/)**: Utility-first CSS framework
 - **[Netlify](https://www.netlify.com/)**: Hosting and continuous deployment
+- **[Cloudflare CDN](https://www.cloudflare.com/)**: Global content delivery for static assets
 
 ## 🛠️ Development
 
@@ -69,6 +70,18 @@ npm run preview
 - `npm run optimize:images` - Optimize images
 - `npm run seo:audit` - Run Lighthouse audit
 - `npm run analyze:bundle` - Analyze bundle size
+
+### SSL Certificate Renewal
+
+Use the `scripts/renew-cert.sh` script to renew your Let's Encrypt
+certificate. You can automate it with a cron job:
+
+```bash
+0 3 * * 1 /path/to/CV_Astro/scripts/renew-cert.sh >> /var/log/letsencrypt/renew.log 2>&1
+```
+
+This example runs every Monday at 3 AM. Adjust the path and schedule as
+needed.
 
 ## 📂 Project Structure
 
@@ -141,6 +154,9 @@ Portfolio: [oriolmacias.dev](https://oriolmacias.dev)
 LinkedIn: [linkedin.com/in/oriolmaciasbadosa](https://linkedin.com/in/oriolmaciasbadosa)
 
 GitHub: [github.com/MaciWP](https://github.com/MaciWP)
+
+Para configurar los registros SPF y DMARC de tu dominio puedes consultar
+[docs/email-dns.md](docs/email-dns.md).
 
 ---
 
