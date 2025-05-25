@@ -6,6 +6,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
+import SecurityHeaders from "../components/SecurityHeaders.astro";
 
 // Define props interface
 export interface Props {
@@ -106,6 +107,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta name="description" content={description} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
+    <SecurityHeaders />
 
     <!-- Enlaces hreflang corregidos -->
     <LanguageAlternates
