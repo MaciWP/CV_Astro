@@ -7,6 +7,11 @@ import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
 import meta from "../data/meta.json";
+import StructuredData from "../components/StructuredData";
+import headerData from "../data/header";
+import meta from "../data/meta.json";
+import CookieBanner from "../components/CookieBanner";
+import SecurityHeaders from "../components/SecurityHeaders.astro";
 
 // Define props interface
 export interface Props {
@@ -36,13 +41,26 @@ const {
 const fullCanonicalUrl = canonicalUrl.startsWith("http")
   ? canonicalUrl
   : new URL(Astro.url.pathname, "https://oriolmacias.dev").href;
-
 const socialMedia = meta.socialMedia || [];
----
+const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
+
 
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
+    <script
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}
+    ></script>
+    <script is:inline define:vars={{ GA_ID: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    </script>
+    <script src="/scripts/ga-events.js" defer></script>
     <link
       rel="preload"
       as="image"
@@ -112,6 +130,8 @@ const socialMedia = meta.socialMedia || [];
     {socialMedia.map((sm) => (
       <link rel="me" href={sm.url} />
     ))}
+
+    <SecurityHeaders />
 
     <!-- Enlaces hreflang corregidos -->
     <LanguageAlternates
@@ -487,6 +507,10 @@ const socialMedia = meta.socialMedia || [];
     <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
 
     <script is:inline src="/scripts/react-error-recovery.js"></script>
+    <StructuredData
+      name={headerData.fullName}
+      jobTitle={headerData.jobTitle}
+    />
   </head>
   <body
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans body-transition"
@@ -538,6 +562,11 @@ const socialMedia = meta.socialMedia || [];
                     © {new Date().getFullYear()} Oriol Macias
                   </p>
                 </div>
+                <p
+                  class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                >
+                  {meta.address} | {meta.telephone}
+                </p>
                 <div class="flex items-center gap-6">
                   {socialMedia.map((sm) => (
                     <a
@@ -584,6 +613,7 @@ const socialMedia = meta.socialMedia || [];
           </footer>
         </ErrorBoundary>
       </I18nLoader>
+      <CookieBanner client:load />
     </div>
     <script is:inline src="/scripts/react-error-recovery.js"></script>
   </body><!-- Script for smooth scrolling to sections -->
@@ -663,7 +693,44 @@ const socialMedia = meta.socialMedia || [];
         );
       }
     });
-  </script>
+</script>
+
+  {import.meta.env.PROD && (
+    <script is:inline define:vars={{ pixelId }}>
+      {`
+      window.initPixel = function () {
+        if (!window.fbq && pixelId) {
+          !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+              n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+          })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', pixelId);
+          fbq('track', 'PageView');
+          document.getElementById('cv-download-button')?.addEventListener('click', () => {
+            fbq('track', 'Lead');
+          });
+        }
+      };
+      if (localStorage.getItem('pixel_consent') === 'granted') {
+        window.initPixel();
+      } else {
+        document.addEventListener('pixel-consent-granted', () => window.initPixel(), { once: true });
+      }
+    `}
+    </script>
+  )}
 
   <!-- Service Worker Registration - Only for production -->
   <script is:inline>
