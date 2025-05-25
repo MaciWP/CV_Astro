@@ -33,8 +33,8 @@ A professional CV/portfolio website following Swiss design standards. This proje
 
 ### Prerequisites
 
-- Node.js 18 or higher
-- npm 9.5 or higher
+- Node.js 20 or higher
+- pnpm 8 or higher
 
 ### Setup
 
@@ -44,32 +44,32 @@ git clone https://github.com/MaciWP/CV_Astro.git
 cd CV_Astro
 
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm run dev
 ```
 
 ### Build
 
 ```bash
 # Build for production
-npm run build
+pnpm run build
 
 # Preview production build
-npm run preview
+pnpm run preview
 ```
 
 ### Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run generate:favicons` - Generate favicons
-- `npm run generate:sitemap` - Generate sitemap
-- `npm run optimize:images` - Optimize images
-- `npm run seo:audit` - Run Lighthouse audit
-- `npm run analyze:bundle` - Analyze bundle size
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm run preview` - Preview production build
+- `pnpm run generate:favicons` - Generate favicons
+- `pnpm run generate:sitemap` - Generate sitemap
+- `pnpm run optimize:images` - Optimize images
+- `pnpm run seo:audit` - Run Lighthouse audit
+- `pnpm run analyze:bundle` - Analyze bundle size
 
 ### SSL Certificate Renewal
 
