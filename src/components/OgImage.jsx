@@ -8,6 +8,7 @@ import styles from "../styles/OgImage.module.css";
  */
 const OgImage = ({ name = "Oriol Macias", title = "Software Developer" }) => {
   return (
+
     <div className={styles.container}>
       {/* Red accent element - top left */}
       <div className={styles.topAccent} />
