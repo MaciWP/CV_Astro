@@ -1,7 +1,8 @@
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
+import { defineConfig } from "astro/config";
+import tailwind from "@astrojs/tailwind";
+import react from "@astrojs/react";
+import compress from "astro-compress";
 
 export default defineConfig({
   i18n: {
@@ -15,9 +16,10 @@ export default defineConfig({
   integrations: [
     tailwind({
       applyBaseStyles: false,
-      config: { path: './tailwind.config.js' },
+      config: { path: "./tailwind.config.js" },
     }),
     react(),
+    compress({ gzip: true, brotli: true }),
   ],
 
   // Configuración explícita de MIME types para corregir errores
@@ -27,16 +29,16 @@ export default defineConfig({
       "*.js": [
         {
           key: "Content-Type",
-          value: "application/javascript; charset=utf-8"
-        }
+          value: "application/javascript; charset=utf-8",
+        },
       ],
       "*.css": [
         {
           key: "Content-Type",
-          value: "text/css; charset=utf-8"
-        }
-      ]
-    }
+          value: "text/css; charset=utf-8",
+        },
+      ],
+    },
   },
 
   vite: {
