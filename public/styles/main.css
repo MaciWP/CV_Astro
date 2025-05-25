@@ -23,353 +23,352 @@
 
 /* ===== VARIABLES GLOBALES ===== */
 :root {
-    /* Transiciones de tema */
-    --theme-transition-duration: 180ms;
-    --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
-    --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
+  /* Transiciones de tema */
+  --theme-transition-duration: 180ms;
+  --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
+  --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
 
-    /* Duraciones estándar de animación */
-    --duration-micro: 100ms;
-    --duration-fast: 150ms;
-    --duration-standard: 250ms;
-    --duration-emphasis: 400ms;
-    --duration-complex: 600ms;
+  /* Duraciones estándar de animación */
+  --duration-micro: 100ms;
+  --duration-fast: 150ms;
+  --duration-standard: 250ms;
+  --duration-emphasis: 400ms;
+  --duration-complex: 600ms;
 
-    /* Curvas de timing */
-    --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
-    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
-    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  /* Curvas de timing */
+  --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* ===== ESTILOS BASE ===== */
 @layer base {
-    body {
-        @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-feature-settings: "kern";
-        text-rendering: optimizeLegibility;
-    }
+  body {
+    @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern";
+    text-rendering: optimizeLegibility;
+  }
 
-    /* Mejoras de tipografía */
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        letter-spacing: -0.02em;
-        @apply font-bold;
-    }
+  /* Mejoras de tipografía */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.02em;
+    @apply font-bold;
+  }
 
-    /* Mejor espaciado para secciones de scroll */
-    section {
-        scroll-margin-top: 80px;
-        @apply mb-24;
-    }
+  /* Mejor espaciado para secciones de scroll */
+  section {
+    scroll-margin-top: 80px;
+    @apply mb-24;
+  }
 
-    /* Accesibilidad */
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-    }
+  /* Accesibilidad */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 
-    /* Estados de foco mejorados para accesibilidad */
-    :focus-visible {
-        outline: 2px solid #D83333 !important;
-        outline-offset: 2px !important;
-    }
+  /* Estados de foco mejorados para accesibilidad */
+  :focus-visible {
+    outline: 2px solid #d83333 !important;
+    outline-offset: 2px !important;
+  }
 
-    /* Fix para que las imágenes no tengan filtros en modo claro */
-    .light img,
-    html:not(.dark) img {
-        filter: none !important;
-        opacity: 1 !important;
-    }
+  /* Fix para que las imágenes no tengan filtros en modo claro */
+  .light img,
+  html:not(.dark) img {
+    filter: none !important;
+    opacity: 1 !important;
+  }
 
-    /* Fix sticky para el navbar */
+  /* Fix sticky para el navbar */
+  nav[role="navigation"] {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+  }
+
+  @supports (position: -webkit-sticky) {
     nav[role="navigation"] {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 50 !important;
+      position: -webkit-sticky !important;
     }
-
-    @supports (position: -webkit-sticky) {
-        nav[role="navigation"] {
-            position: -webkit-sticky !important;
-        }
-    }
+  }
 }
 
 /* ===== TRANSICIONES DE TEMA ===== */
 html.theme-transitioning * {
-    transition-property: color, background-color, border-color;
-    transition-duration: var(--theme-transition-duration);
-    transition-timing-function: var(--theme-curve-color);
-    will-change: color, background-color, border-color;
+  transition-property: color, background-color, border-color;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-curve-color);
+  will-change: color, background-color, border-color;
 }
 
 /* ===== COMPONENTES ===== */
 @layer components {
+  /* Clases de transición de tema */
+  .theme-transition {
+    @apply transition-all duration-75;
+  }
 
-    /* Clases de transición de tema */
-    .theme-transition {
-        @apply transition-all duration-75;
-    }
+  .theme-transition-text {
+    @apply transition-colors duration-75;
+  }
 
-    .theme-transition-text {
-        @apply transition-colors duration-75;
-    }
+  .theme-transition-bg {
+    @apply transition-colors duration-75;
+  }
 
-    .theme-transition-bg {
-        @apply transition-colors duration-75;
-    }
+  /* Botones */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
+  }
 
-    /* Botones */
-    .btn {
-        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
-    }
+  .btn-primary {
+    @apply bg-brand-red text-white hover:bg-red-700;
+  }
 
-    .btn-primary {
-        @apply bg-brand-red text-white hover:bg-red-700;
-    }
+  .btn-secondary {
+    @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
+  }
 
-    .btn-secondary {
-        @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
-    }
+  /* Tarjetas */
+  .card {
+    @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
 
-    /* Tarjetas */
-    .card {
-        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
-    }
+  /* Encabezado de sección con icono */
+  .section-header {
+    @apply flex items-center gap-3 mb-6;
+  }
 
-    /* Encabezado de sección con icono */
-    .section-header {
-        @apply flex items-center gap-3 mb-6;
-    }
+  .section-icon {
+    @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
+  }
 
-    .section-icon {
-        @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
-    }
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-    /* Scrollbar personalizada */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
 
-    ::-webkit-scrollbar-track {
-        @apply bg-gray-100 dark:bg-gray-800;
-    }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600;
+  }
 
-    ::-webkit-scrollbar-thumb {
-        @apply bg-gray-300 dark:bg-gray-600;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        @apply bg-gray-400 dark:bg-gray-500;
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
 }
 
 /* ===== ANIMACIONES ===== */
 @keyframes enhanced-appear {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .section-animate {
-    animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
+  animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
 }
 
 @keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
-    animation: fade-in 0.5s ease-out forwards;
+  animation: fade-in 0.5s ease-out forwards;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fadeInUp {
-    animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
+  animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 @keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .animate-fadeInLeft {
-    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+  animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
 }
 
 @keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .animate-scaleIn {
-    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+  animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 /* Sistema de animación escalonada */
-.stagger-container>* {
-    opacity: 0;
+.stagger-container > * {
+  opacity: 0;
 }
 
-.stagger-visible.stagger-container>*:nth-child(1) {
-    animation-delay: 30ms;
+.stagger-visible.stagger-container > *:nth-child(1) {
+  animation-delay: 30ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(2) {
-    animation-delay: 60ms;
+.stagger-visible.stagger-container > *:nth-child(2) {
+  animation-delay: 60ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(3) {
-    animation-delay: 90ms;
+.stagger-visible.stagger-container > *:nth-child(3) {
+  animation-delay: 90ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(4) {
-    animation-delay: 120ms;
+.stagger-visible.stagger-container > *:nth-child(4) {
+  animation-delay: 120ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(5) {
-    animation-delay: 150ms;
+.stagger-visible.stagger-container > *:nth-child(5) {
+  animation-delay: 150ms;
 }
 
-.stagger-visible.stagger-container>*:nth-child(6) {
-    animation-delay: 180ms;
+.stagger-visible.stagger-container > *:nth-child(6) {
+  animation-delay: 180ms;
 }
 
 /* ===== ESTILOS DE IMPRESIÓN ===== */
 @media print {
-    body {
-        background-color: white !important;
-        color: black !important;
-    }
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
 
-    /* Ocultar elementos no necesarios para impresión */
-    nav,
-    footer,
-    button:not(#cv-download-button),
-    .no-print {
-        display: none !important;
-    }
+  /* Ocultar elementos no necesarios para impresión */
+  nav,
+  footer,
+  button:not(#pdf-download-button),
+  .no-print {
+    display: none !important;
+  }
 
-    /* Asegurar que todo el contenido sea visible */
-    .opacity-0,
-    .translate-y-10 {
-        opacity: 1 !important;
-        transform: none !important;
-    }
+  /* Asegurar que todo el contenido sea visible */
+  .opacity-0,
+  .translate-y-10 {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 
-    /* Eliminar efectos visuales */
-    * {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-        box-shadow: none !important;
-    }
+  /* Eliminar efectos visuales */
+  * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
 
-    /* Asegurar colores de marca para impresión */
-    .text-brand-red {
-        color: #D83333 !important;
-    }
+  /* Asegurar colores de marca para impresión */
+  .text-brand-red {
+    color: #d83333 !important;
+  }
 
-    .bg-brand-red {
-        background-color: #D83333 !important;
-    }
+  .bg-brand-red {
+    background-color: #d83333 !important;
+  }
 
-    /* Configuración de página para PDF */
-    @page {
-        size: A4 portrait;
-        margin: 1.5cm;
-    }
+  /* Configuración de página para PDF */
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
 }
 
 /* ===== ESTILOS RESPONSIVOS ===== */
 @media (max-width: 768px) {
-    section {
-        margin-bottom: 3rem !important;
-    }
+  section {
+    margin-bottom: 3rem !important;
+  }
 
-    #about {
-        padding-top: 1rem;
-        padding-bottom: 2rem;
-    }
+  #about {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
 
-    h1 {
-        font-size: 2.25rem !important;
-        line-height: 2.5rem !important;
-    }
+  h1 {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
 
-    h2 {
-        font-size: 1.5rem !important;
-        line-height: 2rem !important;
-    }
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
 }
 
 /* ===== MEJORAS DE ACCESIBILIDAD ===== */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Objetivos táctiles adecuados para accesibilidad */
 .touch-target {
-    min-height: 44px;
-    min-width: 44px;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 /* Animation system */
@@ -380,52 +379,52 @@ html.theme-transitioning * {
  */
 
 :root {
-    /* 
+  /* 
      * STANDARD DURATIONS
      * -----------------
      * Unified time system for different types of animations
      */
-    --duration-micro: 100ms;
-    /* For minimal changes (simple hovers) */
-    --duration-fast: 150ms;
-    /* For most interactions */
-    --duration-standard: 250ms;
-    /* For standard transitions and entrances */
-    --duration-emphasis: 400ms;
-    /* For more dramatic movements */
-    --duration-complex: 600ms;
-    /* For complex/sequential animations */
+  --duration-micro: 100ms;
+  /* For minimal changes (simple hovers) */
+  --duration-fast: 150ms;
+  /* For most interactions */
+  --duration-standard: 250ms;
+  /* For standard transitions and entrances */
+  --duration-emphasis: 400ms;
+  /* For more dramatic movements */
+  --duration-complex: 600ms;
+  /* For complex/sequential animations */
 
-    /* 
+  /* 
      * TIMING CURVES
      * --------------
      * Standard timing functions for different types of movement
      */
-    /* For regular movements with natural acceleration */
-    --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+  /* For regular movements with natural acceleration */
+  --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
 
-    /* For entrances with slight bounce */
-    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* For entrances with slight bounce */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    /* For entrances with elastic effect */
-    --ease-elastic: cubic-bezier(0.22, 1.75, 0.46, 0.92);
+  /* For entrances with elastic effect */
+  --ease-elastic: cubic-bezier(0.22, 1.75, 0.46, 0.92);
 
-    /* For quick accelerations */
-    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  /* For quick accelerations */
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
 
-    /* For smooth decelerations */
-    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  /* For smooth decelerations */
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
 
-    /* 
+  /* 
      * BASIC DELAYS
      * -------------
      * Base values for staggered effects
      */
-    --delay-minimum: 20ms;
-    --delay-fast: 50ms;
-    --delay-standard: 100ms;
-    --delay-stagger: 30ms;
-    /* For sequential elements */
+  --delay-minimum: 20ms;
+  --delay-fast: 50ms;
+  --delay-standard: 100ms;
+  --delay-stagger: 30ms;
+  /* For sequential elements */
 }
 
 /* 
@@ -436,65 +435,67 @@ html.theme-transitioning * {
 
 /* Transitions for basic properties */
 .transition-standard {
-    transition-property: transform, opacity, color, background-color, border-color;
-    transition-duration: var(--duration-standard);
-    transition-timing-function: var(--ease-standard);
+  transition-property:
+    transform, opacity, color, background-color, border-color;
+  transition-duration: var(--duration-standard);
+  transition-timing-function: var(--ease-standard);
 }
 
 .transition-fast {
-    transition-property: transform, opacity, color, background-color, border-color;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+  transition-property:
+    transform, opacity, color, background-color, border-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-standard);
 }
 
 /* Specific transitions */
 .transition-color {
-    transition-property: color;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+  transition-property: color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-standard);
 }
 
 .transition-bg {
-    transition-property: background-color;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-standard);
+  transition-property: background-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-standard);
 }
 
 .transition-transform {
-    transition-property: transform;
-    transition-duration: var(--duration-standard);
-    transition-timing-function: var(--ease-bounce);
+  transition-property: transform;
+  transition-duration: var(--duration-standard);
+  transition-timing-function: var(--ease-bounce);
 }
 
 .transition-fade {
-    transition-property: opacity;
-    transition-duration: var(--duration-standard);
-    transition-timing-function: var(--ease-standard);
+  transition-property: opacity;
+  transition-duration: var(--duration-standard);
+  transition-timing-function: var(--ease-standard);
 }
 
 /* Classes for hover effects on interactive elements */
 .hover-lift {
-    transition: transform var(--duration-fast) var(--ease-bounce);
+  transition: transform var(--duration-fast) var(--ease-bounce);
 }
 
 .hover-lift:hover {
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 }
 
 .hover-scale {
-    transition: transform var(--duration-fast) var(--ease-bounce);
+  transition: transform var(--duration-fast) var(--ease-bounce);
 }
 
 .hover-scale:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .hover-bright {
-    transition: filter var(--duration-fast) var(--ease-standard);
+  transition: filter var(--duration-fast) var(--ease-standard);
 }
 
 .hover-bright:hover {
-    filter: brightness(1.1);
+  filter: brightness(1.1);
 }
 
 /* 
@@ -503,138 +504,137 @@ html.theme-transitioning * {
    * Reusable animations
    */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes pulseOnce {
-    0% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
+  }
 
-    50% {
-        transform: scale(1.05);
-    }
+  50% {
+    transform: scale(1.05);
+  }
 
-    100% {
-        transform: scale(1);
-    }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Classes to apply animations */
 .animate-fadeIn {
-    animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
+  animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
 }
 
 .animate-fadeInUp {
-    animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
+  animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 .animate-fadeInLeft {
-    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+  animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
 }
 
 .animate-fadeInRight {
-    animation: fadeInRight var(--duration-standard) var(--ease-standard) forwards;
+  animation: fadeInRight var(--duration-standard) var(--ease-standard) forwards;
 }
 
 .animate-scaleIn {
-    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+  animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 .animate-pulseOnce {
-    animation: pulseOnce 600ms var(--ease-elastic) forwards;
+  animation: pulseOnce 600ms var(--ease-elastic) forwards;
 }
 
 /* Staggering system with classes */
-.stagger-container>* {
-    opacity: 0;
+.stagger-container > * {
+  opacity: 0;
 }
 
-.stagger-visible.stagger-container>*:nth-child(1) {
-    animation-delay: calc(var(--delay-stagger) * 1);
+.stagger-visible.stagger-container > *:nth-child(1) {
+  animation-delay: calc(var(--delay-stagger) * 1);
 }
 
-.stagger-visible.stagger-container>*:nth-child(2) {
-    animation-delay: calc(var(--delay-stagger) * 2);
+.stagger-visible.stagger-container > *:nth-child(2) {
+  animation-delay: calc(var(--delay-stagger) * 2);
 }
 
-.stagger-visible.stagger-container>*:nth-child(3) {
-    animation-delay: calc(var(--delay-stagger) * 3);
+.stagger-visible.stagger-container > *:nth-child(3) {
+  animation-delay: calc(var(--delay-stagger) * 3);
 }
 
-.stagger-visible.stagger-container>*:nth-child(4) {
-    animation-delay: calc(var(--delay-stagger) * 4);
+.stagger-visible.stagger-container > *:nth-child(4) {
+  animation-delay: calc(var(--delay-stagger) * 4);
 }
 
-.stagger-visible.stagger-container>*:nth-child(5) {
-    animation-delay: calc(var(--delay-stagger) * 5);
+.stagger-visible.stagger-container > *:nth-child(5) {
+  animation-delay: calc(var(--delay-stagger) * 5);
 }
 
 /* Configuration for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 /**
  * Transiciones de tema optimizadas y unificadas
@@ -648,13 +648,13 @@ html.theme-transitioning * {
 
 /* Variables globales para transiciones */
 :root {
-    /* Duración base más corta para una sensación más natural */
-    --theme-transition-duration: 180ms;
+  /* Duración base más corta para una sensación más natural */
+  --theme-transition-duration: 180ms;
 
-    /* Curvas de temporización optimizadas para diferentes tipos de propiedades */
-    --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
-    --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
-    --theme-curve-transform: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Curvas de temporización optimizadas para diferentes tipos de propiedades */
+  --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
+  --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
+  --theme-curve-transform: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /*
@@ -666,8 +666,9 @@ html.theme-transitioning * {
 html.theme-transitioning body,
 html.theme-transitioning .bg-light-primary,
 html.theme-transitioning .bg-dark-primary {
-    transition: background-color var(--theme-transition-duration) var(--theme-curve-color);
-    will-change: background-color;
+  transition: background-color var(--theme-transition-duration)
+    var(--theme-curve-color);
+  will-change: background-color;
 }
 
 /* Capa 2: Contenedores secundarios y fondos - ligeramente retrasados */
@@ -675,17 +676,19 @@ html.theme-transitioning .bg-light-secondary,
 html.theme-transitioning .bg-dark-secondary,
 html.theme-transitioning .bg-light-surface,
 html.theme-transitioning .bg-dark-surface {
-    transition: background-color calc(var(--theme-transition-duration) * 1.15) var(--theme-curve-color);
-    transition-delay: calc(var(--theme-transition-duration) * 0.1);
-    will-change: background-color;
+  transition: background-color calc(var(--theme-transition-duration) * 1.15)
+    var(--theme-curve-color);
+  transition-delay: calc(var(--theme-transition-duration) * 0.1);
+  will-change: background-color;
 }
 
 /* Capa 3: Texto principal - comienza poco después de los fondos */
 html.theme-transitioning .text-light-text,
 html.theme-transitioning .text-dark-text {
-    transition: color calc(var(--theme-transition-duration) * 1.1) var(--theme-curve-color);
-    transition-delay: calc(var(--theme-transition-duration) * 0.15);
-    will-change: color;
+  transition: color calc(var(--theme-transition-duration) * 1.1)
+    var(--theme-curve-color);
+  transition-delay: calc(var(--theme-transition-duration) * 0.15);
+  will-change: color;
 }
 
 /* Capa 4: Texto secundario y bordes - después del texto principal */
@@ -693,22 +696,22 @@ html.theme-transitioning .text-light-text-secondary,
 html.theme-transitioning .text-dark-text-secondary,
 html.theme-transitioning .border-light-border,
 html.theme-transitioning .border-dark-border {
-    transition-property: color, border-color;
-    transition-duration: calc(var(--theme-transition-duration) * 1.2);
-    transition-timing-function: var(--theme-curve-color);
-    transition-delay: calc(var(--theme-transition-duration) * 0.2);
-    will-change: color, border-color;
+  transition-property: color, border-color;
+  transition-duration: calc(var(--theme-transition-duration) * 1.2);
+  transition-timing-function: var(--theme-curve-color);
+  transition-delay: calc(var(--theme-transition-duration) * 0.2);
+  will-change: color, border-color;
 }
 
 /* Capa 5: Elementos de acento - últimos en transicionar */
 html.theme-transitioning .text-brand-red,
 html.theme-transitioning .bg-brand-red,
 html.theme-transitioning .border-brand-red {
-    transition-property: color, background-color, border-color;
-    transition-duration: calc(var(--theme-transition-duration) * 1.3);
-    transition-timing-function: var(--theme-curve-color);
-    transition-delay: calc(var(--theme-transition-duration) * 0.25);
-    will-change: color, background-color, border-color;
+  transition-property: color, background-color, border-color;
+  transition-duration: calc(var(--theme-transition-duration) * 1.3);
+  transition-timing-function: var(--theme-curve-color);
+  transition-delay: calc(var(--theme-transition-duration) * 0.25);
+  will-change: color, background-color, border-color;
 }
 
 /* Capa 6: Sombras - transición con temporización especializada */
@@ -716,142 +719,149 @@ html.theme-transitioning .shadow-sm,
 html.theme-transitioning .shadow-md,
 html.theme-transitioning .shadow-lg,
 html.theme-transitioning .shadow-xl {
-    transition: box-shadow calc(var(--theme-transition-duration) * 1.5) var(--theme-curve-shadow);
-    transition-delay: calc(var(--theme-transition-duration) * 0.1);
-    will-change: box-shadow;
+  transition: box-shadow calc(var(--theme-transition-duration) * 1.5)
+    var(--theme-curve-shadow);
+  transition-delay: calc(var(--theme-transition-duration) * 0.1);
+  will-change: box-shadow;
 }
 
 /* Clases de utilidad para transiciones más naturales */
 .theme-transition-text {
-    transition: color calc(var(--theme-transition-duration) * 0.8) var(--theme-curve-color);
+  transition: color calc(var(--theme-transition-duration) * 0.8)
+    var(--theme-curve-color);
 }
 
 .theme-transition-bg {
-    transition: background-color calc(var(--theme-transition-duration) * 0.75) var(--theme-curve-color);
+  transition: background-color calc(var(--theme-transition-duration) * 0.75)
+    var(--theme-curve-color);
 }
 
 .theme-transition-transform {
-    transition: transform calc(var(--theme-transition-duration) * 0.9) var(--theme-curve-transform);
+  transition: transform calc(var(--theme-transition-duration) * 0.9)
+    var(--theme-curve-transform);
 }
 
 /* Animaciones específicas para el ThemeToggle */
 @keyframes spin-once {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin-once {
-    animation: spin-once 300ms var(--theme-curve-transform);
+  animation: spin-once 300ms var(--theme-curve-transform);
 }
 
 @keyframes pulse-glow {
-    0% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-    }
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
 
-    50% {
-        box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.2);
-    }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.2);
+  }
 
-    100% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-    }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
 }
 
 .theme-toggle-btn:active {
-    animation: pulse-glow 600ms ease-out;
+  animation: pulse-glow 600ms ease-out;
 }
 
 /* Print styles */
 @media print {
+  /* Hide non-printable elements */
+  .no-print {
+    display: none !important;
+  }
 
-    /* Hide non-printable elements */
-    .no-print {
-        display: none !important;
-    }
+  /* Force all animations to complete */
+  * {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: -1ms !important;
+    transition-duration: 1ms !important;
+  }
 
-    /* Force all animations to complete */
-    * {
-        animation-delay: -1ms !important;
-        animation-duration: 1ms !important;
-        animation-iteration-count: 1 !important;
-        transition-delay: -1ms !important;
-        transition-duration: 1ms !important;
-    }
+  /* Force certain color properties for print */
+  .text-brand-red {
+    color: #d83333 !important;
+  }
 
-    /* Force certain color properties for print */
-    .text-brand-red {
-        color: #D83333 !important;
-    }
+  .bg-brand-red {
+    background-color: #d83333 !important;
+  }
 
-    .bg-brand-red {
-        background-color: #D83333 !important;
-    }
-
-    /* Ensure visible content */
-    .opacity-0 {
-        opacity: 1 !important;
-    }
+  /* Ensure visible content */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
 }
 
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Utility classes for consistency */
-.animate-stagger>*:nth-child(1) {
-    animation-delay: 50ms;
+.animate-stagger > *:nth-child(1) {
+  animation-delay: 50ms;
 }
 
-.animate-stagger>*:nth-child(2) {
-    animation-delay: 100ms;
+.animate-stagger > *:nth-child(2) {
+  animation-delay: 100ms;
 }
 
-.animate-stagger>*:nth-child(3) {
-    animation-delay: 150ms;
+.animate-stagger > *:nth-child(3) {
+  animation-delay: 150ms;
 }
 
-.animate-stagger>*:nth-child(4) {
-    animation-delay: 200ms;
+.animate-stagger > *:nth-child(4) {
+  animation-delay: 200ms;
 }
 
-.animate-stagger>*:nth-child(5) {
-    animation-delay: 250ms;
+.animate-stagger > *:nth-child(5) {
+  animation-delay: 250ms;
 }
 
-.animate-stagger>*:nth-child(6) {
-    animation-delay: 300ms;
+.animate-stagger > *:nth-child(6) {
+  animation-delay: 300ms;
 }
 
 /* Page transitions */
 .page-enter {
-    opacity: 0;
-    transform: translateY(20px);
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .page-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 400ms, transform 400ms;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 400ms,
+    transform 400ms;
 }
 
 .page-exit {
-    opacity: 1;
+  opacity: 1;
 }
 
 .page-exit-active {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 300ms, transform 300ms;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 300ms,
+    transform 300ms;
 }
