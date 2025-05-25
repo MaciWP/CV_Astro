@@ -86,8 +86,6 @@ const SecurityHeaders = () => {
             {/* HSTS Header */}
             <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 
-            {/* X-Frame-Options prevents your site from being embedded in iframes on other sites */}
-            <meta http-equiv="X-Frame-Options" content="DENY" />
 
             {/* X-Content-Type-Options prevents MIME type sniffing */}
             <meta http-equiv="X-Content-Type-Options" content="nosniff" />
