@@ -70,6 +70,18 @@ npm run preview
 - `npm run seo:audit` - Run Lighthouse audit
 - `npm run analyze:bundle` - Analyze bundle size
 
+### SSL Certificate Renewal
+
+Use the `scripts/renew-cert.sh` script to renew your Let's Encrypt
+certificate. You can automate it with a cron job:
+
+```bash
+0 3 * * 1 /path/to/CV_Astro/scripts/renew-cert.sh >> /var/log/letsencrypt/renew.log 2>&1
+```
+
+This example runs every Monday at 3 AM. Adjust the path and schedule as
+needed.
+
 ## 📂 Project Structure
 
 ```
