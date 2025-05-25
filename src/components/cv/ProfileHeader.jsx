@@ -158,8 +158,14 @@ const ProfileHeader = () => {
           <div className="md:col-span-8 space-y-6">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold mb-2">
-                {headerData.fullName} – {localData.jobTitle}
+                {headerData.fullName}
               </h1>
+              <h2
+                className="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium"
+                data-i18n="header.jobTitle"
+              >
+                {localData.jobTitle}
+              </h2>
             </div>
 
             <p
