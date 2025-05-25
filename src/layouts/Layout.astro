@@ -6,6 +6,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
+import meta from "../data/meta.json";
 
 // Define props interface
 export interface Props {
@@ -532,6 +533,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                     © {new Date().getFullYear()} Oriol Macias
                   </p>
                 </div>
+                <p
+                  class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                >
+                  {meta.address} | {meta.telephone}
+                </p>
                 <div class="flex items-center gap-6">
                   <a
                     href="#top"
