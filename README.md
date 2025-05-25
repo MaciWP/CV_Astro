@@ -142,6 +142,9 @@ LinkedIn: [linkedin.com/in/oriolmaciasbadosa](https://linkedin.com/in/oriolmacia
 
 GitHub: [github.com/MaciWP](https://github.com/MaciWP)
 
+Para configurar los registros SPF y DMARC de tu dominio puedes consultar
+[docs/email-dns.md](docs/email-dns.md).
+
 ---
 
 ❤️ Thanks for checking out my project!
