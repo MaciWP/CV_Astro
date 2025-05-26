@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Oriol Dev Insights - Backend & AI" description="Reflections on backend development with Django, Python and retrieval-augmented generation.">
+  <main class="prose lg:prose-lg mx-auto px-4 py-8">
+    <h1>Oriol Dev Insights sobre Backend y AI</h1>
+    <img src="/images/oriol_macias-320.webp" alt="Retrato profesional de Oriol Macias" class="mb-6" width="320" height="320" />
+    <p>
+      Bienvenidos a mi espacio de reflexiones técnicas. Soy Oriol, desarrollador especializado en backend con Python y Django. Tras años integrando protocolos industriales y optimizando infraestructura, he incorporado técnicas de inteligencia artificial para crear aplicaciones más inteligentes y escalables. En esta serie de artículos compartiré aprendizajes y casos de uso reales que pueden inspirar a otros profesionales del sector.
+    </p>
+    <h2>Enfoque en Django para entornos de alto rendimiento</h2>
+    <p>
+      Django es mi framework de cabecera. Gracias a su madurez y comunidad, ofrece un ecosistema sólido para proyectos de misión crítica. Habitualmente trabajo con arquitecturas basadas en microservicios, donde cada servicio se apoya en una API robusta construida con Django REST Framework. Esto permite orquestar flujos de datos entre distintas fuentes, incluyendo sensores IoT y plataformas de monitorización.
+    </p>
+    <h3>Optimización de consultas y tareas asíncronas</h3>
+    <p>
+      Un aspecto clave es la optimización de las consultas a base de datos. Utilizo anotaciones, select related y herramientas de profiling para reducir la carga de cada endpoint. Además, Celery y Redis me ayudan a ejecutar tareas asíncronas que liberan la respuesta web y mejoran la experiencia de usuario en tiempo real.
+    </p>
+    <h2>Casos de uso de IA aplicada al backend</h2>
+    <p>
+      En los últimos meses he experimentado con modelos de lenguaje para enriquecer la lógica de negocio. Uno de los casos más interesantes es la generación aumentada por recuperación (RAG). Mediante esta técnica, un modelo GPT puede responder consultas precisas si le proporcionamos documentos relevantes a través de un índice semántico. He implementado servicios que indexan manuales técnicos y luego permiten resolver dudas complejas en segundos.
+    </p>
+    <p>
+      Otro ejemplo es la clasificación automática de incidencias. Entrenando un modelo con datos históricos, logro asignar prioridad y responsable a cada ticket. El resultado: menos tiempo perdido triando problemas y mayor satisfacción del cliente.
+    </p>
+    <h2>Nuevos horizontes: Python, RAG y escalabilidad</h2>
+    <p>
+      El futuro del backend pasa por combinar la solidez de Python con mecanismos de IA que entiendan el contexto. Utilizar RAG en conjunción con sistemas de colas y bases de datos vectoriales abre la puerta a asistentes especializados que integran conocimiento de dominio y se actualizan en tiempo real. Mi objetivo es seguir explorando estas posibilidades y compartir código abierto que simplifique su adopción.
+    </p>
+    <p>
+      Este blog pretende servir como bitácora de mis experimentos. Si te interesa profundizar en Django, Python y las técnicas de RAG aplicadas al backend, acompáñame en esta aventura. Publicaré artículos periódicos con ejemplos, repositorios y herramientas que uso a diario.
+    </p>
+    <p>
+      Gracias por leer y no dudes en contactarme si quieres debatir ideas o proponer colaboraciones. Puedes encontrarme como <strong>oriol dev</strong> en redes y seguir mis proyectos enfocados al <em>backend</em> para estar al día de las últimas novedades.
+    </p>
+  </main>
+</Layout>
