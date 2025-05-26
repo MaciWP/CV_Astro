@@ -95,7 +95,7 @@ const MobileMenu = ({
               className={`text-sm font-medium py-2 px-3 theme-transition-text theme-transition-bg ${
                 isActive
                   ? "text-brand-red dark:text-brand-red bg-gray-100 dark:bg-gray-800"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                  : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
               }`}
               onClick={(e) => {
                 handleNavClick(e, item.id);
@@ -120,7 +120,11 @@ const MobileMenu = ({
             aria-label="GitHub Profile"
             role="menuitem"
           >
-            <i className="fab fa-github text-lg"></i>
+            <i
+              className="fab fa-github text-lg"
+              role="img"
+              aria-label="GitHub"
+            ></i>
           </a>
 
           <a
@@ -131,7 +135,11 @@ const MobileMenu = ({
             aria-label="LinkedIn Profile"
             role="menuitem"
           >
-            <i className="fab fa-linkedin text-lg"></i>
+            <i
+              className="fab fa-linkedin text-lg"
+              role="img"
+              aria-label="LinkedIn"
+            ></i>
           </a>
         </div>
 
