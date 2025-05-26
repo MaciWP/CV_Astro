@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import compress from "astro-compress";
+import AstroPWA from "@vite-pwa/astro";
 
 export default defineConfig({
   i18n: {
@@ -20,6 +21,56 @@ export default defineConfig({
     }),
     react(),
     compress({ gzip: true, brotli: true }),
+    AstroPWA({
+      registerType: "autoUpdate",
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:js|css|html|json)$/,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "assets",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+            },
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|webp|avif)$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "images",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+              },
+            },
+          },
+        ],
+      },
+      manifest: {
+        name: "Oriol Macias - Software Developer CV",
+        short_name: "Oriol CV",
+        description: "Professional CV & Portfolio for Oriol Macias.",
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        theme_color: "#D83333",
+        icons: [
+          {
+            src: "/icons/favicon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "/icons/favicon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      },
+    }),
   ],
 
   // Configuración explícita de MIME types para corregir errores
@@ -54,5 +105,8 @@ export default defineConfig({
       assetsInlineLimit: 0, // Evitar inline de assets pequeños
       sourcemap: true,
     },
+  },
+  experimental: {
+    viewTransitions: true,
   },
 });
