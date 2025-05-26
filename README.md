@@ -157,6 +157,7 @@ GitHub: [github.com/MaciWP](https://github.com/MaciWP)
 
 Para configurar los registros SPF y DMARC de tu dominio puedes consultar
 [docs/email-dns.md](docs/email-dns.md).
+Puedes ver cómo configurar Google Analytics y Search Console en [docs/analytics.md](docs/analytics.md).
 
 ---
 
