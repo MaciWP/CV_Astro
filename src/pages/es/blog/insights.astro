@@ -1,0 +1,38 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="Oriol Dev Insights - Backend y AI" description="Reflexiones sobre desarrollo backend con Django, Python y RAG">
+  <main class="prose lg:prose-lg mx-auto px-4 py-8">
+    <h1>Oriol Dev Insights: Backend y AI</h1>
+    <img src="/images/oriol_macias-320.webp" alt="Retrato profesional de Oriol Macias" class="mb-6" width="320" height="320" />
+    <p>
+      Bienvenidos a mi rincón de <strong>backend</strong> y aprendizaje automático. Soy Oriol, también conocido como <em>oriol dev</em>. Después de años integrando protocolos industriales con Python, he ampliado mi enfoque hacia la inteligencia artificial para resolver problemas reales de negocio. En este espacio compartiré ideas y proyectos que he puesto en práctica.
+    </p>
+    <h2>Python y Django como base de cada proyecto</h2>
+    <p>
+      Trabajo principalmente con Django por su seguridad y rapidez de desarrollo. Un ejemplo fue la construcción de un panel de control para data centers que debía recoger métricas en tiempo real. Gracias a Django REST Framework y una buena estrategia de caché, logré tiempos de respuesta inferiores a 200 ms incluso con un gran volumen de peticiones simultáneas.
+    </p>
+    <h3>Retos de escalabilidad</h3>
+    <p>
+      Para escalar es fundamental usar colas de tareas y bases de datos bien indexadas. Me apoyo en Redis y PostgreSQL para asegurar consistencia sin sacrificar rendimiento. Además, automatizo despliegues con contenedores Docker y pipelines de CI/CD, manteniendo un entorno reproducible.
+    </p>
+    <h2>Casos de uso de RAG en aplicaciones reales</h2>
+    <p>
+      La generación aumentada por recuperación (RAG) me permite crear asistentes especializados. He construido un prototipo que procesa documentación técnica de equipos industriales y responde preguntas en castellano y catalán. El modelo busca en los textos más relevantes y genera la respuesta final con contexto actualizado.
+    </p>
+    <p>
+      Este enfoque reduce drásticamente el tiempo de formación de nuevos técnicos y evita errores durante las intervenciones. A corto plazo, planeo integrar este sistema en plataformas de servicio al cliente para ofrecer soporte 24/7 en varios idiomas.
+    </p>
+    <h2>Blog "Insights" y próximos artículos</h2>
+    <p>
+      Publicaré con frecuencia tutoriales y análisis de herramientas que facilitan el trabajo en el lado del servidor. Hablaré sobre optimización de consultas en Django, flujos asíncronos con Celery y estrategias para crear APIs seguras. También profundizaré en cómo combinar modelos de lenguaje con bases de datos vectoriales para implementar RAG de forma eficiente.
+    </p>
+    <p>
+      Mi objetivo es compartir conocimiento de manera transparente y fomentar la colaboración. Si te apasiona el <strong>backend</strong> y quieres explorar nuevas soluciones con <em>Python</em> y <em>Django</em>, sigue este blog para obtener actualizaciones constantes.
+    </p>
+    <p>
+      ¡Gracias por formar parte de esta comunidad y por apoyar mis proyectos! Si tienes preguntas o sugerencias, puedes contactar conmigo a través de mis redes bajo el nombre <strong>oriol dev</strong>.
+    </p>
+  </main>
+</Layout>
