@@ -5,84 +5,93 @@
 
 // Base navigation items with translations
 export const navItems = [
-    {
-        id: 'about',
-        name: {
-            en: 'About',
-            es: 'Sobre Mí',
-            fr: 'À Propos'
-        },
-        href: '#about'
+  {
+    id: "about",
+    name: {
+      en: "About",
+      es: "Sobre Mí",
+      fr: "À Propos",
     },
-    {
-        id: 'experience',
-        name: {
-            en: 'Experience',
-            es: 'Experiencia',
-            fr: 'Expérience'
-        },
-        href: '#experience'
+    href: "#about",
+  },
+  {
+    id: "experience",
+    name: {
+      en: "Experience",
+      es: "Experiencia",
+      fr: "Expérience",
     },
-    {
-        id: 'skills',
-        name: {
-            en: 'Skills',
-            es: 'Habilidades',
-            fr: 'Compétences'
-        },
-        href: '#skills'
+    href: "#experience",
+  },
+  {
+    id: "skills",
+    name: {
+      en: "Skills",
+      es: "Habilidades",
+      fr: "Compétences",
     },
-    {
-        id: 'education',
-        name: {
-            en: 'Education',
-            es: 'Educación',
-            fr: 'Formation'
-        },
-        href: '#education'
+    href: "#skills",
+  },
+  {
+    id: "education",
+    name: {
+      en: "Education",
+      es: "Educación",
+      fr: "Formation",
     },
-    {
-        id: 'languages',
-        name: {
-            en: 'Languages',
-            es: 'Idiomas',
-            fr: 'Langues'
-        },
-        href: '#languages'
+    href: "#education",
+  },
+  {
+    id: "languages",
+    name: {
+      en: "Languages",
+      es: "Idiomas",
+      fr: "Langues",
     },
-    {
-        id: 'projects',
-        name: {
-            en: 'Projects',
-            es: 'Proyectos',
-            fr: 'Projets'
-        },
-        href: '#projects'
-    }
+    href: "#languages",
+  },
+  {
+    id: "projects",
+    name: {
+      en: "Projects",
+      es: "Proyectos",
+      fr: "Projets",
+    },
+    href: "#projects",
+  },
+  {
+    id: "blog",
+    name: {
+      en: "Blog",
+      es: "Blog",
+      fr: "Blog",
+    },
+    href: "/blog/",
+  },
 ];
 
 // UI translations
 export const uiTranslations = {
-    downloadCV: {
-        en: 'Download CV',
-        es: 'Descargar CV',
-        fr: 'Télécharger CV'
-    },
-    backToTop: {
-        en: 'Back to top',
-        es: 'Volver arriba',
-        fr: 'Retour en haut'
-    },
-    openMenu: {
-        en: 'Open menu',
-        es: 'Abrir menú',
-        fr: 'Ouvrir le menu'
-    },
-    closeMenu: {
-        en: 'Close menu',
-        es: 'Cerrar menú',
-        fr: 'Fermer le menu'
-    }
+  downloadCV: {
+    en: "Download CV",
+    es: "Descargar CV",
+    fr: "Télécharger CV",
+  },
+  backToTop: {
+    en: "Back to top",
+    es: "Volver arriba",
+    fr: "Retour en haut",
+  },
+  openMenu: {
+    en: "Open menu",
+    es: "Abrir menú",
+    fr: "Ouvrir le menu",
+  },
+  closeMenu: {
+    en: "Close menu",
+    es: "Cerrar menú",
+    fr: "Fermer le menu",
+  },
 };
 
 /**
@@ -90,16 +99,16 @@ export const uiTranslations = {
  * @param {string} lang - Language code (en, es, fr)
  * @returns {Array} Navigation items with names in the specified language
  */
-export const getNavItems = (lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+export const getNavItems = (lang = "en") => {
+  // Default to English if language not supported
+  const language = ["en", "es", "fr"].includes(lang) ? lang : "en";
 
-    // Transform data structure to use the specified language
-    return navItems.map(item => ({
-        id: item.id,
-        name: item.name[language] || item.name.en, // Fallback to English
-        href: item.href
-    }));
+  // Transform data structure to use the specified language
+  return navItems.map((item) => ({
+    id: item.id,
+    name: item.name[language] || item.name.en, // Fallback to English
+    href: item.href,
+  }));
 };
 
 /**
@@ -108,16 +117,16 @@ export const getNavItems = (lang = 'en') => {
  * @param {string} lang - Language code (en, es, fr)
  * @returns {string} Translation in the specified language
  */
-export const getUITranslation = (key, lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+export const getUITranslation = (key, lang = "en") => {
+  // Default to English if language not supported
+  const language = ["en", "es", "fr"].includes(lang) ? lang : "en";
 
-    if (uiTranslations[key] && uiTranslations[key][language]) {
-        return uiTranslations[key][language];
-    }
+  if (uiTranslations[key] && uiTranslations[key][language]) {
+    return uiTranslations[key][language];
+  }
 
-    // Fallback to English or key itself
-    return uiTranslations[key]?.en || key;
+  // Fallback to English or key itself
+  return uiTranslations[key]?.en || key;
 };
 
 /**
@@ -125,9 +134,10 @@ export const getUITranslation = (key, lang = 'en') => {
  * @returns {Array} Navigation items with names in the current UI language
  */
 export const getCurrentLanguageNavItems = () => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getNavItems(currentLang);
+  // Get current language from window object if available
+  const currentLang =
+    (typeof window !== "undefined" && window.CURRENT_LANGUAGE) || "en";
+  return getNavItems(currentLang);
 };
 
 /**
@@ -136,14 +146,15 @@ export const getCurrentLanguageNavItems = () => {
  * @returns {string} Translation in the current UI language
  */
 export const getCurrentUITranslation = (key) => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getUITranslation(key, currentLang);
+  // Get current language from window object if available
+  const currentLang =
+    (typeof window !== "undefined" && window.CURRENT_LANGUAGE) || "en";
+  return getUITranslation(key, currentLang);
 };
 
 // For compatibility with existing code - English nav items
-export default navItems.map(item => ({
-    id: item.id,
-    name: item.name.en,
-    href: item.href
+export default navItems.map((item) => ({
+  id: item.id,
+  name: item.name.en,
+  href: item.href,
 }));
