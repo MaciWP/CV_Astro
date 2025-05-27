@@ -79,6 +79,7 @@ npm run preview
 - `npm run optimize:images` - Optimize images
 - `npm run seo:audit` - Run Lighthouse audit
 - `npm run analyze:bundle` - Analyze bundle size
+- `npm run lint` - Check code style with ESLint
 
 ### SSL Certificate Renewal
 
