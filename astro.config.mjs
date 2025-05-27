@@ -3,9 +3,11 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import compress from "astro-compress";
+import sitemap from "@astrojs/sitemap";
 import AstroPWA from "@vite-pwa/astro";
 
 export default defineConfig({
+  site: "https://oriolmacias.dev",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es", "fr"],
@@ -71,6 +73,7 @@ export default defineConfig({
         ],
       },
     }),
+    sitemap(),
   ],
 
   // Configuración explícita de MIME types para corregir errores

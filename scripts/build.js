@@ -82,21 +82,6 @@ async function setupFontAwesome() {
 }
 
 /**
- * Generar sitemap
- */
-async function generateSitemap() {
-  console.log("🗺️ Generando sitemap...");
-
-  try {
-    execSync("node scripts/generate-sitemap.js", { stdio: "inherit" });
-    console.log("✅ Sitemap generado");
-  } catch (error) {
-    console.error("❌ Error al generar sitemap:", error);
-    // No salir en este caso, no es crítico
-  }
-}
-
-/**
  * Ejecutar la compilación de Astro
  */
 async function buildAstro() {
@@ -184,7 +169,6 @@ async function build() {
     await ensurePublicDirectories();
     await setupFontAwesome();
     await copyStylesToDist();
-    await generateSitemap();
     await buildAstro();
     await copyScriptsToDist();
     await verifyFontFiles();
