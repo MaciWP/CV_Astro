@@ -44,8 +44,12 @@ const StructuredData = ({
     "oriol dev",
     "macias dev",
   ],
-  address,
-  telephone,
+  address = {
+    "@type": "PostalAddress",
+    addressLocality: "Barcelona",
+    addressCountry: "ES",
+  },
+  telephone = "+34 600 000 000",
   education = [],
   experiences = [],
 }) => {
@@ -74,16 +78,10 @@ const StructuredData = ({
       "@type": "Country",
       name: "Spain",
     },
+    address,
+    telephone,
     keywords: keywords.join(", "),
   };
-
-  if (address) {
-    personData.address = address;
-  }
-
-  if (telephone) {
-    personData.telephone = telephone;
-  }
 
   // Añadir idiomas a los datos estructurados
   if (languages && languages.length > 0) {
@@ -119,6 +117,25 @@ const StructuredData = ({
   }
 
   // Datos estructurados de la página web
+  const webSite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://oriolmacias.dev/#website",
+    url: "https://oriolmacias.dev/",
+    name: "Oriol Macias - Portfolio",
+    description:
+      "Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
+    publisher: {
+      "@id": "https://oriolmacias.dev/#person",
+    },
+    inLanguage: ["en", "es", "fr"],
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://oriolmacias.dev/search?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   const webPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -128,9 +145,7 @@ const StructuredData = ({
     description:
       "Professional CV and portfolio for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
     isPartOf: {
-      "@type": "WebSite",
-      name: "Oriol Macias - Portfolio",
-      url: "https://oriolmacias.dev/",
+      "@id": "https://oriolmacias.dev/#website",
     },
     about: {
       "@id": "https://oriolmacias.dev/#person",
@@ -155,6 +170,7 @@ const StructuredData = ({
   return (
     <>
       <script type="application/ld+json">{JSON.stringify(personData)}</script>
+      <script type="application/ld+json">{JSON.stringify(webSite)}</script>
       <script type="application/ld+json">{JSON.stringify(webPage)}</script>
     </>
   );
