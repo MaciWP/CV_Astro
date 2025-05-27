@@ -1,3 +1,4 @@
-const config = require("./.eslintrc.json");
-delete config.root;
-module.exports = config;
+module.exports = async () => {
+  const { default: config } = await import("./eslint.config.js");
+  return config;
+};
