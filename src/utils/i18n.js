@@ -1,7 +1,7 @@
 /**
  * Sistema de internacionalización que carga traducciones dinámicamente
  * Evita importar archivos de la carpeta public directamente
- * 
+ *
  * src/utils/i18n.js
  */
 
@@ -9,7 +9,7 @@
 const translationsCache = {
   en: null,
   es: null,
-  fr: null
+  fr: null,
 };
 
 /**
@@ -18,19 +18,19 @@ const translationsCache = {
  */
 export const detectLanguage = () => {
   // Primero intentamos usar la variable global establecida en el layout
-  if (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) {
+  if (typeof window !== "undefined" && window.CURRENT_LANGUAGE) {
     return window.CURRENT_LANGUAGE;
   }
 
   // Si no está disponible, detectamos por URL
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const path = window.location.pathname;
-    if (path.startsWith('/es/')) return 'es';
-    if (path.startsWith('/fr/')) return 'fr';
+    if (path.startsWith("/es/")) return "es";
+    if (path.startsWith("/fr/")) return "fr";
   }
 
   // Valor por defecto
-  return 'en';
+  return "en";
 };
 
 /**
@@ -46,13 +46,17 @@ export const loadTranslation = async (lang) => {
 
   try {
     // Usar URL relativa para que funcione en desarrollo y producción
-    const response = await fetch(`/locales/${lang}/translation.json?v=${new Date().getTime()}`);
+    const response = await fetch(
+      `/locales/${lang}/translation.json?v=${new Date().getTime()}`,
+    );
 
     if (!response.ok) {
-      console.warn(`Failed to load ${lang} translations, status: ${response.status}`);
+      console.warn(
+        `Failed to load ${lang} translations, status: ${response.status}`,
+      );
       // Si falla, intentamos con inglés como fallback
-      if (lang !== 'en') {
-        return loadTranslation('en');
+      if (lang !== "en") {
+        return loadTranslation("en");
       }
       return {};
     }
@@ -64,8 +68,8 @@ export const loadTranslation = async (lang) => {
   } catch (error) {
     console.error(`Error loading ${lang} translations:`, error);
     // Si hay error y no es inglés, intentar con inglés
-    if (lang !== 'en') {
-      return loadTranslation('en');
+    if (lang !== "en") {
+      return loadTranslation("en");
     }
     return {};
   }
@@ -80,11 +84,11 @@ export const loadTranslation = async (lang) => {
 const getValueByPath = (obj, path) => {
   if (!obj || !path) return undefined;
 
-  const keys = path.split('.');
+  const keys = path.split(".");
   let result = obj;
 
   for (const key of keys) {
-    if (result && typeof result === 'object' && key in result) {
+    if (result && typeof result === "object" && key in result) {
       result = result[key];
     } else {
       return undefined;
@@ -102,7 +106,7 @@ const fallbackTranslations = {
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
-      photoAlt: "Oriol Macias - Software Developer"
+      photoAlt: "Oriol Macias - Software Developer",
     },
     sections: {
       summary: "Professional Summary",
@@ -110,8 +114,8 @@ const fallbackTranslations = {
       education: "Education",
       skills: "Skills",
       languages: "Languages",
-      projects: "Projects"
-    }
+      projects: "Projects",
+    },
   },
   es: {
     header: {
@@ -119,7 +123,7 @@ const fallbackTranslations = {
       email: "Correo",
       linkedin: "LinkedIn",
       github: "GitHub",
-      photoAlt: "Oriol Macias - Desarrollador de Software"
+      photoAlt: "Oriol Macias - Desarrollador de Software",
     },
     sections: {
       summary: "Resumen Profesional",
@@ -127,8 +131,8 @@ const fallbackTranslations = {
       education: "Formación",
       skills: "Habilidades",
       languages: "Idiomas",
-      projects: "Proyectos"
-    }
+      projects: "Proyectos",
+    },
   },
   fr: {
     header: {
@@ -136,7 +140,7 @@ const fallbackTranslations = {
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
-      photoAlt: "Oriol Macias - Développeur Logiciel"
+      photoAlt: "Oriol Macias - Développeur Logiciel",
     },
     sections: {
       summary: "Résumé Professionnel",
@@ -144,9 +148,9 @@ const fallbackTranslations = {
       education: "Formation",
       skills: "Compétences",
       languages: "Langues",
-      projects: "Projets"
-    }
-  }
+      projects: "Projets",
+    },
+  },
 };
 
 /**
@@ -171,13 +175,13 @@ export const translate = (key, lang = null) => {
   if (fallback !== undefined) return fallback;
 
   // Si aún no hay traducción, intentar con el idioma inglés
-  if (langToUse !== 'en') {
+  if (langToUse !== "en") {
     const enFallback = getValueByPath(fallbackTranslations.en, key);
     if (enFallback !== undefined) return enFallback;
   }
 
   // Último recurso: devolver la última parte de la clave
-  const parts = key.split('.');
+  const parts = key.split(".");
   return parts[parts.length - 1];
 };
 
@@ -188,13 +192,13 @@ export const translate = (key, lang = null) => {
 export const preloadTranslations = async () => {
   try {
     await Promise.all([
-      loadTranslation('en'),
-      loadTranslation('es'),
-      loadTranslation('fr')
+      loadTranslation("en"),
+      loadTranslation("es"),
+      loadTranslation("fr"),
     ]);
-    console.log('All translations preloaded successfully');
+    console.log("All translations preloaded successfully");
   } catch (error) {
-    console.error('Error preloading translations:', error);
+    console.error("Error preloading translations:", error);
   }
 };
 
@@ -207,8 +211,8 @@ export const useI18n = () => {
 
   // Cargar las traducciones si aún no están cargadas
   if (!translationsCache[lang]) {
-    loadTranslation(lang).catch(e =>
-      console.error(`Failed to load translations for ${lang}:`, e)
+    loadTranslation(lang).catch((e) =>
+      console.error(`Failed to load translations for ${lang}:`, e),
     );
   }
 
@@ -217,20 +221,21 @@ export const useI18n = () => {
     lang,
     // Función para crear URLs localizadas
     localizeUrl: (path) => {
-      if (lang === 'en') return path.startsWith('/') ? path : `/${path}`;
-      return `/${lang}${path.startsWith('/') ? path : `/${path}`}`;
+      if (lang === "en") return path.startsWith("/") ? path : `/${path}`;
+      return `/${lang}${path.startsWith("/") ? path : `/${path}`}`;
     },
     // Obtener nombre nativo del idioma actual
-    languageName: {
-      en: 'English',
-      es: 'Español',
-      fr: 'Français'
-    }[lang] || 'English'
+    languageName:
+      {
+        en: "English",
+        es: "Español",
+        fr: "Français",
+      }[lang] || "English",
   };
 };
 
 // Intentar precargar traducciones si estamos en el navegador
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   preloadTranslations();
 }
 
@@ -238,5 +243,5 @@ export default {
   translate,
   detectLanguage,
   useI18n,
-  preloadTranslations
+  preloadTranslations,
 };

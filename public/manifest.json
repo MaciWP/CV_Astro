@@ -35,13 +35,7 @@
   "lang": "en",
   "dir": "ltr",
   "orientation": "portrait-primary",
-  "categories": [
-    "productivity",
-    "portfolio",
-    "resume",
-    "cv",
-    "professional"
-  ],
+  "categories": ["productivity", "portfolio", "resume", "cv", "professional"],
   "shortcuts": [
     {
       "name": "Resume",
