@@ -116,16 +116,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       type="image/webp"
     />
 
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
-    <link
-      rel="preload"
-      as="font"
-      href="/styles/fonts/fa-solid-900.woff2"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
 
     <script src="/mobile-optimizations.js" defer></script>
 
@@ -253,60 +244,14 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <link
-      rel="preload"
-      href="/styles/fonts/fa-brands-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
 
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
-
-    <!-- Critical Font Awesome styles inlined for faster rendering -->
+    <!-- Critical styles -->
     <style is:inline>
-      /* Core Font Awesome styles for immediate icon rendering */
-      @font-face {
-        font-family: "Font Awesome 5 Free";
-        font-style: normal;
-        font-weight: 900;
-        font-display: swap;
-        src: url("/styles/fonts/fa-solid-900.woff2") format("woff2");
-      }
-
-      @font-face {
-        font-family: "Font Awesome 5 Brands";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("/styles/fonts/fa-brands-400.woff2") format("woff2");
-      }
-
-      .fas,
-      .fa-solid {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
+      .icon {
+        width: 1em;
+        height: 1em;
         display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        line-height: 1;
-      }
-
-      .fab,
-      .fa-brands {
-        font-family: "Font Awesome 5 Brands";
-        font-weight: 400;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        line-height: 1;
+        fill: currentColor;
       }
 
       /* Estilos críticos para el navbar sticky */
@@ -457,80 +402,6 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     </style>
 
     <!-- Añadir al <head> de src/layouts/Layout.astro justo antes del cierre </head> -->
-    <script is:inline>
-      // Script de verificación y corrección de Font Awesome
-      (function () {
-        // Comprobar si los iconos están cargados correctamente
-        function checkIcons() {
-          // Verificar si algún icono Font Awesome está visible
-          const testIcon = document.createElement("i");
-          testIcon.className = "fas fa-user";
-          testIcon.style.visibility = "hidden";
-          document.body.appendChild(testIcon);
-
-          // Obtener el estilo computado
-          const computedStyle = window.getComputedStyle(testIcon);
-          const fontFamily = computedStyle.getPropertyValue("font-family");
-          const content = computedStyle.getPropertyValue("content");
-
-          // Limpiar elemento de prueba
-          document.body.removeChild(testIcon);
-
-          // Si no hay contenido o la fuente no es correcta, forzar carga de emergencia
-          return content !== "none" && fontFamily.includes("Font Awesome");
-        }
-
-        // Forzar carga de CDN como último recurso si los iconos no aparecen
-        window.addEventListener("DOMContentLoaded", function () {
-          // Dar tiempo a que carguen las fuentes normalmente
-          setTimeout(function () {
-            if (!checkIcons()) {
-              console.warn(
-                "Font Awesome no cargó correctamente. Aplicando solución de emergencia...",
-              );
-
-              // Inyectar definiciones de fuentes directamente
-              const style = document.createElement("style");
-              style.textContent = `
-            @font-face {
-              font-family: 'Font Awesome 5 Free';
-              font-style: normal;
-              font-weight: 900;
-              font-display: block;
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
-            }
-            
-            @font-face {
-              font-family: 'Font Awesome 5 Brands';
-              font-style: normal;
-              font-weight: 400;
-              font-display: block;
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
-            }
-            
-            /* Asegurar estilos básicos */
-            .fas, .fa-solid {
-              font-family: 'Font Awesome 5 Free' !important;
-              font-weight: 900 !important;
-            }
-            
-            .fab, .fa-brands {
-              font-family: 'Font Awesome 5 Brands' !important;
-              font-weight: 400 !important;
-            }
-          `;
-              document.head.appendChild(style);
-
-              // Cargar versión optimizada local como respaldo
-              const link = document.createElement("link");
-              link.rel = "stylesheet";
-              link.href = "/styles/font-awesome-optimized.css";
-              document.head.appendChild(link);
-            }
-          }, 500); // Esperar 500ms para comprobar
-        });
-      })();
-    </script>
     <link
       rel="stylesheet"
       href="/styles/critical-mobile.css"
@@ -539,7 +410,6 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 
     <link rel="stylesheet" href="/styles/combined.css" />
 
-    <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
 
     <script is:inline src="/scripts/react-error-recovery.js"></script>
     <StructuredData
