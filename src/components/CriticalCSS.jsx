@@ -1,14 +1,14 @@
 // src/components/CriticalCSS.jsx
-import React from 'react';
+import React from "react";
 
 /**
  * CriticalCSS component inlines essential CSS directly in the head
  * to eliminate render-blocking CSS resources
  */
 const CriticalCSS = () => {
-    // This CSS contains only the styles needed for above-the-fold content
-    // The rest of the styles will be loaded asynchronously
-    const criticalCSS = `
+  // This CSS contains only the styles needed for above-the-fold content
+  // The rest of the styles will be loaded asynchronously
+  const criticalCSS = `
 /* Critical CSS - Inlined to eliminate render-blocking resources */
 
 /* Base styles */
@@ -232,7 +232,7 @@ nav {
 }
 `;
 
-    return <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />;
+  return <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />;
 };
 
 export default CriticalCSS;

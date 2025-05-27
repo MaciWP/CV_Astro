@@ -12,12 +12,7 @@
     "plugin:jsx-a11y/recommended",
     "plugin:astro/recommended"
   ],
-  "plugins": [
-    "react",
-    "react-hooks",
-    "jsx-a11y",
-    "astro"
-  ],
+  "plugins": ["react", "react-hooks", "jsx-a11y", "astro"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",

@@ -2,39 +2,37 @@
 /* Solución para evitar animaciones no compuestas en móvil */
 
 @media (max-width: 767px) {
+  /* Evitar animaciones de propiedades costosas */
+  body * {
+    /* Usar will-change solo para elementos que realmente cambian */
+    will-change: auto !important;
+  }
 
-    /* Evitar animaciones de propiedades costosas */
-    body * {
-        /* Usar will-change solo para elementos que realmente cambian */
-        will-change: auto !important;
-    }
+  /* Usar transform en lugar de propiedades de borde o color */
+  [class*="transition-"] {
+    transition-property: transform, opacity !important;
+  }
 
-    /* Usar transform en lugar de propiedades de borde o color */
-    [class*="transition-"] {
-        transition-property: transform, opacity !important;
-    }
+  /* Forzar uso de GPU para elementos clave */
+  .profile-image-container,
+  [id="skills"],
+  nav[role="navigation"] {
+    transform: translateZ(0);
+  }
 
-    /* Forzar uso de GPU para elementos clave */
-    .profile-image-container,
-    [id="skills"],
-    nav[role="navigation"] {
-        transform: translateZ(0);
+  /* Deshabilitar animaciones innecesarias en móvil */
+  @media (prefers-reduced-motion: reduce), (max-width: 767px) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
+  }
 
-    /* Deshabilitar animaciones innecesarias en móvil */
-    @media (prefers-reduced-motion: reduce),
-    (max-width: 767px) {
-        * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-            scroll-behavior: auto !important;
-        }
-    }
-
-    /* Estabilizar elementos que causan CLS */
-    .flex.items-center.gap-2 {
-        min-height: 40px;
-        contain: layout;
-    }
+  /* Estabilizar elementos que causan CLS */
+  .flex.items-center.gap-2 {
+    min-height: 40px;
+    contain: layout;
+  }
 }

@@ -3,202 +3,202 @@
 
 /* Definición de fuentes básica */
 @font-face {
-    font-family: 'Font Awesome 5 Free';
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: url('/styles/fonts/fa-solid-900.woff2') format('woff2');
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/styles/fonts/fa-solid-900.woff2") format("woff2");
 }
 
 @font-face {
-    font-family: 'Font Awesome 5 Brands';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('/styles/fonts/fa-brands-400.woff2') format('woff2');
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/styles/fonts/fa-brands-400.woff2") format("woff2");
 }
 
 /* Estilos básicos para iconos */
 .fas,
 .fa-solid {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    line-height: 1;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
 }
 
 .fab,
 .fa-brands {
-    font-family: 'Font Awesome 5 Brands';
-    font-weight: 400;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    line-height: 1;
+  font-family: "Font Awesome 5 Brands";
+  font-weight: 400;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
 }
 
 /* Iconos específicos utilizados en la web */
 .fa-user:before {
-    content: "\f007";
+  content: "\f007";
 }
 
 .fa-envelope:before {
-    content: "\f0e0";
+  content: "\f0e0";
 }
 
 .fa-linkedin:before {
-    content: "\f08c";
+  content: "\f08c";
 }
 
 .fa-github:before {
-    content: "\f09b";
+  content: "\f09b";
 }
 
 .fa-download:before {
-    content: "\f019";
+  content: "\f019";
 }
 
 .fa-arrow-up:before {
-    content: "\f062";
+  content: "\f062";
 }
 
 .fa-briefcase:before {
-    content: "\f0b1";
+  content: "\f0b1";
 }
 
 .fa-graduation-cap:before {
-    content: "\f19d";
+  content: "\f19d";
 }
 
 .fa-code:before {
-    content: "\f121";
+  content: "\f121";
 }
 
 .fa-language:before {
-    content: "\f1ab";
+  content: "\f1ab";
 }
 
 .fa-project-diagram:before {
-    content: "\f542";
+  content: "\f542";
 }
 
 .fa-home:before {
-    content: "\f015";
+  content: "\f015";
 }
 
 .fa-check:before {
-    content: "\f00c";
+  content: "\f00c";
 }
 
 .fa-trophy:before {
-    content: "\f091";
+  content: "\f091";
 }
 
 .fa-calendar-alt:before {
-    content: "\f073";
+  content: "\f073";
 }
 
 .fa-times:before {
-    content: "\f00d";
+  content: "\f00d";
 }
 
 .fa-bars:before {
-    content: "\f0c9";
+  content: "\f0c9";
 }
 
 .fa-chevron-up:before {
-    content: "\f077";
+  content: "\f077";
 }
 
 .fa-chevron-down:before {
-    content: "\f078";
+  content: "\f078";
 }
 
 .fa-sun:before {
-    content: "\f185";
+  content: "\f185";
 }
 
 .fa-moon:before {
-    content: "\f186";
+  content: "\f186";
 }
 
 .fa-network-wired:before {
-    content: "\f6ff";
+  content: "\f6ff";
 }
 
 .fa-server:before {
-    content: "\f233";
+  content: "\f233";
 }
 
 .fa-database:before {
-    content: "\f1c0";
+  content: "\f1c0";
 }
 
 .fa-plug:before {
-    content: "\f1e6";
+  content: "\f1e6";
 }
 
 .fa-building:before {
-    content: "\f1ad";
+  content: "\f1ad";
 }
 
 .fa-external-link-alt:before {
-    content: "\f35d";
+  content: "\f35d";
 }
 
 /* Iconos de marcas */
 .fa-react:before {
-    content: "\f41b";
+  content: "\f41b";
 }
 
 .fa-js:before {
-    content: "\f3b8";
+  content: "\f3b8";
 }
 
 .fa-html5:before {
-    content: "\f13b";
+  content: "\f13b";
 }
 
 .fa-css3-alt:before {
-    content: "\f38b";
+  content: "\f38b";
 }
 
 .fa-python:before {
-    content: "\f3e2";
+  content: "\f3e2";
 }
 
 .fa-java:before {
-    content: "\f4e4";
+  content: "\f4e4";
 }
 
 .fa-microsoft:before {
-    content: "\f3ca";
+  content: "\f3ca";
 }
 
 .fa-windows:before {
-    content: "\f17a";
+  content: "\f17a";
 }
 
 .fa-docker:before {
-    content: "\f395";
+  content: "\f395";
 }
 
 .fa-aws:before {
-    content: "\f375";
+  content: "\f375";
 }
 
 .fa-git-alt:before {
-    content: "\f841";
+  content: "\f841";
 }
 
 .fa-vmware:before {
-    content: "\f3c4";
+  content: "\f3c4";
 }

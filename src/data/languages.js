@@ -5,51 +5,51 @@
 
 // Base languages data with translations
 const languagesData = [
-    {
-        id: "spanish",
-        language: {
-            en: "Spanish",
-            es: "Español",
-            fr: "Espagnol"
-        },
-        level: {
-            en: "Native",
-            es: "Nativo",
-            fr: "Langue Maternelle"
-        },
-        badge: "NATIVE",
-        percent: 100
+  {
+    id: "spanish",
+    language: {
+      en: "Spanish",
+      es: "Español",
+      fr: "Espagnol",
     },
-    {
-        id: "catalan",
-        language: {
-            en: "Catalan",
-            es: "Catalán",
-            fr: "Catalan"
-        },
-        level: {
-            en: "Native",
-            es: "Nativo",
-            fr: "Langue Maternelle"
-        },
-        badge: "NATIVE",
-        percent: 100
+    level: {
+      en: "Native",
+      es: "Nativo",
+      fr: "Langue Maternelle",
     },
-    {
-        id: "english",
-        language: {
-            en: "English",
-            es: "Inglés",
-            fr: "Anglais"
-        },
-        level: {
-            en: "Intermediate",
-            es: "Intermedio",
-            fr: "Intermédiaire"
-        },
-        badge: "B1",
-        percent: 60
-    }
+    badge: "NATIVE",
+    percent: 100,
+  },
+  {
+    id: "catalan",
+    language: {
+      en: "Catalan",
+      es: "Catalán",
+      fr: "Catalan",
+    },
+    level: {
+      en: "Native",
+      es: "Nativo",
+      fr: "Langue Maternelle",
+    },
+    badge: "NATIVE",
+    percent: 100,
+  },
+  {
+    id: "english",
+    language: {
+      en: "English",
+      es: "Inglés",
+      fr: "Anglais",
+    },
+    level: {
+      en: "Intermediate",
+      es: "Intermedio",
+      fr: "Intermédiaire",
+    },
+    badge: "B1",
+    percent: 60,
+  },
 ];
 
 /**
@@ -57,17 +57,17 @@ const languagesData = [
  * @param {string} lang - Language code (en, es, fr)
  * @returns {Array} Languages with texts in the specified language
  */
-export const getLanguages = (lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+export const getLanguages = (lang = "en") => {
+  // Default to English if language not supported
+  const language = ["en", "es", "fr"].includes(lang) ? lang : "en";
 
-    // Transform data structure to use the specified language
-    return languagesData.map(lang => ({
-        language: lang.language[language] || lang.language.en,
-        level: lang.level[language] || lang.level.en,
-        badge: lang.badge,
-        percent: lang.percent
-    }));
+  // Transform data structure to use the specified language
+  return languagesData.map((lang) => ({
+    language: lang.language[language] || lang.language.en,
+    level: lang.level[language] || lang.level.en,
+    badge: lang.badge,
+    percent: lang.percent,
+  }));
 };
 
 /**
@@ -75,11 +75,12 @@ export const getLanguages = (lang = 'en') => {
  * @returns {Array} Languages with texts in the current UI language
  */
 export const getCurrentLanguageLanguages = () => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getLanguages(currentLang);
+  // Get current language from window object if available
+  const currentLang =
+    (typeof window !== "undefined" && window.CURRENT_LANGUAGE) || "en";
+  return getLanguages(currentLang);
 };
 
 // For compatibility with existing code
-const languages = getLanguages('en');
+const languages = getLanguages("en");
 export default languages;
