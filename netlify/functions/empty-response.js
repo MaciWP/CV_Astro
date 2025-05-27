@@ -1,4 +1,3 @@
-exports.handler = async () => ({
-  statusCode: 204,
-  body: "",
-});
+export async function handler() {
+  return { statusCode: 204, body: "" };
+}

@@ -106,7 +106,5 @@ export default defineConfig({
       sourcemap: true,
     },
   },
-  experimental: {
-    viewTransitions: true,
-  },
+  viewTransitions: true,
 });
