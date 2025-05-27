@@ -15,7 +15,11 @@ const NavbarLinks = ({ navItems, activeSection, handleNavClick }) => {
 
           // Use "↑" icon for the "About" section to save space
           if (item.id === "about") {
-            icon = <i className="fas fa-arrow-up text-xs mr-1"></i>;
+            icon = (
+              <svg className="icon text-xs mr-1" aria-hidden="true">
+                <use href="#icon-arrow-up"></use>
+              </svg>
+            );
             // If translated name is too long, just use the icon
             if (item.name.length > 8) {
               content = "";

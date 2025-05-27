@@ -120,11 +120,9 @@ const MobileMenu = ({
             aria-label="GitHub Profile"
             role="menuitem"
           >
-            <i
-              className="fab fa-github text-lg"
-              role="img"
-              aria-label="GitHub"
-            ></i>
+            <svg className="icon text-lg" aria-label="GitHub" role="img">
+              <use href="#icon-github"></use>
+            </svg>
           </a>
 
           <a
@@ -135,11 +133,9 @@ const MobileMenu = ({
             aria-label="LinkedIn Profile"
             role="menuitem"
           >
-            <i
-              className="fab fa-linkedin text-lg"
-              role="img"
-              aria-label="LinkedIn"
-            ></i>
+            <svg className="icon text-lg" aria-label="LinkedIn" role="img">
+              <use href="#icon-linkedin"></use>
+            </svg>
           </a>
         </div>
 
@@ -154,7 +150,9 @@ const MobileMenu = ({
           }}
           role="menuitem"
         >
-          <i className="fas fa-download mr-1.5"></i>
+          <svg className="icon mr-1.5" aria-hidden="true">
+            <use href="#icon-download"></use>
+          </svg>
           <span>{uiTexts.downloadCV}</span>
         </a>
       </div>

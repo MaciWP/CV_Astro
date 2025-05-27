@@ -262,7 +262,9 @@ const ProfileHeader = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                 aria-label={localData.downloadCV}
               >
-                <i className="fas fa-download mr-1.5"></i>
+                <svg className="icon mr-1.5" aria-hidden="true">
+                  <use href="#icon-download"></use>
+                </svg>
                 <span>{localData.downloadCV}</span>
               </button>
 
@@ -271,7 +273,9 @@ const ProfileHeader = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                 aria-label={localData.downloadCoverLetter}
               >
-                <i className="fas fa-file-alt mr-1.5"></i>
+                <svg className="icon mr-1.5" aria-hidden="true">
+                  <use href="#icon-file-alt"></use>
+                </svg>
                 <span>{localData.downloadCoverLetter}</span>
               </button>
             </div>

@@ -143,7 +143,9 @@ const Projects = () => {
             aria-label={`GitHub: ${project.title}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <i className="fab fa-github text-lg"></i>
+            <svg className="icon text-lg" aria-hidden="true">
+              <use href="#icon-github"></use>
+            </svg>
           </a>
         )}
       </div>
@@ -165,7 +167,12 @@ const Projects = () => {
             <ul className="space-y-2 text-sm">
               {project.keyFeatures.map((feature, featureIndex) => (
                 <li key={featureIndex} className="flex items-start gap-2">
-                  <i className="fas fa-check text-brand-red flex-shrink-0 mt-1"></i>
+                  <svg
+                    className="icon text-brand-red flex-shrink-0 mt-1"
+                    aria-hidden="true"
+                  >
+                    <use href="#icon-check"></use>
+                  </svg>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -199,7 +206,9 @@ const Projects = () => {
 
         {/* Click indicator */}
         <div className="mt-3 flex items-center text-xs text-light-text-secondary dark:text-dark-text-secondary opacity-0 group-hover:opacity-100 transition-opacity z-20 relative">
-          <i className="fas fa-external-link-alt mr-1 text-brand-red"></i>
+          <svg className="icon mr-1 text-brand-red" aria-hidden="true">
+            <use href="#icon-external-link-alt"></use>
+          </svg>
           {translations.viewOnGithub}
         </div>
 
@@ -248,7 +257,12 @@ const Projects = () => {
             <ul className="space-y-2 text-sm">
               {project.keyFeatures.map((feature, featureIndex) => (
                 <li key={featureIndex} className="flex items-start gap-2">
-                  <i className="fas fa-check text-brand-red flex-shrink-0 mt-1"></i>
+                  <svg
+                    className="icon text-brand-red flex-shrink-0 mt-1"
+                    aria-hidden="true"
+                  >
+                    <use href="#icon-check"></use>
+                  </svg>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -291,7 +305,9 @@ const Projects = () => {
         className={`flex items-center mb-6 transition-all duration-700 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >
         <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
-          <i className="fas fa-project-diagram"></i>
+          <svg className="icon" aria-hidden="true">
+            <use href="#icon-project-diagram"></use>
+          </svg>
         </div>
         <h2 className="text-2xl font-bold ml-3" data-i18n="projects.title">
           {translations.title}
@@ -304,12 +320,16 @@ const Projects = () => {
         >
           {showAllDetails ? (
             <>
-              <i className="fas fa-chevron-up text-xs"></i>
+              <svg className="icon text-xs" aria-hidden="true">
+                <use href="#icon-chevron-up"></use>
+              </svg>
               {translations.showLessDetails}
             </>
           ) : (
             <>
-              <i className="fas fa-chevron-down text-xs"></i>
+              <svg className="icon text-xs" aria-hidden="true">
+                <use href="#icon-chevron-down"></use>
+              </svg>
               {translations.showAllDetails}
             </>
           )}

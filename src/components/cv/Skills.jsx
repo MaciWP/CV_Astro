@@ -140,7 +140,9 @@ const Skills = () => {
           transformOrigin: index % 2 === 0 ? "left center" : "right center",
         }}
       >
-        <i className={`${icon} text-brand-red`}></i>
+        <svg className="icon text-brand-red" aria-hidden="true">
+          <use href={`#icon-${icon.replace(/^(fas|fab) fa-/, "")}`}></use>
+        </svg>
         <span>{name}</span>
       </div>
     );
@@ -165,7 +167,9 @@ const Skills = () => {
       >
         <h3 className="text-lg font-semibold flex items-center gap-2">
           <div className="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
-            <i className={`${icon} text-brand-red`}></i>
+            <svg className="icon text-brand-red" aria-hidden="true">
+              <use href={`#icon-${icon.replace(/^(fas|fab) fa-/, "")}`}></use>
+            </svg>
           </div>
           {title}
         </h3>
@@ -191,7 +195,9 @@ const Skills = () => {
         }}
       >
         <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
-          <i className="fas fa-code"></i>
+          <svg className="icon" aria-hidden="true">
+            <use href="#icon-code"></use>
+          </svg>
         </div>
         <h2 className="text-2xl font-bold ml-3" data-i18n="skills.title">
           {titles.main}

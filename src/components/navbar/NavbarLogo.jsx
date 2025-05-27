@@ -39,11 +39,9 @@ const NavbarLogo = ({ onClick }) => {
           className="text-brand-red hover:text-brand-red/80 transition-colors"
           aria-label="GitHub Profile"
         >
-          <i
-            className="fab fa-github text-lg"
-            role="img"
-            aria-label="GitHub"
-          ></i>
+          <svg className="icon text-lg" aria-label="GitHub" role="img">
+            <use href="#icon-github"></use>
+          </svg>
         </a>
 
         <a
@@ -53,11 +51,9 @@ const NavbarLogo = ({ onClick }) => {
           className="text-brand-red hover:text-brand-red/80 transition-colors"
           aria-label="LinkedIn Profile"
         >
-          <i
-            className="fab fa-linkedin text-lg"
-            role="img"
-            aria-label="LinkedIn"
-          ></i>
+          <svg className="icon text-lg" aria-label="LinkedIn" role="img">
+            <use href="#icon-linkedin"></use>
+          </svg>
         </a>
       </div>
     </div>
