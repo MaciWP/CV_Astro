@@ -444,7 +444,7 @@ async function setupFontAwesome() {
     for (const font of FONT_FILES) {
       const fontPath = path.join(PUBLIC_FONTS_DIR, font.name);
       console.log(`Descargando ${font.name}`);
-      // await downloadFile(font.url, fontPath);
+      await downloadFile(font.url, fontPath);
       console.log(`✓ Descargado ${font.name}`);
 
       // Configurar permisos apropiados

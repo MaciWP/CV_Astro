@@ -11,7 +11,7 @@
     "analyze": "astro build --analyze",
     "styles": "node scripts/styles.js",
     "styles:optimize": "node scripts/styles.js --optimize",
-    "setup:font-awesome": "node /public/scripts/font-awesome.js",
+    "setup:font-awesome": "node scripts/font-awesome-setup.js",
     "check": "npm run check:contrast && npm run check:translations",
     "check:contrast": "node scripts/check-contrast.js",
     "check:translations": "node scripts/check-translations.js",
