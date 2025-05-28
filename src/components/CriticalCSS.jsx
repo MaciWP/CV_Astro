@@ -1,14 +1,14 @@
 // src/components/CriticalCSS.jsx
-import React from "react";
+import React from 'react';
 
 /**
  * CriticalCSS component inlines essential CSS directly in the head
  * to eliminate render-blocking CSS resources
  */
 const CriticalCSS = () => {
-  // This CSS contains only the styles needed for above-the-fold content
-  // The rest of the styles will be loaded asynchronously
-  const criticalCSS = `
+    // This CSS contains only the styles needed for above-the-fold content
+    // The rest of the styles will be loaded asynchronously
+    const criticalCSS = `
 /* Critical CSS - Inlined to eliminate render-blocking resources */
 
 /* Base styles */
@@ -47,12 +47,46 @@ body {
   color: var(--dark-text);
 }
 
-/* Icon sprite styles */
-.icon {
-  width: 1em;
-  height: 1em;
+/* Font faces for icons */
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/styles/fonts/fa-solid-900.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/styles/fonts/fa-brands-400.woff2') format('woff2');
+}
+
+/* Critical icon styles */
+.fas, .fa-solid {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
   display: inline-block;
-  fill: currentColor;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+.fab, .fa-brands {
+  font-family: 'Font Awesome 5 Brands';
+  font-weight: 400;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
 }
 
 /* Navbar critical styles */
@@ -198,7 +232,7 @@ nav {
 }
 `;
 
-  return <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />;
+    return <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />;
 };
 
 export default CriticalCSS;

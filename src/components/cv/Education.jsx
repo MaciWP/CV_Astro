@@ -93,9 +93,7 @@ const Education = () => {
         className={`flex items-center mb-6 transition-all duration-700 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >
         <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
-          <svg className="icon" aria-hidden="true">
-            <use href="#icon-graduation-cap"></use>
-          </svg>
+          <i className="fas fa-graduation-cap"></i>
         </div>
         <h2 className="text-2xl font-bold ml-3" data-i18n="education.title">
           {translations.title}
@@ -126,9 +124,10 @@ const Education = () => {
                   </p>
                 </div>
                 <div className="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white transition-colors duration-300">
-                  <svg className="icon mr-2" aria-hidden="true">
-                    <use href="#icon-calendar-alt"></use>
-                  </svg>
+                  <i
+                    className="fas fa-calendar-alt mr-2"
+                    aria-hidden="true"
+                  ></i>
                   {item.period}
                 </div>
               </div>

@@ -94,9 +94,7 @@ const Languages = () => {
         className={`flex items-center mb-6 transition-all duration-700 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >
         <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
-          <svg className="icon" aria-hidden="true">
-            <use href="#icon-language"></use>
-          </svg>
+          <i className="fas fa-language"></i>
         </div>
         <h2 className="text-2xl font-bold ml-3" data-i18n="languages.title">
           {title}

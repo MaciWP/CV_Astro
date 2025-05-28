@@ -94,9 +94,7 @@ const Experience = () => {
         className={`flex items-center gap-4 mb-10 transition-all duration-700 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
       >
         <div className="h-10 w-10 bg-brand-red dark:bg-brand-red rounded-none flex items-center justify-center flex-shrink-0 transition-colors duration-150">
-          <svg className="icon text-white" aria-hidden="true">
-            <use href="#icon-briefcase"></use>
-          </svg>
+          <i className="fas fa-briefcase text-white"></i>
         </div>
         <h2
           className="text-3xl font-bold tracking-tight"
@@ -132,12 +130,7 @@ const Experience = () => {
                   {job.title}
                 </h3>
                 <p className="text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-150 flex items-center">
-                  <svg
-                    className="icon mr-2 text-brand-red/70"
-                    aria-hidden="true"
-                  >
-                    <use href="#icon-building"></use>
-                  </svg>
+                  <i className="fas fa-building mr-2 text-brand-red/70"></i>
                   {job.companyUrl ? (
                     <a
                       href={job.companyUrl}
@@ -154,9 +147,7 @@ const Experience = () => {
                 </p>
               </div>
               <div className="flex items-center gap-2 text-sm text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary px-3 py-1 rounded-none transition-all duration-150 group-hover:bg-brand-red group-hover:text-white">
-                <svg className="icon" aria-hidden="true">
-                  <use href="#icon-calendar-alt"></use>
-                </svg>
+                <i className="fas fa-calendar-alt"></i>
                 <span>{job.period}</span>
               </div>
             </div>
@@ -206,11 +197,9 @@ const Experience = () => {
                       className="text-xs inline-flex items-center gap-1 text-brand-red hover:text-brand-red/80 mb-5 focus:outline-none focus:underline"
                       aria-expanded={!!expandedJobs[job.id]}
                     >
-                      <svg className="icon text-xs" aria-hidden="true">
-                        <use
-                          href={`#icon-chevron-${expandedJobs[job.id] ? "up" : "down"}`}
-                        ></use>
-                      </svg>
+                      <i
+                        className={`fas fa-chevron-${expandedJobs[job.id] ? "up" : "down"} text-xs`}
+                      ></i>
                       {expandedJobs[job.id]
                         ? translations.showLess
                         : translations.showMore}
@@ -232,12 +221,7 @@ const Experience = () => {
                       key={i}
                       className="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150"
                     >
-                      <svg
-                        className="icon text-brand-red flex-shrink-0 mt-1 transition-all duration-150 group-hover/item:scale-125"
-                        aria-hidden="true"
-                      >
-                        <use href="#icon-trophy"></use>
-                      </svg>
+                      <i className="fas fa-trophy text-brand-red flex-shrink-0 mt-1 transition-all duration-150 group-hover/item:scale-125"></i>
                       <span>{achievement}</span>
                     </li>
                   ))}
