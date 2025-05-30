@@ -52,7 +52,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}
         ></script>
-        <script is:inline define:vars={{ GA_ID: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
+        <script is:inline nonce={Astro.locals.nonce} define:vars={{ GA_ID: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
           window.dataLayer = window.dataLayer || [];
           function gtag() {
             dataLayer.push(arguments);
@@ -175,7 +175,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       client:load
     />
 
-    <style is:inline>
+    <style is:inline nonce={Astro.locals.nonce}>
       /* Estilos críticos para prevenir CLS */
       #skills,
       .nav-container,
@@ -265,7 +265,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
 
     <!-- Critical Font Awesome styles inlined for faster rendering -->
-    <style is:inline>
+    <style is:inline nonce={Astro.locals.nonce}>
       /* Core Font Awesome styles for immediate icon rendering */
       @font-face {
         font-family: "Font Awesome 5 Free";
@@ -335,12 +335,11 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     </style>
 
     <!-- Cargar el sistema unificado de internacionalización -->
-    <script is:inline src="/scripts/i18n.js" onerror="window.i18nFailed = true;"
-    ></script>
-    <script is:inline src="/scripts/i18n-enhanced-fix.js"></script>
+    <script is:inline nonce={Astro.locals.nonce} src="/scripts/i18n.js" onerror="window.i18nFailed = true;"></script>
+    <script is:inline nonce={Astro.locals.nonce} src="/scripts/i18n-enhanced-fix.js"></script>
 
     <!-- Establecer idioma actual para scripts cliente y depuración -->
-    <script is:inline define:vars={{ currentLang: lang }}>
+    <script is:inline nonce={Astro.locals.nonce} define:vars={{ currentLang: lang }}>
       // Establecer el idioma actual en una variable global
       window.CURRENT_LANGUAGE = currentLang;
       console.log("Current language set to:", window.CURRENT_LANGUAGE);
@@ -379,7 +378,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     </script>
 
     <!-- Theme initialization script -->
-    <script is:inline>
+    <script is:inline nonce={Astro.locals.nonce}>
       (function () {
         // Get stored theme or default to dark
         const storedTheme = localStorage.getItem("theme") || "dark";
@@ -390,7 +389,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     </script>
 
     <!-- Print styles for PDF download capability -->
-    <style is:inline>
+    <style is:inline nonce={Astro.locals.nonce}>
       @media print {
         nav,
         footer,
@@ -457,7 +456,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     </style>
 
     <!-- Añadir al <head> de src/layouts/Layout.astro justo antes del cierre </head> -->
-    <script is:inline>
+    <script is:inline nonce={Astro.locals.nonce}>
       // Script de verificación y corrección de Font Awesome
       (function () {
         // Comprobar si los iconos están cargados correctamente
@@ -541,7 +540,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 
     <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
 
-    <script is:inline src="/scripts/react-error-recovery.js"></script>
+    <script is:inline nonce={Astro.locals.nonce} src="/scripts/react-error-recovery.js"></script>
     <StructuredData
       name={headerData.fullName}
       jobTitle={headerData.jobTitle}
@@ -655,9 +654,9 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       </I18nLoader>
       <CookieBanner client:load />
     </div>
-    <script is:inline src="/scripts/react-error-recovery.js"></script>
+    <script is:inline nonce={Astro.locals.nonce} src="/scripts/react-error-recovery.js"></script>
   </body><!-- Script for smooth scrolling to sections -->
-  <script is:inline>
+  <script is:inline nonce={Astro.locals.nonce}>
     document.addEventListener("DOMContentLoaded", () => {
       // Smooth scroll for anchors
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -705,7 +704,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
   </script>
 
   <!-- Update translated elements in the DOM when translations load -->
-  <script is:inline>
+  <script is:inline nonce={Astro.locals.nonce}>
     document.addEventListener("translationsLoaded", () => {
       // Actualizar elementos con atributo data-i18n
       if (window.i18n && typeof window.i18n.updateElements === "function") {
@@ -735,8 +734,8 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     });
 </script>
 
-  {import.meta.env.PROD && (
-    <script is:inline define:vars={{ pixelId }}>
+{import.meta.env.PROD && (
+    <script is:inline nonce={Astro.locals.nonce} define:vars={{ pixelId }}>
       {`
       window.initPixel = function () {
         if (!window.fbq && pixelId) {
@@ -776,7 +775,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
   )}
 
   <!-- Service Worker Registration - Only for production -->
-  <script is:inline>
+  <script is:inline nonce={Astro.locals.nonce}>
     // Only register in production (not local)
     if (
       window.location.hostname !== "localhost" &&
@@ -795,6 +794,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       });
     }
   </script>
+  <script src="/rum.js" defer nonce={Astro.locals.nonce}></script>
 </html>
 
 <style is:global>
