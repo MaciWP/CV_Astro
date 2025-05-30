@@ -1,0 +1,21 @@
+---
+interface Link {
+  href: string;
+  label: string;
+  icon: string;
+}
+const { links = [], class: className = "" } = Astro.props as { links: Link[]; class?: string };
+---
+<div class={className}>
+  {links.map((link) => (
+    <a
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-brand-red hover:text-brand-red/80 transition-colors"
+      aria-label={link.label}
+    >
+      <i class={`${link.icon} text-lg`} role="img" aria-label={link.label}></i>
+    </a>
+  ))}
+</div>
