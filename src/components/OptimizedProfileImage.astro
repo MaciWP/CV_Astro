@@ -1,0 +1,192 @@
+---
+// src/components/OptimizedProfileImage.astro
+/**
+ * Optimized profile image component with progressive enhancement
+ * Designed for optimal LCP performance and accessibility
+ */
+import { Image } from 'astro:assets';
+
+// Import the original image from assets directory
+import profileImage from '../assets/oriol_macias.jpg';
+
+interface Props {
+  priority?: boolean;
+  className?: string;
+  sizes?: string;
+  width?: number;
+  height?: number;
+}
+
+const { 
+  priority = true, 
+  className = "w-full h-full object-cover",
+  sizes = "(max-width: 767px) 100vw, 400px",
+  width = 400,
+  height = 400
+} = Astro.props;
+---
+
+<div class="relative w-full h-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg profile-image-container">
+  <!-- Optimized Image with progressive enhancement -->
+  <Image
+    src={profileImage}
+    alt="Oriol Macias - Software Developer"
+    width={width}
+    height={height}
+    widths={[320, 480, 640, 800, 1024]}
+    format="jpg"
+    quality={85}
+    loading={priority ? "eager" : "lazy"}
+    fetchpriority={priority ? "high" : "auto"}
+    decoding="async"
+    class={`${className} transition-opacity duration-500`}
+    style="transform: translateZ(0)"
+    data-i18n-alt="header.photoAlt"
+  />
+  
+  <!-- Loading placeholder -->
+  <div 
+    class="loading-placeholder absolute inset-0 bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 opacity-100 transition-opacity duration-300"
+    aria-hidden="true"
+  ></div>
+  
+  <!-- Red accent border -->
+  <div class="absolute bottom-0 left-0 right-0 h-2 bg-brand-red"></div>
+  
+  <!-- Hover effect overlay -->
+  <div class="absolute inset-0 bg-black opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none"></div>
+</div>
+
+<style>
+  .profile-image-container {
+    /* Ensure proper aspect ratio */
+    aspect-ratio: 1 / 1;
+    /* GPU acceleration for smooth transitions */
+    transform: translateZ(0);
+    /* Content visibility optimization */
+    content-visibility: auto;
+    /* Contain layout shifts */
+    contain: layout style paint;
+  }
+  
+  /* Progressive enhancement for better loading */
+  .profile-image-container img {
+    opacity: 0;
+    animation: fade-in 0.5s ease-out 0.1s forwards;
+  }
+  
+  .profile-image-container.loaded img {
+    opacity: 1;
+  }
+  
+  .profile-image-container.loaded .loading-placeholder {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: scale(1.02);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Error state styling */
+  .profile-image-container.error .loading-placeholder {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  }
+  
+  .dark .profile-image-container.error .loading-placeholder {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  }
+  
+  /* Optimize for mobile performance */
+  @media (max-width: 768px) {
+    .profile-image-container {
+      will-change: transform;
+    }
+  }
+  
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .profile-image-container img {
+      animation: none;
+      opacity: 1;
+    }
+    
+    .loading-placeholder {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Type declarations for better TypeScript support
+  declare global {
+    interface Window {
+      announceToScreenReader?: (message: string) => void;
+    }
+  }
+
+  // Progressive image loading enhancement
+  document.addEventListener('DOMContentLoaded', () => {
+    const imageContainer = document.querySelector('.profile-image-container') as HTMLElement;
+    const image = imageContainer?.querySelector('img') as HTMLImageElement;
+    const placeholder = imageContainer?.querySelector('.loading-placeholder') as HTMLElement;
+    
+    if (image && imageContainer) {
+      // Handle successful image load
+      image.addEventListener('load', () => {
+        imageContainer.classList.add('loaded');
+        
+        // Announce to screen readers when image is loaded (if function exists)
+        if (typeof window.announceToScreenReader === 'function') {
+          window.announceToScreenReader('Profile image loaded successfully');
+        }
+      });
+      
+      // Handle image load errors
+      image.addEventListener('error', () => {
+        console.warn('Failed to load profile image, showing fallback');
+        
+        imageContainer.classList.add('error');
+        
+        if (placeholder) {
+          // Create fallback content
+          const fallback = document.createElement('div');
+          fallback.className = 'absolute inset-0 flex items-center justify-center';
+          fallback.innerHTML = `
+            <div class="text-center text-gray-400 dark:text-gray-500">
+              <svg class="mx-auto h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span class="text-sm font-medium">Oriol Macias</span>
+              <span class="text-xs block mt-1">Software Developer</span>
+            </div>
+          `;
+          placeholder.appendChild(fallback);
+        }
+      });
+      
+      // Preload WebP version if browser supports it
+      const supportsWebP = (() => {
+        const canvas = document.createElement('canvas');
+        return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+      })();
+      
+      if (supportsWebP && image.src) {
+        const webpSrc = image.src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        const webpImage = new Image();
+        webpImage.src = webpSrc;
+        webpImage.onload = () => {
+          // Replace with WebP if available and loaded successfully
+          image.src = webpSrc;
+        };
+      }
+    }
+  });
+</script>

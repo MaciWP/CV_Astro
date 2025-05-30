@@ -1,0 +1,32 @@
+# Font Awesome to Lucide Migration Guide
+
+## Replaced Icons Mapping
+
+| Font Awesome Class | New Icon Name | Lucide Component |
+|-------------------|---------------|------------------|
+| `fas fa-user` | `user` | User |
+| `fas fa-envelope` | `email` | Mail |
+| `fab fa-github` | `github` | Github |
+| `fab fa-linkedin` | `linkedin` | Linkedin |
+| `fas fa-download` | `download` | Download |
+| `fas fa-arrow-up` | `arrow-up` | ArrowUp |
+| `fas fa-briefcase` | `briefcase` | Briefcase |
+| `fas fa-graduation-cap` | `graduation-cap` | GraduationCap |
+| `fas fa-code` | `code` | Code |
+| `fas fa-language` | `language` | Languages |
+| `fas fa-project-diagram` | `project-diagram` | FolderOpen |
+| `fas fa-home` | `home` | Home |
+| `fas fa-chevron-up` | `chevron-up` | ChevronUp |
+| `fas fa-chevron-down` | `chevron-down` | ChevronDown |
+| `fas fa-sun` | `sun` | Sun |
+| `fas fa-moon` | `moon` | Moon |
+| `fas fa-menu` or `fas fa-bars` | `menu` | Menu |
+| `fas fa-times` | `times` | X |
+| `fas fa-external-link-alt` | `external-link-alt` | ExternalLink |
+
+## Usage Examples
+
+### Before (Font Awesome):
+```jsx
+<i className="fas fa-user"></i>
+<i className="fab fa-github text-lg"></i>

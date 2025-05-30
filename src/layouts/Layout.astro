@@ -1,4 +1,8 @@
 ---
+/**
+ * Main layout component with enhanced SEO and performance optimizations
+ * File: src/layouts/Layout.astro
+ */
 // Import components
 import Navbar from "../components/nav/Navbar";
 import I18nLoader from "../components/I18nLoader";
@@ -40,19 +44,23 @@ const {
 const fullCanonicalUrl = canonicalUrl.startsWith("http")
   ? canonicalUrl
   : new URL(Astro.url.pathname, "https://oriolmacias.dev").href;
+
+// Environment variables
 const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
+const isProduction = import.meta.env.PROD;
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 ---
 
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
-    {import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+    {gaId && (
       <>
         <script
           async
-          src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
         ></script>
-        <script is:inline define:vars={{ GA_ID: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
+        <script is:inline define:vars={{ GA_ID: gaId }}>
           window.dataLayer = window.dataLayer || [];
           function gtag() {
             dataLayer.push(arguments);
@@ -62,61 +70,42 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
         </script>
       </>
     )}
+
     <script src="/scripts/ga-events.js" defer></script>
-    {Astro.isProd && import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+
+    {isProduction && gaId && (
       <script type="module">
         import { initRUM } from "../utils/rum";
         initRUM(GA_ID);
       </script>
     )}
+
+    <!-- Preload critical resources -->
     <link
       rel="preload"
       as="image"
-      href="/images/oriol_macias-sm.avif"
+      href="/images/oriol_macias-320.avif"
       imagesrcset="
-      /images/oriol_macias-sm.avif 400w,
-      /images/oriol_macias-md.avif 800w,
-      /images/oriol_macias-lg.avif 1200w
-    "
-      type="image/avif"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="/images/oriol_macias-sm.webp"
-      imagesrcset="
-      /images/oriol_macias-sm.webp 400w,
-      /images/oriol_macias-md.webp 800w,
-      /images/oriol_macias-lg.webp 1200w
-    "
-      type="image/webp"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="/images/oriol_macias-1280.avif"
-      imagesrcset="
-      /images/oriol_macias-192.avif 192w,
-      /images/oriol_macias-320.avif 320w,
-      /images/oriol_macias-640.avif 640w,
-      /images/oriol_macias-960.avif 960w,
-      /images/oriol_macias-1280.avif 1280w
-    "
+        /images/oriol_macias-320.avif 320w,
+        /images/oriol_macias-640.avif 640w,
+        /images/oriol_macias-960.avif 960w,
+        /images/oriol_macias-1280.avif 1280w
+      "
       imagesizes="(max-width: 767px) 100vw, 400px"
       fetchpriority="high"
       type="image/avif"
     />
+
     <link
       rel="preload"
       as="image"
-      href="/images/oriol_macias-1280.webp"
+      href="/images/oriol_macias-320.webp"
       imagesrcset="
-      /images/oriol_macias-192.webp 192w,
-      /images/oriol_macias-320.webp 320w,
-      /images/oriol_macias-640.webp 640w,
-      /images/oriol_macias-960.webp 960w,
-      /images/oriol_macias-1280.webp 1280w
-    "
+        /images/oriol_macias-320.webp 320w,
+        /images/oriol_macias-640.webp 640w,
+        /images/oriol_macias-960.webp 960w,
+        /images/oriol_macias-1280.webp 1280w
+      "
       imagesizes="(max-width: 767px) 100vw, 400px"
       fetchpriority="high"
       type="image/webp"
@@ -134,9 +123,9 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     />
 
     <script src="/mobile-optimizations.js" defer></script>
-
     <script src="/scripts/font-awesome-loader.js" defer></script>
 
+    <!-- Favicon and basic meta -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link
@@ -166,49 +155,56 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     <meta name="description" content={description} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
+    
     {import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
       <meta
         name="google-site-verification"
         content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION}
       />
     )}
+
     <SecurityHeaders />
 
-    <!-- Enlaces hreflang corregidos -->
+    <!-- Language alternatives -->
     <LanguageAlternates
       currentLang={lang}
       currentPath={Astro.url.pathname}
       client:load
     />
 
+    <!-- Critical CSS inlined -->
     <style is:inline>
-      /* Estilos críticos para prevenir CLS */
+      /* Critical styles to prevent CLS */
       #skills,
       .nav-container,
       .profile-image-container {
         content-visibility: auto;
       }
+      
+      /* Navbar stability */
+      nav,
+      header nav,
+      nav[role="navigation"] {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 50 !important;
+      }
     </style>
 
-    <!-- CSS de correcciones combinadas de accesibilidad y CLS -->
+    <!-- Combined CSS fixes -->
     <link rel="stylesheet" href="/styles/combined.css" />
 
     <!-- Alternate language versions -->
-    {
-      alternateUrls.en && (
-        <link rel="alternate" hreflang="en" href={alternateUrls.en} />
-      )
-    }
-    {
-      alternateUrls.es && (
-        <link rel="alternate" hreflang="es" href={alternateUrls.es} />
-      )
-    }
-    {
-      alternateUrls.fr && (
-        <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />
-      )
-    }
+    {alternateUrls.en && (
+      <link rel="alternate" hreflang="en" href={alternateUrls.en} />
+    )}
+    {alternateUrls.es && (
+      <link rel="alternate" hreflang="es" href={alternateUrls.es} />
+    )}
+    {alternateUrls.fr && (
+      <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />
+    )}
     <link
       rel="alternate"
       hreflang="x-default"
@@ -244,33 +240,13 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Favicon and PWA -->
+    <!-- Generator info -->
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#D83333" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/icons/favicon.svg" />
-
-    <!-- Preload critical assets -->
-    <link
-      rel="preload"
-      href="/styles/fonts/fa-solid-900.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/styles/fonts/fa-brands-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
 
-    <!-- Critical Font Awesome styles inlined for faster rendering -->
+    <!-- Critical Font Awesome styles inlined -->
     <style is:inline>
       /* Core Font Awesome styles for immediate icon rendering */
       @font-face {
@@ -314,88 +290,53 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
         text-rendering: auto;
         line-height: 1;
       }
-
-      /* Estilos críticos para el navbar sticky */
-      nav,
-      header nav,
-      nav[role="navigation"],
-      header[role="banner"] {
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 50 !important;
-      }
-
-      /* Asegurar que el header no interfiera con el posicionamiento */
-      header[role="banner"] {
-        display: block;
-        position: static;
-        z-index: auto;
-      }
-
-      /* Sin márgenes o paddings que afecten al navbar */
-      header[role="banner"] {
-        margin: 0;
-        padding: 0;
-      }
     </style>
 
-    <!-- Cargar el sistema unificado de internacionalización -->
-    <script is:inline src="/scripts/i18n.js" onerror="window.i18nFailed = true;"
-    ></script>
+    <!-- i18n system -->
+    <script is:inline src="/scripts/i18n.js" onerror="window.i18nFailed = true;"></script>
     <script is:inline src="/scripts/i18n-enhanced-fix.js"></script>
 
-    <!-- Establecer idioma actual para scripts cliente y depuración -->
+    <!-- Set current language -->
     <script is:inline define:vars={{ currentLang: lang }}>
-      // Establecer el idioma actual en una variable global
       window.CURRENT_LANGUAGE = currentLang;
       console.log("Current language set to:", window.CURRENT_LANGUAGE);
 
-      // Inicializar sistema i18n si está disponible
       document.addEventListener("DOMContentLoaded", () => {
         if (window.i18n && typeof window.i18n.init === "function") {
           window.i18n.init(currentLang);
         } else {
-          // Función simplificada como fallback si el script i18n.js no se ha cargado
           window.t = function (key) {
-            // Esta es una función de fallback mínima
-            const key_parts = key.split(".");
-            const last_part = key_parts[key_parts.length - 1];
-
-            // Si hay traducciones disponibles, intentar buscar la clave
+            const keyParts = key.split(".");
+            const lastPart = keyParts[keyParts.length - 1];
+            
             if (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) {
               let result = window.TRANSLATIONS[currentLang];
-              for (const part of key_parts) {
+              for (const part of keyParts) {
                 if (result && typeof result === "object" && part in result) {
                   result = result[part];
                 } else {
-                  return last_part; // No se encontró la clave completa
+                  return lastPart;
                 }
               }
-              return result || last_part;
+              return result || lastPart;
             }
-
-            return last_part;
+            return lastPart;
           };
         }
       });
 
-      // Objeto global para almacenar traducciones una vez cargadas
       window.TRANSLATIONS = window.TRANSLATIONS || {};
     </script>
 
-    <!-- Theme initialization script -->
+    <!-- Theme initialization -->
     <script is:inline>
       (function () {
-        // Get stored theme or default to dark
         const storedTheme = localStorage.getItem("theme") || "dark";
-
-        // Apply theme class
         document.documentElement.classList.add(storedTheme);
       })();
     </script>
 
-    <!-- Print styles for PDF download capability -->
+    <!-- Print styles -->
     <style is:inline>
       @media print {
         nav,
@@ -419,124 +360,88 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
           padding: 0 !important;
         }
 
-        /* Remove shadows and hover effects */
         * {
           box-shadow: none !important;
           transition: none !important;
         }
 
-        /* Adjust colors for printing */
-        .dark\:text-dark-text,
-        .dark\:text-dark-text-secondary,
-        .text-light-text,
-        .text-light-text-secondary {
-          color: #000 !important;
-        }
-
-        .dark\:bg-dark-surface,
-        .dark\:bg-dark-secondary,
-        .bg-light-surface,
-        .bg-light-secondary {
-          background-color: #fff !important;
-        }
-
-        /* Ensure all sections are visible */
         .opacity-0 {
           opacity: 1 !important;
         }
 
-        /* Maintain the red accent for visual identity */
-        .border-brand-red {
-          border-color: #d83333 !important;
-        }
-
-        /* Ensure all text is visible */
         .text-brand-red {
           color: #d83333 !important;
         }
 
-        /* Ensure backgrounds print correctly */
         .bg-brand-red {
           background-color: #d83333 !important;
         }
       }
     </style>
 
-    <!-- Añadir al <head> de src/layouts/Layout.astro justo antes del cierre </head> -->
+    <!-- Font Awesome verification and fallback -->
     <script is:inline>
-      // Script de verificación y corrección de Font Awesome
       (function () {
-        // Comprobar si los iconos están cargados correctamente
         function checkIcons() {
-          // Verificar si algún icono Font Awesome está visible
           const testIcon = document.createElement("i");
           testIcon.className = "fas fa-user";
           testIcon.style.visibility = "hidden";
           document.body.appendChild(testIcon);
 
-          // Obtener el estilo computado
           const computedStyle = window.getComputedStyle(testIcon);
           const fontFamily = computedStyle.getPropertyValue("font-family");
           const content = computedStyle.getPropertyValue("content");
 
-          // Limpiar elemento de prueba
           document.body.removeChild(testIcon);
 
-          // Si no hay contenido o la fuente no es correcta, forzar carga de emergencia
           return content !== "none" && fontFamily.includes("Font Awesome");
         }
 
-        // Forzar carga de CDN como último recurso si los iconos no aparecen
         window.addEventListener("DOMContentLoaded", function () {
-          // Dar tiempo a que carguen las fuentes normalmente
           setTimeout(function () {
             if (!checkIcons()) {
-              console.warn(
-                "Font Awesome no cargó correctamente. Aplicando solución de emergencia...",
-              );
+              console.warn("Font Awesome not loaded correctly. Applying emergency solution...");
 
-              // Inyectar definiciones de fuentes directamente
               const style = document.createElement("style");
               style.textContent = `
-            @font-face {
-              font-family: 'Font Awesome 5 Free';
-              font-style: normal;
-              font-weight: 900;
-              font-display: block;
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
-            }
-            
-            @font-face {
-              font-family: 'Font Awesome 5 Brands';
-              font-style: normal;
-              font-weight: 400;
-              font-display: block;
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
-            }
-            
-            /* Asegurar estilos básicos */
-            .fas, .fa-solid {
-              font-family: 'Font Awesome 5 Free' !important;
-              font-weight: 900 !important;
-            }
-            
-            .fab, .fa-brands {
-              font-family: 'Font Awesome 5 Brands' !important;
-              font-weight: 400 !important;
-            }
-          `;
+                @font-face {
+                  font-family: 'Font Awesome 5 Free';
+                  font-style: normal;
+                  font-weight: 900;
+                  font-display: block;
+                  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
+                }
+                
+                @font-face {
+                  font-family: 'Font Awesome 5 Brands';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: block;
+                  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
+                }
+                
+                .fas, .fa-solid {
+                  font-family: 'Font Awesome 5 Free' !important;
+                  font-weight: 900 !important;
+                }
+                
+                .fab, .fa-brands {
+                  font-family: 'Font Awesome 5 Brands' !important;
+                  font-weight: 400 !important;
+                }
+              `;
               document.head.appendChild(style);
 
-              // Cargar versión optimizada local como respaldo
               const link = document.createElement("link");
               link.rel = "stylesheet";
               link.href = "/styles/font-awesome-optimized.css";
               document.head.appendChild(link);
             }
-          }, 500); // Esperar 500ms para comprobar
+          }, 500);
         });
       })();
     </script>
+
     <link
       rel="stylesheet"
       href="/styles/critical-mobile.css"
@@ -544,15 +449,16 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     />
 
     <link rel="stylesheet" href="/styles/combined.css" />
-
     <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
 
     <script is:inline src="/scripts/react-error-recovery.js"></script>
+    
     <StructuredData
       name={headerData.fullName}
       jobTitle={headerData.jobTitle}
     />
   </head>
+  
   <body
     class="min-h-screen min-h-[var(--vh)] bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans body-transition"
   >
@@ -569,7 +475,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
           </ErrorBoundary>
         </header>
 
-        <!-- Main content with ARIA landmark -->
+        <!-- Main content -->
         <main
           id="cv-content"
           role="main"
@@ -580,7 +486,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
           </ErrorBoundary>
         </main>
 
-        <!-- Footer with ErrorBoundary -->
+        <!-- Footer -->
         <ErrorBoundary>
           <footer
             role="contentinfo"
@@ -609,13 +515,13 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
                   {meta.address} | {meta.telephone}
                 </p>
                 <div class="flex items-center gap-6">
-                  <a
+                  
                     href="/blog/"
                     class="text-sm text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
                   >
                     Blog
                   </a>
-                  <a
+                  
                     href="#top"
                     class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
                     aria-label={lang === "es"
@@ -624,8 +530,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
                         ? "Retourner en haut de la page"
                         : "Return to top of page"}
                   >
-                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
-                    ></i>
+                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"></i>
                     {
                       lang === "es"
                         ? "Volver arriba"
@@ -662,20 +567,21 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       <CookieBanner client:load />
     </div>
     <script is:inline src="/scripts/react-error-recovery.js"></script>
-  </body><!-- Script for smooth scrolling to sections -->
+  </body>
+
+  <!-- Smooth scrolling script -->
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
-      // Smooth scroll for anchors
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           const targetId = this.getAttribute("href").substring(1);
-          if (!targetId) return; // Avoid errors with href="#"
+          if (!targetId) return;
 
           const targetElement = document.getElementById(targetId);
 
           if (targetElement) {
             e.preventDefault();
-            const navbarHeight = 80; // Estimated navbar height
+            const navbarHeight = 80;
             const position =
               targetElement.getBoundingClientRect().top +
               window.pageYOffset -
@@ -686,7 +592,6 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
               behavior: "smooth",
             });
 
-            // Announce to screen readers (if function is available)
             if (window.announceToScreenReader) {
               const elementTitle =
                 targetElement.querySelector("h2, h3")?.textContent || targetId;
@@ -695,11 +600,9 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
               );
             }
 
-            // Set focus to the target element (for keyboard accessibility)
             targetElement.setAttribute("tabindex", "-1");
             targetElement.focus({ preventScroll: true });
 
-            // Remove tabindex after blur to avoid persistent tab stops
             targetElement.addEventListener("blur", function onBlur() {
               targetElement.removeAttribute("tabindex");
               targetElement.removeEventListener("blur", onBlur);
@@ -710,14 +613,12 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     });
   </script>
 
-  <!-- Update translated elements in the DOM when translations load -->
+  <!-- Translation update script -->
   <script is:inline>
     document.addEventListener("translationsLoaded", () => {
-      // Actualizar elementos con atributo data-i18n
       if (window.i18n && typeof window.i18n.updateElements === "function") {
         window.i18n.updateElements();
       } else {
-        // Fallback manual implementation
         document.querySelectorAll("[data-i18n]").forEach((element) => {
           const key = element.getAttribute("data-i18n");
           if (key && typeof window.t === "function") {
@@ -726,7 +627,6 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
         });
       }
 
-      // Announce to screen readers that translations are loaded
       if (window.announceToScreenReader) {
         const lang = window.CURRENT_LANGUAGE || "en";
         const langNames = {
@@ -739,9 +639,9 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
         );
       }
     });
-</script>
+  </script>
 
-  {import.meta.env.PROD && (
+  {isProduction && (
     <script is:inline define:vars={{ pixelId }}>
       {`
       window.initPixel = function () {
@@ -780,8 +680,6 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     `}
     </script>
   )}
-
-
 </html>
 
 <style is:global>

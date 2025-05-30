@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import compress from "astro-compress";
 import sitemap from "@astrojs/sitemap";
+import AstroPWA from "@vite-pwa/astro";
 
 export default defineConfig({
   site: "https://oriolmacias.dev",
@@ -21,52 +22,86 @@ export default defineConfig({
       config: { path: "./tailwind.config.js" },
     }),
     react(),
-    compress({ gzip: true, brotli: true }),
+    compress({ 
+      gzip: true, 
+      brotli: true,
+      css: true,
+      html: true,
+      img: true,
+      js: true,
+      svg: true
+    }),
     sitemap(),
-    {
-      name: "workbox-register",
-      hooks: {
-        "astro:config:setup"({ injectScript }) {
-          injectScript(
-            "head-inline",
-            `if ('serviceWorker' in navigator && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }`,
-          );
-        },
+    AstroPWA({
+      registerType: "autoUpdate",
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:js|css|html|json)$/,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "assets",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+            },
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|webp|avif)$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "images",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+              },
+            },
+          },
+        ],
       },
-    },
+      manifest: {
+        name: "Oriol Macias - Software Developer CV",
+        short_name: "Oriol CV",
+        description: "Professional CV & Portfolio for Oriol Macias.",
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        theme_color: "#D83333",
+        icons: [
+          {
+            src: "/icons/favicon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "/icons/favicon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      },
+    }),
   ],
 
-  // Configuración explícita de MIME types para corregir errores
-  server: {
-    headers: {
-      // Forzar tipos MIME correctos para archivos críticos
-      "*.js": [
-        {
-          key: "Content-Type",
-          value: "application/javascript; charset=utf-8",
-        },
-      ],
-      "*.css": [
-        {
-          key: "Content-Type",
-          value: "text/css; charset=utf-8",
-        },
-      ],
-    },
+  // Enable image optimization
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    }
   },
 
   vite: {
-    // Forzar MIME types correctos durante el desarrollo
-    server: {
-      fs: {
-        strict: true,
-      },
-      middlewareMode: false,
-    },
-    // Configuración de construcción para garantizar MIME types
     build: {
-      assetsInlineLimit: 0, // Evitar inline de assets pequeños
+      assetsInlineLimit: 0,
       sourcemap: true,
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[name].[hash][extname]',
+          chunkFileNames: 'assets/[name].[hash].js',
+          entryFileNames: 'assets/[name].[hash].js'
+        }
+      }
     },
   },
   viewTransitions: true,

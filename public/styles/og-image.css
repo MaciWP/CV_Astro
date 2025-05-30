@@ -1,0 +1,40 @@
+/* Styles for the OgImage component */
+.og-container {
+  @apply flex flex-col h-full w-full relative p-[60px] bg-gradient-to-br from-[#121620] to-[#1e2433] font-sans;
+}
+
+.og-accent-top {
+  @apply absolute top-0 left-0 w-[100px] h-[12px] bg-[#D83333];
+}
+
+.og-header {
+  @apply flex flex-row justify-between mb-[40px];
+}
+
+.og-logo {
+  @apply flex items-center justify-center w-[50px] h-[50px] bg-[#D83333] text-white text-[20px] font-bold;
+}
+
+.og-urls {
+  @apply flex items-center text-[#9ca3af] text-[16px];
+}
+
+.og-main {
+  @apply flex flex-col justify-center flex-grow;
+}
+
+.og-name {
+  @apply text-[64px] font-bold text-white leading-[1.2] m-0;
+}
+
+.og-title {
+  @apply text-[36px] font-medium text-[#D83333] m-0 mt-[16px];
+}
+
+.og-description {
+  @apply text-[24px] text-[#9ca3af] mt-[32px] max-w-[650px] leading-[1.4];
+}
+
+.og-accent-bottom {
+  @apply absolute bottom-0 right-0 w-[200px] h-[8px] bg-[#D83333];
+}
