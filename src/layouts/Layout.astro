@@ -1,6 +1,6 @@
 ---
 // Import components
-import Navbar from "../components/Navbar";
+import Navbar from "../components/nav/Navbar";
 import I18nLoader from "../components/I18nLoader";
 import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
@@ -548,7 +548,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     />
   </head>
   <body
-    class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans body-transition"
+    class="min-h-screen min-h-[var(--vh)] bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans body-transition"
   >
     <div id="app-root">
       <!-- Accessibility components -->

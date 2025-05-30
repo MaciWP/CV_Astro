@@ -16,7 +16,7 @@ const CookieBanner = () => {
     document.dispatchEvent(new CustomEvent("pixel-consent-granted"));
   };
 
-  if (!visible) return null;
+  if (!visible) return <div aria-hidden className="h-14" />;
 
   return (
     <div className="fixed bottom-0 inset-x-0 bg-gray-900 text-white p-4 flex flex-col sm:flex-row items-center justify-between text-sm z-50">
