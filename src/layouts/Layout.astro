@@ -63,6 +63,12 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
       </>
     )}
     <script src="/scripts/ga-events.js" defer></script>
+    {Astro.isProd && import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+      <script type="module">
+        import { initRUM } from "../utils/rum";
+        initRUM(GA_ID);
+      </script>
+    )}
     <link
       rel="preload"
       as="image"
