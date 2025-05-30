@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getEntryBySlug } from "astro:content";
+const { slug } = Astro.params;
+const post = await getEntryBySlug("blog", slug);
+if (!post) throw new Error(`Post not found: ${slug}`);
+const { Content, data } = await post.render();
+---
+
+<Layout title={data.title} description={data.description}>
+  <main class="prose lg:prose-lg mx-auto px-4 py-8">
+    <h1>{data.title}</h1>
+    <Content />
+  </main>
+</Layout>
+
+

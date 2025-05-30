@@ -42,7 +42,8 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^15.4.1",
     "rimraf": "^5.0.5",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "@astrojs/mdx": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.1",
