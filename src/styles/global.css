@@ -17,6 +17,8 @@
 
 /* ===== VARIABLES GLOBALES ===== */
 :root {
+  /* Viewport height unit */
+  --vh: 100vh;
   /* Transiciones de tema */
   --theme-transition-duration: 180ms;
   --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
@@ -39,7 +41,7 @@
 /* ===== ESTILOS BASE ===== */
 @layer base {
   body {
-    @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
+    @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text min-h-[var(--vh)];
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern";
@@ -193,6 +195,7 @@ html.theme-transitioning * {
 .section-animate {
   animation: enhanced-appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
+  transform: translateZ(0);
 }
 
 @keyframes fade-in {
@@ -207,6 +210,7 @@ html.theme-transitioning * {
 
 .animate-fade-in {
   animation: fade-in 0.5s ease-out forwards;
+  transform: translateZ(0);
 }
 
 @keyframes fadeInUp {
@@ -223,6 +227,7 @@ html.theme-transitioning * {
 
 .animate-fadeInUp {
   animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
+  transform: translateZ(0);
 }
 
 @keyframes fadeInLeft {
@@ -239,6 +244,7 @@ html.theme-transitioning * {
 
 .animate-fadeInLeft {
   animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+  transform: translateZ(0);
 }
 
 @keyframes scaleIn {
@@ -255,6 +261,7 @@ html.theme-transitioning * {
 
 .animate-scaleIn {
   animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+  transform: translateZ(0);
 }
 
 /* Sistema de animación escalonada */

@@ -1,0 +1,74 @@
+---
+import headerData from '../../data/header';
+---
+<div id="about" class="pt-4 pb-8">
+  <section>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-8 space-y-6">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold mb-2">{headerData.fullName}</h1>
+          <h2 class="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium" data-i18n="header.jobTitle">
+            {headerData.jobTitle}
+          </h2>
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-2xl" data-i18n="header.summary">
+          {headerData.summary}
+        </p>
+        <div class="flex flex-wrap gap-4 mt-2">
+          {headerData.contactInfo.map((contact) => (
+            <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
+              <a
+                href={contact.type === 'email' ? `mailto:${contact.value}` : contact.url}
+                target={contact.type !== 'email' ? '_blank' : undefined}
+                rel={contact.type !== 'email' ? 'noopener noreferrer' : undefined}
+                class="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                aria-label={contact.label}
+              >
+                <div class="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                  <i class={contact.icon}></i>
+                </div>
+                <div>
+                  <span class="text-xs block text-light-text-secondary dark:text-dark-text-secondary" data-i18n={`header.${contact.type}`}>{contact.label}</span>
+                  {contact.value}
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="md:col-span-4 flex flex-col justify-center md:justify-end">
+        <div class="relative w-100 h-100 md:w-100 md:h-100 overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg">
+          <div class="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
+          <div class="w-full h-full bg-white dark:bg-gray-800">
+            <picture>
+              <source srcset="/images/oriol_macias-sm.avif" type="image/avif" />
+              <source srcset="/images/oriol_macias-sm.webp" type="image/webp" />
+              <img src="/images/oriol_macias.jpg" alt={headerData.photoAlt} width="400" height="400" loading="eager" fetchpriority="high" class="w-full h-full object-cover" />
+            </picture>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-2 bg-brand-red"></div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 mt-4 justify-center">
+          <a
+            href="/OriolMacias_CV.pdf"
+            download
+            class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            aria-label="Download CV"
+          >
+            <i class="fas fa-download mr-1.5"></i>
+            <span data-i18n="buttons.downloadCV">Download CV</span>
+          </a>
+          <a
+            href="/OriolMacias_CoverLetter.pdf"
+            download
+            class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            aria-label="Download Cover Letter"
+          >
+            <i class="fas fa-file-alt mr-1.5"></i>
+            <span data-i18n="buttons.downloadCoverLetter">Download Cover Letter</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
