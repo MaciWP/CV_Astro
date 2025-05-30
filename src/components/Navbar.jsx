@@ -11,7 +11,7 @@ import {
 } from "../data/navigation";
 
 // Import subcomponents
-import NavbarLogo from "./navbar/NavbarLogo";
+import NavbarLogo from "./navbar/NavbarLogo.astro";
 import NavbarLinks from "./navbar/NavbarLinks";
 import ThemeToggle from "./navbar/ThemeToggle";
 import MobileMenu from "./navbar/MobileMenu";

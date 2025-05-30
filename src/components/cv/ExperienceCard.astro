@@ -1,0 +1,69 @@
+---
+import ExperienceExtras from './ExperienceExtras.tsx';
+import type { JSX } from 'astro/jsx-runtime';
+const { job, index, translations, visible } = Astro.props;
+---
+<div
+  class={`relative pl-8 pb-12 transition-all duration-700 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:translate-x-1`}
+  style={`transition-delay: ${200 * index}ms`}
+>
+  <div
+    class={`absolute left-0 top-4 w-4 h-4 rounded-none bg-brand-red dark:bg-brand-red border-4 border-white dark:border-gray-900 shadow-sm transition-all duration-500 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+    style={`opacity: ${visible ? 1 - index * 0.15 : 0}; transition-delay: ${300 * index}ms;`}
+  ></div>
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4 group">
+    <div>
+      <h3 class="text-xl font-bold group-hover:text-brand-red transition-colors duration-150">
+        {job.title}
+      </h3>
+      <p class="text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-150 flex items-center">
+        <i class="fas fa-building mr-2 text-brand-red/70"></i>
+        {job.companyUrl ? (
+          <a
+            href={job.companyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-brand-red dark:hover:text-brand-red transition-colors"
+            aria-label={`Visit ${job.company} website`}
+          >
+            {job.company}
+          </a>
+        ) : (
+          job.company
+        )}
+      </p>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary px-3 py-1 rounded-none transition-all duration-150 group-hover:bg-brand-red group-hover:text-white">
+      <i class="fas fa-calendar-alt"></i>
+      <span>{job.period}</span>
+    </div>
+  </div>
+  <div class="bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 transition-all duration-150 hover:shadow-md">
+    <h4 class="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider" data-i18n="experience.responsibilities">
+      {translations.responsibilities}
+    </h4>
+    <ul class="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150 mb-3">
+      {job.keyResponsibilities?.map((resp: string, i: number) => (
+        <li key={i} class="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150">
+          <span class="w-1.5 h-1.5 bg-brand-red flex-shrink-0 mt-2 transition-all duration-150 group-hover/item:scale-125"></span>
+          <span>{resp}</span>
+        </li>
+      ))}
+    </ul>
+    {job.extraResponsibilities && job.extraResponsibilities.length > 0 && (
+      <ExperienceExtras client:visible extra={job.extraResponsibilities} showMore={translations.showMore} showLess={translations.showLess} />
+    )}
+    <h4 class="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-3 tracking-wider" data-i18n="experience.keyAchievements">
+      {translations.keyAchievements}
+    </h4>
+    <ul class="space-y-3 text-light-text dark:text-dark-text transition-colors duration-150">
+      {job.achievements?.map((ach: string, i: number) => (
+        <li key={i} class="flex items-start gap-2 group/item hover:translate-x-1 transition-all duration-150">
+          <i class="fas fa-trophy text-brand-red flex-shrink-0 mt-1 transition-all duration-150 group-hover/item:scale-125"></i>
+          <span>{ach}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="w-0 h-0.5 bg-brand-red mt-4 transition-all duration-150 group-hover:w-full"></div>
+  </div>
+</div>

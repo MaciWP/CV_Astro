@@ -1,0 +1,26 @@
+---
+const { onClick } = Astro.props;
+import SocialIcons from "../SocialIcons.astro";
+const links = [
+  { href: "https://github.com/MaciWP", label: "GitHub Profile", icon: "fab fa-github" },
+  { href: "https://linkedin.com/in/oriolmaciasbadosa", label: "LinkedIn Profile", icon: "fab fa-linkedin" },
+];
+---
+<div class="flex items-center gap-4">
+  <div
+    class="flex items-center cursor-pointer"
+    role="button"
+    tabindex="0"
+    onClick={onClick}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter' || e.key === ' ') onClick(e);
+    }}
+    aria-label="Go to top of page"
+  >
+    <div class="w-12 h-12 flex items-center justify-center bg-brand-red text-white rounded-none">
+      <span class="text-lg font-bold">OM</span>
+    </div>
+    <div class="ml-2 font-medium tracking-tight theme-transition-text">Oriol Macias</div>
+  </div>
+  <SocialIcons links={links} class="hidden md:flex items-center gap-3 ml-2" />
+</div>
