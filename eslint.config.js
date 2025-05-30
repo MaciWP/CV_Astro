@@ -1,2 +1,9 @@
-import config from "./.eslintrc.json" assert { type: "json" };
-export default config;
+export default [
+  {
+    files: ["scripts/critical-css.js"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+  },
+];
