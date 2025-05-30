@@ -140,3 +140,8 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# ===== NETLIFY EDGE FUNCTIONS =====
+[[edge_functions]]
+  function = "i18n"
+  path = "/*"
