@@ -4,9 +4,9 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import ErrorBoundary from "../components/ErrorBoundary";
 
 // Import CV components
-import ProfileHeader from "../components/cv/ProfileHeader";
+import ProfileHeader from "../components/cv/ProfileHeader.astro";
 import Experience from "../components/cv/Experience";
-import Skills from "../components/cv/Skills";
+import Skills from "../components/cv/Skills.astro";
 import Languages from "../components/cv/Languages";
 import Education from "../components/cv/Education";
 import Projects from "../components/cv/Projects";
@@ -46,7 +46,7 @@ const frUrl = getRelativeLocaleUrl("fr", "");
       fallbackMessage="Unable to load profile information. Please refresh the page."
       showReset={true}
     >
-      <ProfileHeader client:load />
+      <ProfileHeader />
     </ErrorBoundary>
 
     {/* Experience con ErrorBoundary */}
@@ -62,7 +62,7 @@ const frUrl = getRelativeLocaleUrl("fr", "");
       fallbackTitle="Error loading skills"
       fallbackMessage="Unable to load technical skills information."
     >
-      <Skills client:visible />
+      <Skills />
     </ErrorBoundary>
 
     {/* Education con ErrorBoundary */}

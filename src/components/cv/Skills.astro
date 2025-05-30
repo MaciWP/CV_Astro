@@ -1,0 +1,169 @@
+---
+import skillsData, { getSectionTitle } from "../../data/skills";
+const titles = {
+  main: getSectionTitle("skills"),
+  languages: getSectionTitle("languages"),
+  libraries: getSectionTitle("libraries"),
+  technologies: getSectionTitle("technologies"),
+  tools: getSectionTitle("tools"),
+  protocols: getSectionTitle("protocols"),
+};
+---
+
+<section id="skills" class="mb-16 opacity-0 transition-opacity duration-500">
+  <div
+    class="flex items-center mb-6"
+    id="skills-header"
+  >
+    <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+      <i class="fas fa-code"></i>
+    </div>
+    <h2 class="text-2xl font-bold ml-3" data-i18n="skills.title">{titles.main}</h2>
+  </div>
+
+  <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm" id="skills-container">
+    <div class="grid grid-cols-1 gap-8">
+      <div class="space-y-4">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 section-header" data-category="languages">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+              <i class="fas fa-code text-brand-red"></i>
+            </div>
+            <span data-i18n="skills.languages">{titles.languages}</span>
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.languages.map((skill, index) => (
+            <div
+              class="bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 skill-pill"
+              style={`transition-delay: ${10 * index}ms`}
+            >
+              <i class={`${skill.icon} text-brand-red`}></i>
+              <span>{skill.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 section-header" data-category="libraries">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+              <i class="fas fa-puzzle-piece text-brand-red"></i>
+            </div>
+            <span data-i18n="skills.libraries">{titles.libraries}</span>
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.libraries.map((lib, index) => (
+            <div
+              class="bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 skill-pill"
+              style={`transition-delay: ${12 * index}ms`}
+            >
+              <i class={`${lib.icon} text-brand-red`}></i>
+              <span>{lib.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 section-header" data-category="technologies">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+              <i class="fas fa-server text-brand-red"></i>
+            </div>
+            <span data-i18n="skills.technologies">{titles.technologies}</span>
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.technologies.map((tech, index) => (
+            <div
+              class="bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 skill-pill"
+              style={`transition-delay: ${16 * index}ms`}
+            >
+              <i class={`${tech.icon} text-brand-red`}></i>
+              <span>{tech.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 section-header" data-category="tools">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+              <i class="fas fa-tools text-brand-red"></i>
+            </div>
+            <span data-i18n="skills.tools">{titles.tools}</span>
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.tools.map((tool, index) => (
+            <div
+              class="bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 skill-pill"
+              style={`transition-delay: ${18 * index}ms`}
+            >
+              <i class={`${tool.icon} text-brand-red`}></i>
+              <span>{tool.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 section-header" data-category="protocols">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-red bg-opacity-10 flex items-center justify-center rounded-none">
+              <i class="fas fa-network-wired text-brand-red"></i>
+            </div>
+            <span data-i18n="skills.protocols">{titles.protocols}</span>
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.protocols.map((protocol, index) => (
+            <div
+              class="bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 skill-pill"
+              style={`transition-delay: ${20 * index}ms`}
+            >
+              <i class={`${protocol.icon} text-brand-red`}></i>
+              <span>{protocol.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #skills.animate {
+    opacity: 1;
+  }
+  #skills.animate .skill-pill {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .skill-pill {
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+</style>
+
+<script>
+  const section = document.getElementById('skills');
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        section.classList.add('animate');
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.15, rootMargin: '-50px 0px' }
+  );
+
+  if (section) {
+    observer.observe(section);
+  }
+</script>
