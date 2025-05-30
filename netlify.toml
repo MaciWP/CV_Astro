@@ -21,6 +21,19 @@
     Content-Type = "text/css; charset=utf-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Soporte para ficheros precomprimidos
+[[headers]]
+  for = "/*.br"
+  [headers.values]
+    Content-Encoding = "br"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.gz"
+  [headers.values]
+    Content-Encoding = "gzip"
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Headers para scripts especiales que no deben ser cacheados
 [[headers]]
   for = "/scripts/i18n.js"

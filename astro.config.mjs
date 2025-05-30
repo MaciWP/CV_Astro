@@ -23,7 +23,14 @@ export default defineConfig({
       config: { path: "./tailwind.config.js" },
     }),
     react(),
-    compress({ gzip: true, brotli: true }),
+    compress({
+      html: true,
+      css: true,
+      js: true,
+      img: true,
+      gzip: true,
+      brotli: true,
+    }),
     sitemap(),
     AstroPWA({
       registerType: "autoUpdate",
