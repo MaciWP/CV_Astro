@@ -80,11 +80,11 @@
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self'; manifest-src 'self';"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; style-src 'self' 'strict-dynamic'; script-src 'self' 'strict-dynamic'; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self'; manifest-src 'self'; require-trusted-types-for 'script';"
 
 # ===== REDIRECCIONES Y MANEJO DE ERRORES =====
 
@@ -140,3 +140,7 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+# ===== FUNCIONES EDGE =====
+[[edge_functions]]
+  function = "security-headers"
+  path = "/*"

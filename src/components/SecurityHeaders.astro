@@ -1,25 +1,14 @@
-<!-- Content Security Policy -->
+---
+const nonce = Astro.locals.nonce;
+---
 <meta
-    http-equiv="Content-Security-Policy"
-    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; manifest-src 'self';"
+  http-equiv="Content-Security-Policy"
+  content={`default-src 'self'; base-uri 'self'; object-src 'none'; style-src 'self' 'strict-dynamic' 'nonce-${nonce}' 'sha256-iC8+wSrx0/v1MyD4Ru9xOIZ1+OJweRBAc8JM/B/VRbk=' https://cdnjs.cloudflare.com; script-src 'self' 'strict-dynamic' 'nonce-${nonce}' 'sha256-0g8z/IQg327EqmXEkNuGDPivOhHksRHv02Y8+F+c3KQ=' https://static.cloudflareinsights.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self'; manifest-src 'self'; require-trusted-types-for 'script';`}
 />
-
-<!-- HTTP Strict Transport Security -->
-<meta
-    http-equiv="Strict-Transport-Security"
-    content="max-age=31536000; includeSubDomains; preload"
-/>
-
-<!-- Additional Security Headers -->
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-<meta
-    http-equiv="Permissions-Policy"
-    content="camera=(), microphone=(), geolocation=(), interest-cohort=()"
-/>
-<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-
-<!-- Add Cross-Origin headers for enhanced security -->
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
 <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
 <meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin" />
