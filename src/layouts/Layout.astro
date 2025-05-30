@@ -775,26 +775,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
     </script>
   )}
 
-  <!-- Service Worker Registration - Only for production -->
-  <script is:inline>
-    // Only register in production (not local)
-    if (
-      window.location.hostname !== "localhost" &&
-      window.location.hostname !== "127.0.0.1" &&
-      "serviceWorker" in navigator
-    ) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/sw.js?v=" + new Date().getTime())
-          .then((registration) => {
-            console.log("Service Worker registered successfully");
-          })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-          });
-      });
-    }
-  </script>
+
 </html>
 
 <style is:global>

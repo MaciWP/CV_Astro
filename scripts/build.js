@@ -8,6 +8,7 @@ import { execSync } from "child_process";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+import { generateSW } from "workbox-build";
 
 // Obtener dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -156,6 +157,53 @@ async function verifyFontFiles() {
   }
 }
 
+async function generateServiceWorker() {
+  console.log("🛠️ Generando Service Worker...");
+  try {
+    await generateSW({
+      globDirectory: path.join(__dirname, "../dist"),
+      globPatterns: [
+        "**/*.{html,js,css,woff2,png,jpg,jpeg,svg,webp,avif,json}",
+      ],
+      swDest: path.join(__dirname, "../dist/sw.js"),
+      clientsClaim: true,
+      skipWaiting: true,
+      offlineGoogleAnalytics: true,
+      runtimeCaching: [
+        {
+          urlPattern: ({ request }) => request.destination === "image",
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "img",
+            expiration: { maxEntries: 60, maxAgeSeconds: 7 * 24 * 60 * 60 },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.g(?:oogleapis|static)\.com\//,
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "google-fonts",
+            expiration: { maxEntries: 30, maxAgeSeconds: 365 * 24 * 60 * 60 },
+          },
+        },
+        {
+          urlPattern: /\/api\//,
+          handler: "NetworkFirst",
+          options: {
+            cacheName: "api",
+            networkTimeoutSeconds: 10,
+            expiration: { maxEntries: 50, maxAgeSeconds: 24 * 60 * 60 },
+          },
+        },
+      ],
+    });
+    console.log("✅ Service Worker generado");
+  } catch (error) {
+    console.error("❌ Error al generar Service Worker:", error);
+    process.exit(1);
+  }
+}
+
 /**
  * Función principal que ejecuta todo el proceso de compilación
  */
@@ -172,6 +220,7 @@ async function build() {
     await buildAstro();
     await copyScriptsToDist();
     await verifyFontFiles();
+    await generateServiceWorker();
 
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`✨ Compilación completada en ${duration}s`);

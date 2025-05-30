@@ -4,8 +4,6 @@ import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import compress from "astro-compress";
 import sitemap from "@astrojs/sitemap";
-import AstroPWA from "@vite-pwa/astro";
-import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://oriolmacias.dev",
@@ -25,57 +23,17 @@ export default defineConfig({
     react(),
     compress({ gzip: true, brotli: true }),
     sitemap(),
-    AstroPWA({
-      registerType: "autoUpdate",
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: /\.(?:js|css|html|json)$/,
-            handler: "StaleWhileRevalidate",
-            options: {
-              cacheName: "assets",
-              expiration: {
-                maxEntries: 60,
-                maxAgeSeconds: 24 * 60 * 60,
-              },
-            },
-          },
-          {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|webp|avif)$/,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "images",
-              expiration: {
-                maxEntries: 60,
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-              },
-            },
-          },
-        ],
+    {
+      name: "workbox-register",
+      hooks: {
+        "astro:config:setup"({ injectScript }) {
+          injectScript(
+            "head-inline",
+            `if ('serviceWorker' in navigator && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }`,
+          );
+        },
       },
-      manifest: {
-        name: "Oriol Macias - Software Developer CV",
-        short_name: "Oriol CV",
-        description: "Professional CV & Portfolio for Oriol Macias.",
-        start_url: "/",
-        display: "standalone",
-        background_color: "#ffffff",
-        theme_color: "#D83333",
-        icons: [
-          {
-            src: "/icons/favicon-192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "/icons/favicon-512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-        ],
-      },
-    }),
-    sitemap(),
+    },
   ],
 
   // Configuración explícita de MIME types para corregir errores
