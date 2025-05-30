@@ -4,6 +4,7 @@
  * File: src/components/PDFDownload.jsx
  */
 import React from "react";
+import Icon from "./common/Icon";
 
 const PDFDownload = ({ label = "Download CV", className = "" }) => {
   // Function to handle PDF download
@@ -30,7 +31,7 @@ const PDFDownload = ({ label = "Download CV", className = "" }) => {
       className={`inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${className}`}
       aria-label={label}
     >
-      <i className="fas fa-download mr-1.5"></i>
+      <Icon name="download" className="mr-1.5" />
       <span>{label}</span>
     </button>
   );
