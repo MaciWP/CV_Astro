@@ -22,7 +22,7 @@ Disallow: /styles/
 Crawl-delay: 10
 
 # Ubicación del sitemap
-Sitemap: https://oriolmacias.dev/sitemap-index.xml
+Sitemap: https://oriolmacias.dev/sitemap.xml
 
 # Host canónico - ayuda a resolver problemas con www vs no-www
 Host: oriolmacias.dev
