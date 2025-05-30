@@ -5,7 +5,7 @@ import react from "@astrojs/react";
 import compress from "astro-compress";
 import sitemap from "@astrojs/sitemap";
 import AstroPWA from "@vite-pwa/astro";
-import sitemap from "@astrojs/sitemap";
+import { runCritical } from "./scripts/critical-css.js";
 
 export default defineConfig({
   site: "https://oriolmacias.dev",
@@ -76,6 +76,14 @@ export default defineConfig({
       },
     }),
     sitemap(),
+    {
+      name: "critical-css",
+      hooks: {
+        "astro:build:done": async ({ dir }) => {
+          await runCritical(dir);
+        },
+      },
+    },
   ],
 
   // Configuración explícita de MIME types para corregir errores
