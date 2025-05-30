@@ -172,6 +172,7 @@ async function build() {
     await buildAstro();
     await copyScriptsToDist();
     await verifyFontFiles();
+    await generateRSSFeed();
 
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`✨ Compilación completada en ${duration}s`);
@@ -183,3 +184,42 @@ async function build() {
 
 // Ejecutar la función principal
 build();
+
+async function generateRSSFeed() {
+  console.log("\uD83D\uDCE3 Generando RSS...");
+  try {
+    const postsDir = path.join(__dirname, "../src/content/blog");
+    const files = await fs.readdir(postsDir);
+    const items = [];
+    for (const file of files) {
+      if (!file.endsWith(".mdx")) continue;
+      const text = await fs.readFile(path.join(postsDir, file), "utf8");
+      const frontmatter = /---\n([\s\S]*?)\n---/.exec(text);
+      const data = {};
+      if (frontmatter) {
+        for (const line of frontmatter[1].split(/\n/)) {
+          const [k, ...rest] = line.split(":");
+          if (k) data[k.trim()] = rest.join(":").trim();
+        }
+      }
+      items.push({
+        slug: file.replace(/\.mdx$/, ""),
+        title: data.title || "",
+        description: data.description || "",
+        pubDate: data.pubDate || new Date().toISOString(),
+      });
+    }
+    const rssItems = items
+      .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
+      .map(
+        (i) =>
+          `<item><title>${i.title}</title><link>https://oriolmacias.dev/blog/${i.slug}/</link><description>${i.description}</description><pubDate>${new Date(i.pubDate).toUTCString()}</pubDate></item>`,
+      )
+      .join("\n    ");
+    const rss = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Oriol Macias Blog</title><link>https://oriolmacias.dev/</link><description>Blog posts</description>\n    ${rssItems}\n</channel></rss>`;
+    await fs.writeFile(path.join(__dirname, "../public/rss.xml"), rss);
+    console.log("✅ RSS generado");
+  } catch (error) {
+    console.error("❌ Error al generar RSS:", error);
+  }
+}
