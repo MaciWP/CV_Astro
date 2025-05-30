@@ -1,0 +1,21 @@
+[
+  {
+    "ignores": [
+      "src/**",
+      "!src/utils/rum.ts",
+      "dist/**",
+      "node_modules/**",
+      "astro.config.mjs",
+      "eslint.config.js",
+      ".astro/**"
+    ]
+  },
+  {
+    "files": ["src/utils/rum.ts"],
+    "languageOptions": {
+      "ecmaVersion": 2021,
+      "sourceType": "module"
+    },
+    "rules": {}
+  }
+]
