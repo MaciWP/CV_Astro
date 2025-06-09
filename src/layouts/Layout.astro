@@ -1,5 +1,5 @@
----
-// Import components
+﻿---
+// Import components (MANTENER TODO IGUAL)
 import Navbar from "../components/Navbar";
 import I18nLoader from "../components/I18nLoader";
 import ErrorBoundary from "../components/ErrorBoundary";
@@ -7,7 +7,7 @@ import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
 
-// Define props interface
+// Define props interface (MANTENER IGUAL)
 export interface Props {
   title?: string;
   description?: string;
@@ -21,7 +21,7 @@ export interface Props {
   };
 }
 
-// Destructure props with defaults
+// Destructure props with defaults (MANTENER IGUAL)
 const {
   title = "Oriol Macias - Software Developer CV & Portfolio",
   description = "Professional CV for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
@@ -31,7 +31,70 @@ const {
   alternateUrls = {},
 } = Astro.props;
 
-// Construct full canonical URL based on current page path
+// ===== AÑADIR SOLO ESTO - DETECCIÓN DE MERCADO =====
+// Detectar mercado suizo/español desde URL
+let detectedMarket = 'general';
+let detectedCity = 'general';
+let enhancedTitle = title;
+let enhancedDescription = description;
+let enhancedKeywords = 'oriol macias, software developer, backend developer, cv, portfolio';
+let brandKeywords = 'oriol macias, oriol dev, macias dev, oriol macias dev, oriolmacias.dev, software developer oriol';
+
+
+
+try {
+  const currentUrl = new URL(Astro.request.url);
+  const pathSegments = currentUrl.pathname.split('/').filter(Boolean);
+
+  if (currentUrl && currentUrl.pathname === '/') {
+  enhancedTitle = "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
+  enhancedDescription = "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
+  brandKeywords = 'oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio';
+}
+  
+  // Detectar ciudades suizas
+  const swissCities = ['zurich', 'basel', 'geneva', 'geneve', 'lausanne'];
+  const detectedSwissCity = pathSegments.find(segment => 
+    swissCities.includes(segment.toLowerCase())
+  );
+  
+  if (detectedSwissCity || pathSegments.includes('switzerland')) {
+    detectedMarket = 'switzerland';
+    detectedCity = detectedSwissCity || 'general';
+    
+    // Títulos específicos para Suiza
+    if (detectedCity === 'zurich') {
+      enhancedTitle = "Oriol Macias - Senior Backend Developer Zurich | Python Expert";
+      enhancedDescription = "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise. Work permit ready for Swiss companies.";
+      enhancedKeywords = "backend developer zurich, python developer zurich, software engineer zurich, work permit switzerland";
+    } else if (detectedCity === 'basel') {
+      enhancedTitle = "Oriol Macias - Software Engineer Basel | Industrial Automation";
+      enhancedDescription = "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, MODBUS, BACnet) expert.";
+      enhancedKeywords = "software engineer basel, industrial automation basel, pharmaceutical developer basel";
+    } else if (detectedCity === 'geneva') {
+      enhancedTitle = "Oriol Macias - Backend Developer Geneva | Multilingual Professional";
+      enhancedDescription = "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.";
+      enhancedKeywords = "backend developer geneva, multilingual developer geneva, international organizations";
+    } else {
+      enhancedTitle = "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
+      enhancedDescription = "Senior Backend Developer seeking opportunities across Switzerland. 8+ years experience, EU work permit ready.";
+      enhancedKeywords = "backend developer switzerland, python developer switzerland, work permit ready";
+    }
+  }
+  // Detectar mercado español
+  else if (pathSegments.includes('espana') || pathSegments.includes('spain') || lang === 'es') {
+    detectedMarket = 'spain';
+    enhancedTitle = "Oriol Macias - Desarrollador Backend España | Senior Python";
+    enhancedDescription = "Desarrollador Backend senior con 8+ años experiencia. Python, Django, protocolos industriales. Disponible España.";
+    enhancedKeywords = "desarrollador backend españa, python desarrollador madrid, ingeniero software españa";
+  }
+} catch (error) {
+  console.warn('Market detection error:', error);
+}
+
+const finalKeywords = `${enhancedKeywords}, ${brandKeywords}`;
+
+// Construct full canonical URL based on current page path (MANTENER IGUAL)
 const fullCanonicalUrl = canonicalUrl.startsWith("http")
   ? canonicalUrl
   : new URL(Astro.url.pathname, "https://oriolmacias.dev").href;
@@ -135,13 +198,31 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Basic meta tags -->
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <!-- ===== MODIFICAR SOLO ESTAS LÍNEAS - Meta tags mejorados ===== -->
+    <title>{enhancedTitle}</title>
+    <meta name="description" content={enhancedDescription} />
+    <meta name="keywords" content={finalKeywords} />
     <meta name="author" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
 
-    <!-- Enlaces hreflang corregidos -->
+    <!-- ===== AÑADIR - Geo-targeting para mercados específicos ===== -->
+    {detectedMarket === 'switzerland' && (
+      <Fragment>
+        <meta name="geo.region" content="CH" />
+        <meta name="geo.country" content="Switzerland" />
+        {detectedCity !== 'general' && <meta name="geo.placename" content={detectedCity.charAt(0).toUpperCase() + detectedCity.slice(1)} />}
+        <meta name="work-authorization" content="EU work permit ready" />
+      </Fragment>
+    )}
+    
+    {detectedMarket === 'spain' && (
+      <Fragment>
+        <meta name="geo.region" content="ES" />
+        <meta name="geo.country" content="Spain" />
+      </Fragment>
+    )}
+
+    <!-- Enlaces hreflang corregidos (MANTENER IGUAL) -->
     <LanguageAlternates
       currentLang={lang}
       currentPath={Astro.url.pathname}
@@ -183,6 +264,18 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       href="https://oriolmacias.dev/"
     />
 
+    <!-- ===== AÑADIR - Hreflang específico para mercados ===== -->
+    {detectedMarket === 'switzerland' && (
+      <Fragment>
+        <link rel="alternate" hreflang="de-CH" href={`https://oriolmacias.dev/de${Astro.url.pathname}`} />
+        <link rel="alternate" hreflang="fr-CH" href={`https://oriolmacias.dev/fr${Astro.url.pathname}`} />
+      </Fragment>
+    )}
+    
+    {detectedMarket === 'spain' && (
+      <link rel="alternate" hreflang="es-ES" href={`https://oriolmacias.dev/es${Astro.url.pathname}`} />
+    )}
+
     <!-- Accessibility & Device Support -->
     <meta name="color-scheme" content="light dark" />
     <meta
@@ -196,9 +289,17 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       content="#121620"
     />
 
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <!-- AÑADIR estas líneas específicas para brand authority: -->
+    <meta name="author" content="Oriol Macias" />
+    <meta name="designer" content="Oriol Macias" />
+    <meta name="owner" content="Oriol Macias" />
+    <meta property="profile:first_name" content="Oriol" />
+    <meta property="profile:last_name" content="Macias" />
+    <meta property="profile:username" content="orioldev" />
+
+    <!-- ===== MODIFICAR - Open Graph mejorado ===== -->
+    <meta property="og:title" content={enhancedTitle} />
+    <meta property="og:description" content={enhancedDescription} />
     <meta property="og:url" content={fullCanonicalUrl} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:type" content="website" />
@@ -206,13 +307,133 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     {lang === "es" && <meta property="og:locale:alternate" content="es_ES" />}
     {lang === "fr" && <meta property="og:locale:alternate" content="fr_FR" />}
 
-    <!-- Twitter Card -->
+    <!-- ===== MODIFICAR - Twitter Card mejorado ===== -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={enhancedTitle} />
+    <meta name="twitter:description" content={enhancedDescription} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Favicon and PWA -->
+    <!-- ===== AÑADIR - Google Analytics (TU ID) ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C98YSPVS02"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-C98YSPVS02', {
+        custom_map: {
+          'custom_parameter_1': 'market_focus',
+          'custom_parameter_2': 'target_city'
+        }
+      });
+      
+      // Track market-specific pageview
+      gtag('event', 'page_view', {
+        market_focus: '{detectedMarket}',
+        target_city: '{detectedCity}',
+        language: '{lang}'
+      });
+    </script>
+ 
+    <!-- AÑADIR Structured Data específico para brand identity -->
+    <script type="application/ld+json">
+    {
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://oriolmacias.dev/#oriol-macias-dev",
+        "name": "Oriol Macias",
+        "alternateName": ["Oriol Dev", "Macias Dev", "Oriol Macias Dev"],
+        "description": "Software Developer known professionally as Oriol Macias Dev",
+        "url": "https://oriolmacias.dev",
+        "mainEntityOfPage": "https://oriolmacias.dev",
+        "sameAs": [
+          "https://linkedin.com/in/oriolmaciasbadosa",
+          "https://github.com/MaciWP",
+          "https://oriolmacias.dev"
+        ],
+        "jobTitle": "Software Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Bjumper",
+          "url": "https://bjumper.com"
+        },
+        "brand": {
+          "@type": "Brand",
+          "name": "Oriol Macias Dev",
+          "url": "https://oriolmacias.dev"
+        },
+        "knowsAbout": [
+          "Software Development", "Python", "Django", "Backend Development",
+          "Industrial Protocols", "SNMP", "MODBUS", "BACnet"
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "name": "Website",
+          "value": "oriolmacias.dev"
+        }
+      }, null, 2)
+    }
+    </script>
+    <!-- ===== AÑADIR - Structured Data para mercados específicos ===== -->
+    <script type="application/ld+json">
+    {
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://oriolmacias.dev/#person",
+        "name": "Oriol Macias",
+        "url": "https://oriolmacias.dev",
+        "image": "https://oriolmacias.dev/images/oriol_macias.jpg",
+        "jobTitle": "Senior Backend Developer",
+        "description": enhancedDescription,
+        "knowsAbout": [
+          "Python", "Django", "Backend Development", "Industrial Protocols",
+          "SNMP", "MODBUS", "BACnet", "DCIM", "REST APIs"
+        ],
+        "sameAs": [
+          "https://linkedin.com/in/oriolmaciasbadosa",
+          "https://github.com/MaciWP"
+        ],
+        ...(detectedMarket === 'switzerland' && {
+          "seeks": {
+            "@type": "JobPosting",
+            "jobTitle": "Backend Developer",
+            "jobLocation": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "CH",
+                "addressRegion": "Switzerland",
+                ...(detectedCity !== 'general' && { "addressLocality": detectedCity.charAt(0).toUpperCase() + detectedCity.slice(1) })
+              }
+            }
+          }
+        }),
+        ...(detectedMarket === 'spain' && {
+          "seeks": {
+            "@type": "JobPosting", 
+            "jobTitle": "Desarrollador Backend",
+            "jobLocation": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "ES",
+                "addressRegion": "Spain"
+              }
+            }
+          }
+        })
+      }, null, 2)
+    }
+    </script>
+
+    <!-- AÑADIR meta específico para domain authority -->
+    <link rel="me" href="https://linkedin.com/in/oriolmaciasbadosa" />
+    <link rel="me" href="https://github.com/MaciWP" />
+    <link rel="author" href="https://oriolmacias.dev" />
+    <link rel="publisher" href="https://oriolmacias.dev" />
+
+    <!-- Favicon and PWA (MANTENER RESTO IGUAL) -->
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#D83333" />
@@ -519,6 +740,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <script is:inline src="/scripts/react-error-recovery.js"></script>
   </head>
+  <!-- EL RESTO DEL BODY MANTENER EXACTAMENTE IGUAL -->
   <body
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
   >
@@ -615,6 +837,36 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         </ErrorBoundary>
       </I18nLoader>
     </div>
+
+    <!-- ===== AÑADIR - Tracking específico de mercados ===== -->
+    <script is:inline>
+      // Market-specific tracking
+      document.addEventListener('click', function(e) {
+        if (typeof gtag !== 'undefined') {
+          const target = e.target;
+          
+          // Track Swiss market interactions
+          if (target && target.closest && target.closest('[data-swiss-tracking]')) {
+            gtag('event', 'swiss_market_interaction', {
+              event_category: 'Swiss SEO',
+              event_label: target.closest('[data-swiss-tracking]').getAttribute('data-swiss-tracking'),
+              market_focus: '{detectedMarket}',
+              target_city: '{detectedCity}'
+            });
+          }
+          
+          // Track Spanish market interactions  
+          if (target && target.closest && target.closest('[data-spanish-tracking]')) {
+            gtag('event', 'spanish_market_interaction', {
+              event_category: 'Spanish SEO', 
+              event_label: target.closest('[data-spanish-tracking]').getAttribute('data-spanish-tracking'),
+              market_focus: '{detectedMarket}'
+            });
+          }
+        }
+      });
+    </script>
+
     <script is:inline src="/scripts/react-error-recovery.js"></script>
   </body><!-- Script for smooth scrolling to sections -->
   <script is:inline>

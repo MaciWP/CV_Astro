@@ -1,28 +1,18 @@
-# robots.txt optimizado para SEO
-# https://oriolmacias.dev/robots.txt
-
-# Permitir a todos los rastreadores acceder a todo el sitio
 User-agent: *
 Allow: /
 
-# Indexar versiones en diferentes idiomas
+# Permitir versiones en idiomas
 Allow: /es/
 Allow: /fr/
+Allow: /switzerland/
 
-# No indexar archivos de mantenimiento y recursos estáticos
+# Bloquear archivos técnicos innecesarios
 Disallow: /sw.js
 Disallow: /sw-register.js
 Disallow: /manifest.json
-
-# Evitar rastreo de recursos dentro de estas carpetas
 Disallow: /scripts/
 Disallow: /styles/
+Disallow: /_astro/
 
-# Optimización: disminuir tasa de rastreo para evitar sobrecargar el servidor
-Crawl-delay: 10
-
-# Ubicación del sitemap
+# Sitemap location
 Sitemap: https://oriolmacias.dev/sitemap.xml
-
-# Host canónico - ayuda a resolver problemas con www vs no-www
-Host: oriolmacias.dev
