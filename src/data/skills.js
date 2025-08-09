@@ -114,7 +114,7 @@ const skillsData = {
     // Protocols
     protocols: [
         { id: "snmp", name: "SNMP", icon: "fas fa-exchange-alt" },
-        { id: "modbus", name: "MODBUS", icon: "fas fa-plug" },
+        { id: "modbus", name: "Modbus", icon: "fas fa-plug" },
         { id: "bacnet", name: "BACnet", icon: "fas fa-building" },
     ],
 };

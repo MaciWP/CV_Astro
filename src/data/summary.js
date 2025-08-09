@@ -1,25 +1,24 @@
+// path: src/data/summary.js
 /**
  * Summary data for CV
- * Extracted from Summary component for better maintainability
- * File: src/data/summary.js
+ * Adjusted to the real profile: backend (Python/Django), REST APIs,
+ * industrial integration (SNMP, Modbus, BACnet) and practical experience
+ * with CI/CD and testing. ~7 years of programming experience.
  */
 
 const summaryData = {
-    text: "Experienced web developer with over 8 years of expertise in front-end and back-end development. Specialized in creating responsive and performant web applications using React, Node.js, and modern JavaScript. Successfully delivered projects for financial and healthcare sectors with a focus on accessibility and security.",
-    highlights: [
-        {
-            text: "Technical Degree in Software Development",
-            icon: "fas fa-graduation-cap"
-        },
-        {
-            text: "8+ Years Professional Experience",
-            icon: "fas fa-award"
-        },
-        {
-            text: "Available for remote work",
-            icon: "fas fa-map-marker-alt"
-        }
-    ]
+  text:
+    "Backend developer with around 7 years of programming experience, specialized in Python/Django and REST APIs. I build reliable services and integrations with industrial protocols (SNMP, Modbus, BACnet). Practical experience with CI/CD and testing, currently expanding knowledge in performance optimization (profiling, caching, SQL).",
+  highlights: [
+    {
+      text: "Python, Django, DRF · PostgreSQL · Docker · Git/GitHub Actions",
+      icon: "fas fa-tools"
+    },
+    {
+      text: "Industrial integration: SNMP, Modbus, BACnet",
+      icon: "fas fa-network-wired"
+    }
+  ]
 };
 
 export default summaryData;

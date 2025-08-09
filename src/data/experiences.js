@@ -16,21 +16,21 @@ const experiencesData = [
         period: "2018 - Present",
         keyResponsibilities: {
             en: [
-                "Design, development, and maintenance of integration solutions between industrial protocols (SNMP, MODBUS, BACnet, etc.) or external applications (PowerIQ, HPE IMC, Invision, VMware, etc.) and DCIM platforms (iTRACS, ITA, DCE, etc.)",
+                "Design, development, and maintenance of integration solutions between industrial protocols (SNMP, Modbus, BACnet, etc.) or external applications (PowerIQ, HPE IMC, Invision, VMware, etc.) and DCIM platforms (iTRACS, ITA, DCE, etc.)",
                 "Development of scalable, agnostic microservices for data extraction, transformation, and loading (ETL) using REST APIs",
                 "Participated in 8+ operational projects using agile methodologies (Kanban, Scrum)",
                 "Used C#, Python, JavaScript, .NET (Framework & Core), Django, and Django REST Framework",
                 "Worked with PostgreSQL, Docker, GitHub, AWS for database and DevOps operations"
             ],
             es: [
-                "Diseño, desarrollo y mantenimiento de soluciones de integración entre protocolos industriales (SNMP, MODBUS, BACnet, etc.) o aplicaciones externas (PowerIQ, HPE IMC, Invision, VMware, etc.) y plataformas DCIM (iTRACS, ITA, DCE, etc.)",
+                "Diseño, desarrollo y mantenimiento de soluciones de integración entre protocolos industriales (SNMP, Modbus, BACnet, etc.) o aplicaciones externas (PowerIQ, HPE IMC, Invision, VMware, etc.) y plataformas DCIM (iTRACS, ITA, DCE, etc.)",
                 "Desarrollo de microservicios escalables y agnósticos para extracción, transformación y carga de datos (ETL) utilizando APIs REST",
                 "Participación en más de 8 proyectos operativos utilizando metodologías ágiles (Kanban, Scrum)",
                 "Uso de C#, Python, JavaScript, .NET (Framework y Core), Django y Django REST Framework",
                 "Trabajo con PostgreSQL, Docker, GitHub, AWS para operaciones de base de datos y DevOps"
             ],
             fr: [
-                "Conception, développement et maintenance de solutions d'intégration entre protocoles industriels (SNMP, MODBUS, BACnet, etc.) ou applications externes (PowerIQ, HPE IMC, Invision, VMware, etc.) et plateformes DCIM (iTRACS, ITA, DCE, etc.)",
+                "Conception, développement et maintenance de solutions d'intégration entre protocoles industriels (SNMP, Modbus, BACnet, etc.) ou applications externes (PowerIQ, HPE IMC, Invision, VMware, etc.) et plateformes DCIM (iTRACS, ITA, DCE, etc.)",
                 "Développement de microservices évolutifs et agnostiques pour l'extraction, la transformation et le chargement de données (ETL) utilisant des API REST",
                 "Participation à plus de 8 projets opérationnels utilisant des méthodologies agiles (Kanban, Scrum)",
                 "Utilisation de C#, Python, JavaScript, .NET (Framework & Core), Django et Django REST Framework",
