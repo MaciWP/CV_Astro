@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "*",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Skill(adaptive-meta-orchestrator)",
+      "Bash(sed:*)",
+      "Bash(done)",
+      "Bash(chmod:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "autoApprove": true,
+    "defaultAction": "allow"
+  },
+  "outputStyle": "default"
+}

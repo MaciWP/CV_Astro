@@ -9,8 +9,8 @@
 /* Make the brand-red color slightly darker for better contrast */
 :root {
     --original-brand-red: #D83333;
-    --accessible-brand-red: #C42B2B;
-    /* Versión más oscura para mejor contraste */
+    --accessible-brand-red: #C41E1E;
+    /* Versión WCAG AA compliant (4.5:1 ratio) */
 }
 
 /* Apply the darker red to text and borders */

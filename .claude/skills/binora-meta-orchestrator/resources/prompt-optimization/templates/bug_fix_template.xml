@@ -1,0 +1,113 @@
+<!--
+EasyBoard Bug Fix Prompt Template
+Use this template for fixing bugs in EasyBoard codebase
+Replace {{PLACEHOLDERS}} with actual values
+-->
+
+<task>Fix {{ERROR_TYPE}} in {{CLASS_NAME}}.{{METHOD_NAME}}() when {{CONDITION}}</task>
+
+<context>
+  <file>{{FILE_PATH}}:{{LINE_NUMBER}}</file>
+  <error>{{EXACT_ERROR_MESSAGE}}</error>
+  <symptom>{{USER_VISIBLE_SYMPTOM}}</symptom>
+  <tech_stack>Flutter 3.24, {{RELEVANT_PACKAGES}}</tech_stack>
+  <when_occurs>{{REPRODUCTION_STEPS}}</when_occurs>
+  <architecture>
+    - {{ARCHITECTURAL_CONTEXT}}
+    - {{RELEVANT_PATTERNS}}
+    - {{CURRENT_IMPLEMENTATION_DETAILS}}
+  </architecture>
+  <related_files>
+    - {{RELATED_FILE_1}} ({{PURPOSE}})
+    - {{RELATED_FILE_2}} ({{PURPOSE}})
+  </related_files>
+</context>
+
+<instructions>
+1. {{DIAGNOSTIC_STEP_1}}
+2. {{FIX_STEP_1}} at line {{LINE}}: {{CODE_CHANGE}}
+3. {{FIX_STEP_2}} {{ADDITIONAL_CHANGES}}
+4. {{ERROR_HANDLING}} Add try-catch / null check / validation
+5. {{LOGGING}} Add LoggingService.{{LEVEL}}('{{CLASS}}', '{{MESSAGE}}')
+6. Add unit test in test/{{TEST_PATH}}/{{TEST_FILE}}.dart:
+   - Create Mock{{SERVICE}} with {{FAILURE_CONDITION}}
+   - Verify {{METHOD}}() {{EXPECTED_BEHAVIOR}}
+   - Verify {{SIDE_EFFECT}} (SnackBar, log, state change)
+7. Verify no crash with: flutter test test/{{TEST_PATH}}/{{TEST_FILE}}.dart
+8. Manual test: {{MANUAL_REPRODUCTION_STEPS}}
+</instructions>
+
+<output_format>
+<fix>
+  <file>{{FILE_PATH}}</file>
+  <changes>
+    - Line {{LINE1}}: {{CHANGE_DESCRIPTION_1}}
+    - Line {{LINE2}}: {{CHANGE_DESCRIPTION_2}}
+    - Line {{LINE3}}: {{CHANGE_DESCRIPTION_3}}
+  </changes>
+  <code>Complete {{LANGUAGE}} code with {{FIX_TYPE}}</code>
+</fix>
+<test>
+  <file>test/{{TEST_PATH}}/{{TEST_FILE}}.dart</file>
+  <test_case>test{{CAMEL_CASE_DESCRIPTION}}</test_case>
+  <assertions>
+    - Verify {{ASSERTION_1}}
+    - Verify {{ASSERTION_2}}
+    - Verify {{ASSERTION_3}}
+  </assertions>
+</test>
+<verification>
+  <manual_steps>
+    1. {{MANUAL_STEP_1}}
+    2. {{MANUAL_STEP_2}}
+    3. {{MANUAL_STEP_3}}
+    4. Verify {{EXPECTED_OUTCOME}}
+    5. Verify no {{PREVIOUS_ERROR}}
+  </manual_steps>
+  <flutter_analyze>flutter analyze (expect 0 errors)</flutter_analyze>
+  <edge_cases>
+    - Test with {{EDGE_CASE_1}}
+    - Test with {{EDGE_CASE_2}}
+  </edge_cases>
+</verification>
+</output_format>
+
+<!--
+EXAMPLES OF PLACEHOLDERS:
+
+ERROR_TYPE: NullPointerException, StateError, FormatException, TimeoutException
+CLASS_NAME: MLService, CameraScreen, DatabaseService, HistoryService
+METHOD_NAME: detectObjects, takePicture, loadMatchHistory, saveMatch
+CONDITION: model not loaded, camera not initialized, database closed, null input
+FILE_PATH: lib/services/ml_service.dart, lib/screens/camera_screen.dart
+LINE_NUMBER: 156, 234, 89
+EXACT_ERROR_MESSAGE: Null check operator used on null value - _session is null
+USER_VISIBLE_SYMPTOM: App crashes when switching games, SnackBar shows error
+RELEVANT_PACKAGES: Riverpod 2.4.9, Isar 3.1.0, ONNX Runtime 1.22.0, camera 0.11.0
+REPRODUCTION_STEPS: Reproducible 100%: tap capture immediately after opening CameraScreen
+ARCHITECTURAL_CONTEXT: CameraScreen uses StatefulWidget with CameraController
+RELEVANT_PATTERNS: Constructor DI, Result<T> error handling, LoggingService
+CURRENT_IMPLEMENTATION_DETAILS: takePicture() called from FAB without init check
+RELATED_FILE_1: lib/services/camera_service.dart
+PURPOSE: Camera initialization and control
+FIX_STEP_1: Add null safety check
+CODE_CHANGE: if (!cameraController.value.isInitialized) return;
+ERROR_HANDLING: Add null check, show SnackBar, early return
+LOGGING: LoggingService.warning('CameraScreen', 'takePicture called before init')
+TEST_PATH: screens, services, models/database
+TEST_FILE: camera_screen_test, ml_service_test, database_service_test
+MOCK_SERVICE: MockCameraService, MockMLService, MockDatabaseService
+FAILURE_CONDITION: isInitialized = false, model = null, session closed
+EXPECTED_BEHAVIOR: returns early without crash, shows error message
+SIDE_EFFECT: SnackBar displayed, error logged, state unchanged
+MANUAL_REPRODUCTION_STEPS: Open CameraScreen, tap capture immediately
+CHANGE_DESCRIPTION: Add null safety check before accessing value
+LANGUAGE: Dart, SQL, YAML
+FIX_TYPE: null check, error handling, defensive programming
+CAMEL_CASE_DESCRIPTION: TakePictureBeforeInitialization, DetectWithNullModel
+ASSERTION: no exception thrown, SnackBar displayed, correct error logged
+MANUAL_STEP: Run app in debug mode, Navigate to X, Tap Y button
+EXPECTED_OUTCOME: SnackBar appears, no crash, graceful degradation
+PREVIOUS_ERROR: NullPointerException, StateError
+EDGE_CASE: null input, empty list, database closed, no network
+-->

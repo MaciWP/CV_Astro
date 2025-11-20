@@ -8,8 +8,8 @@ export default {
                 sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
             },
             colors: {
-                // Color principal para acentos
-                'brand-red': '#D83333',
+                // Color principal para acentos (WCAG AA compliant - 4.5:1 ratio)
+                'brand-red': '#C41E1E',
 
                 // Light theme - Nueva paleta más clara con recuadros grises
                 'light-primary': '#ffffff',       // Fondo principal BLANCO

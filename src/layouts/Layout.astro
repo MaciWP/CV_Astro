@@ -5,7 +5,7 @@
  * @description Enterprise-grade layout with proper TypeScript definitions
  * @author Oriol Macias Dev
  * @version 2.0.0
- * 
+ *
  * FIXES APPLIED:
  * ✅ TypeScript 'seeks' property errors resolved
  * ✅ Proper structured data typing with conditional properties
@@ -20,6 +20,9 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
+import JobPostingSchema from "../components/JobPostingSchema";
+
+const currentPath = Astro.url.pathname;
 
 /**
  * Layout component props interface
@@ -44,7 +47,7 @@ export interface Props {
  * @interface MarketDetection
  */
 interface MarketDetection {
-  market: 'general' | 'switzerland' | 'spain';
+  market: "general" | "switzerland" | "spain";
   city: string;
   title: string;
   description: string;
@@ -53,11 +56,22 @@ interface MarketDetection {
 
 /**
  * Schema.org structured data interfaces
- * @interface JobPostingSchema
+ * @interface JobPostingSchema - Complete JobPosting schema compliant with Google requirements
  */
 interface JobPostingSchema {
   "@type": "JobPosting";
-  jobTitle: string;
+  "@context"?: string;
+  title: string; // Required: Job title
+  description: string; // Required: Job description
+  datePosted: string; // Required: ISO date when posted
+  validThrough: string; // Required: ISO date when expires
+  employmentType: string; // Required: FULL_TIME, PART_TIME, etc.
+  hiringOrganization: {
+    "@type": "Organization";
+    name: string;
+    url?: string;
+    logo?: string;
+  }; // Required: Hiring organization
   jobLocation: {
     "@type": "Place";
     address: {
@@ -65,8 +79,23 @@ interface JobPostingSchema {
       addressCountry: string;
       addressRegion: string;
       addressLocality?: string;
+      postalCode?: string;
     };
   };
+  baseSalary?: {
+    "@type": "MonetaryAmount";
+    currency: string;
+    value: {
+      "@type": "QuantitativeValue";
+      minValue?: number;
+      maxValue?: number;
+      unitText: string;
+    };
+  };
+  jobBenefits?: string[];
+  qualifications?: string[];
+  responsibilities?: string[];
+  skills?: string[];
 }
 
 /**
@@ -121,84 +150,124 @@ const {
  * @example
  * const result = detectMarketAndOptimizeSEO(new URL(request.url), 'en');
  */
-function detectMarketAndOptimizeSEO(currentUrl: URL, language: string): MarketDetection {
-  let detectedMarket: 'general' | 'switzerland' | 'spain' = 'general';
-  let detectedCity = 'general';
+function detectMarketAndOptimizeSEO(
+  currentUrl: URL,
+  language: string,
+): MarketDetection {
+  let detectedMarket: "general" | "switzerland" | "spain" = "general";
+  let detectedCity = "general";
   let enhancedTitle = title;
   let enhancedDescription = description;
-  let enhancedKeywords = 'oriol macias, software developer, backend developer, cv, portfolio';
+  let enhancedKeywords =
+    "oriol macias, software developer, backend developer, cv, portfolio";
 
   try {
-    const pathSegments = currentUrl.pathname.split('/').filter(Boolean);
-    
+    const pathSegments = currentUrl.pathname.split("/").filter(Boolean);
+
     // Swiss cities detection with enhanced targeting
-    const swissCities = ['zurich', 'basel', 'geneva', 'geneve', 'lausanne', 'bern'];
-    const detectedSwissCity = pathSegments.find(segment => 
-      swissCities.includes(segment.toLowerCase())
+    const swissCities = [
+      "zurich",
+      "basel",
+      "geneva",
+      "geneve",
+      "lausanne",
+      "bern",
+    ];
+    const detectedSwissCity = pathSegments.find((segment) =>
+      swissCities.includes(segment.toLowerCase()),
     );
-    
-    if (detectedSwissCity || pathSegments.includes('switzerland')) {
-      detectedMarket = 'switzerland';
-      detectedCity = detectedSwissCity || 'general';
-      
+
+    if (detectedSwissCity || pathSegments.includes("switzerland")) {
+      detectedMarket = "switzerland";
+      detectedCity = detectedSwissCity || "general";
+
       // Brand optimization for homepage
-      if (currentUrl.pathname === '/') {
-        enhancedTitle = "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
-        enhancedDescription = "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
-        enhancedKeywords = "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio";
+      if (currentUrl.pathname === "/") {
+        enhancedTitle =
+          "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
+        enhancedDescription =
+          "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
+        enhancedKeywords =
+          "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio";
       }
       // Swiss city-specific optimization
       else {
         const cityOptimizations = {
           zurich: {
-            title: "Oriol Macias - Senior Backend Developer Zurich | Python Expert",
-            description: "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise. Work permit ready for Swiss companies.",
-            keywords: "backend developer zurich, python developer zurich, software engineer zurich, work permit switzerland"
+            title:
+              "Oriol Macias - Senior Backend Developer Zurich | Python Expert",
+            description:
+              "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise. Work permit ready for Swiss companies.",
+            keywords:
+              "backend developer zurich, python developer zurich, software engineer zurich, work permit switzerland",
           },
           basel: {
-            title: "Oriol Macias - Software Engineer Basel | Industrial Automation",
-            description: "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, MODBUS, BACnet) expert.",
-            keywords: "software engineer basel, industrial automation basel, pharmaceutical developer basel"
+            title:
+              "Oriol Macias - Software Engineer Basel | Industrial Automation",
+            description:
+              "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, MODBUS, BACnet) expert.",
+            keywords:
+              "software engineer basel, industrial automation basel, pharmaceutical developer basel",
           },
           geneva: {
-            title: "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
-            description: "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
-            keywords: "backend developer geneva, multilingual developer geneva, international organizations"
+            title:
+              "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
+            description:
+              "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
+            keywords:
+              "backend developer geneva, multilingual developer geneva, international organizations",
           },
           geneve: {
-            title: "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
-            description: "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
-            keywords: "backend developer geneva, multilingual developer geneva, international organizations"
-          }
+            title:
+              "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
+            description:
+              "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
+            keywords:
+              "backend developer geneva, multilingual developer geneva, international organizations",
+          },
         };
 
-        const cityConfig = cityOptimizations[detectedCity as keyof typeof cityOptimizations];
+        const cityConfig =
+          cityOptimizations[detectedCity as keyof typeof cityOptimizations];
         if (cityConfig) {
           enhancedTitle = cityConfig.title;
           enhancedDescription = cityConfig.description;
           enhancedKeywords = cityConfig.keywords;
         } else {
-          enhancedTitle = "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
-          enhancedDescription = "Senior Backend Developer seeking opportunities across Switzerland. 8+ years experience, EU work permit ready.";
-          enhancedKeywords = "backend developer switzerland, python developer switzerland, work permit ready";
+          enhancedTitle =
+            "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
+          enhancedDescription =
+            "Senior Backend Developer seeking opportunities across Switzerland. 8+ years experience, EU work permit ready.";
+          enhancedKeywords =
+            "backend developer switzerland, python developer switzerland, work permit ready";
         }
       }
     }
     // Spanish market detection
-    else if (pathSegments.includes('espana') || pathSegments.includes('spain') || language === 'es') {
-      detectedMarket = 'spain';
-      enhancedTitle = "Oriol Macias - Desarrollador Backend España | Senior Python";
-      enhancedDescription = "Desarrollador Backend senior con 8+ años experiencia. Python, Django, protocolos industriales. Disponible España.";
-      enhancedKeywords = "desarrollador backend españa, python desarrollador madrid, ingeniero software españa";
+    else if (
+      pathSegments.includes("espana") ||
+      pathSegments.includes("spain") ||
+      language === "es"
+    ) {
+      detectedMarket = "spain";
+      enhancedTitle =
+        "Oriol Macias - Desarrollador Backend España | Senior Python";
+      enhancedDescription =
+        "Desarrollador Backend senior con 8+ años experiencia. Python, Django, protocolos industriales. Disponible España.";
+      enhancedKeywords =
+        "desarrollador backend españa, python desarrollador madrid, ingeniero software españa";
     }
     // Homepage brand optimization
-    else if (currentUrl.pathname === '/') {
-      enhancedTitle = "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
-      enhancedDescription = "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
-      enhancedKeywords = "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio";
+    else if (currentUrl.pathname === "/") {
+      enhancedTitle =
+        "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
+      enhancedDescription =
+        "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
+      enhancedKeywords =
+        "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio";
     }
   } catch (error) {
-    console.warn('Market detection error:', error);
+    console.warn("Market detection error:", error);
     // Fallback to safe defaults
   }
 
@@ -207,7 +276,7 @@ function detectMarketAndOptimizeSEO(currentUrl: URL, language: string): MarketDe
     city: detectedCity,
     title: enhancedTitle,
     description: enhancedDescription,
-    keywords: enhancedKeywords
+    keywords: enhancedKeywords,
   };
 }
 
@@ -222,78 +291,54 @@ const marketData = detectMarketAndOptimizeSEO(new URL(Astro.request.url), lang);
  * @example
  * const schema = generatePersonStructuredData(marketData);
  */
-function generatePersonStructuredData(marketInfo: MarketDetection): PersonSchema {
+function generatePersonStructuredData(
+  marketInfo: MarketDetection,
+): PersonSchema {
   // Base person schema object
   const personSchema: PersonSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": "https://oriolmacias.dev/#oriol-macias-dev",
-    "name": "Oriol Macias",
-    "alternateName": ["Oriol Dev", "Macias Dev", "Oriol Macias Dev"],
-    "description": "Software Developer known professionally as Oriol Macias Dev",
-    "url": "https://oriolmacias.dev",
-    "mainEntityOfPage": "https://oriolmacias.dev",
-    "jobTitle": "Software Developer",
-    "sameAs": [
+    name: "Oriol Macias",
+    alternateName: ["Oriol Dev", "Macias Dev", "Oriol Macias Dev"],
+    description: "Software Developer known professionally as Oriol Macias Dev",
+    url: "https://oriolmacias.dev",
+    mainEntityOfPage: "https://oriolmacias.dev",
+    jobTitle: "Software Developer",
+    sameAs: [
       "https://linkedin.com/in/oriolmaciasbadosa",
-      "https://github.com/MaciWP"
+      "https://github.com/MaciWP",
     ],
-    "worksFor": {
+    worksFor: {
       "@type": "Organization",
-      "name": "Bjumper",
-      "url": "https://bjumper.com"
+      name: "Bjumper",
+      url: "https://bjumper.com",
     },
-    "brand": {
+    brand: {
       "@type": "Brand",
-      "name": "Oriol Macias Dev",
-      "url": "https://oriolmacias.dev"
+      name: "Oriol Macias Dev",
+      url: "https://oriolmacias.dev",
     },
-    "knowsAbout": [
-      "Software Development", "Python", "Django", "Backend Development",
-      "Industrial Protocols", "SNMP", "MODBUS", "BACnet", "Data Center Infrastructure"
+    knowsAbout: [
+      "Software Development",
+      "Python",
+      "Django",
+      "Backend Development",
+      "Industrial Protocols",
+      "SNMP",
+      "MODBUS",
+      "BACnet",
+      "Data Center Infrastructure",
     ],
-    "identifier": {
+    identifier: {
       "@type": "PropertyValue",
-      "name": "Website",
-      "value": "oriolmacias.dev"
-    }
+      name: "Website",
+      value: "oriolmacias.dev",
+    },
   };
 
-  // Conditionally add job seeking information based on market
-  if (marketInfo.market === 'switzerland') {
-    const jobPosting: JobPostingSchema = {
-      "@type": "JobPosting",
-      "jobTitle": "Backend Developer",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "CH",
-          "addressRegion": "Switzerland"
-        }
-      }
-    };
-    
-    // Add specific city if detected
-    if (marketInfo.city !== 'general') {
-      jobPosting.jobLocation.address.addressLocality = marketInfo.city.charAt(0).toUpperCase() + marketInfo.city.slice(1);
-    }
-    
-    personSchema.seeks = jobPosting;
-  } else if (marketInfo.market === 'spain') {
-    personSchema.seeks = {
-      "@type": "JobPosting", 
-      "jobTitle": "Desarrollador Backend",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "ES",
-          "addressRegion": "Spain"
-        }
-      }
-    };
-  }
+  // Note: JobPosting schema is now handled by separate JobPostingSchema component
+  // This keeps the Person schema clean and focused
 
   return personSchema;
 }
@@ -311,8 +356,21 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <html lang={lang} class="dark" dir="ltr">
   <head>
     <!-- Content Security Policy - Enhanced for Analytics -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com https://www.google-analytics.com; object-src 'none'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com;">
-    
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+      default-src 'self';
+      base-uri 'self';
+      object-src 'none';
+      img-src 'self' data: blob:;
+      font-src 'self' data:;
+      style-src 'self' 'unsafe-inline';
+      script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com;
+      connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net;
+      upgrade-insecure-requests;
+    "
+    />
+
     <!-- Critical resource preloading for Core Web Vitals optimization -->
     <link
       rel="preload"
@@ -341,65 +399,28 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Mobile optimizations script -->
     <script src="/mobile-optimizations.js" defer></script>
 
-    <!-- Font Awesome optimized setup -->
-    <script is:inline>
-      /**
-       * Optimized Font Awesome loading strategy
-       * @description Loads Font Awesome with fallback mechanisms
-       */
-      (function () {
-        try {
-          const linkCDN = document.createElement("link");
-          linkCDN.rel = "stylesheet";
-          linkCDN.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
-          linkCDN.integrity = "sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==";
-          linkCDN.crossOrigin = "anonymous";
-          linkCDN.onerror = function() {
-            console.warn('Font Awesome CDN failed, using fallback');
-            // Fallback to local fonts
-          };
-          document.head.insertBefore(linkCDN, document.head.firstChild);
-
-          const inlineStyle = document.createElement("style");
-          inlineStyle.textContent = `
-            @font-face {
-              font-family: 'FontAwesome';
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
-              font-weight: 900;
-              font-style: normal;
-              font-display: block;
-            }
-            @font-face {
-              font-family: 'FontAwesomeBrands';
-              src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
-              font-weight: normal;
-              font-style: normal;
-              font-display: block;
-            }
-            .fas:not(:empty)::before, .fab:not(:empty)::before {
-              content: '';
-              display: inline-block;
-              width: 1em;
-              height: 1em;
-              margin-right: 0.25em;
-              background-color: currentColor;
-              -webkit-mask-size: cover;
-              mask-size: cover;
-            }
-          `;
-          document.head.insertBefore(inlineStyle, document.head.firstChild);
-        } catch (error) {
-          console.error('Font Awesome setup error:', error);
-        }
-      })();
-    </script>
+    <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
 
     <!-- Favicons and manifest -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/favicon-180.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/favicon-180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16.png"
+    />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#D83333" />
     <meta charset="UTF-8" />
@@ -415,23 +436,41 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="canonical" href={fullCanonicalUrl} />
 
     <!-- Geo-targeting based on market detection -->
-    {marketData.market === 'switzerland' && (
-      <Fragment>
-        <meta name="geo.region" content="CH" />
-        <meta name="geo.country" content="Switzerland" />
-        {marketData.city !== 'general' && <meta name="geo.placename" content={marketData.city.charAt(0).toUpperCase() + marketData.city.slice(1)} />}
-        <meta name="work-authorization" content="EU work permit ready" />
-        <meta name="employment-eligibility" content="Authorized to work in Switzerland" />
-      </Fragment>
-    )}
-    
-    {marketData.market === 'spain' && (
-      <Fragment>
-        <meta name="geo.region" content="ES" />
-        <meta name="geo.country" content="Spain" />
-        <meta name="employment-eligibility" content="Authorized to work in Spain" />
-      </Fragment>
-    )}
+    {
+      marketData.market === "switzerland" && (
+        <Fragment>
+          <meta name="geo.region" content="CH" />
+          <meta name="geo.country" content="Switzerland" />
+          {marketData.city !== "general" && (
+            <meta
+              name="geo.placename"
+              content={
+                marketData.city.charAt(0).toUpperCase() +
+                marketData.city.slice(1)
+              }
+            />
+          )}
+          <meta name="work-authorization" content="EU work permit ready" />
+          <meta
+            name="employment-eligibility"
+            content="Authorized to work in Switzerland"
+          />
+        </Fragment>
+      )
+    }
+
+    {
+      marketData.market === "spain" && (
+        <Fragment>
+          <meta name="geo.region" content="ES" />
+          <meta name="geo.country" content="Spain" />
+          <meta
+            name="employment-eligibility"
+            content="Authorized to work in Spain"
+          />
+        </Fragment>
+      )
+    }
 
     <!-- Language alternatives component -->
     <LanguageAlternates
@@ -443,47 +482,159 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Critical CSS for layout shift prevention -->
     <style is:inline>
       /* Critical layout preservation styles */
-      #skills, .nav-container, .profile-image-container {
+      #skills,
+      .nav-container,
+      .profile-image-container {
         content-visibility: auto;
         contain-intrinsic-size: 0 400px;
       }
-      
+
       /* Prevent layout shifts during font loading */
-      .fas, .fa-solid, .fab, .fa-brands {
+      .fas,
+      .fa-solid,
+      .fab,
+      .fa-brands {
         min-width: 1em;
         display: inline-block;
       }
     </style>
 
-    <!-- Accessibility and layout improvements -->
-    <link rel="stylesheet" href="/styles/a11y-improvements.css" />
-    <link rel="stylesheet" href="/styles/layout-shift-fixes.css" />
+    <!-- Critical CSS Inlined for Performance - OPTIMIZED -->
+    <style is:inline>
+      /* a11y-improvements.css - Accessibility fixes */
+      :root {
+        --original-brand-red: #D83333;
+        --accessible-brand-red: #C41E1E;
+      }
+      .text-brand-red { color: var(--accessible-brand-red) !important; }
+      .border-brand-red { border-color: var(--accessible-brand-red) !important; }
+      .bg-brand-red { background-color: var(--original-brand-red); }
+      h4.text-brand-red { color: #B22222 !important; font-weight: 600 !important; }
+      [aria-current="page"] { font-weight: 600 !important; }
+      .text-brand-red[aria-current="page"] { color: #B22222 !important; }
+      #cv-download-button { color: #FFFFFF !important; background-color: var(--accessible-brand-red) !important; border-color: var(--accessible-brand-red) !important; }
+      #cv-download-button:hover { background-color: #a81c1c !important; }
+      footer, footer p { color: #4A5568 !important; }
+      .dark footer, .dark footer p { color: #CBD5E0 !important; }
+      button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+        outline: 3px solid var(--accessible-brand-red) !important;
+        outline-offset: 2px !important;
+        box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
+      }
+
+      /* layout-shift-fixes.css - CLS prevention */
+      #skills { min-height: 400px; contain: layout paint; }
+      .skill-pill { height: 32px; margin-bottom: 8px; contain: content; }
+      nav .hidden.md\:block { min-height: 40px; contain: layout size; }
+      .w-10.h-10 { min-width: 2.5rem; min-height: 2.5rem; contain: strict; }
+      [data-i18n="header.photoAlt"] { min-height: 400px; min-width: 400px; aspect-ratio: 1; contain: size layout; }
+      section#skills, div.hidden.md\:block { contain: layout paint; isolation: isolate; }
+      section#skills h3, section#skills .skill-pill { transform: translateZ(0); will-change: transform; transition: transform 0.2s ease-out; }
+      nav a[data-section] { min-width: 70px; text-align: center; justify-content: center; display: inline-flex; }
+      #skills .section-header { height: 40px; margin-bottom: 16px; contain: layout size; }
+      @media (max-width: 768px) {
+        #skills, .nav-container { contain: strict; content-visibility: auto; }
+        main>div>section:first-child { min-height: 200px; }
+        h1, h2, h3, p { contain: content; }
+      }
+
+      /* cls-fix.css - Additional CLS prevention */
+      #skills .skill-pill {
+        opacity: 0;
+        transform: translateY(0);
+        transition: opacity 0.3s ease-out;
+        height: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+      #skills .skill-pill[style*="opacity: 1"] {
+        transform: translateY(0) !important;
+      }
+
+      /* critical-mobile.css - Mobile critical styles */
+      @media (max-width: 767px) {
+        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff; color: #1f2937; }
+        .dark body { background-color: #121620; color: #f9fafb; }
+        header { position: sticky; top: 0; z-index: 50; background-color: #ffffff; border-bottom: 1px solid #e5e7eb; padding: 0.75rem 0; }
+        .dark header { background-color: #121620; border-color: #374151; }
+        .container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+        p { margin-bottom: 1rem; }
+      }
+    </style>
 
     <!-- Alternate language versions -->
-    {alternateUrls.en && <link rel="alternate" hreflang="en" href={alternateUrls.en} />}
-    {alternateUrls.es && <link rel="alternate" hreflang="es" href={alternateUrls.es} />}
-    {alternateUrls.fr && <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />}
-    <link rel="alternate" hreflang="x-default" href="https://oriolmacias.dev/" />
+    {
+      alternateUrls.en && (
+        <link rel="alternate" hreflang="en" href={alternateUrls.en} />
+      )
+    }
+    {
+      alternateUrls.es && (
+        <link rel="alternate" hreflang="es" href={alternateUrls.es} />
+      )
+    }
+    {
+      alternateUrls.fr && (
+        <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />
+      )
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://oriolmacias.dev/"
+    />
 
     <!-- Market-specific hreflang -->
-    {marketData.market === 'switzerland' && (
-      <Fragment>
-        <link rel="alternate" hreflang="de-CH" href={`https://oriolmacias.dev/de${Astro.url.pathname}`} />
-        <link rel="alternate" hreflang="fr-CH" href={`https://oriolmacias.dev/fr${Astro.url.pathname}`} />
-        <link rel="alternate" hreflang="it-CH" href={`https://oriolmacias.dev/it${Astro.url.pathname}`} />
-      </Fragment>
-    )}
-    
-    {marketData.market === 'spain' && (
-      <link rel="alternate" hreflang="es-ES" href={`https://oriolmacias.dev/es${Astro.url.pathname}`} />
-    )}
+    {
+      marketData.market === "switzerland" && (
+        <Fragment>
+          <link
+            rel="alternate"
+            hreflang="de-CH"
+            href={`https://oriolmacias.dev/de${Astro.url.pathname}`}
+          />
+          <link
+            rel="alternate"
+            hreflang="fr-CH"
+            href={`https://oriolmacias.dev/fr${Astro.url.pathname}`}
+          />
+          <link
+            rel="alternate"
+            hreflang="it-CH"
+            href={`https://oriolmacias.dev/it${Astro.url.pathname}`}
+          />
+        </Fragment>
+      )
+    }
+
+    {
+      marketData.market === "spain" && (
+        <link
+          rel="alternate"
+          hreflang="es-ES"
+          href={`https://oriolmacias.dev/es${Astro.url.pathname}`}
+        />
+      )
+    }
 
     <!-- Enhanced accessibility and device support -->
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121620" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#121620"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
 
     <!-- Enhanced Open Graph -->
     <meta property="og:title" content={marketData.title} />
@@ -504,39 +655,62 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta name="twitter:creator" content="@oriolmacias" />
 
     <!-- Google Analytics with enhanced tracking -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C98YSPVS02"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C98YSPVS02"
+    ></script>
     <script is:inline define:vars={{ marketData, lang }}>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-C98YSPVS02', {
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-C98YSPVS02", {
         custom_map: {
-          'custom_parameter_1': 'market_focus',
-          'custom_parameter_2': 'target_city'
+          custom_parameter_1: "market_focus",
+          custom_parameter_2: "target_city",
         },
         anonymize_ip: true,
-        allow_google_signals: false
+        allow_google_signals: false,
       });
-      
+
       // Enhanced market-specific tracking
-      gtag('event', 'page_view', {
+      gtag("event", "page_view", {
         market_focus: marketData.market,
         target_city: marketData.city,
         language: lang,
-        page_type: 'cv_portfolio'
+        page_type: "cv_portfolio",
       });
     </script>
 
     <!-- Fixed Structured Data with proper typing -->
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData, null, 2)}></script>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData, null, 2)}
+    />
+
+    <!-- JobPosting Structured Data - Separate component for Google compliance -->
+    <JobPostingSchema
+      market={marketData.market as "switzerland" | "spain" | "general"}
+      city={marketData.city}
+      language={lang as "en" | "es" | "fr"}
+      client:load
+    />
 
     <!-- Performance optimizations -->
     <meta name="generator" content={Astro.generator} />
-    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-
-    <!-- Font Awesome fallback CSS -->
-    <link rel="stylesheet" href="/styles/font-awesome-fallback.css" />
+    <link
+      rel="preload"
+      href="/styles/fonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/styles/fonts/fa-brands-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
 
     <!-- Critical Font Awesome styles -->
     <style is:inline>
@@ -556,7 +730,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         src: url("/styles/fonts/fa-brands-400.woff2") format("woff2");
       }
 
-      .fas, .fa-solid {
+      .fas,
+      .fa-solid {
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
         -moz-osx-font-smoothing: grayscale;
@@ -568,7 +743,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         line-height: 1;
       }
 
-      .fab, .fa-brands {
+      .fab,
+      .fa-brands {
         font-family: "Font Awesome 5 Brands";
         font-weight: 400;
         -moz-osx-font-smoothing: grayscale;
@@ -581,7 +757,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       }
 
       /* Enhanced navigation positioning */
-      nav, header nav, nav[role="navigation"], header[role="banner"] {
+      nav,
+      header nav,
+      nav[role="navigation"],
+      header[role="banner"] {
         position: -webkit-sticky !important;
         position: sticky !important;
         top: 0 !important;
@@ -612,27 +791,29 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       try {
         window.CURRENT_LANGUAGE = lang;
         window.TRANSLATIONS = window.TRANSLATIONS || {};
-        
+
         // Enhanced translation function with fallbacks
-        window.t = function(key, fallback) {
+        window.t = function (key, fallback) {
           try {
-            const keys = key.split('.');
+            const keys = key.split(".");
             let value = window.TRANSLATIONS[window.CURRENT_LANGUAGE];
             for (const k of keys) {
               value = value?.[k];
             }
-            return value || fallback || key.split('.').pop() || key;
+            return value || fallback || key.split(".").pop() || key;
           } catch (error) {
-            console.warn('Translation error:', error);
+            console.warn("Translation error:", error);
             return fallback || key;
           }
         };
-        
+
         console.log("Language set to:", window.CURRENT_LANGUAGE);
       } catch (error) {
-        console.error('I18n initialization error:', error);
+        console.error("I18n initialization error:", error);
         // Fallback setup
-        window.t = function(key) { return key; };
+        window.t = function (key) {
+          return key;
+        };
       }
     </script>
 
@@ -646,13 +827,15 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         try {
           const storedTheme = localStorage.getItem("theme") || "dark";
           document.documentElement.classList.add(storedTheme);
-          
+
           // Emit theme change event for components
-          document.dispatchEvent(new CustomEvent('theme-changed', { 
-            detail: { theme: storedTheme } 
-          }));
+          document.dispatchEvent(
+            new CustomEvent("theme-changed", {
+              detail: { theme: storedTheme },
+            }),
+          );
         } catch (error) {
-          console.warn('Theme initialization error:', error);
+          console.warn("Theme initialization error:", error);
           // Fallback to dark theme
           document.documentElement.classList.add("dark");
         }
@@ -662,7 +845,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Enhanced print styles -->
     <style is:inline>
       @media print {
-        nav, footer, button:not(.cv-download-btn), .no-print {
+        nav,
+        footer,
+        button:not(.cv-download-btn),
+        .no-print {
           display: none !important;
         }
         body {
@@ -686,10 +872,16 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
           transition: none !important;
           animation: none !important;
         }
-        .dark\:text-dark-text, .dark\:text-dark-text-secondary, .text-light-text, .text-light-text-secondary {
+        .dark\:text-dark-text,
+        .dark\:text-dark-text-secondary,
+        .text-light-text,
+        .text-light-text-secondary {
           color: #000 !important;
         }
-        .dark\:bg-dark-surface, .dark\:bg-dark-secondary, .bg-light-surface, .bg-light-secondary {
+        .dark\:bg-dark-surface,
+        .dark\:bg-dark-secondary,
+        .bg-light-surface,
+        .bg-light-secondary {
           background-color: #fff !important;
         }
         .opacity-0 {
@@ -704,22 +896,43 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         .bg-brand-red {
           background-color: #d83333 !important;
         }
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
           page-break-after: avoid;
         }
-        p, li {
+        p,
+        li {
           page-break-inside: avoid;
         }
       }
     </style>
+    <LanguageAlternates currentLang={lang} currentPath={currentPath} />
 
-    <!-- Performance and mobile optimization stylesheets -->
-    <link rel="stylesheet" href="/styles/critical-mobile.css" media="(max-width: 767px)" />
-    <link rel="stylesheet" href="/styles/cls-fix.css" />
-    <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
+    <!-- Critical CSS already inlined above - Removed external links for performance -->
+    <!-- Preloads locales -->
+    <link
+      rel="preload"
+      href="/styles/fonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/styles/fonts/fa-brands-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Font Awesome CSS completo (incluye TODOS los iconos) -->
+    <link rel="stylesheet" href="/styles/font-awesome.min.css" />
   </head>
-  
-  <body class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300">
+
+  <body
+    class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
+  >
     <div id="app-root">
       <SkipToContent client:load />
       <A11yAnnouncer client:load />
@@ -731,37 +944,79 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
           </ErrorBoundary>
         </header>
 
-        <main id="cv-content" role="main" class="container mx-auto px-4 py-8 max-w-5xl">
+        <main
+          id="cv-content"
+          role="main"
+          class="container mx-auto px-4 py-8 max-w-5xl"
+        >
           <ErrorBoundary>
             <slot />
           </ErrorBoundary>
         </main>
 
         <ErrorBoundary>
-          <footer role="contentinfo" class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300">
+          <footer
+            role="contentinfo"
+            class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
+          >
             <div class="container mx-auto px-4 max-w-5xl">
-              <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div
+                class="flex flex-col md:flex-row justify-between items-center gap-4"
+              >
                 <div class="flex items-center gap-2">
-                  <div class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center" aria-hidden="true">
+                  <div
+                    class="h-6 w-6 bg-brand-red rounded-none flex items-center justify-center"
+                    aria-hidden="true"
+                  >
                     <span class="text-white font-bold text-xs">OM</span>
                   </div>
-                  <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+                  <p
+                    class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                    suppressHydrationWarning
+                  >
                     © {new Date().getFullYear()} Oriol Macias
                   </p>
                 </div>
                 <div class="flex items-center gap-6">
-                  <a href="#top" class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                     aria-label={lang === "es" ? "Volver al inicio de la página" : lang === "fr" ? "Retourner en haut de la page" : "Return to top of page"}>
-                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"></i>
-                    {lang === "es" ? "Volver arriba" : lang === "fr" ? "Retour en haut" : "Back to top"}
+                  <a
+                    href="#top"
+                    class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                    aria-label={lang === "es"
+                      ? "Volver al inicio de la página"
+                      : lang === "fr"
+                        ? "Retourner en haut de la page"
+                        : "Return to top of page"}
+                  >
+                    <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
+                    ></i>
+                    {
+                      lang === "es"
+                        ? "Volver arriba"
+                        : lang === "fr"
+                          ? "Retour en haut"
+                          : "Back to top"
+                    }
                   </a>
                 </div>
                 <!-- Fixed unique ID for download button -->
-                <button id="footer-cv-download-button" class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
-                        onclick="window.print()"
-                        aria-label={lang === "es" ? "Descargar CV en formato PDF" : lang === "fr" ? "Télécharger CV en format PDF" : "Download CV in PDF format"}>
+                <button
+                  id="footer-cv-download-button"
+                  class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
+                  onclick="window.print()"
+                  aria-label={lang === "es"
+                    ? "Descargar CV en formato PDF"
+                    : lang === "fr"
+                      ? "Télécharger CV en format PDF"
+                      : "Download CV in PDF format"}
+                >
                   <i class="fas fa-download mr-2" aria-hidden="true"></i>
-                  {lang === "es" ? "Descargar CV" : lang === "fr" ? "Télécharger CV" : "Download CV"}
+                  {
+                    lang === "es"
+                      ? "Descargar CV"
+                      : lang === "fr"
+                        ? "Télécharger CV"
+                        : "Download CV"
+                  }
                 </button>
               </div>
             </div>
@@ -776,50 +1031,52 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
        * Market-specific interaction tracking
        * @description Tracks user interactions for market optimization
        */
-      if (typeof gtag !== 'undefined') {
+      if (typeof gtag !== "undefined") {
         try {
-          document.addEventListener('click', function(e) {
+          document.addEventListener("click", function (e) {
             const target = e.target;
             if (target && target.closest) {
               // Swiss market tracking
-              if (target.closest('[data-swiss-tracking]')) {
-                gtag('event', 'swiss_market_interaction', {
-                  event_category: 'Swiss SEO',
-                  event_label: target.closest('[data-swiss-tracking]').getAttribute('data-swiss-tracking'),
+              if (target.closest("[data-swiss-tracking]")) {
+                gtag("event", "swiss_market_interaction", {
+                  event_category: "Swiss SEO",
+                  event_label: target
+                    .closest("[data-swiss-tracking]")
+                    .getAttribute("data-swiss-tracking"),
                   market_focus: marketData.market,
                   target_city: marketData.city,
                   custom_parameter_1: marketData.market,
-                  custom_parameter_2: marketData.city
+                  custom_parameter_2: marketData.city,
                 });
               }
               // Spanish market tracking
-              if (target.closest('[data-spanish-tracking]')) {
-                gtag('event', 'spanish_market_interaction', {
-                  event_category: 'Spanish SEO', 
-                  event_label: target.closest('[data-spanish-tracking]').getAttribute('data-spanish-tracking'),
+              if (target.closest("[data-spanish-tracking]")) {
+                gtag("event", "spanish_market_interaction", {
+                  event_category: "Spanish SEO",
+                  event_label: target
+                    .closest("[data-spanish-tracking]")
+                    .getAttribute("data-spanish-tracking"),
                   market_focus: marketData.market,
-                  custom_parameter_1: marketData.market
+                  custom_parameter_1: marketData.market,
                 });
               }
               // General CV interactions
-              if (target.closest('.cv-download-btn')) {
-                gtag('event', 'cv_download_attempt', {
-                  event_category: 'CV Engagement',
-                  event_label: 'Footer Download Button',
+              if (target.closest(".cv-download-btn")) {
+                gtag("event", "cv_download_attempt", {
+                  event_category: "CV Engagement",
+                  event_label: "Footer Download Button",
                   market_focus: marketData.market,
-                  target_city: marketData.city
+                  target_city: marketData.city,
                 });
               }
             }
           });
         } catch (error) {
-          console.warn('Market tracking error:', error);
+          console.warn("Market tracking error:", error);
         }
       }
     </script>
-  </body>
-
-  <!-- Enhanced smooth scrolling with error handling -->
+  </body><!-- Enhanced smooth scrolling with error handling -->
   <script is:inline>
     /**
      * Smooth scrolling navigation with accessibility
@@ -836,7 +1093,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
             if (targetElement) {
               e.preventDefault();
               const navbarHeight = 80;
-              const position = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+              const position =
+                targetElement.getBoundingClientRect().top +
+                window.pageYOffset -
+                navbarHeight;
 
               window.scrollTo({
                 top: position,
@@ -845,8 +1105,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
               // Accessibility announcement
               if (window.announceToScreenReader) {
-                const elementTitle = targetElement.querySelector("h2, h3")?.textContent || targetId;
-                window.announceToScreenReader(`Navigated to ${elementTitle} section`);
+                const elementTitle =
+                  targetElement.querySelector("h2, h3")?.textContent ||
+                  targetId;
+                window.announceToScreenReader(
+                  `Navigated to ${elementTitle} section`,
+                );
               }
 
               // Focus management for keyboard users
@@ -861,7 +1125,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
           });
         });
       } catch (error) {
-        console.error('Smooth scrolling error:', error);
+        console.error("Smooth scrolling error:", error);
       }
     });
   </script>
@@ -872,18 +1136,24 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
      * Service Worker registration for production
      * @description Registers service worker with proper error handling
      */
-    if (window.location.hostname !== "localhost" && 
-        window.location.hostname !== "127.0.0.1" && 
-        "serviceWorker" in navigator) {
+    if (
+      window.location.hostname !== "localhost" &&
+      window.location.hostname !== "127.0.0.1" &&
+      "serviceWorker" in navigator
+    ) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js?v=" + new Date().getTime())
+        navigator.serviceWorker
+          .register("/sw.js?v=" + new Date().getTime())
           .then((registration) => {
-            console.log("Service Worker registered successfully:", registration.scope);
-            
+            console.log(
+              "Service Worker registered successfully:",
+              registration.scope,
+            );
+
             // Check for updates
-            registration.addEventListener('updatefound', () => {
+            registration.addEventListener("updatefound", () => {
               const newWorker = registration.installing;
-              console.log('Service Worker update found');
+              console.log("Service Worker update found");
             });
           })
           .catch((error) => {

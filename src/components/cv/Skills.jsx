@@ -118,7 +118,8 @@ const Skills = () => {
                         transition-all hover:border-brand-red hover:translate-x-1
                         hover:shadow-sm dark:hover:bg-gray-800 skill-pill`}
                 style={{
-                    transform: isActive ? 'translateY(0)' : `translateY(${20 + index % 10}px)`,
+                    // OPTIMIZED: Use scale instead of translateY to prevent CLS
+                    transform: isActive ? 'scale(1)' : 'scale(0.95)',
                     opacity: isActive ? 1 : 0,
                     transitionProperty: 'transform, opacity, border-color, box-shadow',
                     transitionDuration: `${280 + index % 120}ms`,
@@ -126,7 +127,9 @@ const Skills = () => {
                     transitionTimingFunction: hasBounce
                         ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' // With bounce
                         : 'cubic-bezier(0.33, 1, 0.68, 1)', // Without bounce
-                    transformOrigin: index % 2 === 0 ? 'left center' : 'right center'
+                    transformOrigin: 'center',
+                    willChange: 'opacity, transform',
+                    backfaceVisibility: 'hidden'
                 }}
             >
                 <i className={`${icon} text-brand-red`}></i>
@@ -144,12 +147,15 @@ const Skills = () => {
             <div
                 className="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 section-header"
                 style={{
-                    transform: isActive ? 'translateX(0)' : 'translateX(-30px)',
+                    // OPTIMIZED: Use scale instead of translateX to prevent CLS
+                    transform: isActive ? 'scale(1)' : 'scale(0.98)',
                     opacity: isActive ? 1 : 0,
                     transitionProperty: 'transform, opacity',
                     transitionDuration: '450ms',
                     transitionDelay: `${delay}ms`,
-                    transitionTimingFunction: 'cubic-bezier(0.33, 1, 0.68, 1)'
+                    transitionTimingFunction: 'cubic-bezier(0.33, 1, 0.68, 1)',
+                    willChange: 'opacity, transform',
+                    backfaceVisibility: 'hidden'
                 }}
             >
                 <h3 className="text-lg font-semibold flex items-center gap-2">

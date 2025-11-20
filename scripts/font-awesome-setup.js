@@ -141,12 +141,23 @@ function downloadFile(url, destPath) {
  */
 async function fixCssPaths(cssPath) {
     let cssContent = await fs.readFile(cssPath, 'utf-8');
+    // Actualizar rutas de webfonts a rutas absolutas
     cssContent = cssContent.replace(
         /url\(['"]?\.\.\/webfonts\//g,
-        'url(\'./fonts/'
+        'url(\'/styles/fonts/'
+    );
+    // También actualizar rutas relativas ./fonts/ a absolutas
+    cssContent = cssContent.replace(
+        /url\(['"]?\.\/fonts\//g,
+        'url(\'/styles/fonts/'
+    );
+    // Fix missing closing quotes in url() - add closing quote before )
+    cssContent = cssContent.replace(
+        /url\('\/styles\/fonts\/([^)]+)\)/g,
+        "url('/styles/fonts/$1')"
     );
     await fs.writeFile(cssPath, cssContent, 'utf-8');
-    console.log('✓ Rutas actualizadas en archivo CSS');
+    console.log('✓ Rutas actualizadas a rutas absolutas en archivo CSS con comillas corregidas');
 }
 
 /**
