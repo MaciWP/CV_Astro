@@ -127,23 +127,23 @@ const marketConfigs = {
  * City-specific configurations for Switzerland
  */
 const swissCityConfigs = {
-    zurich: { min: 100000, max: 140000, postal: "8000-8099", canton: "Zürich" },
-    basel: { min: 95000, max: 135000, postal: "4000-4099", canton: "Basel-Stadt" },
-    geneva: { min: 98000, max: 138000, postal: "1200-1299", canton: "Genève" },
-    geneve: { min: 98000, max: 138000, postal: "1200-1299", canton: "Genève" },
-    lausanne: { min: 90000, max: 125000, postal: "1000-1099", canton: "Vaud" },
-    bern: { min: 88000, max: 120000, postal: "3000-3099", canton: "Bern" }
+    zurich: { min: 100000, max: 140000, postal: "8000-8099", canton: "ZH" },  // ISO 3166-2:CH-ZH
+    basel: { min: 95000, max: 135000, postal: "4000-4099", canton: "BS" },  // ISO 3166-2:CH-BS
+    geneva: { min: 98000, max: 138000, postal: "1200-1299", canton: "GE" },  // ISO 3166-2:CH-GE
+    geneve: { min: 98000, max: 138000, postal: "1200-1299", canton: "GE" },  // ISO 3166-2:CH-GE
+    lausanne: { min: 90000, max: 125000, postal: "1000-1099", canton: "VD" },  // ISO 3166-2:CH-VD
+    bern: { min: 88000, max: 120000, postal: "3000-3099", canton: "BE" }  // ISO 3166-2:CH-BE
 };
 
 /**
  * City-specific configurations for Spain
  */
 const spanishCityConfigs = {
-    madrid: { min: 48000, max: 68000, postal: "28000-28999", region: "Madrid" },
-    barcelona: { min: 45000, max: 65000, postal: "08000-08999", region: "Cataluña" },
-    valencia: { min: 40000, max: 58000, postal: "46000-46999", region: "Valencia" },
-    sevilla: { min: 38000, max: 55000, postal: "41000-41999", region: "Andalucía" },
-    bilbao: { min: 42000, max: 62000, postal: "48000-48999", region: "País Vasco" }
+    madrid: { min: 48000, max: 68000, postal: "28000-28999", region: "M" },  // ISO 3166-2:ES-M
+    barcelona: { min: 45000, max: 65000, postal: "08000-08999", region: "CT" },  // ISO 3166-2:ES-CT
+    valencia: { min: 40000, max: 58000, postal: "46000-46999", region: "V" },  // ISO 3166-2:ES-V (Comunitat Valenciana)
+    sevilla: { min: 38000, max: 55000, postal: "41000-41999", region: "AN" },  // ISO 3166-2:ES-AN
+    bilbao: { min: 42000, max: 62000, postal: "48000-48999", region: "PV" }  // ISO 3166-2:ES-PV
 };
 
 /**
@@ -198,8 +198,8 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
             address: {
                 "@type": "PostalAddress",
                 addressCountry: market === 'switzerland' ? 'CH' : 'ES',
-                addressRegion: market === 'switzerland' ? 'Zürich' : 'Madrid',  // Canton for CH, Autonomous Community for ES
-                addressLocality: market === 'switzerland' ? 'Zürich' : 'Madrid',  // Default to main economic centers
+                addressRegion: market === 'switzerland' ? 'ZH' : 'M',  // ISO 3166-2: ZH=Zürich canton, M=Madrid region
+                addressLocality: market === 'switzerland' ? 'Zürich' : 'Madrid',  // City name
                 postalCode: langConfig.postalCode
             }
         },
