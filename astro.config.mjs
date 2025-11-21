@@ -16,7 +16,7 @@ export default defineConfig({
   // i18n configuration ARREGLADA
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "es", "fr"],  // Mantener solo los que usas
+    locales: ["en", "es", "fr", "de"],  // Added German for /de/ pages
     routing: {
       prefixDefaultLocale: false,
       // Remover redirectToDefaultLocale que causaba error

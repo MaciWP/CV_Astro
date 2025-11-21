@@ -1,0 +1,69 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import ErrorBoundary from "../../components/ErrorBoundary";
+
+// Import CV components
+import ProfileHeader from "../../components/cv/ProfileHeader";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills";
+import Languages from "../../components/cv/Languages";
+import Education from "../../components/cv/Education";
+import Projects from "../../components/cv/Projects";
+
+// Enhanced metadata for SEO (German version)
+const pageTitle = "Oriol Macias - Software-Entwickler CV & Portfolio";
+const pageDescription =
+    "Professioneller Lebenslauf und Portfolio von Oriol Macias, einem Backend-Entwickler mit über 8 Jahren Erfahrung in der Integration industrieller Protokolle (SNMP, MODBUS, BACnet) und Rechenzentrumsinfrastruktur.";
+const ogImage = "/images/oriol_macias.jpg";
+const canonicalUrl = "https://oriolmacias.dev/de/";
+
+// Enlaces a versiones en otros idiomas
+const enUrl = getRelativeLocaleUrl("en", "");
+const esUrl = getRelativeLocaleUrl("es", "");
+const frUrl = getRelativeLocaleUrl("fr", "");
+---
+
+<Layout
+    title={pageTitle}
+    description={pageDescription}
+    lang="de"
+    ogImage={ogImage}
+    canonicalUrl={canonicalUrl}
+    alternateUrls={{
+        en: enUrl,
+        es: esUrl,
+        fr: frUrl,
+    }}
+>
+    <div
+        id="cv-content"
+        class="space-y-16"
+        itemscope
+        itemtype="https://schema.org/Person"
+    >
+        <ErrorBoundary client:load>
+            <ProfileHeader client:load />
+        </ErrorBoundary>
+
+        <ErrorBoundary client:load>
+            <Experience client:load />
+        </ErrorBoundary>
+
+        <ErrorBoundary client:load>
+            <Skills client:load />
+        </ErrorBoundary>
+
+        <ErrorBoundary client:load>
+            <Education client:load />
+        </ErrorBoundary>
+
+        <ErrorBoundary client:load>
+            <Languages client:load />
+        </ErrorBoundary>
+
+        <ErrorBoundary client:load>
+            <Projects client:load />
+        </ErrorBoundary>
+    </div>
+</Layout>

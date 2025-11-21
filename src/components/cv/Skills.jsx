@@ -53,14 +53,14 @@ const Skills = () => {
                     // Sequence of activation for categories with natural delays
                     const sequence = ['languages', 'libraries', 'technologies', 'tools', 'protocols'];
 
-                    // Activate categories with natural timing
+                    // Activate categories with faster timing to reduce CLS
                     sequence.forEach((category, i) => {
                         setTimeout(() => {
                             setCategories(prev => ({
                                 ...prev,
                                 [category]: true
                             }));
-                        }, 150 + i * 100); // Natural spacing between categories
+                        }, 50 + i * 30); // Faster spacing (3x speed) to minimize layout shift
                     });
 
                     observer.disconnect();
@@ -169,14 +169,25 @@ const Skills = () => {
     };
 
     return (
-        <section id="skills" ref={sectionRef} className="mb-16">
+        <section
+            id="skills"
+            ref={sectionRef}
+            className="mb-16"
+            style={{
+                minHeight: '800px',        // Reserve space to prevent layout collapse
+                contain: 'layout',         // Isolate layout shifts within section
+                willChange: 'contents'     // Browser hint for optimization
+            }}
+        >
             {/* Section Header with optimized animation */}
             <div
                 className="flex items-center mb-6"
                 style={{
-                    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                    transform: isVisible ? 'scale(1)' : 'scale(0.98)',  // Use scale instead of translateY to prevent CLS
                     opacity: isVisible ? 1 : 0,
-                    transition: 'transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 500ms ease-out'
+                    transition: 'transform 400ms cubic-bezier(0.33, 1, 0.68, 1), opacity 400ms ease-out',
+                    transformOrigin: 'center',
+                    backfaceVisibility: 'hidden'
                 }}
             >
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
@@ -189,10 +200,12 @@ const Skills = () => {
             <div
                 className="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm"
                 style={{
-                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                    transform: isVisible ? 'scale(1)' : 'scale(0.99)',  // Use scale instead of translateY to prevent CLS
                     opacity: isVisible ? 1 : 0,
-                    transition: 'transform 500ms cubic-bezier(0.33, 1, 0.68, 1), opacity 400ms ease-out',
-                    transitionDelay: '100ms'
+                    transition: 'transform 400ms cubic-bezier(0.33, 1, 0.68, 1), opacity 400ms ease-out',
+                    transitionDelay: '100ms',
+                    transformOrigin: 'center',
+                    backfaceVisibility: 'hidden'
                 }}
             >
                 {/* Layout with natural gap */}

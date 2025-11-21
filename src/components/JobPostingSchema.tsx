@@ -127,23 +127,23 @@ const marketConfigs = {
  * City-specific configurations for Switzerland
  */
 const swissCityConfigs = {
-    zurich: { min: 100000, max: 140000, postal: "8000-8099" },
-    basel: { min: 95000, max: 135000, postal: "4000-4099" },
-    geneva: { min: 98000, max: 138000, postal: "1200-1299" },
-    geneve: { min: 98000, max: 138000, postal: "1200-1299" },
-    lausanne: { min: 90000, max: 125000, postal: "1000-1099" },
-    bern: { min: 88000, max: 120000, postal: "3000-3099" }
+    zurich: { min: 100000, max: 140000, postal: "8000-8099", canton: "Zürich" },
+    basel: { min: 95000, max: 135000, postal: "4000-4099", canton: "Basel-Stadt" },
+    geneva: { min: 98000, max: 138000, postal: "1200-1299", canton: "Genève" },
+    geneve: { min: 98000, max: 138000, postal: "1200-1299", canton: "Genève" },
+    lausanne: { min: 90000, max: 125000, postal: "1000-1099", canton: "Vaud" },
+    bern: { min: 88000, max: 120000, postal: "3000-3099", canton: "Bern" }
 };
 
 /**
  * City-specific configurations for Spain
  */
 const spanishCityConfigs = {
-    madrid: { min: 48000, max: 68000, postal: "28000-28999" },
-    barcelona: { min: 45000, max: 65000, postal: "08000-08999" },
-    valencia: { min: 40000, max: 58000, postal: "46000-46999" },
-    sevilla: { min: 38000, max: 55000, postal: "41000-41999" },
-    bilbao: { min: 42000, max: 62000, postal: "48000-48999" }
+    madrid: { min: 48000, max: 68000, postal: "28000-28999", region: "Madrid" },
+    barcelona: { min: 45000, max: 65000, postal: "08000-08999", region: "Cataluña" },
+    valencia: { min: 40000, max: 58000, postal: "46000-46999", region: "Valencia" },
+    sevilla: { min: 38000, max: 55000, postal: "41000-41999", region: "Andalucía" },
+    bilbao: { min: 42000, max: 62000, postal: "48000-48999", region: "País Vasco" }
 };
 
 /**
@@ -198,7 +198,8 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
             address: {
                 "@type": "PostalAddress",
                 addressCountry: market === 'switzerland' ? 'CH' : 'ES',
-                addressRegion: market === 'switzerland' ? 'Switzerland' : 'Spain',
+                addressRegion: market === 'switzerland' ? 'Zürich' : 'Madrid',  // Canton for CH, Autonomous Community for ES
+                addressLocality: market === 'switzerland' ? 'Zürich' : 'Madrid',  // Default to main economic centers
                 postalCode: langConfig.postalCode
             }
         },
@@ -243,6 +244,7 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
                 jobPosting.baseSalary.value.minValue = cityConfig.min;
                 jobPosting.baseSalary.value.maxValue = cityConfig.max;
                 jobPosting.jobLocation.address.postalCode = cityConfig.postal;
+                jobPosting.jobLocation.address.addressRegion = cityConfig.canton;  // Set canton name
             }
         } else if (market === 'spain') {
             jobPosting.title = language === 'es'
@@ -253,6 +255,7 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
                 jobPosting.baseSalary.value.minValue = cityConfig.min;
                 jobPosting.baseSalary.value.maxValue = cityConfig.max;
                 jobPosting.jobLocation.address.postalCode = cityConfig.postal;
+                jobPosting.jobLocation.address.addressRegion = cityConfig.region;  // Set autonomous community name
             }
         }
     }

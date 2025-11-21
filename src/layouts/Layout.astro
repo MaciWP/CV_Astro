@@ -154,7 +154,7 @@ function detectMarketAndOptimizeSEO(
   currentUrl: URL,
   language: string,
 ): MarketDetection {
-  let detectedMarket: "general" | "switzerland" | "spain" = "general";
+  let detectedMarket: "general" | "switzerland" | "spain" = "switzerland"; // Default to Swiss market
   let detectedCity = "general";
   let enhancedTitle = title;
   let enhancedDescription = description;
@@ -241,6 +241,20 @@ function detectMarketAndOptimizeSEO(
           enhancedKeywords =
             "backend developer switzerland, python developer switzerland, work permit ready";
         }
+      }
+    }
+    // Swiss languages detection (French, German) - Target Swiss market
+    else if (language === "fr" || language === "de") {
+      detectedMarket = "switzerland";
+
+      if (language === "fr") {
+        enhancedTitle = "Oriol Macias - Développeur Backend Suisse | Python Expert";
+        enhancedDescription = "Développeur Backend senior avec 8+ ans d'expérience. Python, Django, protocoles industriels. Disponible Suisse.";
+        enhancedKeywords = "développeur backend suisse, python développeur genève, ingénieur logiciel suisse";
+      } else if (language === "de") {
+        enhancedTitle = "Oriol Macias - Backend Entwickler Schweiz | Python Experte";
+        enhancedDescription = "Senior Backend Entwickler mit 8+ Jahren Erfahrung. Python, Django, industrielle Protokolle. Verfügbar Schweiz.";
+        enhancedKeywords = "backend entwickler schweiz, python entwickler zürich, software ingenieur schweiz";
       }
     }
     // Spanish market detection
@@ -697,6 +711,14 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Performance optimizations -->
     <meta name="generator" content={Astro.generator} />
+    <!-- Preload LCP image for Mobile (critical rendering path) -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/oriol_macias.jpg"
+      fetchpriority="high"
+      media="(max-width: 768px)"
+    />
     <link
       rel="preload"
       href="/styles/fonts/fa-solid-900.woff2"
