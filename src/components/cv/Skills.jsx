@@ -41,40 +41,15 @@ const Skills = () => {
         // Load initial titles based on current language
         updateTitles();
 
-        // IntersectionObserver configuration
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const [entry] = entries;
-
-                if (entry.isIntersecting) {
-                    // Fluid staggered animation for different categories
-                    setIsVisible(true);
-
-                    // Sequence of activation for categories with natural delays
-                    const sequence = ['languages', 'libraries', 'technologies', 'tools', 'protocols'];
-
-                    // Activate categories with faster timing to reduce CLS
-                    sequence.forEach((category, i) => {
-                        setTimeout(() => {
-                            setCategories(prev => ({
-                                ...prev,
-                                [category]: true
-                            }));
-                        }, 50 + i * 30); // Faster spacing (3x speed) to minimize layout shift
-                    });
-
-                    observer.disconnect();
-                }
-            },
-            {
-                threshold: 0.15,
-                rootMargin: "-50px 0px"
-            }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
+        // ✅ OPTIMIZED: Render everything visible immediately (no IntersectionObserver delays to prevent CLS)
+        setIsVisible(true);
+        setCategories({
+            languages: true,
+            libraries: true,
+            technologies: true,
+            tools: true,
+            protocols: true
+        });
 
         // Listen for language changes
         const handleLanguageChanged = () => {
@@ -85,7 +60,6 @@ const Skills = () => {
         document.addEventListener('translationsLoaded', handleLanguageChanged);
 
         return () => {
-            observer.disconnect();
             document.removeEventListener('languageChanged', handleLanguageChanged);
             document.removeEventListener('translationsLoaded', handleLanguageChanged);
         };

@@ -32,7 +32,7 @@ const headerData = {
       icon: "fab fa-github",
     },
   ],
-  photoUrl: "/images/oriol_macias.jpg",
+  photoUrl: "/images/oriol_macias-960.avif",
   photoAlt: "Oriol Macias - Backend Developer",
 };
 
