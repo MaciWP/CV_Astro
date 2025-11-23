@@ -1,18 +1,15 @@
 User-agent: *
 Allow: /
 
-# Permitir versiones en idiomas
+# Allow language versions
 Allow: /es/
 Allow: /fr/
 Allow: /switzerland/
 
-# Bloquear archivos técnicos innecesarios
+# Block technical files
 Disallow: /sw.js
 Disallow: /sw-register.js
 Disallow: /manifest.json
-Disallow: /scripts/
-Disallow: /styles/
-Disallow: /_astro/
 
-# Sitemap location
+# Sitemap
 Sitemap: https://oriolmacias.dev/sitemap.xml

@@ -37,6 +37,22 @@ const LanguageAlternates = ({ currentLang = 'en', currentPath = '/' }) => {
         };
     });
 
+    // Generate JSON-LD structured data
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "url": languageUrls.find(lang => lang.code === currentLang)?.url,
+        "inLanguage": currentLang,
+        "potentialAction": {
+            "@type": "ReadAction",
+            "target": languageUrls.map(lang => ({
+                "@type": "EntryPoint",
+                "urlTemplate": lang.url,
+                "inLanguage": lang.code
+            }))
+        }
+    };
+
     return (
         <>
             {/* Standard hreflang tags */}
@@ -66,23 +82,11 @@ const LanguageAlternates = ({ currentLang = 'en', currentPath = '/' }) => {
                 href={languageUrls.find(lang => lang.code === 'en')?.url || baseUrl}
             />
 
-            {/* Add structured data for translation information */}
-            <script type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "WebPage",
-                    "url": languageUrls.find(lang => lang.code === currentLang)?.url,
-                    "inLanguage": currentLang,
-                    "potentialAction": {
-                        "@type": "ReadAction",
-                        "target": languageUrls.map(lang => ({
-                            "@type": "EntryPoint",
-                            "urlTemplate": lang.url,
-                            "inLanguage": lang.code
-                        }))
-                    }
-                })}
-            </script>
+            {/* Add structured data for translation information - Fixed hydration */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
 
             {/* Language metadata for Search Engines and browsers */}
             <meta httpEquiv="content-language" content={currentLang} />
