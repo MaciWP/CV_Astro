@@ -77,20 +77,6 @@
 
 # Headers para HTML principal y otras páginas
 [[headers]]
-  for = "/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
-    X-Frame-Options = "DENY"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self'; manifest-src 'self';"
-
-# ===== REDIRECCIONES Y MANEJO DE ERRORES =====
-
-# Ignorar recursos Cloudflare ausentes
-[[redirects]]
-  from = "/cdn-cgi/*"
   to = "/.netlify/functions/empty-response"
   status = 204
 

@@ -132,8 +132,10 @@ async function cacheResponse(request, response) {
         // Store metadata in a separate cache if needed
         if (expiration) {
             const metadataCache = await caches.open('cache-metadata');
+            // Use a valid URL scheme for metadata to avoid "Request scheme 'metadata' is unsupported" error
+            const metadataUrl = new URL(`/_metadata/${encodeURIComponent(request.url)}`, self.location.origin).href;
             await metadataCache.put(
-                new Request(`metadata:${request.url}`),
+                new Request(metadataUrl),
                 new Response(JSON.stringify({ expirationTime }))
             );
         }
@@ -150,7 +152,8 @@ async function cacheResponse(request, response) {
 async function hasExpired(url) {
     try {
         const metadataCache = await caches.open('cache-metadata');
-        const metadataResponse = await metadataCache.match(new Request(`metadata:${url}`));
+        const metadataUrl = new URL(`/_metadata/${encodeURIComponent(url)}`, self.location.origin).href;
+        const metadataResponse = await metadataCache.match(new Request(metadataUrl));
 
         if (!metadataResponse) {
             return false; // No metadata, assume not expired
@@ -173,16 +176,25 @@ async function cleanExpiredCache() {
         const metadataRequests = await metadataCache.keys();
 
         for (const request of metadataRequests) {
-            // Extract URL from metadata key
-            const url = request.url.replace('metadata:', '');
+            try {
+                // Extract URL from metadata key
+                // Format is: origin/_metadata/encoded_url
+                const metadataPath = new URL(request.url).pathname;
+                if (metadataPath.includes('/_metadata/')) {
+                    const encodedUrl = metadataPath.split('/_metadata/')[1];
+                    const url = decodeURIComponent(encodedUrl);
 
-            if (await hasExpired(url)) {
-                // Find and delete from the appropriate cache
-                const resourceType = getResourceType(url);
-                const cacheName = CACHE_SETTINGS[resourceType].cacheName;
-                const cache = await caches.open(cacheName);
-                await cache.delete(new Request(url));
-                await metadataCache.delete(request);
+                    if (await hasExpired(url)) {
+                        // Find and delete from the appropriate cache
+                        const resourceType = getResourceType(url);
+                        const cacheName = CACHE_SETTINGS[resourceType].cacheName;
+                        const cache = await caches.open(cacheName);
+                        await cache.delete(new Request(url));
+                        await metadataCache.delete(request);
+                    }
+                }
+            } catch (e) {
+                // Ignore malformed keys
             }
         }
     } catch (error) {

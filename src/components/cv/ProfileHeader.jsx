@@ -207,9 +207,29 @@ const ProfileHeader = () => {
                                 {/* Usar picture para formatos modernos y fallback a placeholder si fallan */}
                                 <picture>
                                     {/* Formato AVIF - más eficiente */}
-                                    <source srcSet="/images/oriol_macias-sm.avif" type="image/avif" />
+                                    <source
+                                        srcSet="
+                                            /images/oriol_macias-192.avif 192w,
+                                            /images/oriol_macias-320.avif 320w,
+                                            /images/oriol_macias-640.avif 640w,
+                                            /images/oriol_macias-960.avif 960w,
+                                            /images/oriol_macias-1280.avif 1280w
+                                        "
+                                        sizes="(max-width: 767px) 100vw, 400px"
+                                        type="image/avif"
+                                    />
                                     {/* Formato WebP - amplio soporte */}
-                                    <source srcSet="/images/oriol_macias-sm.webp" type="image/webp" />
+                                    <source
+                                        srcSet="
+                                            /images/oriol_macias-192.webp 192w,
+                                            /images/oriol_macias-320.webp 320w,
+                                            /images/oriol_macias-640.webp 640w,
+                                            /images/oriol_macias-960.webp 960w,
+                                            /images/oriol_macias-1280.webp 1280w
+                                        "
+                                        sizes="(max-width: 767px) 100vw, 400px"
+                                        type="image/webp"
+                                    />
                                     {/* Fallback a placeholder */}
                                     <img
                                         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='42' text-anchor='middle' fill='%239ca3af' dominant-baseline='middle'%3EOM%3C/text%3E%3C/svg%3E"
