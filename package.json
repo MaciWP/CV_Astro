@@ -22,6 +22,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.5",
     "@astrojs/react": "^3.6.3",
     "@astrojs/sitemap": "^3.3.0",
     "@astrojs/tailwind": "^5.1.0",
@@ -47,7 +48,8 @@
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.4.1",
     "rimraf": "^5.0.5",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "eslint": "^8.57.1",

@@ -4,44 +4,13 @@
  */
 import React, { useEffect, useState } from 'react';
 import { getCurrentLanguageLanguages } from '../../data/languages';
+import ScrollAnimationWrapper from '../ScrollAnimationWrapper';
 
 const Languages = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [progressAnimation, setProgressAnimation] = useState({});
     const [languagesData, setLanguagesData] = useState([]);
     const [title, setTitle] = useState('Languages');
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-
-                    // Get languages in current UI language
-                    const languages = getCurrentLanguageLanguages();
-                    setLanguagesData(languages);
-
-                    // Start progress bar animations with natural staggering
-                    languages.forEach((lang, index) => {
-                        setTimeout(() => {
-                            setProgressAnimation(prev => ({
-                                ...prev,
-                                [lang.language]: true
-                            }));
-                        }, 500 + (index * 250)); // Slower, similar to Experience
-                    });
-
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        const element = document.getElementById('languages');
-        if (element) {
-            observer.observe(element);
-        }
-
         // Initial load of languages data
         setLanguagesData(getCurrentLanguageLanguages());
 
@@ -55,17 +24,6 @@ const Languages = () => {
             const newLanguages = getCurrentLanguageLanguages();
             setLanguagesData(newLanguages);
 
-            // Reset and restart progress animations
-            setProgressAnimation({});
-            newLanguages.forEach((lang, index) => {
-                setTimeout(() => {
-                    setProgressAnimation(prev => ({
-                        ...prev,
-                        [lang.language]: true
-                    }));
-                }, 300 + (index * 150));
-            });
-
             // Update title
             if (typeof window !== 'undefined' && typeof window.t === 'function') {
                 setTitle(window.t('languages.title') || 'Languages');
@@ -76,7 +34,6 @@ const Languages = () => {
         document.addEventListener('translationsLoaded', handleLanguageChanged);
 
         return () => {
-            observer.disconnect();
             document.removeEventListener('languageChanged', handleLanguageChanged);
             document.removeEventListener('translationsLoaded', handleLanguageChanged);
         };
@@ -84,21 +41,20 @@ const Languages = () => {
 
     return (
         <section id="languages" className="mb-16">
-            <div
-                className={`flex items-center mb-6 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-            >
+            <ScrollAnimationWrapper className="flex items-center mb-6">
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-language"></i>
                 </div>
                 <h2 className="text-2xl font-bold ml-3" data-i18n="languages.title">{title}</h2>
-            </div>
+            </ScrollAnimationWrapper>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {languagesData.map((lang, index) => (
-                    <div
+                    <ScrollAnimationWrapper
                         key={index}
-                        className={`group bg-light-surface dark:bg-dark-surface rounded-none p-4 border border-light-border dark:border-dark-border transition-all duration-700 transform hover:-translate-y-1 hover:shadow-md ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-                        style={{ transitionDelay: `${300 * index}ms` }} // Slower, similar to Experience
+                        className="group bg-light-surface dark:bg-dark-surface rounded-none p-4 border border-light-border dark:border-dark-border transition-all duration-700 transform hover:-translate-y-1 hover:shadow-md"
+                        delay={`${index * 100}ms`}
+                        animationClass="animate-scale"
                     >
                         <div className="flex justify-between items-center mb-4">
                             <span className="font-medium text-lg">{lang.language}</span>
@@ -112,19 +68,21 @@ const Languages = () => {
                                 {lang.level}
                             </div>
 
-                            {/* Progress bar with slower animation */}
+                            {/* Progress bar with CSS animation */}
                             <div className="h-1.5 bg-light-secondary dark:bg-dark-secondary rounded-none overflow-hidden">
-                                <div
+                                <ScrollAnimationWrapper
                                     className="h-full bg-brand-red"
+                                    animationClass="animate-width"
                                     style={{
-                                        width: progressAnimation[lang.language] ? `${lang.percent}%` : '0%',
-                                        transition: 'width 1200ms cubic-bezier(0.25, 1, 0.5, 1)', // Slower animation
-                                        transitionDelay: progressAnimation[lang.language] ? '100ms' : '0ms'
+                                        width: `${lang.percent}%`,
+                                        '--target-width': `${lang.percent}%`
                                     }}
-                                ></div>
+                                >
+                                    <div style={{ width: '100%', height: '100%' }}></div>
+                                </ScrollAnimationWrapper>
                             </div>
                         </div>
-                    </div>
+                    </ScrollAnimationWrapper>
                 ))}
             </div>
         </section>

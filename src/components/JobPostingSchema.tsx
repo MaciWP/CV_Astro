@@ -1,6 +1,6 @@
 /**
  * JobPosting Schema Component
- * @file src/components/JobPostingSchema.jsx
+ * @file src/components/JobPostingSchema.tsx
  * @description Generates compliant JobPosting structured data for Google Search Console
  * @author Oriol Macias Dev
  * @version 1.0.0
@@ -156,16 +156,34 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
     city = 'general',
     language = 'en'
 }) => {
-    // Don't render if no market specified
-    if (market === 'general') {
-        return null;
-    }
+    // Default to 'general' configuration if market is not specific
+    // @ts-ignore
+    const effectiveMarket = (market === 'general' || !marketConfigs[market]) ? 'general' : market;
 
-    // Get market configuration
-    const marketConfig = marketConfigs[market];
-    if (!marketConfig) {
-        return null;
-    }
+    // Get market configuration or use a default fallback
+    // @ts-ignore
+    const marketConfig = marketConfigs[effectiveMarket] || {
+        en: {
+            title: "Senior Backend Developer",
+            description: "Experienced Backend Developer with 8+ years in industrial protocol integration (SNMP, MODBUS, BACnet). Expertise in Python, Django, C#, .NET, and data center infrastructure.",
+            hiringOrg: "Oriol Macias Dev",
+            currency: "EUR",
+            salaryRange: { min: 50000, max: 80000 },
+            postalCode: "08000",
+            qualifications: [
+                "8+ years backend development experience",
+                "Python and Django expertise",
+                "Industrial protocols knowledge",
+                "Full stack capabilities"
+            ],
+            responsibilities: [
+                "Design and develop backend systems",
+                "Industrial protocol integration",
+                "API development",
+                "System optimization"
+            ]
+        }
+    };
 
     // Get language configuration with fallback
     const langConfig = marketConfig[language] || marketConfig.en || marketConfig.es;
@@ -197,9 +215,10 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
             "@type": "Place",
             address: {
                 "@type": "PostalAddress",
-                addressCountry: market === 'switzerland' ? 'CH' : 'ES',
-                addressRegion: market === 'switzerland' ? 'ZH' : 'M',  // ISO 3166-2: ZH=Zürich canton, M=Madrid region
-                addressLocality: market === 'switzerland' ? 'Zürich' : 'Madrid',  // City name
+                streetAddress: "Remote / Flexible",
+                addressCountry: effectiveMarket === 'switzerland' ? 'CH' : 'ES',
+                addressRegion: effectiveMarket === 'switzerland' ? 'ZH' : 'M',
+                addressLocality: effectiveMarket === 'switzerland' ? 'Zürich' : (effectiveMarket === 'spain' ? 'Madrid' : 'Barcelona'),
                 postalCode: langConfig.postalCode
             }
         },
@@ -219,7 +238,7 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
             "Python", "Django", "C#", ".NET", "PostgreSQL",
             "Docker", "AWS", "SNMP", "MODBUS", "BACnet"
         ],
-        jobBenefits: market === 'switzerland' ? [
+        jobBenefits: effectiveMarket === 'switzerland' ? [
             "Competitive Swiss salary",
             "Work permit sponsorship",
             "Health insurance",
@@ -237,16 +256,16 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
         const cityName = city.charAt(0).toUpperCase() + city.slice(1);
         jobPosting.jobLocation.address.addressLocality = cityName;
 
-        if (market === 'switzerland') {
+        if (effectiveMarket === 'switzerland') {
             jobPosting.title = `Senior Backend Developer - ${cityName}, Switzerland`;
             const cityConfig = swissCityConfigs[city as keyof typeof swissCityConfigs];
             if (cityConfig) {
                 jobPosting.baseSalary.value.minValue = cityConfig.min;
                 jobPosting.baseSalary.value.maxValue = cityConfig.max;
                 jobPosting.jobLocation.address.postalCode = cityConfig.postal;
-                jobPosting.jobLocation.address.addressRegion = cityConfig.canton;  // Set canton name
+                jobPosting.jobLocation.address.addressRegion = cityConfig.canton;
             }
-        } else if (market === 'spain') {
+        } else if (effectiveMarket === 'spain') {
             jobPosting.title = language === 'es'
                 ? `Desarrollador Backend Senior - ${cityName}, España`
                 : `Senior Backend Developer - ${cityName}, Spain`;
@@ -255,7 +274,7 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
                 jobPosting.baseSalary.value.minValue = cityConfig.min;
                 jobPosting.baseSalary.value.maxValue = cityConfig.max;
                 jobPosting.jobLocation.address.postalCode = cityConfig.postal;
-                jobPosting.jobLocation.address.addressRegion = cityConfig.region;  // Set autonomous community name
+                jobPosting.jobLocation.address.addressRegion = cityConfig.region;
             }
         }
     }
