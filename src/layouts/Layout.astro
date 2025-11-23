@@ -20,7 +20,11 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
-// import JobPostingSchema from "../components/JobPostingSchema";
+import {
+  detectMarketAndOptimizeSEO,
+  generatePersonStructuredData,
+  toSafeJsonLd,
+} from "../utils/seo";
 
 // Import global animations
 import "../styles/animations.css";
@@ -30,7 +34,6 @@ const currentPath = Astro.url.pathname;
 /**
  * Layout component props interface
  * @interface Props
- * @description Defines all possible props for the Layout component
  */
 export interface Props {
   title?: string;
@@ -45,96 +48,6 @@ export interface Props {
   };
 }
 
-/**
- * Market detection result interface
- * @interface MarketDetection
- */
-interface MarketDetection {
-  market: "general" | "switzerland" | "spain";
-  city: string;
-  title: string;
-  description: string;
-  keywords: string;
-}
-
-/**
- * Schema.org structured data interfaces
- * @interface JobPostingSchema - Complete JobPosting schema compliant with Google requirements
- */
-interface JobPostingSchemaType {
-  "@type": "JobPosting";
-  "@context"?: string;
-  title: string; // Required: Job title
-  description: string; // Required: Job description
-  datePosted: string; // Required: ISO date when posted
-  validThrough: string; // Required: ISO date when expires
-  employmentType: string; // Required: FULL_TIME, PART_TIME, etc.
-  hiringOrganization: {
-    "@type": "Organization";
-    name: string;
-    url?: string;
-    logo?: string;
-  }; // Required: Hiring organization
-  jobLocation: {
-    "@type": "Place";
-    address: {
-      "@type": "PostalAddress";
-      addressCountry: string;
-      addressRegion: string;
-      addressLocality?: string;
-      postalCode?: string;
-    };
-  };
-  baseSalary?: {
-    "@type": "MonetaryAmount";
-    currency: string;
-    value: {
-      "@type": "QuantitativeValue";
-      minValue?: number;
-      maxValue?: number;
-      unitText: string;
-    };
-  };
-  jobBenefits?: string[];
-  qualifications?: string[];
-  responsibilities?: string[];
-  skills?: string[];
-}
-
-/**
- * Person schema with optional job seeking
- * @interface PersonSchema
- */
-interface PersonSchema {
-  "@context": string;
-  "@type": "Person";
-  "@id": string;
-  name: string;
-  alternateName: string[];
-  description: string;
-  url: string;
-  mainEntityOfPage: string;
-  jobTitle: string;
-  sameAs: string[];
-  worksFor: {
-    "@type": "Organization";
-    name: string;
-    url: string;
-  };
-  brand: {
-    "@type": "Brand";
-    name: string;
-    url: string;
-  };
-  knowsAbout: string[];
-  identifier: {
-    "@type": "PropertyValue";
-    name: string;
-    value: string;
-  };
-  seeks?: JobPostingSchemaType; // Optional property for job seeking
-}
-
 const {
   title = "Oriol Macias - Software Developer CV & Portfolio",
   description = "Professional CV for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
@@ -144,230 +57,16 @@ const {
   alternateUrls = {},
 } = Astro.props;
 
-/**
- * Detects market and optimizes SEO accordingly
- * @function detectMarketAndOptimizeSEO
- * @param {URL} currentUrl - Current request URL
- * @param {string} language - Current language
- * @returns {MarketDetection} Market detection results with optimized content
- * @example
- * const result = detectMarketAndOptimizeSEO(new URL(request.url), 'en');
- */
-function detectMarketAndOptimizeSEO(
-  currentUrl: URL,
-  language: string,
-): MarketDetection {
-  let detectedMarket: "general" | "switzerland" | "spain" = "switzerland"; // Default to Swiss market
-  let detectedCity = "general";
-  let enhancedTitle = title;
-  let enhancedDescription = description;
-  let enhancedKeywords =
-    "oriol macias, software developer, backend developer, cv, portfolio";
+// Execute market detection using centralized utility
+const marketData = detectMarketAndOptimizeSEO(
+  new URL(Astro.request.url),
+  lang,
+  title,
+  description,
+);
 
-  try {
-    const pathSegments = currentUrl.pathname.split("/").filter(Boolean);
-
-    // Swiss cities detection with enhanced targeting
-    const swissCities = [
-      "zurich",
-      "basel",
-      "geneva",
-      "geneve",
-      "lausanne",
-      "bern",
-    ];
-    const detectedSwissCity = pathSegments.find((segment) =>
-      swissCities.includes(segment.toLowerCase()),
-    );
-
-    if (detectedSwissCity || pathSegments.includes("switzerland")) {
-      detectedMarket = "switzerland";
-      detectedCity = detectedSwissCity || "general";
-
-      // Brand optimization for homepage
-      if (currentUrl.pathname === "/") {
-        enhancedTitle =
-          "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
-        enhancedDescription =
-          "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
-        enhancedKeywords =
-          "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio";
-      }
-      // Swiss city-specific optimization
-      else {
-        const cityOptimizations = {
-          zurich: {
-            title:
-              "Oriol Macias - Senior Backend Developer Zurich | Python Expert",
-            description:
-              "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise. Work permit ready for Swiss companies.",
-            keywords:
-              "backend developer zurich, python developer zurich, software engineer zurich, work permit switzerland",
-          },
-          basel: {
-            title:
-              "Oriol Macias - Software Engineer Basel | Industrial Automation",
-            description:
-              "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, MODBUS, BACnet) expert.",
-            keywords:
-              "software engineer basel, industrial automation basel, pharmaceutical developer basel",
-          },
-          geneva: {
-            title:
-              "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
-            description:
-              "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
-            keywords:
-              "backend developer geneva, multilingual developer geneva, international organizations",
-          },
-          geneve: {
-            title:
-              "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
-            description:
-              "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
-            keywords:
-              "backend developer geneva, multilingual developer geneva, international organizations",
-          },
-        };
-
-        const cityConfig =
-          cityOptimizations[detectedCity as keyof typeof cityOptimizations];
-        if (cityConfig) {
-          enhancedTitle = cityConfig.title;
-          enhancedDescription = cityConfig.description;
-          enhancedKeywords = cityConfig.keywords;
-        } else {
-          enhancedTitle =
-            "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
-          enhancedDescription =
-            "Senior Backend Developer seeking opportunities across Switzerland. 8+ years experience, EU work permit ready.";
-          enhancedKeywords =
-            "backend developer switzerland, python developer switzerland, work permit ready";
-        }
-      }
-    }
-    // Swiss languages detection (French, German) - Target Swiss market
-    else if (language === "fr" || language === "de") {
-      detectedMarket = "switzerland";
-
-      if (language === "fr") {
-        enhancedTitle =
-          "Oriol Macias - Développeur Backend Suisse | Python Expert";
-        enhancedDescription =
-          "Développeur Backend senior avec 8+ ans d'expérience. Python, Django, protocoles industriels. Disponible Suisse.";
-        enhancedKeywords =
-          "développeur backend suisse, python développeur genève, ingénieur logiciel suisse";
-      } else if (language === "de") {
-        enhancedTitle =
-          "Oriol Macias - Backend Entwickler Schweiz | Python Experte";
-        enhancedDescription =
-          "Senior Backend Entwickler mit 8+ Jahren Erfahrung. Python, Django, industrielle Protokolle. Verfügbar Schweiz.";
-        enhancedKeywords =
-          "backend entwickler schweiz, python entwickler zürich, software ingenieur schweiz";
-      }
-    }
-    // Spanish market detection
-    else if (
-      pathSegments.includes("espana") ||
-      pathSegments.includes("spain") ||
-      language === "es"
-    ) {
-      detectedMarket = "spain";
-      enhancedTitle =
-        "Oriol Macias - Desarrollador Backend España | Senior Python";
-      enhancedDescription =
-        "Desarrollador Backend senior con 8+ años experiencia. Python, Django, protocolos industriales. Disponible España.";
-      enhancedKeywords =
-        "desarrollador backend españa, python desarrollador madrid, ingeniero software españa";
-    }
-    // Homepage brand optimization
-    else if (currentUrl.pathname === "/") {
-      enhancedTitle =
-        "Oriol Macias Dev - Software Developer Portfolio | oriolmacias.dev";
-      enhancedDescription =
-        "Oriol Macias Dev: Professional Software Developer specializing in Python, Django, and industrial protocols. Visit oriolmacias.dev for portfolio and contact.";
-      enhancedKeywords =
-        "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, oriol backend developer, oriol macias portfolio";
-    }
-  } catch (error) {
-    console.warn("Market detection error:", error);
-    // Fallback to safe defaults
-  }
-
-  return {
-    market: detectedMarket,
-    city: detectedCity,
-    title: enhancedTitle,
-    description: enhancedDescription,
-    keywords: enhancedKeywords,
-  };
-}
-
-// Execute market detection
-const marketData = detectMarketAndOptimizeSEO(new URL(Astro.request.url), lang);
-
-/**
- * Generates Schema.org Person structured data with proper TypeScript typing
- * @function generatePersonStructuredData
- * @param {MarketDetection} marketInfo - Market detection results
- * @returns {PersonSchema} Properly typed structured data object
- * @example
- * const schema = generatePersonStructuredData(marketData);
- */
-function generatePersonStructuredData(
-  marketInfo: MarketDetection,
-): PersonSchema {
-  // Base person schema object
-  const personSchema: PersonSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://oriolmacias.dev/#oriol-macias-dev",
-    name: "Oriol Macias",
-    alternateName: ["Oriol Dev", "Macias Dev", "Oriol Macias Dev"],
-    description: "Software Developer known professionally as Oriol Macias Dev",
-    url: "https://oriolmacias.dev",
-    mainEntityOfPage: "https://oriolmacias.dev",
-    jobTitle: "Software Developer",
-    sameAs: [
-      "https://linkedin.com/in/oriolmaciasbadosa",
-      "https://github.com/MaciWP",
-    ],
-    worksFor: {
-      "@type": "Organization",
-      name: "Bjumper",
-      url: "https://bjumper.com",
-    },
-    brand: {
-      "@type": "Brand",
-      name: "Oriol Macias Dev",
-      url: "https://oriolmacias.dev",
-    },
-    knowsAbout: [
-      "Software Development",
-      "Python",
-      "Django",
-      "Backend Development",
-      "Industrial Protocols",
-      "SNMP",
-      "MODBUS",
-      "BACnet",
-      "Data Center Infrastructure",
-    ],
-    identifier: {
-      "@type": "PropertyValue",
-      name: "Website",
-      value: "oriolmacias.dev",
-    },
-  };
-
-  // Note: JobPosting schema is now handled by separate JobPostingSchema component
-  // This keeps the Person schema clean and focused
-
-  return personSchema;
-}
-
-// Generate structured data
-const structuredData = generatePersonStructuredData(marketData);
+// Generate structured data using centralized utility
+const personSchema = generatePersonStructuredData();
 
 // Construct full canonical URL
 const fullCanonicalUrl = canonicalUrl.startsWith("http")
@@ -848,7 +547,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Fixed Structured Data with proper typing -->
     <script
       type="application/ld+json"
-      set:html={JSON.stringify(structuredData, null, 2)}
+      set:html={JSON.stringify(personSchema, null, 2)}
     />
 
     <!-- JobPosting Structured Data - Separate component for Google compliance -->
