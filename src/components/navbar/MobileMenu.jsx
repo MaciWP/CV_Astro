@@ -93,8 +93,8 @@ const MobileMenu = ({
                             key={item.id}
                             href={item.href}
                             className={`text-sm font-medium py-2 px-3 theme-transition-text theme-transition-bg ${isActive
-                                    ? 'text-brand-red dark:text-brand-red bg-gray-100 dark:bg-gray-800'
-                                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                                ? 'text-brand-red dark:text-brand-red bg-gray-100 dark:bg-gray-800'
+                                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                                 }`}
                             onClick={(e) => {
                                 handleNavClick(e, item.id);
@@ -115,7 +115,7 @@ const MobileMenu = ({
                         href="https://github.com/MaciWP"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-brand-red hover:text-brand-red/80 transition-colors"
+                        className="text-brand-red dark:text-red-400 hover:text-brand-red/80 dark:hover:text-red-400/80 transition-colors"
                         aria-label="GitHub Profile"
                         role="menuitem"
                     >
@@ -126,7 +126,7 @@ const MobileMenu = ({
                         href="https://linkedin.com/in/oriolmaciasbadosa"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-brand-red hover:text-brand-red/80 transition-colors"
+                        className="text-brand-red dark:text-red-400 hover:text-brand-red/80 dark:hover:text-red-400/80 transition-colors"
                         aria-label="LinkedIn Profile"
                         role="menuitem"
                     >

@@ -20,7 +20,10 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
-import JobPostingSchema from "../components/JobPostingSchema";
+// import JobPostingSchema from "../components/JobPostingSchema";
+
+// Import global animations
+import "../styles/animations.css";
 
 const currentPath = Astro.url.pathname;
 
@@ -58,7 +61,7 @@ interface MarketDetection {
  * Schema.org structured data interfaces
  * @interface JobPostingSchema - Complete JobPosting schema compliant with Google requirements
  */
-interface JobPostingSchema {
+interface JobPostingSchemaType {
   "@type": "JobPosting";
   "@context"?: string;
   title: string; // Required: Job title
@@ -129,7 +132,7 @@ interface PersonSchema {
     name: string;
     value: string;
   };
-  seeks?: JobPostingSchema; // Optional property for job seeking
+  seeks?: JobPostingSchemaType; // Optional property for job seeking
 }
 
 const {
@@ -248,13 +251,19 @@ function detectMarketAndOptimizeSEO(
       detectedMarket = "switzerland";
 
       if (language === "fr") {
-        enhancedTitle = "Oriol Macias - Développeur Backend Suisse | Python Expert";
-        enhancedDescription = "Développeur Backend senior avec 8+ ans d'expérience. Python, Django, protocoles industriels. Disponible Suisse.";
-        enhancedKeywords = "développeur backend suisse, python développeur genève, ingénieur logiciel suisse";
+        enhancedTitle =
+          "Oriol Macias - Développeur Backend Suisse | Python Expert";
+        enhancedDescription =
+          "Développeur Backend senior avec 8+ ans d'expérience. Python, Django, protocoles industriels. Disponible Suisse.";
+        enhancedKeywords =
+          "développeur backend suisse, python développeur genève, ingénieur logiciel suisse";
       } else if (language === "de") {
-        enhancedTitle = "Oriol Macias - Backend Entwickler Schweiz | Python Experte";
-        enhancedDescription = "Senior Backend Entwickler mit 8+ Jahren Erfahrung. Python, Django, industrielle Protokolle. Verfügbar Schweiz.";
-        enhancedKeywords = "backend entwickler schweiz, python entwickler zürich, software ingenieur schweiz";
+        enhancedTitle =
+          "Oriol Macias - Backend Entwickler Schweiz | Python Experte";
+        enhancedDescription =
+          "Senior Backend Entwickler mit 8+ Jahren Erfahrung. Python, Django, industrielle Protokolle. Verfügbar Schweiz.";
+        enhancedKeywords =
+          "backend entwickler schweiz, python entwickler zürich, software ingenieur schweiz";
       }
     }
     // Spanish market detection
@@ -410,8 +419,38 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       crossorigin="anonymous"
     />
 
+    <!-- JS Enabled Class Injector - Critical for preventing invisible content -->
+    <script is:inline>
+      document.documentElement.classList.add("js-enabled");
+    </script>
+
     <!-- Mobile optimizations script -->
     <script src="/mobile-optimizations.js" defer></script>
+
+    <!-- Global animations script - Inlined for reliability -->
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        const animatedElements = document.querySelectorAll(
+          ".animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width",
+        );
+        animatedElements.forEach((el) => observer.observe(el));
+      });
+    </script>
 
     <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
 
@@ -517,39 +556,116 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <style is:inline>
       /* a11y-improvements.css - Accessibility fixes */
       :root {
-        --original-brand-red: #D83333;
-        --accessible-brand-red: #C41E1E;
+        --original-brand-red: #d83333;
+        --accessible-brand-red: #c41e1e;
       }
-      .text-brand-red { color: var(--accessible-brand-red) !important; }
-      .border-brand-red { border-color: var(--accessible-brand-red) !important; }
-      .bg-brand-red { background-color: var(--original-brand-red); }
-      h4.text-brand-red { color: #B22222 !important; font-weight: 600 !important; }
-      [aria-current="page"] { font-weight: 600 !important; }
-      .text-brand-red[aria-current="page"] { color: #B22222 !important; }
-      #cv-download-button { color: #FFFFFF !important; background-color: var(--accessible-brand-red) !important; border-color: var(--accessible-brand-red) !important; }
-      #cv-download-button:hover { background-color: #a81c1c !important; }
-      footer, footer p { color: #4A5568 !important; }
-      .dark footer, .dark footer p { color: #CBD5E0 !important; }
-      button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      .text-brand-red {
+        color: var(--accessible-brand-red) !important;
+      }
+      .border-brand-red {
+        border-color: var(--accessible-brand-red) !important;
+      }
+      .bg-brand-red {
+        background-color: var(--original-brand-red);
+      }
+      h4.text-brand-red {
+        color: #b22222 !important;
+        font-weight: 600 !important;
+      }
+      [aria-current="page"] {
+        font-weight: 600 !important;
+      }
+      .text-brand-red[aria-current="page"] {
+        color: #b22222 !important;
+      }
+      #cv-download-button {
+        color: #ffffff !important;
+        background-color: var(--accessible-brand-red) !important;
+        border-color: var(--accessible-brand-red) !important;
+      }
+      #cv-download-button:hover {
+        background-color: #a81c1c !important;
+      }
+      footer,
+      footer p {
+        color: #4a5568 !important;
+      }
+      .dark footer,
+      .dark footer p {
+        color: #cbd5e0 !important;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible {
         outline: 3px solid var(--accessible-brand-red) !important;
         outline-offset: 2px !important;
         box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
       }
 
       /* layout-shift-fixes.css - CLS prevention */
-      #skills { min-height: 400px; contain: layout paint; }
-      .skill-pill { height: 32px; margin-bottom: 8px; contain: content; }
-      nav .hidden.md\:block { min-height: 40px; contain: layout size; }
-      .w-10.h-10 { min-width: 2.5rem; min-height: 2.5rem; contain: strict; }
-      [data-i18n="header.photoAlt"] { min-height: 400px; min-width: 400px; aspect-ratio: 1; contain: size layout; }
-      section#skills, div.hidden.md\:block { contain: layout paint; isolation: isolate; }
-      section#skills h3, section#skills .skill-pill { transform: translateZ(0); will-change: transform; transition: transform 0.2s ease-out; }
-      nav a[data-section] { min-width: 70px; text-align: center; justify-content: center; display: inline-flex; }
-      #skills .section-header { height: 40px; margin-bottom: 16px; contain: layout size; }
+      #skills {
+        min-height: 400px;
+        contain: layout paint;
+      }
+      .skill-pill {
+        height: 32px;
+        margin-bottom: 8px;
+        contain: content;
+      }
+      nav .hidden.md\:block {
+        min-height: 40px;
+        contain: layout size;
+      }
+      .w-10.h-10 {
+        min-width: 2.5rem;
+        min-height: 2.5rem;
+        contain: strict;
+      }
+      [data-i18n="header.photoAlt"] {
+        min-height: 400px;
+        min-width: 400px;
+        aspect-ratio: 1;
+        contain: size layout;
+      }
+      section#skills,
+      div.hidden.md\:block {
+        contain: layout paint;
+        isolation: isolate;
+      }
+      section#skills h3,
+      section#skills .skill-pill {
+        transform: translateZ(0);
+        will-change: transform;
+        transition: transform 0.2s ease-out;
+      }
+      nav a[data-section] {
+        min-width: 70px;
+        text-align: center;
+        justify-content: center;
+        display: inline-flex;
+      }
+      #skills .section-header {
+        height: 40px;
+        margin-bottom: 16px;
+        contain: layout size;
+      }
       @media (max-width: 768px) {
-        #skills, .nav-container { contain: strict; content-visibility: auto; }
-        main>div>section:first-child { min-height: 200px; }
-        h1, h2, h3, p { contain: content; }
+        #skills,
+        .nav-container {
+          contain: strict;
+          content-visibility: auto;
+        }
+        main > div > section:first-child {
+          min-height: 200px;
+        }
+        h1,
+        h2,
+        h3,
+        p {
+          contain: content;
+        }
       }
 
       /* cls-fix.css - Additional CLS prevention */
@@ -566,14 +682,48 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
       /* critical-mobile.css - Mobile critical styles */
       @media (max-width: 767px) {
-        body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff; color: #1f2937; }
-        .dark body { background-color: #121620; color: #f9fafb; }
-        header { position: sticky; top: 0; z-index: 50; background-color: #ffffff; border-bottom: 1px solid #e5e7eb; padding: 0.75rem 0; }
-        .dark header { background-color: #121620; border-color: #374151; }
-        .container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
-        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-        h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
-        p { margin-bottom: 1rem; }
+        body {
+          margin: 0;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          background-color: #ffffff;
+          color: #1f2937;
+        }
+        .dark body {
+          background-color: #121620;
+          color: #f9fafb;
+        }
+        header {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          background-color: #ffffff;
+          border-bottom: 1px solid #e5e7eb;
+          padding: 0.75rem 0;
+        }
+        .dark header {
+          background-color: #121620;
+          border-color: #374151;
+        }
+        .container {
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+        }
+        h2 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        p {
+          margin-bottom: 1rem;
+        }
       }
     </style>
 
@@ -702,12 +852,15 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- JobPosting Structured Data - Separate component for Google compliance -->
-    <JobPostingSchema
+    <!-- JobPosting Structured Data - Separate component for Google compliance -->
+    {
+      /* <JobPostingSchema
       market={marketData.market as "switzerland" | "spain" | "general"}
       city={marketData.city}
       language={lang as "en" | "es" | "fr"}
       client:load
-    />
+    /> */
+    }
 
     <!-- Performance optimizations -->
     <meta name="generator" content={Astro.generator} />
@@ -1002,12 +1155,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                 <div class="flex items-center gap-6">
                   <a
                     href="#top"
-                    class="text-sm flex items-center text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                    aria-label={lang === "es"
-                      ? "Volver al inicio de la página"
-                      : lang === "fr"
-                        ? "Retourner en haut de la page"
-                        : "Return to top of page"}
+                    class="text-sm flex items-center text-light-text dark:text-dark-text hover:text-brand-red dark:hover:text-red-400 transition-colors"
                   >
                     <i class="fas fa-arrow-up mr-2 text-xs" aria-hidden="true"
                     ></i>
@@ -1023,7 +1171,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                 <!-- Fixed unique ID for download button -->
                 <button
                   id="footer-cv-download-button"
-                  class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red text-brand-red dark:text-brand-red hover:bg-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:text-white transition-colors duration-300"
+                  class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red dark:border-red-400 text-brand-red dark:text-red-400 hover:bg-brand-red hover:text-white dark:hover:bg-red-400 dark:hover:text-white transition-colors duration-300"
                   onclick="window.print()"
                   aria-label={lang === "es"
                     ? "Descargar CV en formato PDF"
@@ -1150,6 +1298,58 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         console.error("Smooth scrolling error:", error);
       }
     });
+  </script>
+
+  <!-- Enhanced market tracking with error handling -->
+  <script is:inline define:vars={{ marketData }}>
+    /**
+     * Market-specific interaction tracking
+     * @description Tracks user interactions for market optimization
+     */
+    if (typeof gtag !== "undefined") {
+      try {
+        document.addEventListener("click", function (e) {
+          const target = e.target;
+          if (target && target.closest) {
+            // Swiss market tracking
+            if (target.closest("[data-swiss-tracking]")) {
+              gtag("event", "swiss_market_interaction", {
+                event_category: "Swiss SEO",
+                event_label: target
+                  .closest("[data-swiss-tracking]")
+                  .getAttribute("data-swiss-tracking"),
+                market_focus: marketData.market,
+                target_city: marketData.city,
+                custom_parameter_1: marketData.market,
+                custom_parameter_2: marketData.city,
+              });
+            }
+            // Spanish market tracking
+            if (target.closest("[data-spanish-tracking]")) {
+              gtag("event", "spanish_market_interaction", {
+                event_category: "Spanish SEO",
+                event_label: target
+                  .closest("[data-spanish-tracking]")
+                  .getAttribute("data-spanish-tracking"),
+                market_focus: marketData.market,
+                custom_parameter_1: marketData.market,
+              });
+            }
+            // General CV interactions
+            if (target.closest(".cv-download-btn")) {
+              gtag("event", "cv_download_attempt", {
+                event_category: "CV Engagement",
+                event_label: "Footer Download Button",
+                market_focus: marketData.market,
+                target_city: marketData.city,
+              });
+            }
+          }
+        });
+      } catch (error) {
+        console.warn("Market tracking error:", error);
+      }
+    }
   </script>
 
   <!-- Enhanced Service Worker registration -->

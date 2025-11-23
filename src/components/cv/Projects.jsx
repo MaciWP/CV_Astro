@@ -292,8 +292,8 @@ const Projects = () => {
                 <button
                     onClick={() => setActiveTab('personal')}
                     className={`py-2 px-4 font-medium text-sm ${activeTab === 'personal'
-                        ? 'text-brand-red border-b-2 border-brand-red'
-                        : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70'}`}
+                        ? 'text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400'
+                        : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70'}`}
                     data-i18n="projects.personalProjects"
                 >
                     {translations.personalProjects}
@@ -301,8 +301,8 @@ const Projects = () => {
                 <button
                     onClick={() => setActiveTab('professional')}
                     className={`py-2 px-4 font-medium text-sm ${activeTab === 'professional'
-                        ? 'text-brand-red border-b-2 border-brand-red'
-                        : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70'}`}
+                        ? 'text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400'
+                        : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70'}`}
                     data-i18n="projects.professionalWork"
                 >
                     {translations.professionalWork}

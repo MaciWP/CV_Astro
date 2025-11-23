@@ -36,7 +36,7 @@ const NavbarLogo = ({ onClick }) => {
                     href="https://github.com/MaciWP"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-brand-red hover:text-brand-red/80 transition-colors"
+                    className="text-brand-red dark:text-red-400 hover:text-brand-red/80 dark:hover:text-red-400/80 transition-colors"
                     aria-label="GitHub Profile"
                 >
                     <i className="fab fa-github text-lg"></i>
@@ -46,7 +46,7 @@ const NavbarLogo = ({ onClick }) => {
                     href="https://linkedin.com/in/oriolmaciasbadosa"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-brand-red hover:text-brand-red/80 transition-colors"
+                    className="text-brand-red dark:text-red-400 hover:text-brand-red/80 dark:hover:text-red-400/80 transition-colors"
                     aria-label="LinkedIn Profile"
                 >
                     <i className="fab fa-linkedin text-lg"></i>
