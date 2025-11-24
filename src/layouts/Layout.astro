@@ -20,6 +20,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
+import JobPostingSchema from "../components/JobPostingSchema";
 import {
   detectMarketAndOptimizeSEO,
   generatePersonStructuredData,
@@ -560,15 +561,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- JobPosting Structured Data - Separate component for Google compliance -->
-    <!-- JobPosting Structured Data - Separate component for Google compliance -->
-    {
-      /* <JobPostingSchema
+    <JobPostingSchema
       market={marketData.market as "switzerland" | "spain" | "general"}
       city={marketData.city}
       language={lang as "en" | "es" | "fr"}
       client:load
-    /> */
-    }
+    />
 
     <!-- Performance optimizations -->
     <meta name="generator" content={Astro.generator} />
