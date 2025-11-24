@@ -607,27 +607,14 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     </script>
 
     <!-- Fixed Structured Data with proper typing -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(personSchema, null, 2)}
+    <Fragment
+      set:html={`<script type="application/ld+json">${JSON.stringify(personSchema, null, 2)}</script>`}
     />
 
     <!-- JobPosting Structured Data -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(jobPostingSchema, null, 2)}
+    <Fragment
+      set:html={`<script type="application/ld+json">${JSON.stringify(jobPostingSchema, null, 2)}</script>`}
     />
-
-    <!-- JobPosting Structured Data - Separate component for Google compliance -->
-    <JobPostingSchema
-      market={marketData.market as "switzerland" | "spain" | "general"}
-      city={marketData.city}
-      language={lang as "en" | "es" | "fr"}
-    />
-
-    <!-- Performance optimizations -->
-    <meta name="generator" content={Astro.generator} />
-    <!-- Preload LCP image for Mobile (critical rendering path) -->
 
     <link
       rel="preload"
