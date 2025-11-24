@@ -1,0 +1,139 @@
+---
+/**
+ * Página específica Lausanne
+ * @file src/pages/switzerland/lausanne.astro
+ * @description SEO específico para mercado Lausanne
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader";
+
+const title = "Oriol Macias - Backend Developer Lausanne | EPFL Tech Ecosystem";
+const description =
+    "Backend Developer targeting Lausanne EPFL tech ecosystem. Python, Django specialist with research collaboration experience.";
+---
+
+<Layout title={title} description={description}>
+    <div class="max-w-4xl mx-auto">
+        <!-- Lausanne-specific Hero -->
+        <section class="mb-16">
+            <h1 class="text-4xl font-bold mb-4 text-brand-red">
+                Backend Developer for Lausanne Tech Ecosystem
+            </h1>
+            <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+                Ready to contribute to Lausanne's dynamic EPFL research and
+                startup ecosystem
+            </p>
+
+            <!-- Lausanne Market Advantages -->
+            <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg mb-8">
+                <h2 class="text-xl font-semibold mb-4">Why Lausanne?</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="font-semibold text-brand-red">
+                            Research Collaboration
+                        </h3>
+                        <p class="text-sm">
+                            Perfect fit for EPFL research projects and academic
+                            partnerships
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-brand-red">
+                            Startup Ecosystem
+                        </h3>
+                        <p class="text-sm">
+                            Experience with agile development and innovation
+                            projects
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-brand-red">
+                            Academic Technology
+                        </h3>
+                        <p class="text-sm">
+                            Open to research collaborations and knowledge
+                            transfer
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-brand-red">
+                            Work Authorization
+                        </h3>
+                        <p class="text-sm">
+                            EU work permit ready, immediate availability
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lausanne Companies Targeting -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold mb-4">
+                    Target Organizations in Lausanne
+                </h2>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="p-4 border rounded">
+                        <h3 class="font-semibold">Academic Institutions</h3>
+                        <ul class="mt-2 space-y-1">
+                            <li>
+                                • EPFL (École Polytechnique Fédérale de
+                                Lausanne)
+                            </li>
+                            <li>• University of Lausanne IT</li>
+                            <li>• Swiss Institute of Technology</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 border rounded">
+                        <h3 class="font-semibold">Tech Companies</h3>
+                        <ul class="mt-2 space-y-1">
+                            <li>• Logitech</li>
+                            <li>• Kudelski Group</li>
+                            <li>• Nespresso (Nestlé)</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 border rounded">
+                        <h3 class="font-semibold">Startups & Innovation</h3>
+                        <ul class="mt-2 space-y-1">
+                            <li>• EPFL Innovation Park</li>
+                            <li>• Tech startups</li>
+                            <li>• Research spin-offs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Expertise for Lausanne -->
+            <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+                <h2 class="text-xl font-semibold mb-4">
+                    Technical Expertise for Lausanne Market
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-brand-red mb-2">
+                            Backend Development
+                        </h3>
+                        <ul class="text-sm space-y-1">
+                            <li>• Python and Django expertise</li>
+                            <li>• REST API development</li>
+                            <li>• Microservices architecture</li>
+                            <li>• Database optimization (PostgreSQL)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-brand-red mb-2">
+                            Research-Ready Skills
+                        </h3>
+                        <ul class="text-sm space-y-1">
+                            <li>• Data processing and analysis</li>
+                            <li>• Performance optimization</li>
+                            <li>• Documentation and knowledge transfer</li>
+                            <li>• Agile methodologies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <ProfileHeader client:load />
+    </div>
+</Layout>
