@@ -70,6 +70,58 @@ const marketData = detectMarketAndOptimizeSEO(
 // Generate structured data using centralized utility
 const personSchema = generatePersonStructuredData();
 
+// Generate JobPosting schema inline
+const currentDate = new Date();
+const validThroughDate = new Date();
+validThroughDate.setMonth(validThroughDate.getMonth() + 6);
+
+const jobPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  title:
+    marketData.market === "switzerland"
+      ? `Senior Backend Developer - Switzerland`
+      : `Desarrollador Backend Senior - España`,
+  description:
+    marketData.market === "switzerland"
+      ? "Experienced Backend Developer with 8+ years in industrial protocol integration (SNMP, MODBUS, BACnet) seeking opportunities in Switzerland. Expertise in Python, Django, C#, .NET, and data center infrastructure. EU work permit ready."
+      : "Desarrollador Backend experimentado con 8+ años en integración de protocolos industriales buscando oportunidades en España.",
+  datePosted: currentDate.toISOString().split("T")[0],
+  validThrough: validThroughDate.toISOString().split("T")[0],
+  employmentType: "FULL_TIME",
+  hiringOrganization: {
+    "@type": "Organization",
+    name: "Oriol Macias Dev",
+    url: "https://oriolmacias.dev",
+    logo: "https://oriolmacias.dev/images/oriol_macias.jpg",
+  },
+  jobLocation: {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Remote / Flexible",
+      addressCountry: marketData.market === "switzerland" ? "CH" : "ES",
+      addressLocality:
+        marketData.city !== "general"
+          ? marketData.city.charAt(0).toUpperCase() + marketData.city.slice(1)
+          : marketData.market === "switzerland"
+            ? "Zürich"
+            : "Madrid",
+      postalCode: marketData.market === "switzerland" ? "8000" : "28000",
+    },
+  },
+  baseSalary: {
+    "@type": "MonetaryAmount",
+    currency: marketData.market === "switzerland" ? "CHF" : "EUR",
+    value: {
+      "@type": "QuantitativeValue",
+      minValue: marketData.market === "switzerland" ? 90000 : 45000,
+      maxValue: marketData.market === "switzerland" ? 130000 : 65000,
+      unitText: "YEAR",
+    },
+  },
+};
+
 // Construct full canonical URL
 const fullCanonicalUrl = canonicalUrl.startsWith("http")
   ? canonicalUrl
@@ -558,6 +610,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <script
       type="application/ld+json"
       set:html={JSON.stringify(personSchema, null, 2)}
+    />
+
+    <!-- JobPosting Structured Data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jobPostingSchema, null, 2)}
     />
 
     <!-- JobPosting Structured Data - Separate component for Google compliance -->
