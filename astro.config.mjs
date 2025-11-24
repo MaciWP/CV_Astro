@@ -9,7 +9,7 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
-import node from '@astrojs/node';
+import netlify from '@astrojs/netlify';
 
 // Check required environment variables
 if (process.env.NODE_ENV === 'development') {
@@ -34,9 +34,7 @@ export default defineConfig({
 
   // Hybrid Rendering (Static + Server Islands)
   // In Astro v5, 'static' output with an adapter enables hybrid features automatically.
-  adapter: node({
-    mode: 'middleware'
-  }),
+  adapter: netlify(),
 
   // i18n configuration ARREGLADA
   i18n: {
