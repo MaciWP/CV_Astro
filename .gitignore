@@ -84,5 +84,5 @@ report_output.txt
 next-env.d.ts
 
 # Claude Code Configuration
-.claude/
-CLAUDE.md
+# .claude/
+# CLAUDE.md

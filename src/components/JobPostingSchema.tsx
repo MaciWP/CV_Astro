@@ -3,9 +3,10 @@
  * @file src/components/JobPostingSchema.tsx
  * @description Generates compliant JobPosting structured data for Google Search Console
  * @author Oriol Macias Dev
- * @version 1.0.0
+ * @version 1.1.0
  * 
  * FIXES APPLIED:
+ * ✅ Fixed JSON-LD syntax error (Missing '}') by using safe serialization
  * ✅ All required fields included (title, description, datePosted, hiringOrganization)
  * ✅ Non-critical fields added (addressLocality, postalCode, employmentType, validThrough, baseSalary)
  * ✅ Market-specific optimizations for Switzerland and Spain
@@ -14,6 +15,7 @@
  */
 
 import React from 'react';
+import { toSafeJsonLd } from '../utils/seo';
 
 /**
  * JobPosting Schema Component Props
@@ -36,7 +38,7 @@ const marketConfigs = {
             hiringOrg: "Swiss Technology Companies",
             currency: "CHF",
             salaryRange: { min: 90000, max: 130000 },
-            postalCode: "8000-9000",
+            postalCode: "8000",
             qualifications: [
                 "8+ years backend development experience",
                 "Python and Django expertise",
@@ -58,7 +60,7 @@ const marketConfigs = {
             hiringOrg: "Entreprises Technologiques Suisses",
             currency: "CHF",
             salaryRange: { min: 90000, max: 130000 },
-            postalCode: "8000-9000",
+            postalCode: "8000",
             qualifications: [
                 "8+ ans d'expérience développement backend",
                 "Expertise Python et Django",
@@ -82,7 +84,7 @@ const marketConfigs = {
             hiringOrg: "Empresas Tecnológicas España",
             currency: "EUR",
             salaryRange: { min: 45000, max: 65000 },
-            postalCode: "28000-28999",
+            postalCode: "28000",
             qualifications: [
                 "8+ años experiencia desarrollo backend",
                 "Experiencia en Python y Django",
@@ -104,7 +106,7 @@ const marketConfigs = {
             hiringOrg: "Spanish Technology Companies",
             currency: "EUR",
             salaryRange: { min: 45000, max: 65000 },
-            postalCode: "28000-28999",
+            postalCode: "28000",
             qualifications: [
                 "8+ years backend development experience",
                 "Python and Django expertise",
@@ -127,23 +129,23 @@ const marketConfigs = {
  * City-specific configurations for Switzerland
  */
 const swissCityConfigs = {
-    zurich: { min: 100000, max: 140000, postal: "8000-8099", canton: "ZH" },  // ISO 3166-2:CH-ZH
-    basel: { min: 95000, max: 135000, postal: "4000-4099", canton: "BS" },  // ISO 3166-2:CH-BS
-    geneva: { min: 98000, max: 138000, postal: "1200-1299", canton: "GE" },  // ISO 3166-2:CH-GE
-    geneve: { min: 98000, max: 138000, postal: "1200-1299", canton: "GE" },  // ISO 3166-2:CH-GE
-    lausanne: { min: 90000, max: 125000, postal: "1000-1099", canton: "VD" },  // ISO 3166-2:CH-VD
-    bern: { min: 88000, max: 120000, postal: "3000-3099", canton: "BE" }  // ISO 3166-2:CH-BE
+    zurich: { min: 100000, max: 140000, postal: "8000", canton: "ZH" },  // ISO 3166-2:CH-ZH
+    basel: { min: 95000, max: 135000, postal: "4000", canton: "BS" },  // ISO 3166-2:CH-BS
+    geneva: { min: 98000, max: 138000, postal: "1200", canton: "GE" },  // ISO 3166-2:CH-GE
+    geneve: { min: 98000, max: 138000, postal: "1200", canton: "GE" },  // ISO 3166-2:CH-GE
+    lausanne: { min: 90000, max: 125000, postal: "1000", canton: "VD" },  // ISO 3166-2:CH-VD
+    bern: { min: 88000, max: 120000, postal: "3000", canton: "BE" }  // ISO 3166-2:CH-BE
 };
 
 /**
  * City-specific configurations for Spain
  */
 const spanishCityConfigs = {
-    madrid: { min: 48000, max: 68000, postal: "28000-28999", region: "M" },  // ISO 3166-2:ES-M
-    barcelona: { min: 45000, max: 65000, postal: "08000-08999", region: "CT" },  // ISO 3166-2:ES-CT
-    valencia: { min: 40000, max: 58000, postal: "46000-46999", region: "V" },  // ISO 3166-2:ES-V (Comunitat Valenciana)
-    sevilla: { min: 38000, max: 55000, postal: "41000-41999", region: "AN" },  // ISO 3166-2:ES-AN
-    bilbao: { min: 42000, max: 62000, postal: "48000-48999", region: "PV" }  // ISO 3166-2:ES-PV
+    madrid: { min: 48000, max: 68000, postal: "28000", region: "M" },  // ISO 3166-2:ES-M
+    barcelona: { min: 45000, max: 65000, postal: "08000", region: "CT" },  // ISO 3166-2:ES-CT
+    valencia: { min: 40000, max: 58000, postal: "46000", region: "V" },  // ISO 3166-2:ES-V (Comunitat Valenciana)
+    sevilla: { min: 38000, max: 55000, postal: "41000", region: "AN" },  // ISO 3166-2:ES-AN
+    bilbao: { min: 42000, max: 62000, postal: "48000", region: "PV" }  // ISO 3166-2:ES-PV
 };
 
 /**
@@ -283,7 +285,7 @@ const JobPostingSchema: React.FC<JobPostingSchemaProps> = ({
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-                __html: JSON.stringify(jobPosting, null, 2)
+                __html: toSafeJsonLd(jobPosting)
             }}
         />
     );

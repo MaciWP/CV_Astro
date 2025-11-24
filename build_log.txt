@@ -1,0 +1,22 @@
+[2m11:23:10[22m [31m[1m[vite][22m[39m [31m[2m(ssr)[22m[39m [31mError when evaluating SSR module D:\PYTHON\CV_Astro\astro.config.mjs: Cannot find module '@astrojs/node' imported from 'D:/PYTHON/CV_Astro/astro.config.mjs'[39m
+      at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:52065:19)
+      at RunnableDevEnvironment.fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:53159:12)
+      at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:53117:21)
+      at handleInvoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:44506:28)
+      at EventEmitter.listenerForInvokeHandler (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:44579:25)
+      at EventEmitter.emit (node:events:519:28)
+      at Object.send (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:30831:40)
+      at Object.invoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:610:34)
+      at Object.invoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:671:34)
+      at SSRCompatModuleRunner.getModuleInformation (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:1192:94)
+[astro] Unable to load your Astro config
+
+Cannot find module '@astrojs/node' imported from 'D:/PYTHON/CV_Astro/astro.config.mjs'
+  Location:
+    D:\PYTHON\CV_Astro\node_modules\vite\dist\node\chunks\dep-DDxXL6bt.js:52065:19
+  Stack trace:
+    at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:52065:19)
+    at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:53117:21)
+    at EventEmitter.listenerForInvokeHandler (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:44579:25)
+    at Object.send (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:30831:40)
+    at Object.invoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:671:34)

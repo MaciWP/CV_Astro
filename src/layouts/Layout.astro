@@ -27,7 +27,8 @@ import {
 } from "../utils/seo";
 
 // Import global animations
-import "../styles/animations.css";
+// Import global styles (includes animations, theme, etc.)
+import "../styles/global.css";
 
 const currentPath = Astro.url.pathname;
 
@@ -85,8 +86,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       base-uri 'self';
       object-src 'none';
       img-src 'self' data: blob:;
-      font-src 'self' data:;
-      style-src 'self' 'unsafe-inline';
+      font-src 'self' data: https://fonts.gstatic.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com;
       connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net;
       upgrade-insecure-requests;
@@ -107,6 +108,14 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     "
       imagesizes="(max-width: 767px) 100vw, 400px"
       fetchpriority="high"
+    />
+
+    <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
     />
 
     <!-- Font preloading for performance -->
@@ -564,20 +573,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Performance optimizations -->
     <meta name="generator" content={Astro.generator} />
     <!-- Preload LCP image for Mobile (critical rendering path) -->
-    <link
-      rel="preload"
-      as="image"
-      href="/images/oriol_macias-960.avif"
-      fetchpriority="high"
-      media="(max-width: 768px)"
-    />
-    <link
-      rel="preload"
-      href="/styles/fonts/fa-solid-900.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+
     <link
       rel="preload"
       href="/styles/fonts/fa-brands-400.woff2"
@@ -787,21 +783,22 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Preloads locales -->
     <link
       rel="preload"
-      href="/styles/fonts/fa-solid-900.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
       href="/styles/fonts/fa-brands-400.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
     />
 
-    <!-- Font Awesome CSS completo (incluye TODOS los iconos) -->
-    <link rel="stylesheet" href="/styles/font-awesome.min.css" />
+    <!-- Font Awesome CSS completo (incluye TODOS los iconos) - Loaded non-blocking -->
+    <link
+      rel="stylesheet"
+      href="/styles/font-awesome.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="/styles/font-awesome.min.css" />
+    </noscript>
   </head>
 
   <body

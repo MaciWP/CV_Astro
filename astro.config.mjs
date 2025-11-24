@@ -7,51 +7,93 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
+import compress from 'astro-compress';
+import node from '@astrojs/node';
 
-// Configuración compatible con tu setup actual
+// Check required environment variables
+if (process.env.NODE_ENV === 'development') {
+  const requiredVars = ['SITE_URL'];
+  const missingVars = requiredVars.filter(varName => !process.env[varName]);
+
+  if (missingVars.length > 0) {
+    console.warn('⚠️  Missing environment variables:', missingVars.join(', '));
+    console.warn('   Create .env file with required variables');
+  }
+
+  if (process.env.SWISS_SEO_ENABLED === 'true') {
+    console.log('✅ Swiss SEO optimization enabled');
+  } else {
+    console.log('ℹ️  Swiss SEO optimization disabled');
+  }
+}
+
 export default defineConfig({
   // Site configuration (NECESARIO para SEO)
   site: 'https://oriolmacias.dev',
-  
+
+  // Hybrid Rendering (Static + Server Islands)
+  // In Astro v5, 'static' output with an adapter enables hybrid features automatically.
+  adapter: node({
+    mode: 'middleware'
+  }),
+
   // i18n configuration ARREGLADA
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "es", "fr", "de"],  // Added German for /de/ pages
+    locales: ["en", "es", "fr", "de"],
     routing: {
       prefixDefaultLocale: false,
-      // Remover redirectToDefaultLocale que causaba error
     },
   },
 
-  // Integrations (MANTENER tu configuración)
+  // Integrations
   integrations: [
     tailwind({
       applyBaseStyles: false,
       config: { path: './tailwind.config.js' },
     }),
     react(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en', es: 'es', fr: 'fr', de: 'de',
+        },
+      },
+    }),
+    compress({
+      CSS: true,
+      HTML: { removeAttributeQuotes: false },
+      Image: false, // Sharp handles images
+      JavaScript: true,
+      SVG: true,
+    }),
   ],
 
-  // ARREGLAR - Server config simplificada
   server: {
     port: 4321,
     host: '0.0.0.0'
   },
 
-  // ARREGLAR - Vite config simplificada
   vite: {
     server: {
-      fs: {
-        strict: true,
-      },
+      fs: { strict: true },
       middlewareMode: false,
     },
     build: {
       assetsInlineLimit: 4096,
       sourcemap: true,
       cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom'],
+            'vendor-i18n': ['i18next', 'react-i18next'],
+          },
+        },
+      },
     },
-    // Variables de entorno para SEO
     define: {
       __SWISS_SEO_ENABLED__: process.env.SWISS_SEO_ENABLED === 'true',
       __SPANISH_SEO_ENABLED__: true,
@@ -59,39 +101,11 @@ export default defineConfig({
     },
   },
 
-  // Build configuration ARREGLADA
   build: {
-    inlineStylesheets: 'always',  // String, no object
-    // assets: '_astro'  // Remover si causaba error
+    inlineStylesheets: 'always',
+    assets: '_astro',
+    format: 'file',
   },
 
-  // Output configuration ARREGLADA - solo static por ahora
-  output: 'static',
-
-  // Remover configuraciones experimentales problemáticas
-  // experimental: {} // Comentar por ahora
-
-  // Trailing slash para URLs limpias
   trailingSlash: 'never',
 });
-
-// Debugging en desarrollo
-if (process.env.NODE_ENV === 'development') {
-  console.log('🇨🇭 Swiss SEO Configuration Loaded');
-  console.log('🇪🇸 Spanish Market Support Enabled');
-  
-  // Check required environment variables
-  const requiredVars = ['SITE_URL'];
-  const missingVars = requiredVars.filter(varName => !process.env[varName]);
-  
-  if (missingVars.length > 0) {
-    console.warn('⚠️  Missing environment variables:', missingVars.join(', '));
-    console.warn('   Create .env file with required variables');
-  }
-  
-  if (process.env.SWISS_SEO_ENABLED === 'true') {
-    console.log('✅ Swiss SEO optimization enabled');
-  } else {
-    console.log('ℹ️  Swiss SEO optimization disabled');
-  }
-}

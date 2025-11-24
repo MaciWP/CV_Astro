@@ -41,53 +41,65 @@ const frUrl = getRelativeLocaleUrl("fr", "");
     itemtype="https://schema.org/Person"
   >
     {/* ProfileHeader con ErrorBoundary */}
-    <ErrorBoundary
-      fallbackTitle="Error loading profile"
-      fallbackMessage="Unable to load profile information. Please refresh the page."
-      showReset={true}
-    >
-      <ProfileHeader client:load />
-    </ErrorBoundary>
+    <div class="section-animate">
+      <ErrorBoundary
+        fallbackTitle="Error loading profile"
+        fallbackMessage="Unable to load profile information. Please refresh the page."
+        showReset={true}
+      >
+        <ProfileHeader client:load />
+      </ErrorBoundary>
+    </div>
 
     {/* Experience con ErrorBoundary */}
-    <ErrorBoundary
-      fallbackTitle="Error loading experience"
-      fallbackMessage="Unable to load work experience information."
-    >
-      <Experience client:load />
-    </ErrorBoundary>
+    <div class="section-animate" style="animation-delay: 100ms">
+      <ErrorBoundary
+        fallbackTitle="Error loading experience"
+        fallbackMessage="Unable to load work experience information."
+      >
+        <Experience client:visible />
+      </ErrorBoundary>
+    </div>
 
     {/* Skills con ErrorBoundary */}
-    <ErrorBoundary
-      fallbackTitle="Error loading skills"
-      fallbackMessage="Unable to load technical skills information."
-    >
-      <Skills client:load />
-    </ErrorBoundary>
+    <div class="section-animate" style="animation-delay: 200ms">
+      <ErrorBoundary
+        fallbackTitle="Error loading skills"
+        fallbackMessage="Unable to load technical skills information."
+      >
+        <Skills client:visible />
+      </ErrorBoundary>
+    </div>
 
     {/* Education con ErrorBoundary */}
-    <ErrorBoundary
-      fallbackTitle="Error loading education"
-      fallbackMessage="Unable to load education information."
-    >
-      <Education client:load />
-    </ErrorBoundary>
+    <div class="section-animate" style="animation-delay: 300ms">
+      <ErrorBoundary
+        fallbackTitle="Error loading education"
+        fallbackMessage="Unable to load education information."
+      >
+        <Education client:visible />
+      </ErrorBoundary>
+    </div>
 
     {/* Languages con ErrorBoundary */}
-    <ErrorBoundary
-      fallbackTitle="Error loading languages"
-      fallbackMessage="Unable to load language proficiency information."
-    >
-      <Languages client:load />
-    </ErrorBoundary>
+    <div class="section-animate" style="animation-delay: 400ms">
+      <ErrorBoundary
+        fallbackTitle="Error loading languages"
+        fallbackMessage="Unable to load language proficiency information."
+      >
+        <Languages client:visible />
+      </ErrorBoundary>
+    </div>
 
     {/* Projects con ErrorBoundary */}
-    <ErrorBoundary
-      fallbackTitle="Error loading projects"
-      fallbackMessage="Unable to load project information."
-    >
-      <Projects client:load />
-    </ErrorBoundary>
+    <div class="section-animate" style="animation-delay: 500ms">
+      <ErrorBoundary
+        fallbackTitle="Error loading projects"
+        fallbackMessage="Unable to load project information."
+      >
+        <Projects client:visible />
+      </ErrorBoundary>
+    </div>
 
     {/* Contenido SEO oculto */}
     <div class="sr-only">

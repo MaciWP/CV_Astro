@@ -1,0 +1,31 @@
+Lighthouse Scores:
+{
+  "performance": 55.00000000000001,
+  "accessibility": 96,
+  "best-practices": 92,
+  "seo": 92
+}
+
+Failed Audits:
+- First Contentful Paint (first-contentful-paint): 0
+- Largest Contentful Paint (largest-contentful-paint): 0
+- Speed Index (speed-index): 0
+- Browser errors were logged to the console (errors-in-console): 0
+- Time to Interactive (interactive): 0
+- Background and foreground colors do not have a sufficient contrast ratio. (color-contrast): 0
+- Elements with visible text labels do not have matching accessible names. (label-content-name-mismatch): 0
+- Avoid enormous network payloads (total-byte-weight): 0.5
+- Minify CSS (unminified-css): 0.5
+- Minify JavaScript (unminified-javascript): 0
+- Reduce unused CSS (unused-css-rules): 0
+- Reduce unused JavaScript (unused-javascript): 0
+- Charset declaration is missing or occurs too late in the HTML (charset): 0
+- Links do not have descriptive text (link-text): 0
+- Page prevented back/forward cache restoration (bf-cache): 0
+- Document request latency (document-latency-insight): 0.5
+- Duplicated JavaScript (duplicated-javascript-insight): 0.5
+- Improve image delivery (image-delivery-insight): 0
+- Network dependency tree (network-dependency-tree-insight): 0
+- Render blocking requests (render-blocking-insight): 0
+
+--- DIAGNOSTICS ---

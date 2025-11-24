@@ -5,11 +5,12 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+                sans: ['Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+                heading: ['Outfit', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
             },
             colors: {
-                // Color principal para acentos (WCAG AA compliant - 5.2:1 ratio, Tailwind red-800)
-                'brand-red': '#991B1B',
+                // Color principal para acentos (WCAG AA compliant - 5.2:1 ratio)
+                'brand-red': '#c41e1e',
 
                 // Light theme - Nueva paleta más clara con recuadros grises
                 'light-primary': '#ffffff',       // Fondo principal BLANCO
@@ -89,4 +90,14 @@ export default {
         },
     },
     plugins: [],
+    safelist: [
+        // Only safelist truly dynamic classes
+        {
+            pattern: /^(bg|text|border)-(red|green|blue)-(500|600|700)$/,
+            variants: ['hover', 'focus', 'dark'],
+        },
+    ],
+    future: {
+        hoverOnlyWhenSupported: true, // Prevents hover on touch devices
+    },
 };

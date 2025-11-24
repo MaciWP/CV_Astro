@@ -7,7 +7,7 @@ import ResponsiveImage from '../ResponsiveImage';
 import headerData from '../../data/header';
 
 const ProfileHeader = () => {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const [photoLoaded, setPhotoLoaded] = useState(false);
     const [localData, setLocalData] = useState({
         ...headerData,
@@ -237,35 +237,33 @@ const ProfileHeader = () => {
                                         width={400}
                                         height={400}
                                         loading="eager"
+                                        fetchpriority="high"
                                         className="w-full h-full object-cover transition-opacity duration-500"
                                         onLoad={handleImageLoaded}
                                     />
                                 </picture>
                             </div>
 
-                            {/* Acento rojo */}
-                            <div className="absolute bottom-0 left-0 right-0 h-2 bg-brand-red"></div>
-                        </div>
+                            {/* Botones de descarga con estilo consistente */}
+                            <div className="flex flex-col sm:flex-row gap-3 mt-4 justify-center">
+                                <button
+                                    onClick={handleCVDownload}
+                                    className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                                    aria-label={localData.downloadCV}
+                                >
+                                    <i className="fas fa-download mr-1.5"></i>
+                                    <span>{localData.downloadCV}</span>
+                                </button>
 
-                        {/* Botones de descarga con estilo consistente */}
-                        <div className="flex flex-col sm:flex-row gap-3 mt-4 justify-center">
-                            <button
-                                onClick={handleCVDownload}
-                                className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                                aria-label={localData.downloadCV}
-                            >
-                                <i className="fas fa-download mr-1.5"></i>
-                                <span>{localData.downloadCV}</span>
-                            </button>
-
-                            <button
-                                onClick={handleCoverLetterDownload}
-                                className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                                aria-label={localData.downloadCoverLetter}
-                            >
-                                <i className="fas fa-file-alt mr-1.5"></i>
-                                <span>{localData.downloadCoverLetter}</span>
-                            </button>
+                                <button
+                                    onClick={handleCoverLetterDownload}
+                                    className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                                    aria-label={localData.downloadCoverLetter}
+                                >
+                                    <i className="fas fa-file-alt mr-1.5"></i>
+                                    <span>{localData.downloadCoverLetter}</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

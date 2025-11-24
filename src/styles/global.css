@@ -39,7 +39,7 @@
 /* ===== ESTILOS BASE ===== */
 @layer base {
     body {
-        @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
+        @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         font-feature-settings: "kern";
@@ -54,7 +54,7 @@
     h5,
     h6 {
         letter-spacing: -0.02em;
-        @apply font-bold;
+        @apply font-heading font-bold;
     }
 
     /* Mejor espaciado para secciones de scroll */
