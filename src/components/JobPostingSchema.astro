@@ -1,0 +1,78 @@
+---
+/**
+ * JobPosting Schema Component (Astro)
+ * @file src/components/JobPostingSchema.astro
+ * @description Server-side rendering of JobPosting structured data
+ */
+import { toSafeJsonLd } from "../utils/seo";
+
+interface Props {
+    market?: "switzerland" | "spain" | "general";
+    city?: string;
+    language?: "en" | "es" | "fr";
+}
+
+const {
+    market = "switzerland",
+    city = "general",
+    language = "en",
+} = Astro.props;
+
+// Generate current date and validThrough (6 months ahead)
+const currentDate = new Date();
+const validThroughDate = new Date();
+validThroughDate.setMonth(validThroughDate.getMonth() + 6);
+
+// Base job posting
+const jobPosting = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title:
+        market === "switzerland"
+            ? `Senior Backend Developer - ${city !== "general" ? city.charAt(0).toUpperCase() + city.slice(1) + ", " : ""}Switzerland`
+            : `Desarrollador Backend Senior - España`,
+    description:
+        market === "switzerland"
+            ? "Experienced Backend Developer with 8+ years in industrial protocol integration (SNMP, MODBUS, BACnet) seeking opportunities in Switzerland. Expertise in Python, Django, C#, .NET, and data center infrastructure. EU work permit ready."
+            : "Desarrollador Backend experimentado con 8+ años en integración de protocolos industriales buscando oportunidades en España.",
+    datePosted: currentDate.toISOString().split("T")[0],
+    validThrough: validThroughDate.toISOString().split("T")[0],
+    employmentType: "FULL_TIME",
+    hiringOrganization: {
+        "@type": "Organization",
+        name: "Oriol Macias Dev",
+        url: "https://oriolmacias.dev",
+        logo: "https://oriolmacias.dev/images/oriol_macias.jpg",
+    },
+    jobLocation: {
+        "@type": "Place",
+        address: {
+            "@type": "PostalAddress",
+            streetAddress: "Remote / Flexible",
+            addressCountry: market === "switzerland" ? "CH" : "ES",
+            addressLocality:
+                city !== "general"
+                    ? city.charAt(0).toUpperCase() + city.slice(1)
+                    : market === "switzerland"
+                      ? "Zürich"
+                      : "Madrid",
+            postalCode: market === "switzerland" ? "8000" : "28000",
+        },
+    },
+    baseSalary: {
+        "@type": "MonetaryAmount",
+        currency: market === "switzerland" ? "CHF" : "EUR",
+        value: {
+            "@type": "QuantitativeValue",
+            minValue: market === "switzerland" ? 90000 : 45000,
+            maxValue: market === "switzerland" ? 130000 : 65000,
+            unitText: "YEAR",
+        },
+    },
+};
+---
+
+<script
+    type="application/ld+json"
+    set:html={JSON.stringify(jobPosting, null, 2)}
+/>

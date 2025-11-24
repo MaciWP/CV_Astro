@@ -20,7 +20,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent";
 import A11yAnnouncer from "../components/A11yAnnouncer";
 import LanguageAlternates from "../components/LanguageAlternates";
-import JobPostingSchema from "../components/JobPostingSchema";
+import JobPostingSchema from "../components/JobPostingSchema.astro";
 import {
   detectMarketAndOptimizeSEO,
   generatePersonStructuredData,
@@ -565,7 +565,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       market={marketData.market as "switzerland" | "spain" | "general"}
       city={marketData.city}
       language={lang as "en" | "es" | "fr"}
-      client:load
     />
 
     <!-- Performance optimizations -->

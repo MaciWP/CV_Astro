@@ -1,22 +1,191 @@
-[2m11:23:10[22m [31m[1m[vite][22m[39m [31m[2m(ssr)[22m[39m [31mError when evaluating SSR module D:\PYTHON\CV_Astro\astro.config.mjs: Cannot find module '@astrojs/node' imported from 'D:/PYTHON/CV_Astro/astro.config.mjs'[39m
-      at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:52065:19)
-      at RunnableDevEnvironment.fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:53159:12)
-      at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:53117:21)
-      at handleInvoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:44506:28)
-      at EventEmitter.listenerForInvokeHandler (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:44579:25)
-      at EventEmitter.emit (node:events:519:28)
-      at Object.send (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:30831:40)
-      at Object.invoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:610:34)
-      at Object.invoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:671:34)
-      at SSRCompatModuleRunner.getModuleInformation (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:1192:94)
-[astro] Unable to load your Astro config
 
-Cannot find module '@astrojs/node' imported from 'D:/PYTHON/CV_Astro/astro.config.mjs'
-  Location:
-    D:\PYTHON\CV_Astro\node_modules\vite\dist\node\chunks\dep-DDxXL6bt.js:52065:19
-  Stack trace:
-    at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:52065:19)
-    at fetchModule (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:53117:21)
-    at EventEmitter.listenerForInvokeHandler (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:44579:25)
-    at Object.send (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/chunks/dep-DDxXL6bt.js:30831:40)
-    at Object.invoke (file:///D:/PYTHON/CV_Astro/node_modules/vite/dist/node/module-runner.js:671:34)
+> oriol-macias-portfolio@0.1.0 build
+> node scripts/font-awesome-setup.js && node scripts/build.js && npm run generate-images
+
+­ƒÜÇ Iniciando configuraci├│n unificada de Font Awesome...
+Ô£ô Directorios creados
+Descargando Font Awesome CSS desde https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+Ô£ô CSS descargado
+Descargando fa-brands-400.woff2
+Ô£ô Descargado fa-brands-400.woff2
+Descargando fa-regular-400.woff2
+Ô£ô Descargado fa-regular-400.woff2
+Descargando fa-solid-900.woff2
+Ô£ô Descargado fa-solid-900.woff2
+Ô£ô Rutas actualizadas a rutas absolutas en archivo CSS con comillas corregidas
+Generando CSS minimal con iconos optimizados...
+Ô£ô CSS minimal generado en: D:\PYTHON\CV_Astro\public\styles\font-awesome-minimal.css
+Generando CSS de fallback...
+Ô£ô CSS de fallback generado en: D:\PYTHON\CV_Astro\public\styles\font-awesome-fallback.css
+Generando script de carga para el cliente...
+Ô£ô Script de carga generado en: D:\PYTHON\CV_Astro\public\scripts\font-awesome-loader.js
+
+Ô£à Configuraci├│n de Font Awesome completada con ├®xito!
+­ƒÅù´©Å Iniciando proceso de compilaci├│n...
+­ƒöì Verificando directorios...
+Ô£à Directorios verificados
+­ƒöñ Configurando Font Awesome...
+­ƒÜÇ Iniciando configuraci├│n unificada de Font Awesome...
+Ô£ô Directorios creados
+Descargando Font Awesome CSS desde https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+Ô£ô CSS descargado
+Descargando fa-brands-400.woff2
+Ô£ô Descargado fa-brands-400.woff2
+Descargando fa-regular-400.woff2
+Ô£ô Descargado fa-regular-400.woff2
+Descargando fa-solid-900.woff2
+Ô£ô Descargado fa-solid-900.woff2
+Ô£ô Rutas actualizadas a rutas absolutas en archivo CSS con comillas corregidas
+Generando CSS minimal con iconos optimizados...
+Ô£ô CSS minimal generado en: D:\PYTHON\CV_Astro\public\styles\font-awesome-minimal.css
+Generando CSS de fallback...
+Ô£ô CSS de fallback generado en: D:\PYTHON\CV_Astro\public\styles\font-awesome-fallback.css
+Generando script de carga para el cliente...
+Ô£ô Script de carga generado en: D:\PYTHON\CV_Astro\public\scripts\font-awesome-loader.js
+
+Ô£à Configuraci├│n de Font Awesome completada con ├®xito!
+Ô£à Font Awesome configurado
+­ƒôØ Copiando estilos...
+  Ô£ô Copiado: animation-system.css
+  Ô£ô Copiado: font-awesome-minimal.css
+  Ô£ô Copiado: font-awesome-optimized.css
+  Ô£ô Copiado: global.css
+Ô£à Estilos copiados correctamente
+­ƒù║´©Å Generando sitemap...
+Generating sitemap.xml ...
+Ô£ô Sitemap written to: D:\PYTHON\CV_Astro\public\sitemap.xml
+Ô£à Sitemap generado
+­ƒÜÇ Compilando con Astro...
+[2m23:36:01[22m [34m[@astrojs/netlify][39m Enabling sessions with Netlify Blobs
+[2m23:36:02[22m [34m[content][39m Syncing content
+[2m23:36:02[22m [34m[content][39m Synced content
+[2m23:36:02[22m [34m[types][39m Generated [2m44ms[22m
+[2m23:36:02[22m [34m[build][39m output: [34m"static"[39m
+[2m23:36:02[22m [34m[build][39m mode: [34m"server"[39m
+[2m23:36:02[22m [34m[build][39m directory: [34mD:\PYTHON\CV_Astro\dist\[39m
+[2m23:36:02[22m [34m[build][39m adapter: [32m@astrojs/netlify[39m
+[2m23:36:02[22m [34m[build][39m Collecting build info...
+[2m23:36:02[22m [34m[build][39m [32mÔ£ô Completed in 131ms.[39m
+[2m23:36:02[22m [34m[build][39m Building server entrypoints...
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[33m[1m23:36:03[22m [WARN] [vite][39m [33m"isRemoteAllowed", "matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/remotePattern.js".[39m
+[2m23:36:03[22m [34m[vite][39m [32mÔ£ô built in 1.51s[39m
+[2m23:36:03[22m [34m[build][39m [32mÔ£ô Completed in 1.53s.[39m
+
+[42m[30m building client (vite) [39m[49m
+[2m23:36:03[22m [34m[vite][39m transforming...
+[2m23:36:04[22m [34m[vite][39m [32mÔ£ô[39m 67 modules transformed.
+[2m23:36:04[22m [34m[vite][39m rendering chunks...
+[2m23:36:04[22m [34m[vite][39m computing gzip size...
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/ScrollAnimationWrapper.D41YeA7y.js  [39m[1m[2m  0.71 kB[22m[1m[22m[2m Ôöé gzip:  0.46 kB[22m[2m Ôöé map:   3.16 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/A11yAnnouncer.BhZlVmfK.js           [39m[1m[2m  0.82 kB[22m[1m[22m[2m Ôöé gzip:  0.47 kB[22m[2m Ôöé map:   3.27 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/SkipToContent.m5CkrxIt.js           [39m[1m[2m  0.94 kB[22m[1m[22m[2m Ôöé gzip:  0.59 kB[22m[2m Ôöé map:   2.70 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/jsx-runtime.CyXy1Ci3.js             [39m[1m[2m  1.05 kB[22m[1m[22m[2m Ôöé gzip:  0.65 kB[22m[2m Ôöé map:   2.23 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/I18nLoader.B3RaC4sd.js              [39m[1m[2m  1.25 kB[22m[1m[22m[2m Ôöé gzip:  0.72 kB[22m[2m Ôöé map:   5.00 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/LanguageAlternates.DarABB8F.js      [39m[1m[2m  1.26 kB[22m[1m[22m[2m Ôöé gzip:  0.70 kB[22m[2m Ôöé map:   5.14 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/ErrorBoundary.kGc_nPOX.js           [39m[1m[2m  1.74 kB[22m[1m[22m[2m Ôöé gzip:  0.81 kB[22m[2m Ôöé map:   4.82 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/Languages.CEnoDttw.js               [39m[1m[2m  2.94 kB[22m[1m[22m[2m Ôöé gzip:  1.21 kB[22m[2m Ôöé map:   9.71 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/Education.I9YMBoMT.js               [39m[1m[2m  6.54 kB[22m[1m[22m[2m Ôöé gzip:  2.51 kB[22m[2m Ôöé map:  14.86 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/index.CaZlGE7t.js                   [39m[1m[2m  6.98 kB[22m[1m[22m[2m Ôöé gzip:  2.81 kB[22m[2m Ôöé map:  15.73 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/ProfileHeader.D88Y5AGe.js           [39m[1m[2m  7.53 kB[22m[1m[22m[2m Ôöé gzip:  2.62 kB[22m[2m Ôöé map:  21.17 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/Skills.CjEWelDS.js                  [39m[1m[2m  7.62 kB[22m[1m[22m[2m Ôöé gzip:  2.36 kB[22m[2m Ôöé map:  23.08 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/Experience.fWZs80-O.js              [39m[1m[2m 15.24 kB[22m[1m[22m[2m Ôöé gzip:  5.25 kB[22m[2m Ôöé map:  32.49 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/Navbar.DnvkV1pC.js                  [39m[1m[2m 18.19 kB[22m[1m[22m[2m Ôöé gzip:  5.80 kB[22m[2m Ôöé map:  61.89 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/Projects.C__2aIVJ.js                [39m[1m[2m 41.00 kB[22m[1m[22m[2m Ôöé gzip: 12.09 kB[22m[2m Ôöé map:  77.66 kB[22m
+[2m23:36:04[22m [34m[vite][39m [2mdist/[22m[36m_astro/client.C9BVRz5L.js                  [39m[1m[2m136.54 kB[22m[1m[22m[2m Ôöé gzip: 44.05 kB[22m[2m Ôöé map: 336.79 kB[22m
+[2m23:36:04[22m [34m[vite][39m [32mÔ£ô built in 501ms[39m
+
+[42m[30m prerendering static routes [39m[49m
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/404.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/404.html[22m [2m(+18ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/de/index.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/de.html[22m [2m(+18ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/es/index.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/es.html[22m [2m(+11ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/fr/index.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/fr.html[22m [2m(+9ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/switzerland/basel.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/switzerland/basel.html[22m [2m(+1ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/switzerland/geneva.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/switzerland/geneva.html[22m [2m(+1ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/switzerland/lausanne.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/switzerland/lausanne.html[22m [2m(+5ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/switzerland/zurich.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/switzerland/zurich.html[22m [2m(+1ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/switzerland/index.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/switzerland.html[22m [2m(+15ms)[22m 
+[2m23:36:04[22m [32mÔûÂ[39m src/pages/index.astro
+[2m23:36:04[22m   [34mÔööÔöÇ[39m [2m/index.html[22m [2m(+10ms)[22m 
+[2m23:36:04[22m [32mÔ£ô Completed in 144ms.
+[39m
+[2m23:36:04[22m [34m[build][39m Rearranging server assets...
+[2m23:36:04[22m [34m[@astrojs/netlify][39m Emitted _redirects
+[2m23:36:04[22m [34m[@astrojs/sitemap][39m `sitemap-index.xml` created at `dist`
+(-733 Bytes)	59.98% reduction in /dist/styles/a11y-contrast-fix.css
+(-523 Bytes)	30.28% reduction in /dist/styles/animations.css
+(-1.31 KB)	50.36% reduction in /dist/styles/a11y-improvements.css
+(-2.53 KB)	42.67% reduction in /dist/styles/animation-system.css
+(-661 Bytes)	46.55% reduction in /dist/styles/critical-mobile.css
+(-1.13 KB)	45.17% reduction in /dist/styles/enhanced-contrast-fix.css
+(-910 Bytes)	57.05% reduction in /dist/styles/font-awesome-minimal.css
+(-182 Bytes)	19.36% reduction in /dist/styles/font-awesome-fallback.css
+(-580 Bytes)	18.77% reduction in /dist/styles/font-awesome-optimized.css
+(-625 Bytes)	68.53% reduction in /dist/styles/image-fixes.css
+(-1.69 KB)	63.58% reduction in /dist/styles/layout-shift-fixes.css
+(-879 Bytes)	72.52% reduction in /dist/styles/cls-fix.css
+(-3.51 KB)	42.42% reduction in /dist/styles/global.css
+(-3.9 KB)	3.91% reduction in /dist/styles/font-awesome.min.css
+(-890 Bytes)	42.85% reduction in /dist/styles/main.css
+(-721 Bytes)	60.69% reduction in /dist/styles/mobile-animations-fix.css
+(-1.63 KB)	36.62% reduction in /dist/styles/theme-transitions.css
+(-890 Bytes)	71.37% reduction in /dist/styles/site.css
+Ô£ôÔÇüSuccessfully compressed a total of 18 CSS files for 23.12 KB.
+(-13.22 KB)	13.62% reduction in /dist/switzerland/lausanne.html
+(-13.42 KB)	10.80% reduction in /dist/de.html
+(-12.57 KB)	14.22% reduction in /dist/404.html
+(-13.44 KB)	10.91% reduction in /dist/es.html
+(-13.74 KB)	11.08% reduction in /dist/index.html
+(-13.44 KB)	10.88% reduction in /dist/fr.html
+(-50.88 KB)	20.37% reduction in /dist/switzerland.html
+Ô£ôÔÇüSuccessfully compressed a total of 7 HTML files for 130.71 KB.
+(-717 Bytes)	61.18% reduction in /dist/mobile-optimizations.js
+(-432 Bytes)	55.60% reduction in /dist/scripts/animations.js
+(-1.78 KB)	61.81% reduction in /dist/service-worker-mobile.js
+(-207 Bytes)	44.71% reduction in /dist/sw-register.js
+(-10.73 KB)	66.76% reduction in /dist/sw.js
+(-52 Bytes)	2.99% reduction in /dist/_astro/ErrorBoundary.kGc_nPOX.js
+(-2.14 KB)	41.96% reduction in /dist/scripts/font-awesome-loader.js
+(-1.55 KB)	51.82% reduction in /dist/styles/font-awesome-loader.js
+(-40 Bytes)	0.61% reduction in /dist/_astro/Education.I9YMBoMT.js
+(-43 Bytes)	3.44% reduction in /dist/_astro/I18nLoader.B3RaC4sd.js
+(-43 Bytes)	0.28% reduction in /dist/_astro/Experience.fWZs80-O.js
+(-308 Bytes)	29.31% reduction in /dist/_astro/jsx-runtime.CyXy1Ci3.js
+(-49 Bytes)	5.95% reduction in /dist/_astro/A11yAnnouncer.BhZlVmfK.js
+(-45 Bytes)	3.59% reduction in /dist/_astro/LanguageAlternates.DarABB8F.js
+(-297 Bytes)	4.26% reduction in /dist/_astro/index.CaZlGE7t.js
+(-62 Bytes)	0.34% reduction in /dist/_astro/Navbar.DnvkV1pC.js
+(-44 Bytes)	1.50% reduction in /dist/_astro/Languages.CEnoDttw.js
+(-2.1 KB)	1.58% reduction in /dist/_astro/client.C9BVRz5L.js
+(-58 Bytes)	0.77% reduction in /dist/_astro/ProfileHeader.D88Y5AGe.js
+(-56 Bytes)	0.14% reduction in /dist/_astro/Projects.C__2aIVJ.js
+(-57 Bytes)	8.07% reduction in /dist/_astro/ScrollAnimationWrapper.D41YeA7y.js
+(-45 Bytes)	4.81% reduction in /dist/_astro/SkipToContent.m5CkrxIt.js
+(-43 Bytes)	0.56% reduction in /dist/_astro/Skills.CjEWelDS.js
+Ô£ôÔÇüSuccessfully compressed a total of 23 JavaScript files for 20.84 KB.
+(-27 Bytes)	19.85% reduction in /dist/icons/favicon.svg
+(-131 Bytes)	34.56% reduction in /dist/favicon.svg
+Ô£ôÔÇüSuccessfully compressed a total of 2 SVG files for 158 Bytes.
+[2m23:36:06[22m [34m[build][39m Server built in [1m4.89s[22m
+[2m23:36:06[22m [34m[build][39m [1mComplete![22m
+Ô£à Compilaci├│n completada
+­ƒöì Verificando archivos de fuentes...
+  Ô£ô Archivo presente: dist/styles/fonts/fa-solid-900.woff2
+  Ô£ô Archivo presente: dist/styles/fonts/fa-brands-400.woff2
+Ô£¿ Compilaci├│n completada en 8.68s
+
+> oriol-macias-portfolio@0.1.0 generate-images
+> node scripts/generate-profile-images.js
+
+Ô£à Profile images generated
