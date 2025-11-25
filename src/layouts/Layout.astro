@@ -161,25 +161,30 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     </script>
 
     <!-- Critical resource preloading for Core Web Vitals optimization -->
-    <!-- Image sizes: mobile ~280px, desktop ~320px (max-w-xs) -->
+    <!-- LCP Image: Preload the exact image that will be displayed -->
+    <!-- Desktop uses 640w due to srcset selection, mobile uses 320w -->
     <link
       rel="preload"
       as="image"
-      href="/images/oriol_macias-320.avif"
-      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
-      imagesizes="(max-width: 767px) 280px, 320px"
+      href="/images/oriol_macias-640.avif"
       fetchpriority="high"
       type="image/avif"
     />
 
-    <!-- Google Fonts: Outfit (Headings) & Inter (Body) - Non-blocking load -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preload critical translation file to reduce chain latency -->
     <link
       rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+      as="fetch"
+      href={`/locales/${lang}/translation.json`}
+      crossorigin="anonymous"
     />
+
+    <!-- DNS prefetch and preconnect for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts loaded asynchronously - not critical for LCP -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
       rel="stylesheet"
