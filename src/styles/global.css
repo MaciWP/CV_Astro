@@ -231,13 +231,13 @@
     opacity: 1 !important;
 }
 
-/* Above-the-fold elements: subtle fade-in only (no transform = no CLS) */
+/* Above-the-fold elements: smooth fade-in (no transform = no CLS) */
 .animate-on-scroll.above-fold,
 .animate-scale.above-fold,
 .animate-fade-left.above-fold,
 .animate-width.above-fold {
-    /* Use CSS transition instead of animation for smoother fade */
-    transition: opacity 0.4s var(--ease-standard);
+    /* Use CSS transition for smooth, noticeable fade */
+    transition: opacity 0.5s var(--ease-decelerate);
 }
 
 .animate-on-scroll.above-fold.is-visible,
