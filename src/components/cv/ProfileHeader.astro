@@ -109,11 +109,11 @@ const githubLabel = getTranslation("header.github", "GitHub");
                 </div>
             </div>
 
-            {/* Foto profesional - derecha, más grande */}
+            {/* Foto profesional - derecha, con card container */}
             <div class="md:col-span-4 flex flex-col items-center md:items-end order-1 md:order-2">
-                <div class="relative overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg w-full max-w-xs">
-                    <div class="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
-                    <div class="w-full aspect-square bg-white dark:bg-gray-800">
+                <div class="w-full max-w-xs border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface shadow-sm">
+                    {/* Imagen */}
+                    <div class="w-full aspect-square">
                         <picture>
                             <source
                                 srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
@@ -137,18 +137,18 @@ const githubLabel = getTranslation("header.github", "GitHub");
                             />
                         </picture>
                     </div>
+                    {/* Botón dentro del mismo card */}
+                    <a
+                        href="/OriolMacias_CoverLetter.pdf"
+                        download="OriolMacias_CoverLetter.pdf"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center px-3 py-3 text-sm font-medium text-white bg-brand-red hover:bg-red-700 transition-colors focus:outline-none cursor-pointer no-underline"
+                        aria-label={downloadCoverLetter}
+                    >
+                        <i class="fas fa-file-alt mr-2"></i>
+                        <span>{downloadCoverLetter}</span>
+                    </a>
                 </div>
-                {/* Botón carta de presentación - alineado con imagen */}
-                <a
-                    href="/OriolMacias_CoverLetter.pdf"
-                    download="OriolMacias_CoverLetter.pdf"
-                    target="_blank"
-                    class="w-full max-w-xs inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none cursor-pointer no-underline"
-                    aria-label={downloadCoverLetter}
-                >
-                    <i class="fas fa-file-alt mr-1.5"></i>
-                    <span>{downloadCoverLetter}</span>
-                </a>
             </div>
         </div>
     </section>

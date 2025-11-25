@@ -158,6 +158,7 @@
   compress = true
 
 # ===== FUNCIONES NETLIFY =====
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
+# Functions disabled - pure static site
+# [functions]
+#   directory = "netlify/functions"
+#   node_bundler = "esbuild"

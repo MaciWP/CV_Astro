@@ -9,7 +9,7 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
-import netlify from '@astrojs/netlify';
+// Netlify adapter removed - pure static site doesn't need it
 
 // Check required environment variables
 if (process.env.NODE_ENV === 'development') {
@@ -32,10 +32,9 @@ export default defineConfig({
   // Site configuration (NECESARIO para SEO)
   site: 'https://oriolmacias.dev',
 
-  // Hybrid Rendering (Static + Server Islands)
-  // In Astro v5, 'static' output with an adapter enables hybrid features automatically.
-  // Adapter conditional: Only use Netlify adapter in production/Netlify environment
-  adapter: process.env.NETLIFY ? netlify() : undefined,
+  // Pure Static Output - No adapter needed for CV/portfolio site
+  // This eliminates server overhead and improves performance
+  output: 'static',
 
   // i18n configuration ARREGLADA
   i18n: {
