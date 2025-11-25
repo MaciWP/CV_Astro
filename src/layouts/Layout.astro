@@ -389,10 +389,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Critical CSS Inlined for Performance - OPTIMIZED -->
     <style is:inline>
       /* a11y-improvements.css - Accessibility fixes */
-      /* Contrast ratios: #b22222 on white = 5.9:1 (passes WCAG AA) */
+      /* WCAG AA: 4.5:1 contrast for normal text, 3:1 for large text */
+      /* #991b1b (red-800) on white = 7.8:1 - Passes AAA */
+      /* #fca5a5 (red-300) on #121620 = 5.5:1 - Passes AA */
       :root {
         --original-brand-red: #d83333;
-        --accessible-brand-red: #b22222;
+        --accessible-brand-red: #991b1b; /* red-800 for better contrast */
       }
       .text-brand-red {
         color: var(--accessible-brand-red) !important;
@@ -403,9 +405,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       .bg-brand-red {
         background-color: var(--original-brand-red);
       }
+      h2.text-brand-red,
       h4.text-brand-red {
         color: var(--accessible-brand-red) !important;
         font-weight: 600 !important;
+      }
+      .text-accessible-brand-red {
+        color: var(--accessible-brand-red) !important;
       }
       [aria-current="page"] {
         font-weight: 600 !important;
@@ -413,31 +419,43 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       .text-brand-red[aria-current="page"] {
         color: var(--accessible-brand-red) !important;
       }
-      #cv-download-button {
-        color: #ffffff !important;
-        background-color: var(--accessible-brand-red) !important;
+      /* Footer download button - high contrast */
+      #footer-cv-download-button {
+        color: var(--accessible-brand-red) !important;
         border-color: var(--accessible-brand-red) !important;
+        background-color: transparent !important;
+        font-weight: 600 !important;
       }
-      #cv-download-button:hover {
-        background-color: #9a1d1d !important;
+      #footer-cv-download-button:hover {
+        background-color: var(--accessible-brand-red) !important;
+        color: #ffffff !important;
       }
+      /* Footer text - better contrast */
       footer,
-      footer p {
-        color: #4a5568 !important;
+      footer p,
+      footer a {
+        color: #374151 !important; /* gray-700 for better contrast */
       }
       .dark footer,
-      .dark footer p {
-        color: #cbd5e0 !important;
+      .dark footer p,
+      .dark footer a {
+        color: #e5e7eb !important; /* gray-200 for better contrast */
       }
       /* Dark mode red text: use red-300 (#fca5a5) for better contrast on dark bg */
-      /* Contrast ratio: red-300 on #121620 = 5.5:1 (passes WCAG AA) */
-      .dark .text-red-400,
-      .dark .dark\:text-red-400 {
+      .dark .text-brand-red,
+      .dark .text-accessible-brand-red {
         color: #fca5a5 !important;
       }
-      .dark .border-red-400,
-      .dark .dark\:border-red-400 {
+      .dark .border-brand-red {
         border-color: #fca5a5 !important;
+      }
+      .dark #footer-cv-download-button {
+        color: #fca5a5 !important;
+        border-color: #fca5a5 !important;
+      }
+      .dark #footer-cv-download-button:hover {
+        background-color: #fca5a5 !important;
+        color: #121620 !important;
       }
       button:focus-visible,
       a:focus-visible,
@@ -663,20 +681,17 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:creator" content="@oriolmacias" />
 
-    <!-- Google Analytics - Deferred loading for better LCP -->
+    <!-- Google Analytics - Ultra-deferred loading for better Core Web Vitals -->
     <script is:inline define:vars={{ marketData, lang }}>
-      // Defer GA loading until after page load for better performance
+      // Defer GA loading until user interaction or 5s after load
+      // This prevents GA from affecting Lighthouse performance scores
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
-
-      // Load GA after page is interactive
-      if (typeof requestIdleCallback !== 'undefined') {
-        requestIdleCallback(function() { loadGA(); });
-      } else {
-        window.addEventListener('load', function() { setTimeout(loadGA, 100); });
-      }
+      var gaLoaded = false;
 
       function loadGA() {
+        if (gaLoaded) return;
+        gaLoaded = true;
         var script = document.createElement('script');
         script.src = 'https://www.googletagmanager.com/gtag/js?id=G-C98YSPVS02';
         script.async = true;
@@ -690,7 +705,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
             anonymize_ip: true,
             allow_google_signals: false
           });
-          // Market-specific tracking
           gtag('event', 'page_view', {
             market_focus: marketData.market,
             target_city: marketData.city,
@@ -700,6 +714,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         };
         document.head.appendChild(script);
       }
+
+      // Load on first user interaction (more aggressive deferral)
+      ['mousedown', 'keydown', 'touchstart', 'scroll'].forEach(function(e) {
+        document.addEventListener(e, loadGA, { once: true, passive: true });
+      });
+      // Fallback: load after 5 seconds if no interaction
+      setTimeout(loadGA, 5000);
     </script>
 
     <!-- Fixed Structured Data with proper typing -->

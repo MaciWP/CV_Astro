@@ -5,20 +5,18 @@
  */
 
 // Cache names for different resource types
-const STATIC_CACHE_NAME = 'oriol-macias-cv-static-v1';
-const IMAGE_CACHE_NAME = 'oriol-macias-cv-images-v1';
-const FONT_CACHE_NAME = 'oriol-macias-cv-fonts-v1';
-const DYNAMIC_CACHE_NAME = 'oriol-macias-cv-dynamic-v1';
+// Increment version to force cache refresh
+const STATIC_CACHE_NAME = 'oriol-macias-cv-static-v2';
+const IMAGE_CACHE_NAME = 'oriol-macias-cv-images-v2';
+const FONT_CACHE_NAME = 'oriol-macias-cv-fonts-v2';
+const DYNAMIC_CACHE_NAME = 'oriol-macias-cv-dynamic-v2';
 
 // Resources that will always be cached immediately (core app shell)
+// Only essential files that are guaranteed to exist
 const CORE_ASSETS = [
     '/',
-    '/index.html',
     '/manifest.json',
     '/favicon.svg',
-    '/styles/global.css',
-    '/_astro/index.css',
-    '/_astro/client.js',
 ];
 
 // Resources that will be cached during installation if available

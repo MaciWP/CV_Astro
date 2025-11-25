@@ -49,7 +49,7 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     <h1 class="text-4xl md:text-5xl font-bold mb-2">
                         {headerData.fullName}
                     </h1>
-                    <h2 class="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium">
+                    <h2 class="text-xl md:text-2xl text-accessible-brand-red font-semibold">
                         {jobTitle}
                     </h2>
                 </div>
@@ -126,12 +126,13 @@ const githubLabel = getTranslation("header.github", "GitHub");
                                 type="image/webp"
                             />
                             <img
-                                src="/images/oriol_macias-640.avif"
+                                src="/images/oriol_macias-320.avif"
                                 alt={photoAlt}
                                 width="320"
                                 height="320"
                                 loading="eager"
                                 fetchpriority="high"
+                                decoding="async"
                                 class="w-full h-full object-cover"
                             />
                         </picture>

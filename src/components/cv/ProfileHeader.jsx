@@ -184,7 +184,7 @@ const ProfileHeader = () => {
                         <div>
                             <h1 className="text-3xl md:text-4xl font-bold mb-1">{headerData.fullName}</h1>
                             <h2
-                                className="text-lg md:text-xl text-brand-red font-medium"
+                                className="text-lg md:text-xl text-accessible-brand-red font-semibold dark:text-red-300"
                                 data-i18n="header.jobTitle"
                             >
                                 {localData.jobTitle}

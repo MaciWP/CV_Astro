@@ -268,30 +268,30 @@ const Projects = () => {
                 </div>
                 <h2 className="text-2xl font-bold ml-3" data-i18n="projects.title">{translations.title}</h2>
 
-                {/* Toggle all projects details button */}
+                {/* Toggle all projects details button - min 48px tap target */}
                 <button
                     onClick={toggleAllProjectDetails}
-                    className="ml-auto text-brand-red hover:text-brand-red/80 text-sm inline-flex items-center gap-1 focus:outline-none"
+                    className="ml-auto text-brand-red hover:text-brand-red/80 text-sm inline-flex items-center gap-2 focus:outline-none min-h-[48px] px-3 py-2"
                 >
                     {showAllDetails ? (
                         <>
-                            <i className="fas fa-chevron-up text-xs"></i>
+                            <i className="fas fa-chevron-up text-sm"></i>
                             {translations.showLessDetails}
                         </>
                     ) : (
                         <>
-                            <i className="fas fa-chevron-down text-xs"></i>
+                            <i className="fas fa-chevron-down text-sm"></i>
                             {translations.showAllDetails}
                         </>
                     )}
                 </button>
             </div>
 
-            {/* Project type tabs */}
+            {/* Project type tabs - min 48px tap targets */}
             <div className="flex border-b border-light-border dark:border-dark-border mb-6">
                 <button
                     onClick={() => setActiveTab('personal')}
-                    className={`py-2 px-4 font-medium text-sm ${activeTab === 'personal'
+                    className={`min-h-[48px] py-3 px-5 font-medium text-base ${activeTab === 'personal'
                         ? 'text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400'
                         : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70'}`}
                     data-i18n="projects.personalProjects"
@@ -300,7 +300,7 @@ const Projects = () => {
                 </button>
                 <button
                     onClick={() => setActiveTab('professional')}
-                    className={`py-2 px-4 font-medium text-sm ${activeTab === 'professional'
+                    className={`min-h-[48px] py-3 px-5 font-medium text-base ${activeTab === 'professional'
                         ? 'text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400'
                         : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70'}`}
                     data-i18n="projects.professionalWork"
