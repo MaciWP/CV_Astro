@@ -1,0 +1,52 @@
+---
+/**
+ * Página específica Geneva
+ * @file src/pages/switzerland/geneva.astro
+ * @description SEO específico para mercado Geneva
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills.astro";
+
+const title = "Oriol Macias - Backend Developer Geneva | Multilingual Tech Professional";
+const description = "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organization tech experience, CERN collaboration ready.";
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-4xl mx-auto">
+    <section class="mb-16">
+      <h1 class="text-4xl font-bold mb-4 text-brand-red">
+        Multilingual Developer for Geneva
+      </h1>
+      <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+        Ready for Geneva's international technology landscape
+      </p>
+
+      <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Geneva Advantages</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="text-center">
+            <div class="text-2xl mb-2"><</div>
+            <h3 class="font-semibold">Multilingual</h3>
+            <p class="text-sm">English, Spanish, French, Catalan</p>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl mb-2">=,</div>
+            <h3 class="font-semibold">CERN Ready</h3>
+            <p class="text-sm">Research collaboration experience</p>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl mb-2"><Û</div>
+            <h3 class="font-semibold">International Orgs</h3>
+            <p class="text-sm">UN, WHO, WIPO tech systems</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ProfileHeader lang="en" />
+    <Experience client:visible />
+    <Skills lang="en" />
+  </div>
+</Layout>

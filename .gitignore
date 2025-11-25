@@ -86,3 +86,6 @@ next-env.d.ts
 # Claude Code Configuration
 # .claude/
 # CLAUDE.md
+
+# Archived unused files (kept for reference, not deployed)
+.archived/

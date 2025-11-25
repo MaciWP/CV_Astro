@@ -1,0 +1,53 @@
+---
+/**
+ * Página específica Basel
+ * @file src/pages/switzerland/basel.astro
+ * @description SEO específico para mercado Basel
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills.astro";
+
+const title = "Oriol Macias - Software Engineer Basel | Industrial Automation Expert";
+const description = "Software Engineer specializing in Basel pharmaceutical and manufacturing sectors. Industrial protocol integration (SNMP, MODBUS, BACnet) specialist.";
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-4xl mx-auto">
+    <section class="mb-16">
+      <h1 class="text-4xl font-bold mb-4 text-brand-red">
+        Industrial Software Engineer for Basel
+      </h1>
+      <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+        Specialized in pharmaceutical automation and manufacturing systems
+      </p>
+
+      <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Basel Industrial Expertise</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-semibold text-brand-red mb-2">Pharmaceutical Automation</h3>
+            <ul class="text-sm space-y-1">
+              <li>" SNMP protocol integration</li>
+              <li>" MODBUS industrial systems</li>
+              <li>" BACnet building automation</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red mb-2">Manufacturing Systems</h3>
+            <ul class="text-sm space-y-1">
+              <li>" Production line integration</li>
+              <li>" Real-time monitoring</li>
+              <li>" Data acquisition systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ProfileHeader lang="en" />
+    <Experience client:visible />
+    <Skills lang="en" />
+  </div>
+</Layout>

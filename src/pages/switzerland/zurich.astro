@@ -1,0 +1,45 @@
+---
+/**
+ * Página específica Zurich
+ * @file src/pages/switzerland/zurich.astro
+ * @description SEO específico para mercado Zurich
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills.astro";
+
+const title = "Oriol Macias - Senior Backend Developer Zurich | Python Expert";
+const description = "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise with fintech experience. Work permit ready.";
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-4xl mx-auto">
+    <section class="mb-16">
+      <h1 class="text-4xl font-bold mb-4 text-brand-red">
+        Backend Developer for Zurich Market
+      </h1>
+      <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+        Ready to contribute to Zurich's dynamic fintech and technology ecosystem
+      </p>
+
+      <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Why Zurich?</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="font-semibold text-brand-red">Fintech Expertise</h3>
+            <p class="text-sm">Perfect fit for Zurich's banking and financial technology sector</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Work Authorization</h3>
+            <p class="text-sm">EU work permit ready, immediate availability</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ProfileHeader lang="en" />
+    <Experience client:visible />
+    <Skills lang="en" />
+  </div>
+</Layout>

@@ -231,19 +231,30 @@
     opacity: 1 !important;
 }
 
-.animate-on-scroll.is-visible {
+/* Above-the-fold elements: show instantly without animation to prevent CLS */
+.animate-on-scroll.is-visible.no-animation,
+.animate-scale.is-visible.no-animation,
+.animate-fade-left.is-visible.no-animation,
+.animate-width.is-visible.no-animation {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* Below-the-fold elements: animate normally */
+.animate-on-scroll.is-visible:not(.no-animation) {
     animation: fadeInUp var(--duration-standard) var(--ease-standard) forwards;
 }
 
-.animate-scale.is-visible {
+.animate-scale.is-visible:not(.no-animation) {
     animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
 }
 
-.animate-fade-left.is-visible {
+.animate-fade-left.is-visible:not(.no-animation) {
     animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
 }
 
-.animate-width.is-visible {
+.animate-width.is-visible:not(.no-animation) {
     animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
 }
 

@@ -1,69 +1,72 @@
 /**
  * Lightweight Intersection Observer for scroll animations
- * Handles both initial load and scroll-triggered animations
- * Works with Astro islands (React hydration)
+ * Optimized to prevent CLS (Cumulative Layout Shift)
+ * Uses requestAnimationFrame to batch DOM reads/writes
  */
 
 (function() {
   'use strict';
 
   var animationObserver = null;
+  var initialized = false;
 
   function initAnimations() {
+    if (initialized) return;
+    initialized = true;
+
     if (animationObserver) animationObserver.disconnect();
 
     var observerOptions = {
       root: null,
-      rootMargin: '100px',
-      threshold: 0.05
+      rootMargin: '50px',
+      threshold: 0.1
     };
 
     animationObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var delay = entry.target.style.transitionDelay || '0ms';
-          var delayMs = parseInt(delay) || 0;
-
-          setTimeout(function() {
+      // Batch all DOM writes in a single rAF
+      requestAnimationFrame(function() {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-          }, delayMs);
-
-          animationObserver.unobserve(entry.target);
-        }
+            animationObserver.unobserve(entry.target);
+          }
+        });
       });
     }, observerOptions);
 
-    var animatedElements = document.querySelectorAll(
-      '.animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width'
-    );
+    // Use rAF to avoid forced reflow - read all positions first, then write
+    requestAnimationFrame(function() {
+      var animatedElements = document.querySelectorAll(
+        '.animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width'
+      );
 
-    animatedElements.forEach(function(el) {
-      if (el.classList.contains('is-visible')) return;
+      // Make above-the-fold elements visible immediately (no animation)
+      // This prevents CLS by not animating content that's already visible
+      var viewportHeight = window.innerHeight;
 
-      var rect = el.getBoundingClientRect();
-      var isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      animatedElements.forEach(function(el) {
+        if (el.classList.contains('is-visible')) return;
 
-      if (isVisible) {
-        var delay = el.style.transitionDelay || '0ms';
-        var delayMs = parseInt(delay) || 0;
+        // Check if element is in initial viewport (above-the-fold)
+        var rect = el.getBoundingClientRect();
+        var isAboveFold = rect.top < viewportHeight;
 
-        setTimeout(function() {
-          el.classList.add('is-visible');
-        }, delayMs + 50);
-      } else {
-        animationObserver.observe(el);
-      }
+        if (isAboveFold) {
+          // Immediately show without animation to prevent CLS
+          el.classList.add('is-visible', 'no-animation');
+        } else {
+          // Only animate elements below the fold
+          animationObserver.observe(el);
+        }
+      });
     });
   }
 
-  // Initialize when DOM is ready
+  // Single initialization - no repeated calls
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAnimations);
   } else {
-    initAnimations();
+    // Use rAF to defer initialization and not block rendering
+    requestAnimationFrame(initAnimations);
   }
-
-  // Re-run after React hydration delays
-  setTimeout(initAnimations, 100);
-  setTimeout(initAnimations, 500);
 })();
