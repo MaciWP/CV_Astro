@@ -177,14 +177,17 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Google Fonts loaded asynchronously - not critical for LCP -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
+    <!-- Google Fonts - loaded via JS to avoid render blocking -->
+    <script is:inline>
+      (function(){
+        var f=document.createElement('link');
+        f.rel='stylesheet';
+        f.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap';
+        document.head.appendChild(f);
+      })();
+    </script>
     <noscript>
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
@@ -276,6 +279,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Critical CSS - Essential for FCP and layout -->
     <style is:inline>
+      /* System font fallback - immediate text visibility */
+      body{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif}
+      h1,h2,h3,h4,h5,h6{font-family:Outfit,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
       :root{--brand-red:#d83333;--accessible-brand-red:#991b1b}
       .text-brand-red,.text-accessible-brand-red{color:var(--accessible-brand-red)!important}
       .bg-brand-red{background-color:var(--brand-red)}
