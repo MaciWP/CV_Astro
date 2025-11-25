@@ -4,7 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import ErrorBoundary from "../components/ErrorBoundary";
 
 // Import CV components
-import ProfileHeader from "../components/cv/ProfileHeader";
+import ProfileHeader from "../components/cv/ProfileHeader.astro";
 import Experience from "../components/cv/Experience";
 import Skills from "../components/cv/Skills";
 import Languages from "../components/cv/Languages";
@@ -40,15 +40,9 @@ const frUrl = getRelativeLocaleUrl("fr", "");
     itemscope
     itemtype="https://schema.org/Person"
   >
-    {/* ProfileHeader con ErrorBoundary */}
-    <div class="section-animate">
-      <ErrorBoundary
-        fallbackTitle="Error loading profile"
-        fallbackMessage="Unable to load profile information. Please refresh the page."
-        showReset={true}
-      >
-        <ProfileHeader client:load />
-      </ErrorBoundary>
+    {/* ProfileHeader - SSG Optimized */}
+    <div>
+      <ProfileHeader lang="en" />
     </div>
 
     {/* Experience con ErrorBoundary */}

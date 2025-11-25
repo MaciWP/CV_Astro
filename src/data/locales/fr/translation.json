@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Oriol Macias - Portfolio de Développeur Logiciel",
+    "description": "CV et portfolio professionnel d'Oriol Macias, Développeur Backend avec plus de 8 ans d'expérience en intégration de protocoles industriels (SNMP, MODBUS, BACnet) et infrastructure de centres de données."
+  },
+  "header": {
+    "fullName": "Oriol Macias",
+    "jobTitle": "Développeur Logiciel",
+    "summary": "Développeur Backend orienté solutions, spécialisé dans l'intégration de protocoles industriels (SNMP, MODBUS, BACKnet) avec plus de 8 ans d'expérience dans les applications à haute performance. Reconnu pour transformer des exigences complexes en architectures de code élégantes et réduire les temps de réponse système jusqu'à 45%. Actuellement en train d'élargir son expertise en IA et apprentissage automatique pour développer des solutions d'automatisation de nouvelle génération.",
+    "photoAlt": "Oriol Macias - Développeur Logiciel",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "sections": {
+    "about": "À Propos",
+    "experience": "Expérience Professionnelle",
+    "skills": "Compétences Techniques",
+    "education": "Formation & Certifications",
+    "languages": "Langues",
+    "projects": "Projets Clés"
+  },
+  "experience": {
+    "title": "Expérience Professionnelle",
+    "responsibilities": "Responsabilités",
+    "keyAchievements": "Réalisations Clés",
+    "showMore": "Afficher plus",
+    "showLess": "Afficher moins"
+  },
+  "skills": {
+    "title": "Compétences Techniques",
+    "languages": "Langages de Programmation",
+    "libraries": "Bibliothèques & Frameworks",
+    "technologies": "Technologies & Bases de Données",
+    "tools": "Outils & Applications",
+    "protocols": "Protocoles"
+  },
+  "education": {
+    "title": "Formation & Certifications",
+    "institution": "Institution",
+    "period": "Période",
+    "details": "Détails"
+  },
+  "languages": {
+    "title": "Langues",
+    "native": "Langue Maternelle",
+    "fluent": "Courant (C2)",
+    "advanced": "Avancé (C1)",
+    "intermediate": "Intermédiaire (B2)",
+    "basic": "Élémentaire (A1/A2)"
+  },
+  "projects": {
+    "title": "Projets Clés",
+    "personalProjects": "Projets Personnels",
+    "professionalWork": "Projets Professionnels",
+    "technologies": "Technologies",
+    "keyFeatures": "Fonctionnalités Clés",
+    "viewOnGithub": "Voir sur GitHub",
+    "showAllDetails": "Afficher tous les détails",
+    "showLessDetails": "Afficher moins de détails",
+    "personalProjectsNote": "Voici des projets personnels que j'ai développés pour explorer des technologies et résoudre des défis spécifiques.",
+    "professionalProjectsNote": "Voici quelques-uns des projets professionnels développés pendant mon travail chez Bjumper. Les dépôts sont privés en raison d'accords de confidentialité."
+  },
+  "buttons": {
+    "downloadCV": "Télécharger CV",
+    "backToTop": "Retour en haut",
+    "switchLanguage": "Changer de Langue",
+    "switchTheme": "Changer de Thème",
+    "downloadCoverLetter": "Télécharger Lettre"
+  },
+  "footer": {
+    "copyright": "© 2025 - Créé avec Astro, React, et Tailwind CSS"
+  },
+  "navbar": {
+    "topLink": "↑ Haut"
+  }
+}

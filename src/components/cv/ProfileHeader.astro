@@ -1,0 +1,198 @@
+---
+import headerData from "../../data/header";
+import enTranslations from "../../data/locales/en/translation.json";
+import esTranslations from "../../data/locales/es/translation.json";
+import frTranslations from "../../data/locales/fr/translation.json";
+
+interface Props {
+    lang?: string;
+}
+
+const { lang = "en" } = Astro.props;
+
+// Helper to get translations safely
+const getTranslation = (key: string, fallback: string) => {
+    let translations: any = enTranslations;
+    if (lang === "es") translations = esTranslations;
+    if (lang === "fr") translations = frTranslations;
+
+    const keys = key.split(".");
+    let value = translations;
+    for (const k of keys) {
+        if (value && typeof value === "object" && k in value) {
+            value = value[k];
+        } else {
+            return fallback;
+        }
+    }
+    return value || fallback;
+};
+
+// Get localized data
+const jobTitle = getTranslation("header.jobTitle", headerData.jobTitle);
+const summary = getTranslation("header.summary", headerData.summary);
+const photoAlt = getTranslation("header.photoAlt", headerData.photoAlt);
+const downloadCV = getTranslation("buttons.downloadCV", "Download CV");
+const downloadCoverLetter = getTranslation(
+    "buttons.downloadCoverLetter",
+    "Download Cover Letter",
+);
+
+// Labels for contact info
+const emailLabel = getTranslation("header.email", "Email");
+const linkedinLabel = getTranslation("header.linkedin", "LinkedIn");
+const githubLabel = getTranslation("header.github", "GitHub");
+---
+
+<div id="about" class="pt-4 pb-8">
+    <section>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            {/* Información personal */}
+            <div class="md:col-span-8 space-y-6">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-2">
+                        {headerData.fullName}
+                    </h1>
+                    <h2
+                        class="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium"
+                    >
+                        {jobTitle}
+                    </h2>
+                </div>
+
+                <p
+                    class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-2xl"
+                >
+                    {summary}
+                </p>
+
+                {/* Información de contacto */}
+                <div class="flex flex-wrap gap-4 mt-2">
+                    {
+                        headerData.contactInfo.map((contact) => {
+                            const label =
+                                contact.type === "email"
+                                    ? emailLabel
+                                    : contact.type === "linkedin"
+                                      ? linkedinLabel
+                                      : contact.type === "github"
+                                        ? githubLabel
+                                        : contact.label;
+
+                            return (
+                                <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
+                                    <a
+                                        href={
+                                            contact.type === "email"
+                                                ? `mailto:${contact.value}`
+                                                : contact.url
+                                        }
+                                        target={
+                                            contact.type !== "email"
+                                                ? "_blank"
+                                                : undefined
+                                        }
+                                        rel={
+                                            contact.type !== "email"
+                                                ? "noopener noreferrer"
+                                                : undefined
+                                        }
+                                        class="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                                        aria-label={label}
+                                    >
+                                        <div class="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
+                                            <i class={contact.icon} />
+                                        </div>
+                                        <div>
+                                            <span class="text-xs block text-light-text-secondary dark:text-dark-text-secondary">
+                                                {label}
+                                            </span>
+                                            {contact.value}
+                                        </div>
+                                    </a>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+
+            {/* Foto profesional */}
+            <div
+                class="md:col-span-4 flex flex-col justify-center md:justify-end"
+            >
+                <div
+                    class="relative w-100 h-100 md:w-100 md:h-100 overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg"
+                >
+                    <div
+                        class="absolute inset-0 border border-gray-200 dark:border-gray-700"
+                    >
+                    </div>
+
+                    <div class="w-full h-full bg-white dark:bg-gray-800">
+                        <picture>
+                            <source
+                                srcset="
+                  /images/oriol_macias-192.avif 192w,
+                  /images/oriol_macias-320.avif 320w,
+                  /images/oriol_macias-640.avif 640w,
+                  /images/oriol_macias-960.avif 960w,
+                  /images/oriol_macias-1280.avif 1280w
+              "
+                                sizes="(max-width: 767px) 100vw, 400px"
+                                type="image/avif"
+                            />
+                            <source
+                                srcset="
+                  /images/oriol_macias-192.webp 192w,
+                  /images/oriol_macias-320.webp 320w,
+                  /images/oriol_macias-640.webp 640w,
+                  /images/oriol_macias-960.webp 960w,
+                  /images/oriol_macias-1280.webp 1280w
+              "
+                                sizes="(max-width: 767px) 100vw, 400px"
+                                type="image/webp"
+                            />
+                            <img
+                                src="/images/oriol_macias-640.avif"
+                                alt={photoAlt}
+                                width="400"
+                                height="400"
+                                loading="eager"
+                                fetchpriority="high"
+                                class="w-full h-full object-cover"
+                            />
+                        </picture>
+                    </div>
+
+                    {/* Botones de descarga */}
+                    <div
+                        class="flex flex-col sm:flex-row gap-3 mt-4 justify-center"
+                    >
+                        <a
+                            href="/OriolMacias_CV.pdf"
+                            download="OriolMacias_CV.pdf"
+                            target="_blank"
+                            class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900 cursor-pointer no-underline"
+                            aria-label={downloadCV}
+                        >
+                            <i class="fas fa-download mr-1.5"></i>
+                            <span>{downloadCV}</span>
+                        </a>
+
+                        <a
+                            href="/OriolMacias_CoverLetter.pdf"
+                            download="OriolMacias_CoverLetter.pdf"
+                            target="_blank"
+                            class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900 cursor-pointer no-underline"
+                            aria-label={downloadCoverLetter}
+                        >
+                            <i class="fas fa-file-alt mr-1.5"></i>
+                            <span>{downloadCoverLetter}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

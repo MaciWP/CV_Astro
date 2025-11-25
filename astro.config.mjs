@@ -34,7 +34,8 @@ export default defineConfig({
 
   // Hybrid Rendering (Static + Server Islands)
   // In Astro v5, 'static' output with an adapter enables hybrid features automatically.
-  adapter: netlify(),
+  // Adapter conditional: Only use Netlify adapter in production/Netlify environment
+  adapter: process.env.NETLIFY ? netlify() : undefined,
 
   // i18n configuration ARREGLADA
   i18n: {

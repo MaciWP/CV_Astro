@@ -3,7 +3,6 @@
  * File: src/components/cv/ProfileHeader.jsx
  */
 import React, { useState, useEffect } from 'react';
-import ResponsiveImage from '../ResponsiveImage';
 import headerData from '../../data/header';
 
 const ProfileHeader = () => {
@@ -230,9 +229,8 @@ const ProfileHeader = () => {
                                         sizes="(max-width: 767px) 100vw, 400px"
                                         type="image/webp"
                                     />
-                                    {/* Fallback a placeholder */}
                                     <img
-                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='42' text-anchor='middle' fill='%239ca3af' dominant-baseline='middle'%3EOM%3C/text%3E%3C/svg%3E"
+                                        src="/images/oriol_macias-640.avif"
                                         alt={localData.photoAlt}
                                         width={400}
                                         height={400}
