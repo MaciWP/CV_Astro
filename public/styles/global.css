@@ -186,6 +186,17 @@
     ::-webkit-scrollbar-thumb:hover {
         @apply bg-gray-400 dark:bg-gray-500;
     }
+
+    /* Skill badges - hover instantáneo y notorio */
+    .skill-badge {
+        transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s ease-out, background-color 0.1s ease-out !important;
+        transition-delay: 0s !important;
+    }
+
+    .skill-badge:hover {
+        transform: scale(1.05) translateY(-2px) !important;
+        transition-delay: 0s !important;
+    }
 }
 
 /* ===== SCROLL-TRIGGERED ANIMATIONS ===== */
