@@ -177,7 +177,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
+    <!-- OPTIMIZED: Only 3 critical fonts preloaded (was 7) -->
     <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- JS Enabled Class -->
@@ -264,24 +266,23 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Critical CSS - Essential for FCP and layout -->
     <style is:inline>
-      /* Local font definitions - no external requests */
+      /* Local font definitions - OPTIMIZED: Only 3 critical weights (was 7) */
       /* Using font-display:optional prevents CLS from font swap */
       @font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:optional;src:url('/fonts/inter-latin-400-normal.woff2') format('woff2')}
-      @font-face{font-family:Inter;font-style:normal;font-weight:500;font-display:optional;src:url('/fonts/inter-latin-500-normal.woff2') format('woff2')}
       @font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:optional;src:url('/fonts/inter-latin-600-normal.woff2') format('woff2')}
-      @font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:optional;src:url('/fonts/inter-latin-700-normal.woff2') format('woff2')}
-      @font-face{font-family:Outfit;font-style:normal;font-weight:500;font-display:optional;src:url('/fonts/outfit-latin-500-normal.woff2') format('woff2')}
       @font-face{font-family:Outfit;font-style:normal;font-weight:600;font-display:optional;src:url('/fonts/outfit-latin-600-normal.woff2') format('woff2')}
-      @font-face{font-family:Outfit;font-style:normal;font-weight:700;font-display:optional;src:url('/fonts/outfit-latin-700-normal.woff2') format('woff2')}
       /* Font stacks with system fallbacks */
       body{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif}
       h1,h2,h3,h4,h5,h6{font-family:Outfit,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+      /* Map unused font weights to available ones (500→400, 700→600) */
+      .font-medium{font-weight:400}.font-bold,strong,b{font-weight:600}
       :root{--brand-red:#d83333;--accessible-brand-red:#991b1b}
       .text-brand-red,.text-accessible-brand-red{color:var(--accessible-brand-red)!important}
       .bg-brand-red{background-color:var(--brand-red)}
       .dark .text-brand-red,.dark .text-accessible-brand-red{color:#fca5a5!important}
       /* CLS Prevention - reserve space for Skills section */
       #skills{min-height:750px;contain:layout style paint}
+      .skill-category-animate{contain:layout style paint;min-height:140px}
       .fas,.fab{min-width:1em;display:inline-block}
       footer,footer p,footer a{color:#374151!important}
       .dark footer,.dark footer p,.dark footer a{color:#e5e7eb!important}

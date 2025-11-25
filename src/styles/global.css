@@ -235,10 +235,12 @@
 }
 
 /* Skill category animation - staggered fade in */
-/* CLS-SAFE: Elements visible from start, only fade effect */
+/* CLS-SAFE: contain prevents layout recalculation, min-height reserves space */
 .skill-category-animate {
     animation: sectionFadeIn 0.4s ease-out forwards;
     animation-delay: var(--anim-delay, 150ms);
+    contain: layout style paint;
+    min-height: 140px;
 }
 
 /* Fallback for users with reduced motion */
