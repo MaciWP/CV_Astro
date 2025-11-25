@@ -46,44 +46,34 @@ const esUrl = getRelativeLocaleUrl("es", "");
         </div>
 
         {/* Experience con ErrorBoundary */}
-        <div class="section-animate" style="animation-delay: 100ms">
-            <ErrorBoundary
-                fallbackTitle="Error loading experience"
-                fallbackMessage="Unable to load work experience information."
-            >
-                <Experience client:visible />
-            </ErrorBoundary>
-        </div>
+        <ErrorBoundary
+            fallbackTitle="Error loading experience"
+            fallbackMessage="Unable to load work experience information."
+        >
+            <Experience client:visible />
+        </ErrorBoundary>
 
         {/* Skills - SSG Optimized */}
-        <div class="section-animate" style="animation-delay: 200ms">
-            <Skills lang="fr" />
-        </div>
+        <Skills lang="fr" />
 
         {/* Education - SSG Optimized */}
-        <div class="section-animate" style="animation-delay: 300ms">
-            <Education lang="fr" />
-        </div>
+        <Education lang="fr" />
 
         {/* Languages con ErrorBoundary */}
-        <div class="section-animate" style="animation-delay: 400ms">
-            <ErrorBoundary
-                fallbackTitle="Error loading languages"
-                fallbackMessage="Unable to load language proficiency information."
-            >
-                <Languages client:visible />
-            </ErrorBoundary>
-        </div>
+        <ErrorBoundary
+            fallbackTitle="Error loading languages"
+            fallbackMessage="Unable to load language proficiency information."
+        >
+            <Languages client:visible />
+        </ErrorBoundary>
 
         {/* Projects con ErrorBoundary */}
-        <div class="section-animate" style="animation-delay: 500ms">
-            <ErrorBoundary
-                fallbackTitle="Error loading projects"
-                fallbackMessage="Unable to load project information."
-            >
-                <Projects client:visible />
-            </ErrorBoundary>
-        </div>
+        <ErrorBoundary
+            fallbackTitle="Error loading projects"
+            fallbackMessage="Unable to load project information."
+        >
+            <Projects client:visible />
+        </ErrorBoundary>
 
         {/* Contenido SEO oculto */}
         <div class="sr-only">
