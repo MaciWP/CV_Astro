@@ -931,8 +931,16 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       crossorigin="anonymous"
     />
 
-    <!-- Font Awesome CSS optimized (only used icons) - 3KB vs 102KB -->
-    <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
+    <!-- Font Awesome CSS completo - loaded non-blocking for performance -->
+    <link
+      rel="stylesheet"
+      href="/styles/font-awesome.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="/styles/font-awesome.min.css" />
+    </noscript>
   </head>
 
   <body
