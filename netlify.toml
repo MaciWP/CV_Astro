@@ -7,6 +7,25 @@
 
 # ===== CONFIGURACIÓN DE HEADERS MIME =====
 
+# Headers para Astro build output (hashed filenames = immutable)
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers para imágenes optimizadas (LCP critical)
+[[headers]]
+  for = "/images/*.avif"
+  [headers.values]
+    Content-Type = "image/avif"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*.webp"
+  [headers.values]
+    Content-Type = "image/webp"
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Headers para archivos JavaScript
 [[headers]]
   for = "*.js"
@@ -116,6 +135,10 @@
   status = 200
 
 # ===== OPCIONES DE OPTIMIZACIÓN =====
+
+# Enable Netlify Edge for better TTFB
+[build.environment]
+  NODE_VERSION = "22"
 
 [build.processing]
   skip_processing = false
