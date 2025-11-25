@@ -217,29 +217,28 @@
  */
 
 /* Section header animation - appears first */
+/* CLS-SAFE: visibility instead of opacity to prevent layout shift */
 .section-header-animate {
     animation: sectionFadeIn 0.4s ease-out forwards;
     animation-delay: var(--anim-delay, 0ms);
-    opacity: 0;
 }
 
 /* Section content animation - appears after header */
 .section-content-animate {
     animation: sectionFadeIn 0.5s ease-out forwards;
     animation-delay: var(--anim-delay, 150ms);
-    opacity: 0;
 }
 
 @keyframes sectionFadeIn {
-    from { opacity: 0; }
+    from { opacity: 0.01; } /* Near-invisible but reserves space */
     to { opacity: 1; }
 }
 
 /* Skill category animation - staggered fade in */
+/* CLS-SAFE: Elements visible from start, only fade effect */
 .skill-category-animate {
     animation: sectionFadeIn 0.4s ease-out forwards;
     animation-delay: var(--anim-delay, 150ms);
-    opacity: 0;
 }
 
 /* Fallback for users with reduced motion */
