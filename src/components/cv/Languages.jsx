@@ -60,8 +60,8 @@ const Languages = () => {
     }, []);
 
     return (
-        <section id="languages" className="mb-16" ref={sectionRef}>
-            <div className={`flex items-center mb-6 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <section id="languages" className="mt-16 mb-16" ref={sectionRef}>
+            <div className={`flex items-center mb-6 transition-all duration-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-language"></i>
                 </div>

@@ -450,20 +450,20 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       window.t=function(k,f){try{var v=window.TRANSLATIONS[window.CURRENT_LANGUAGE];k.split('.').forEach(function(p){v=v&&v[p]});return v||f||k}catch(e){return f||k}};
     </script>
 
-    <!-- Font Awesome CSS completo - loaded non-blocking for performance -->
+    <!-- Font Awesome CSS optimizado (~5KB vs 20KB) - loaded non-blocking for performance -->
     <link
       rel="stylesheet"
-      href="/styles/font-awesome.min.css"
+      href="/styles/font-awesome-optimized.css"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
-      <link rel="stylesheet" href="/styles/font-awesome.min.css" />
+      <link rel="stylesheet" href="/styles/font-awesome-optimized.css" />
     </noscript>
   </head>
 
   <body
-    class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
+    class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-100"
   >
     <div id="app-root">
       <SkipToContent client:idle />
@@ -489,7 +489,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         <ErrorBoundary>
           <footer
             role="contentinfo"
-            class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-300"
+            class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-100"
           >
             <div class="container mx-auto px-4 max-w-5xl">
               <div
@@ -527,7 +527,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                 <!-- Fixed unique ID for download button -->
                 <button
                   id="footer-cv-download-button"
-                  class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red dark:border-red-300 text-brand-red dark:text-red-300 hover:bg-brand-red hover:text-white dark:hover:bg-red-400 dark:hover:text-white transition-colors duration-300"
+                  class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red dark:border-red-300 text-brand-red dark:text-red-300 hover:bg-brand-red hover:text-white dark:hover:bg-red-400 dark:hover:text-white transition-colors duration-150"
                   onclick="window.print()"
                   aria-label={lang === "es"
                     ? "Descargar CV en formato PDF"

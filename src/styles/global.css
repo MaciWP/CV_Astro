@@ -210,6 +210,48 @@
     }
 }
 
+/* ===== PURE CSS ANIMATIONS (NO CLS) ===== */
+/*
+ * These animations use ONLY opacity - no transforms that cause layout shift
+ * Elements stay in document flow, preventing CLS
+ */
+
+/* Section header animation - appears first */
+.section-header-animate {
+    animation: sectionFadeIn 0.4s ease-out forwards;
+    animation-delay: var(--anim-delay, 0ms);
+    opacity: 0;
+}
+
+/* Section content animation - appears after header */
+.section-content-animate {
+    animation: sectionFadeIn 0.5s ease-out forwards;
+    animation-delay: var(--anim-delay, 150ms);
+    opacity: 0;
+}
+
+@keyframes sectionFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Skill category animation - staggered fade in */
+.skill-category-animate {
+    animation: sectionFadeIn 0.4s ease-out forwards;
+    animation-delay: var(--anim-delay, 150ms);
+    opacity: 0;
+}
+
+/* Fallback for users with reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .section-header-animate,
+    .section-content-animate,
+    .skill-category-animate {
+        animation: none;
+        opacity: 1;
+    }
+}
+
 /* ===== SCROLL-TRIGGERED ANIMATIONS ===== */
 /*
  * Elements start visible by default (progressive enhancement)

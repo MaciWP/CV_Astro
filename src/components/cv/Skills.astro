@@ -23,20 +23,20 @@ const titles = {
 ---
 
 <section id="skills" class="mb-16" aria-labelledby="skills-heading">
-  <!-- Section Header - visible immediately, no animation -->
-  <div class="flex items-center mb-6">
+  <!-- Section Header with CSS animation (no JS dependency) -->
+  <div class="flex items-center mb-6 section-header-animate" style="--anim-delay: 0ms;">
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
       <i class="fas fa-code" aria-hidden="true"></i>
     </div>
     <h2 id="skills-heading" class="text-2xl font-bold ml-3">{titles.main}</h2>
   </div>
 
-  <!-- Main container -->
-  <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm animate-on-scroll" style="transition: background-color 100ms ease-out, border-color 100ms ease-out;">
+  <!-- Main container - visible immediately, categories animate separately -->
+  <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm section-content-animate" style="--anim-delay: 100ms; transition: background-color 100ms ease-out, border-color 100ms ease-out;">
     <div class="grid grid-cols-1 gap-8">
 
-      <!-- Programming Languages -->
-      <div class="space-y-4">
+      <!-- Programming Languages - Category 1 -->
+      <div class="space-y-4 skill-category-animate" style="--anim-delay: 150ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -55,8 +55,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- Libraries & Frameworks -->
-      <div class="space-y-4 pt-2">
+      <!-- Libraries & Frameworks - Category 2 -->
+      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 250ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -75,8 +75,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- Technologies & Databases -->
-      <div class="space-y-4 pt-2">
+      <!-- Technologies & Databases - Category 3 -->
+      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 350ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -95,8 +95,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- Tools & Applications -->
-      <div class="space-y-4 pt-2">
+      <!-- Tools & Applications - Category 4 -->
+      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 450ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -115,8 +115,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- Protocols -->
-      <div class="space-y-4 pt-2">
+      <!-- Protocols - Category 5 -->
+      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 550ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
