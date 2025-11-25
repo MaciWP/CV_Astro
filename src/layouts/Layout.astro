@@ -160,29 +160,23 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
     </script>
 
-    <!-- Critical resource preloading for Core Web Vitals optimization -->
-    <!-- LCP Image: Preload the exact image that will be displayed -->
-    <!-- Desktop uses 640w due to srcset selection, mobile uses 320w -->
+    <!-- LCP Image Preload - CRITICAL for performance -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/oriol_macias-320.avif"
+      type="image/avif"
+      media="(max-width: 767px)"
+    />
     <link
       rel="preload"
       as="image"
       href="/images/oriol_macias-640.avif"
-      fetchpriority="high"
       type="image/avif"
+      media="(min-width: 768px)"
     />
 
-    <!-- Preload critical translation file to reduce chain latency -->
-    <link
-      rel="preload"
-      as="fetch"
-      href={`/locales/${lang}/translation.json`}
-      crossorigin="anonymous"
-    />
-
-    <!-- DNS prefetch and preconnect for external resources -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Google Fonts loaded asynchronously - not critical for LCP -->
     <link
@@ -198,98 +192,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       />
     </noscript>
 
-    <!-- Font preloading for performance -->
-    <link
-      rel="preload"
-      as="font"
-      href="/styles/fonts/fa-solid-900.woff2"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-
-    <!-- JS Enabled Class Injector - Critical for preventing invisible content -->
-    <script is:inline>
-      document.documentElement.classList.add("js-enabled");
-    </script>
-
-    <!-- Mobile optimizations script -->
-    <script src="/mobile-optimizations.js" defer></script>
-
-    <!-- Global animations script - Inlined for reliability -->
-    <script is:inline>
-      (function() {
-        'use strict';
-        var animationObserver = null;
-
-        function initAnimations() {
-          if (animationObserver) animationObserver.disconnect();
-
-          animationObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-              if (entry.isIntersecting) {
-                var delay = entry.target.style.transitionDelay || '0ms';
-                var delayMs = parseInt(delay) || 0;
-                setTimeout(function() {
-                  entry.target.classList.add('is-visible');
-                }, delayMs);
-                animationObserver.unobserve(entry.target);
-              }
-            });
-          }, { root: null, rootMargin: '100px', threshold: 0.05 });
-
-          var els = document.querySelectorAll('.animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width');
-          els.forEach(function(el) {
-            if (el.classList.contains('is-visible')) return;
-            var rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-              var delay = parseInt(el.style.transitionDelay) || 0;
-              setTimeout(function() { el.classList.add('is-visible'); }, delay + 50);
-            } else {
-              animationObserver.observe(el);
-            }
-          });
-        }
-
-        // Run immediately
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initAnimations);
-        } else {
-          initAnimations();
-        }
-
-        // Re-run after React hydration (Astro islands)
-        setTimeout(initAnimations, 100);
-        setTimeout(initAnimations, 500);
-        setTimeout(initAnimations, 1000);
-
-        // Also observe DOM changes for dynamically added elements
-        function setupMutationObserver() {
-          if (typeof MutationObserver !== 'undefined' && document.body) {
-            var mutationObserver = new MutationObserver(function(mutations) {
-              var hasNewAnimated = mutations.some(function(m) {
-                return Array.from(m.addedNodes).some(function(n) {
-                  return n.nodeType === 1 && (
-                    n.classList && (
-                      n.classList.contains('animate-on-scroll') ||
-                      n.classList.contains('animate-scale') ||
-                      n.classList.contains('animate-fade-left')
-                    )
-                  );
-                });
-              });
-              if (hasNewAnimated) setTimeout(initAnimations, 50);
-            });
-            mutationObserver.observe(document.body, { childList: true, subtree: true });
-          }
-        }
-        // Wait for body to exist before setting up MutationObserver
-        if (document.body) {
-          setupMutationObserver();
-        } else {
-          document.addEventListener('DOMContentLoaded', setupMutationObserver);
-        }
-      })();
-    </script>
+    <!-- JS Enabled Class -->
+    <script is:inline>document.documentElement.classList.add("js-enabled");</script>
 
     <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
 
@@ -368,231 +272,19 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <LanguageAlternates
       currentLang={lang}
       currentPath={Astro.url.pathname}
-      client:load
+      client:idle
     />
 
-    <!-- Critical CSS for layout shift prevention -->
+    <!-- Critical CSS - Minimal for FCP -->
     <style is:inline>
-      /* Critical layout preservation styles */
-      #skills,
-      .nav-container,
-      .profile-image-container {
-        content-visibility: auto;
-        contain-intrinsic-size: 0 400px;
-      }
-
-      /* Prevent layout shifts during font loading */
-      .fas,
-      .fa-solid,
-      .fab,
-      .fa-brands {
-        min-width: 1em;
-        display: inline-block;
-      }
-    </style>
-
-    <!-- Critical CSS Inlined for Performance - OPTIMIZED -->
-    <style is:inline>
-      /* a11y-improvements.css - Accessibility fixes */
-      /* WCAG AA: 4.5:1 contrast for normal text, 3:1 for large text */
-      /* #991b1b (red-800) on white = 7.8:1 - Passes AAA */
-      /* #fca5a5 (red-300) on #121620 = 5.5:1 - Passes AA */
-      :root {
-        --original-brand-red: #d83333;
-        --accessible-brand-red: #991b1b; /* red-800 for better contrast */
-      }
-      .text-brand-red {
-        color: var(--accessible-brand-red) !important;
-      }
-      .border-brand-red {
-        border-color: var(--accessible-brand-red) !important;
-      }
-      .bg-brand-red {
-        background-color: var(--original-brand-red);
-      }
-      h2.text-brand-red,
-      h4.text-brand-red {
-        color: var(--accessible-brand-red) !important;
-        font-weight: 600 !important;
-      }
-      .text-accessible-brand-red {
-        color: var(--accessible-brand-red) !important;
-      }
-      [aria-current="page"] {
-        font-weight: 600 !important;
-      }
-      .text-brand-red[aria-current="page"] {
-        color: var(--accessible-brand-red) !important;
-      }
-      /* Footer download button - high contrast */
-      #footer-cv-download-button {
-        color: var(--accessible-brand-red) !important;
-        border-color: var(--accessible-brand-red) !important;
-        background-color: transparent !important;
-        font-weight: 600 !important;
-      }
-      #footer-cv-download-button:hover {
-        background-color: var(--accessible-brand-red) !important;
-        color: #ffffff !important;
-      }
-      /* Footer text - better contrast */
-      footer,
-      footer p,
-      footer a {
-        color: #374151 !important; /* gray-700 for better contrast */
-      }
-      .dark footer,
-      .dark footer p,
-      .dark footer a {
-        color: #e5e7eb !important; /* gray-200 for better contrast */
-      }
-      /* Dark mode red text: use red-300 (#fca5a5) for better contrast on dark bg */
-      .dark .text-brand-red,
-      .dark .text-accessible-brand-red {
-        color: #fca5a5 !important;
-      }
-      .dark .border-brand-red {
-        border-color: #fca5a5 !important;
-      }
-      .dark #footer-cv-download-button {
-        color: #fca5a5 !important;
-        border-color: #fca5a5 !important;
-      }
-      .dark #footer-cv-download-button:hover {
-        background-color: #fca5a5 !important;
-        color: #121620 !important;
-      }
-      button:focus-visible,
-      a:focus-visible,
-      input:focus-visible,
-      select:focus-visible,
-      textarea:focus-visible {
-        outline: 3px solid var(--accessible-brand-red) !important;
-        outline-offset: 2px !important;
-        box-shadow: 0 0 0 3px rgba(196, 43, 43, 0.4) !important;
-      }
-
-      /* layout-shift-fixes.css - CLS prevention */
-      #skills {
-        min-height: 400px;
-        contain: layout paint;
-      }
-      .skill-pill {
-        height: 32px;
-        margin-bottom: 8px;
-        contain: content;
-      }
-      nav .hidden.md\:block {
-        min-height: 40px;
-        contain: layout size;
-      }
-      .w-10.h-10 {
-        min-width: 2.5rem;
-        min-height: 2.5rem;
-        contain: strict;
-      }
-      [data-i18n="header.photoAlt"] {
-        min-height: 400px;
-        min-width: 400px;
-        aspect-ratio: 1;
-        contain: size layout;
-      }
-      section#skills,
-      div.hidden.md\:block {
-        contain: layout paint;
-        isolation: isolate;
-      }
-      section#skills h3,
-      section#skills .skill-pill {
-        transform: translateZ(0);
-        will-change: transform;
-        transition: transform 0.2s ease-out;
-      }
-      nav a[data-section] {
-        min-width: 70px;
-        text-align: center;
-        justify-content: center;
-        display: inline-flex;
-      }
-      #skills .section-header {
-        height: 40px;
-        margin-bottom: 16px;
-        contain: layout size;
-      }
-      @media (max-width: 768px) {
-        #skills,
-        .nav-container {
-          contain: strict;
-          content-visibility: auto;
-        }
-        main > div > section:first-child {
-          min-height: 200px;
-        }
-        h1,
-        h2,
-        h3,
-        p {
-          contain: content;
-        }
-      }
-
-      /* cls-fix.css - Additional CLS prevention */
-      #skills .skill-pill {
-        opacity: 0;
-        transform: translateY(0);
-        transition: opacity 0.3s ease-out;
-        height: 2.5rem;
-        margin-bottom: 0.5rem;
-      }
-      #skills .skill-pill[style*="opacity: 1"] {
-        transform: translateY(0) !important;
-      }
-
-      /* critical-mobile.css - Mobile critical styles */
-      @media (max-width: 767px) {
-        body {
-          margin: 0;
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-          background-color: #ffffff;
-          color: #1f2937;
-        }
-        .dark body {
-          background-color: #121620;
-          color: #f9fafb;
-        }
-        header {
-          position: sticky;
-          top: 0;
-          z-index: 50;
-          background-color: #ffffff;
-          border-bottom: 1px solid #e5e7eb;
-          padding: 0.75rem 0;
-        }
-        .dark header {
-          background-color: #121620;
-          border-color: #374151;
-        }
-        .container {
-          width: 100%;
-          margin-left: auto;
-          margin-right: auto;
-          padding-left: 1rem;
-          padding-right: 1rem;
-        }
-        h1 {
-          font-size: 1.5rem;
-          font-weight: 700;
-          margin-bottom: 0.5rem;
-        }
-        h2 {
-          font-size: 1.25rem;
-          font-weight: 600;
-          margin-bottom: 0.5rem;
-        }
-        p {
-          margin-bottom: 1rem;
-        }
-      }
+      :root{--brand-red:#d83333;--accessible-brand-red:#991b1b}
+      .text-brand-red,.text-accessible-brand-red{color:var(--accessible-brand-red)!important}
+      .bg-brand-red{background-color:var(--brand-red)}
+      .dark .text-brand-red,.dark .text-accessible-brand-red{color:#fca5a5!important}
+      #skills{min-height:400px;contain:layout paint}
+      .fas,.fab{min-width:1em;display:inline-block}
+      footer,footer p,footer a{color:#374151!important}
+      .dark footer,.dark footer p,.dark footer a{color:#e5e7eb!important}
     </style>
 
     <!-- Alternate language versions -->
@@ -738,224 +430,20 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       set:html={`<script type="application/ld+json">${JSON.stringify(jobPostingSchema, null, 2)}</script>`}
     />
 
-    <link
-      rel="preload"
-      href="/styles/fonts/fa-brands-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-
-    <!-- Critical Font Awesome styles -->
+    <!-- Font Awesome Critical Styles -->
     <style is:inline>
-      @font-face {
-        font-family: "Font Awesome 5 Free";
-        font-style: normal;
-        font-weight: 900;
-        font-display: swap;
-        src: url("/styles/fonts/fa-solid-900.woff2") format("woff2");
-      }
-
-      @font-face {
-        font-family: "Font Awesome 5 Brands";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("/styles/fonts/fa-brands-400.woff2") format("woff2");
-      }
-
-      .fas,
-      .fa-solid {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        line-height: 1;
-      }
-
-      .fab,
-      .fa-brands {
-        font-family: "Font Awesome 5 Brands";
-        font-weight: 400;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        line-height: 1;
-      }
-
-      /* Enhanced navigation positioning */
-      nav,
-      header nav,
-      nav[role="navigation"],
-      header[role="banner"] {
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 50 !important;
-        will-change: transform;
-      }
-
-      header[role="banner"] {
-        display: block;
-        position: static;
-        z-index: auto;
-        margin: 0;
-        padding: 0;
-      }
-
-      /* Performance optimizations */
-      img {
-        content-visibility: auto;
-      }
+      @font-face{font-family:"Font Awesome 5 Free";font-weight:900;font-display:swap;src:url("/styles/fonts/fa-solid-900.woff2") format("woff2")}
+      @font-face{font-family:"Font Awesome 5 Brands";font-weight:400;font-display:swap;src:url("/styles/fonts/fa-brands-400.woff2") format("woff2")}
+      .fas,.fa-solid{font-family:"Font Awesome 5 Free";font-weight:900;display:inline-block;font-style:normal;line-height:1}
+      .fab,.fa-brands{font-family:"Font Awesome 5 Brands";font-weight:400;display:inline-block;font-style:normal;line-height:1}
+      @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
     </style>
 
-    <!-- Enhanced internationalization scripts -->
+    <!-- i18n Setup -->
     <script is:inline define:vars={{ lang }}>
-      /**
-       * Safe internationalization setup
-       * @description Sets up i18n without external dependencies
-       */
-      try {
-        window.CURRENT_LANGUAGE = lang;
-        window.TRANSLATIONS = window.TRANSLATIONS || {};
-
-        // Enhanced translation function with fallbacks
-        window.t = function (key, fallback) {
-          try {
-            const keys = key.split(".");
-            let value = window.TRANSLATIONS[window.CURRENT_LANGUAGE];
-            for (const k of keys) {
-              value = value?.[k];
-            }
-            return value || fallback || key.split(".").pop() || key;
-          } catch (error) {
-            console.warn("Translation error:", error);
-            return fallback || key;
-          }
-        };
-
-        console.log("Language set to:", window.CURRENT_LANGUAGE);
-      } catch (error) {
-        console.error("I18n initialization error:", error);
-        // Fallback setup
-        window.t = function (key) {
-          return key;
-        };
-      }
+      window.CURRENT_LANGUAGE=lang;window.TRANSLATIONS=window.TRANSLATIONS||{};
+      window.t=function(k,f){try{var v=window.TRANSLATIONS[window.CURRENT_LANGUAGE];k.split('.').forEach(function(p){v=v&&v[p]});return v||f||k}catch(e){return f||k}};
     </script>
-
-    <!-- Enhanced theme initialization -->
-    <script is:inline>
-      /**
-       * Theme initialization with error handling
-       * @description Sets up dark/light theme with proper error handling
-       * IMPORTANT: Must remove opposite class to prevent conflicts with ThemeContext
-       */
-      (function () {
-        try {
-          const storedTheme = localStorage.getItem("theme") || "dark";
-          // Remove both classes first to prevent conflicts
-          document.documentElement.classList.remove("light", "dark");
-          document.documentElement.classList.add(storedTheme);
-
-          // Emit theme change event for components
-          document.dispatchEvent(
-            new CustomEvent("theme-changed", {
-              detail: { theme: storedTheme },
-            }),
-          );
-        } catch (error) {
-          console.warn("Theme initialization error:", error);
-          // Fallback to dark theme
-          document.documentElement.classList.remove("light", "dark");
-          document.documentElement.classList.add("dark");
-        }
-      })();
-    </script>
-
-    <!-- Enhanced print styles -->
-    <style is:inline>
-      @media print {
-        nav,
-        footer,
-        button:not(.cv-download-btn),
-        .no-print {
-          display: none !important;
-        }
-        body {
-          background-color: white !important;
-          color: black !important;
-          font-size: 12pt !important;
-          line-height: 1.4 !important;
-        }
-        @page {
-          size: A4 portrait;
-          margin: 1.5cm;
-          orphans: 3;
-          widows: 3;
-        }
-        main {
-          padding: 0 !important;
-          max-width: none !important;
-        }
-        * {
-          box-shadow: none !important;
-          transition: none !important;
-          animation: none !important;
-        }
-        .dark\:text-dark-text,
-        .dark\:text-dark-text-secondary,
-        .text-light-text,
-        .text-light-text-secondary {
-          color: #000 !important;
-        }
-        .dark\:bg-dark-surface,
-        .dark\:bg-dark-secondary,
-        .bg-light-surface,
-        .bg-light-secondary {
-          background-color: #fff !important;
-        }
-        .opacity-0 {
-          opacity: 1 !important;
-        }
-        .border-brand-red {
-          border-color: #d83333 !important;
-        }
-        .text-brand-red {
-          color: #d83333 !important;
-        }
-        .bg-brand-red {
-          background-color: #d83333 !important;
-        }
-        h1,
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-        p,
-        li {
-          page-break-inside: avoid;
-        }
-      }
-    </style>
-    <LanguageAlternates currentLang={lang} currentPath={currentPath} />
-
-    <!-- Critical CSS already inlined above - Removed external links for performance -->
-    <!-- Preloads locales -->
-    <link
-      rel="preload"
-      href="/styles/fonts/fa-brands-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
 
     <!-- Font Awesome CSS completo - loaded non-blocking for performance -->
     <link
@@ -973,13 +461,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     class="min-h-screen bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans transition-colors duration-300"
   >
     <div id="app-root">
-      <SkipToContent client:load />
-      <A11yAnnouncer client:load />
+      <SkipToContent client:idle />
+      <A11yAnnouncer client:idle />
 
       <I18nLoader client:only>
         <header role="banner">
           <ErrorBoundary>
-            <Navbar client:load />
+            <Navbar client:idle />
           </ErrorBoundary>
         </header>
 
@@ -1058,196 +546,14 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       </I18nLoader>
     </div>
 
-    <!-- Enhanced market tracking with error handling -->
-    <script is:inline define:vars={{ marketData }}>
-      /**
-       * Market-specific interaction tracking
-       * @description Tracks user interactions for market optimization
-       */
-      if (typeof gtag !== "undefined") {
-        try {
-          document.addEventListener("click", function (e) {
-            const target = e.target;
-            if (target && target.closest) {
-              // Swiss market tracking
-              if (target.closest("[data-swiss-tracking]")) {
-                gtag("event", "swiss_market_interaction", {
-                  event_category: "Swiss SEO",
-                  event_label: target
-                    .closest("[data-swiss-tracking]")
-                    .getAttribute("data-swiss-tracking"),
-                  market_focus: marketData.market,
-                  target_city: marketData.city,
-                  custom_parameter_1: marketData.market,
-                  custom_parameter_2: marketData.city,
-                });
-              }
-              // Spanish market tracking
-              if (target.closest("[data-spanish-tracking]")) {
-                gtag("event", "spanish_market_interaction", {
-                  event_category: "Spanish SEO",
-                  event_label: target
-                    .closest("[data-spanish-tracking]")
-                    .getAttribute("data-spanish-tracking"),
-                  market_focus: marketData.market,
-                  custom_parameter_1: marketData.market,
-                });
-              }
-              // General CV interactions
-              if (target.closest(".cv-download-btn")) {
-                gtag("event", "cv_download_attempt", {
-                  event_category: "CV Engagement",
-                  event_label: "Footer Download Button",
-                  market_focus: marketData.market,
-                  target_city: marketData.city,
-                });
-              }
-            }
-          });
-        } catch (error) {
-          console.warn("Market tracking error:", error);
-        }
-      }
-    </script>
-  </body><!-- Enhanced smooth scrolling with error handling -->
-  <script is:inline>
-    /**
-     * Smooth scrolling navigation with accessibility
-     * @description Provides smooth scrolling with proper accessibility announcements
-     */
-    document.addEventListener("DOMContentLoaded", () => {
-      try {
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            const targetId = this.getAttribute("href").substring(1);
-            if (!targetId) return;
-
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-              e.preventDefault();
-              const navbarHeight = 80;
-              const position =
-                targetElement.getBoundingClientRect().top +
-                window.pageYOffset -
-                navbarHeight;
-
-              window.scrollTo({
-                top: position,
-                behavior: "smooth",
-              });
-
-              // Accessibility announcement
-              if (window.announceToScreenReader) {
-                const elementTitle =
-                  targetElement.querySelector("h2, h3")?.textContent ||
-                  targetId;
-                window.announceToScreenReader(
-                  `Navigated to ${elementTitle} section`,
-                );
-              }
-
-              // Focus management for keyboard users
-              targetElement.setAttribute("tabindex", "-1");
-              targetElement.focus({ preventScroll: true });
-
-              targetElement.addEventListener("blur", function onBlur() {
-                targetElement.removeAttribute("tabindex");
-                targetElement.removeEventListener("blur", onBlur);
-              });
-            }
-          });
-        });
-      } catch (error) {
-        console.error("Smooth scrolling error:", error);
-      }
-    });
-  </script>
-
-  <!-- Enhanced market tracking with error handling -->
-  <script is:inline define:vars={{ marketData }}>
-    /**
-     * Market-specific interaction tracking
-     * @description Tracks user interactions for market optimization
-     */
-    if (typeof gtag !== "undefined") {
-      try {
-        document.addEventListener("click", function (e) {
-          const target = e.target;
-          if (target && target.closest) {
-            // Swiss market tracking
-            if (target.closest("[data-swiss-tracking]")) {
-              gtag("event", "swiss_market_interaction", {
-                event_category: "Swiss SEO",
-                event_label: target
-                  .closest("[data-swiss-tracking]")
-                  .getAttribute("data-swiss-tracking"),
-                market_focus: marketData.market,
-                target_city: marketData.city,
-                custom_parameter_1: marketData.market,
-                custom_parameter_2: marketData.city,
-              });
-            }
-            // Spanish market tracking
-            if (target.closest("[data-spanish-tracking]")) {
-              gtag("event", "spanish_market_interaction", {
-                event_category: "Spanish SEO",
-                event_label: target
-                  .closest("[data-spanish-tracking]")
-                  .getAttribute("data-spanish-tracking"),
-                market_focus: marketData.market,
-                custom_parameter_1: marketData.market,
-              });
-            }
-            // General CV interactions
-            if (target.closest(".cv-download-btn")) {
-              gtag("event", "cv_download_attempt", {
-                event_category: "CV Engagement",
-                event_label: "Footer Download Button",
-                market_focus: marketData.market,
-                target_city: marketData.city,
-              });
-            }
-          }
-        });
-      } catch (error) {
-        console.warn("Market tracking error:", error);
-      }
-    }
-  </script>
-
+  </body>
   <!-- Scroll Animations Script -->
   <script src="/scripts/animations.js" defer></script>
 
-  <!-- Enhanced Service Worker registration -->
+  <!-- Service Worker registration - deferred -->
   <script is:inline>
-    /**
-     * Service Worker registration for production
-     * @description Registers service worker with proper error handling
-     */
-    if (
-      window.location.hostname !== "localhost" &&
-      window.location.hostname !== "127.0.0.1" &&
-      "serviceWorker" in navigator
-    ) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/sw.js?v=" + new Date().getTime())
-          .then((registration) => {
-            console.log(
-              "Service Worker registered successfully:",
-              registration.scope,
-            );
-
-            // Check for updates
-            registration.addEventListener("updatefound", () => {
-              const newWorker = registration.installing;
-              console.log("Service Worker update found");
-            });
-          })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-          });
-      });
+    if(location.hostname!=='localhost'&&'serviceWorker'in navigator){
+      window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
     }
   </script>
 </html>
