@@ -40,24 +40,33 @@
         '.animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width'
       );
 
-      // Make above-the-fold elements visible immediately (no animation)
-      // This prevents CLS by not animating content that's already visible
       var viewportHeight = window.innerHeight;
+      var aboveFoldElements = [];
 
+      // First pass: collect all elements and classify them
       animatedElements.forEach(function(el) {
         if (el.classList.contains('is-visible')) return;
 
-        // Check if element is in initial viewport (above-the-fold)
         var rect = el.getBoundingClientRect();
         var isAboveFold = rect.top < viewportHeight;
 
         if (isAboveFold) {
-          // Immediately show without animation to prevent CLS
-          el.classList.add('is-visible', 'no-animation');
+          // Collect above-fold elements for staggered reveal
+          aboveFoldElements.push(el);
         } else {
-          // Only animate elements below the fold
+          // Below-the-fold: use IntersectionObserver for scroll animation
           animationObserver.observe(el);
         }
+      });
+
+      // Above-the-fold: subtle staggered fade-in (no CLS - only opacity)
+      aboveFoldElements.forEach(function(el, index) {
+        // Add class for CSS-only fade (no transform = no CLS)
+        el.classList.add('above-fold');
+        // Stagger the reveal with small delays
+        setTimeout(function() {
+          el.classList.add('is-visible');
+        }, 50 + (index * 80)); // 50ms base + 80ms stagger
       });
     });
   }

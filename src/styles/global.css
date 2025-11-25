@@ -231,30 +231,37 @@
     opacity: 1 !important;
 }
 
-/* Above-the-fold elements: show instantly without animation to prevent CLS */
-.animate-on-scroll.is-visible.no-animation,
-.animate-scale.is-visible.no-animation,
-.animate-fade-left.is-visible.no-animation,
-.animate-width.is-visible.no-animation {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+/* Above-the-fold elements: subtle fade-in only (no transform = no CLS) */
+.animate-on-scroll.above-fold,
+.animate-scale.above-fold,
+.animate-fade-left.above-fold,
+.animate-width.above-fold {
+    /* Use CSS transition instead of animation for smoother fade */
+    transition: opacity 0.4s var(--ease-standard);
 }
 
-/* Below-the-fold elements: animate normally */
-.animate-on-scroll.is-visible:not(.no-animation) {
+.animate-on-scroll.above-fold.is-visible,
+.animate-scale.above-fold.is-visible,
+.animate-fade-left.above-fold.is-visible,
+.animate-width.above-fold.is-visible {
+    opacity: 1 !important;
+    /* No transform animation - prevents CLS */
+}
+
+/* Below-the-fold elements: full animations (safe because not in initial viewport) */
+.animate-on-scroll.is-visible:not(.above-fold) {
     animation: fadeInUp var(--duration-standard) var(--ease-standard) forwards;
 }
 
-.animate-scale.is-visible:not(.no-animation) {
+.animate-scale.is-visible:not(.above-fold) {
     animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
 }
 
-.animate-fade-left.is-visible:not(.no-animation) {
+.animate-fade-left.is-visible:not(.above-fold) {
     animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
 }
 
-.animate-width.is-visible:not(.no-animation) {
+.animate-width.is-visible:not(.above-fold) {
     animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
 }
 
