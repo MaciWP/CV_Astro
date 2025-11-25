@@ -95,11 +95,19 @@ const jobPostingSchema = {
     url: "https://oriolmacias.dev",
     logo: "https://oriolmacias.dev/images/oriol_macias.jpg",
   },
+  jobLocationType: "TELECOMMUTE",
+  applicantLocationRequirements: {
+    "@type": "Country",
+    name: marketData.market === "switzerland" ? "Switzerland" : "Spain",
+  },
   jobLocation: {
     "@type": "Place",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Remote / Flexible",
+      streetAddress:
+        marketData.market === "switzerland"
+          ? "Technoparkstrasse 1"
+          : "Paseo de la Castellana 1",
       addressCountry: marketData.market === "switzerland" ? "CH" : "ES",
       addressLocality:
         marketData.city !== "general"
@@ -107,7 +115,7 @@ const jobPostingSchema = {
           : marketData.market === "switzerland"
             ? "Zürich"
             : "Madrid",
-      postalCode: marketData.market === "switzerland" ? "8000" : "28000",
+      postalCode: marketData.market === "switzerland" ? "8005" : "28046",
     },
   },
   baseSalary: {
