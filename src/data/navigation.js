@@ -4,16 +4,8 @@
  */
 
 // Base navigation items with translations
+// Note: "About" removed from nav to save header space - logo click scrolls to top
 export const navItems = [
-    {
-        id: 'about',
-        name: {
-            en: 'About',
-            es: 'Sobre Mí',
-            fr: 'À Propos'
-        },
-        href: '#about'
-    },
     {
         id: 'experience',
         name: {

@@ -4,11 +4,11 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import ErrorBoundary from "../../components/ErrorBoundary";
 
 // Import CV components
-import ProfileHeader from "../../components/cv/ProfileHeader";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
 import Experience from "../../components/cv/Experience";
-import Skills from "../../components/cv/Skills";
+import Skills from "../../components/cv/Skills.astro";
 import Languages from "../../components/cv/Languages";
-import Education from "../../components/cv/Education";
+import Education from "../../components/cv/Education.astro";
 import Projects from "../../components/cv/Projects";
 
 // Enhanced metadata for SEO (German version)
@@ -38,32 +38,34 @@ const frUrl = getRelativeLocaleUrl("fr", "");
 >
     <div
         id="cv-content"
-        class="space-y-16"
+        class="space-y-12"
         itemscope
         itemtype="https://schema.org/Person"
     >
+        {/* ProfileHeader - SSG Optimized */}
+        <div class="-mb-4">
+            <ProfileHeader lang="de" />
+        </div>
+
+        {/* Experience con ErrorBoundary */}
         <ErrorBoundary client:load>
-            <ProfileHeader client:load />
+            <Experience client:visible />
         </ErrorBoundary>
 
+        {/* Skills - SSG Optimized */}
+        <Skills lang="de" />
+
+        {/* Education - SSG Optimized */}
+        <Education lang="de" />
+
+        {/* Languages con ErrorBoundary */}
         <ErrorBoundary client:load>
-            <Experience client:load />
+            <Languages client:visible />
         </ErrorBoundary>
 
+        {/* Projects con ErrorBoundary */}
         <ErrorBoundary client:load>
-            <Skills client:load />
-        </ErrorBoundary>
-
-        <ErrorBoundary client:load>
-            <Education client:load />
-        </ErrorBoundary>
-
-        <ErrorBoundary client:load>
-            <Languages client:load />
-        </ErrorBoundary>
-
-        <ErrorBoundary client:load>
-            <Projects client:load />
+            <Projects client:visible />
         </ErrorBoundary>
     </div>
 </Layout>

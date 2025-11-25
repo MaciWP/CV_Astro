@@ -1,0 +1,66 @@
+---
+/**
+ * Education.astro - SSG optimized version
+ * Static generation for better performance
+ */
+import { getEducation } from '../../data/education';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Get education items in the specified language
+const educationItems = getEducation(lang);
+
+// Get title translation
+const titles = {
+  en: 'Education & Certifications',
+  es: 'Educación y Certificaciones',
+  fr: 'Éducation et Certifications'
+};
+
+const title = titles[lang as keyof typeof titles] || titles.en;
+---
+
+<section id="education" class="mb-16" aria-labelledby="education-heading">
+  <!-- Section Header -->
+  <div class="flex items-center mb-6 animate-on-scroll">
+    <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+    </div>
+    <h2 id="education-heading" class="text-2xl font-bold ml-3">{title}</h2>
+  </div>
+
+  <div class="space-y-6">
+    {educationItems.map((item, index) => (
+      <div
+        class="group bg-light-surface dark:bg-dark-surface p-5
+               border border-light-border dark:border-dark-border
+               rounded-none shadow-sm hover:shadow-md hover:border-brand-red/50 dark:hover:border-brand-red/50
+               transition-all duration-300 transform hover:translate-x-1 animate-fade-left"
+        style={`transition-delay: ${index * 100}ms`}
+      >
+        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
+          <div>
+            <h3 class="font-bold text-lg group-hover:text-brand-red transition-colors duration-300">
+              {item.title}
+            </h3>
+            <p class="text-light-text-secondary dark:text-dark-text-secondary italic mb-2">
+              {item.institution}
+            </p>
+          </div>
+          <div class="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white transition-colors duration-300">
+            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+            {item.period}
+          </div>
+        </div>
+        <p class="text-sm">{item.details}</p>
+
+        <!-- Indicator line with smoother animation -->
+        <div class="w-0 h-0.5 bg-brand-red mt-3 transition-all duration-300 group-hover:w-full"></div>
+      </div>
+    ))}
+  </div>
+</section>

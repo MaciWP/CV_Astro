@@ -1,0 +1,140 @@
+---
+/**
+ * Skills.astro - SSG optimized version
+ * Static generation for better performance
+ */
+import skillsData, { getSectionTitle } from '../../data/skills';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Get section titles in the specified language
+const titles = {
+  main: getSectionTitle('skills', lang),
+  languages: getSectionTitle('languages', lang),
+  libraries: getSectionTitle('libraries', lang),
+  technologies: getSectionTitle('technologies', lang),
+  tools: getSectionTitle('tools', lang),
+  protocols: getSectionTitle('protocols', lang)
+};
+---
+
+<section id="skills" class="mb-16" aria-labelledby="skills-heading">
+  <!-- Section Header -->
+  <div class="flex items-center mb-6 animate-on-scroll">
+    <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+      <i class="fas fa-code" aria-hidden="true"></i>
+    </div>
+    <h2 id="skills-heading" class="text-2xl font-bold ml-3">{titles.main}</h2>
+  </div>
+
+  <!-- Main container -->
+  <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm animate-scale" style="transition-delay: 100ms">
+    <div class="grid grid-cols-1 gap-8">
+
+      <!-- Programming Languages -->
+      <div class="space-y-4">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <i class="fas fa-code text-brand-red" aria-hidden="true"></i>
+            </div>
+            {titles.languages}
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.languages.map((skill, index) => (
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`transition-delay: ${index * 30}ms`}>
+              <i class={`${skill.icon} text-brand-red`}></i>
+              <span>{skill.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Libraries & Frameworks -->
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <i class="fas fa-puzzle-piece text-brand-red" aria-hidden="true"></i>
+            </div>
+            {titles.libraries}
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.libraries.map((lib, index) => (
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`transition-delay: ${index * 30}ms`}>
+              <i class={`${lib.icon} text-brand-red`}></i>
+              <span>{lib.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Technologies & Databases -->
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <i class="fas fa-server text-brand-red" aria-hidden="true"></i>
+            </div>
+            {titles.technologies}
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.technologies.map((tech, index) => (
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`transition-delay: ${index * 30}ms`}>
+              <i class={`${tech.icon} text-brand-red`}></i>
+              <span>{tech.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Tools & Applications -->
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <i class="fas fa-tools text-brand-red" aria-hidden="true"></i>
+            </div>
+            {titles.tools}
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.tools.map((tool, index) => (
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`transition-delay: ${index * 30}ms`}>
+              <i class={`${tool.icon} text-brand-red`}></i>
+              <span>{tool.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Protocols -->
+      <div class="space-y-4 pt-2">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <i class="fas fa-network-wired text-brand-red" aria-hidden="true"></i>
+            </div>
+            {titles.protocols}
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {skillsData.protocols.map((protocol, index) => (
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`transition-delay: ${index * 30}ms`}>
+              <i class={`${protocol.icon} text-brand-red`}></i>
+              <span>{protocol.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

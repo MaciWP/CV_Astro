@@ -5,9 +5,9 @@
  * @description Landing page para todo el mercado suizo
  */
 import Layout from "../../layouts/Layout.astro";
-import ProfileHeader from "../../components/cv/ProfileHeader";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
 import Experience from "../../components/cv/Experience";
-import Skills from "../../components/cv/Skills";
+import Skills from "../../components/cv/Skills.astro";
 
 const title = "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
 const description = "Senior Backend Developer seeking opportunities across Switzerland. 8+ years Python, Django, industrial protocols. EU work permit ready for immediate hire.";
@@ -87,9 +87,9 @@ const description = "Senior Backend Developer seeking opportunities across Switz
     </section>
 
     <!-- Standard CV Sections -->
-    <ProfileHeader client:load />
+    <ProfileHeader lang="en" />
     <Experience client:visible />
-    <Skills client:visible />
+    <Skills lang="en" />
   </div>
 </Layout>
 
@@ -172,7 +172,7 @@ const description = "Senior Backend Developer seeking opportunities in Zurich. 8
       </div>
     </section>
 
-    <ProfileHeader client:load />
+    <ProfileHeader lang="en" />
   </div>
 </Layout>
 
@@ -247,7 +247,7 @@ const description = "Software Engineer specializing in Basel pharmaceutical and 
       </div>
     </section>
 
-    <ProfileHeader client:load />
+    <ProfileHeader lang="en" />
   </div>
 </Layout>
 
@@ -319,6 +319,6 @@ const description = "Multilingual Backend Developer (EN/ES/FR) seeking Geneva op
       </div>
     </section>
 
-    <ProfileHeader client:load />
+    <ProfileHeader lang="en" />
   </div>
 </Layout>

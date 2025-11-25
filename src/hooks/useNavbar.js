@@ -8,7 +8,7 @@ import { getCurrentLanguageNavItems, getCurrentUITranslation } from '../data/nav
 export const useNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
-    const [activeSection, setActiveSection] = useState('about');
+    const [activeSection, setActiveSection] = useState('experience');
     const [scrollY, setScrollY] = useState(0);
     const [theme, setTheme] = useState('dark');
     const [navItems, setNavItems] = useState([]);
@@ -75,68 +75,71 @@ export const useNavbar = () => {
     const handleLogoClick = (e) => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setActiveSection('about');
-        window.history.pushState(null, '', '#about');
+        setActiveSection('experience'); // First nav item after removing About
+        window.history.pushState(null, '', window.location.pathname);
 
         if (window.announceToScreenReader) {
             window.announceToScreenReader('Returned to the top of the page');
         }
     };
 
-    // Toggle theme function
+    // Toggle theme function - INSTANTÁNEO sin transiciones
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
-        document.documentElement.classList.add('theme-transitioning');
 
-        requestAnimationFrame(() => {
-            document.documentElement.classList.remove('light', 'dark');
-            document.documentElement.classList.add(newTheme);
-            localStorage.setItem('theme', newTheme);
-
-            setTimeout(() => {
-                document.documentElement.classList.remove('theme-transitioning');
-            }, 75);
-        });
+        // Cambio inmediato sin animación
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(newTheme);
+        localStorage.setItem('theme', newTheme);
     };
 
-    // Setup intersection observers
+    // Detect active section based on scroll position - simple and reliable
     useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: `-${navbarHeight}px 0px 0px 0px`,
-            threshold: 0.2
-        };
+        if (!mounted) return;
 
-        const observer = new IntersectionObserver((entries) => {
-            const visibleEntries = entries
-                .filter(entry => entry.isIntersecting)
-                .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        const sectionIds = ['experience', 'skills', 'education', 'languages', 'projects'];
 
-            if (visibleEntries.length > 0) {
-                setActiveSection(visibleEntries[0].target.id);
+        const updateActiveSection = () => {
+            const scrollPosition = window.scrollY + navbarHeight + 100;
+
+            // Find the section that's currently in view
+            let currentSection = 'experience';
+
+            for (const id of sectionIds) {
+                const element = document.getElementById(id);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    if (scrollPosition >= offsetTop) {
+                        currentSection = id;
+                    }
+                }
             }
-        }, options);
 
-        const observeElements = () => {
-            const itemsToObserve = navItems.length > 0 ? navItems : [
-                { id: 'about' }, { id: 'experience' }, { id: 'skills' },
-                { id: 'education' }, { id: 'languages' }, { id: 'projects' }
-            ];
-
-            itemsToObserve.forEach(item => {
-                const element = document.getElementById(item.id);
-                if (element) observer.observe(element);
-            });
+            setActiveSection(currentSection);
         };
 
-        observeElements();
+        // Throttle scroll updates for performance
+        let ticking = false;
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateActiveSection();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        // Initial check
+        setTimeout(updateActiveSection, 150);
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => {
-            const allSections = document.querySelectorAll('section[id]');
-            allSections.forEach(section => observer.unobserve(section));
+            window.removeEventListener('scroll', handleScroll);
         };
-    }, [navItems]);
+    }, [mounted]);
 
     // Initialize
     useEffect(() => {

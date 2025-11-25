@@ -32,24 +32,30 @@ const Navbar = () => {
 
     const isScrolled = scrollY > 50;
 
-    // Server-side rendering placeholder
+    // Server-side rendering placeholder - matches hydrated nav exactly to prevent flash
     if (!mounted) {
         return (
-            <nav className="py-4 sticky top-0 z-50 bg-white dark:bg-dark-primary border-b border-gray-200 dark:border-dark-border">
+            <nav
+                className="py-4 sticky top-0 z-50 bg-white/50 dark:bg-dark-primary/50 backdrop-blur-sm border-b border-gray-200 dark:border-dark-border"
+                role="navigation"
+                aria-label="Main Navigation"
+            >
                 <div className="container mx-auto px-4 flex justify-between items-center max-w-5xl">
                     <div className="flex items-center">
                         <div className="w-12 h-12 flex items-center justify-center bg-brand-red text-white rounded-none">
                             <span className="text-lg font-bold">OM</span>
                         </div>
-                        <div className="ml-3 font-medium tracking-tight theme-transition-text whitespace-nowrap">
+                        <div className="ml-3 font-medium tracking-tight whitespace-nowrap">
                             Oriol Macias
                         </div>
                     </div>
                     <div className="hidden md:block">
-                        <div className="h-8 w-48"></div>
+                        <div className="h-8 w-48" aria-hidden="true"></div>
                     </div>
-                    <div className="flex items-center space-x-3">
-                        <div className="h-8 w-24"></div>
+                    <div className="flex items-center gap-2">
+                        <div className="h-8 w-8" aria-hidden="true"></div>
+                        <div className="h-8 w-8" aria-hidden="true"></div>
+                        <div className="hidden sm:block h-8 w-24" aria-hidden="true"></div>
                     </div>
                 </div>
             </nav>

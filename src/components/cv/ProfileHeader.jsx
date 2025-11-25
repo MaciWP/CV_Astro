@@ -144,16 +144,47 @@ const ProfileHeader = () => {
     };
 
     return (
-        <div id="about" className="pt-4 pb-8">
-            {/* Header / Información Personal */}
+        <div id="about" className="pt-4 pb-10">
+            {/* Header / Información Personal - diseño compacto */}
             <section>
-                <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 items-center transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <div className={`grid grid-cols-1 md:grid-cols-12 gap-6 items-start transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                    {/* Foto profesional - a la izquierda, solo imagen con borde */}
+                    <div className="md:col-span-3 flex justify-center md:justify-start order-1 md:order-1">
+                        <div className={`relative transition-all duration-300 ${photoLoaded ? 'opacity-100' : 'opacity-80'}`}>
+                            {/* Solo imagen con borde rojo sutil */}
+                            <div className="w-40 h-40 md:w-44 md:h-44 border-2 border-brand-red/30 hover:border-brand-red transition-all duration-200 overflow-hidden shadow-sm hover:shadow-md">
+                                <picture>
+                                    <source
+                                        srcSet="/images/oriol_macias-192.avif 192w, /images/oriol_macias-320.avif 320w"
+                                        sizes="176px"
+                                        type="image/avif"
+                                    />
+                                    <source
+                                        srcSet="/images/oriol_macias-192.webp 192w, /images/oriol_macias-320.webp 320w"
+                                        sizes="176px"
+                                        type="image/webp"
+                                    />
+                                    <img
+                                        src="/images/oriol_macias-320.avif"
+                                        alt={localData.photoAlt}
+                                        width={176}
+                                        height={176}
+                                        loading="eager"
+                                        fetchpriority="high"
+                                        className="w-full h-full object-cover"
+                                        onLoad={handleImageLoaded}
+                                    />
+                                </picture>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Información personal */}
-                    <div className="md:col-span-8 space-y-6">
+                    <div className="md:col-span-9 space-y-3 order-2 md:order-2">
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-bold mb-2">{headerData.fullName}</h1>
+                            <h1 className="text-3xl md:text-4xl font-bold mb-1">{headerData.fullName}</h1>
                             <h2
-                                className="text-xl md:text-2xl text-brand-red dark:text-brand-red font-medium"
+                                className="text-lg md:text-xl text-brand-red font-medium"
                                 data-i18n="header.jobTitle"
                             >
                                 {localData.jobTitle}
@@ -161,107 +192,27 @@ const ProfileHeader = () => {
                         </div>
 
                         <p
-                            className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-2xl"
+                            className="text-gray-700 dark:text-gray-300 leading-relaxed text-base text-justify"
                             data-i18n="header.summary"
                         >
                             {localData.summary}
                         </p>
 
-                        {/* Información de contacto */}
-                        <div className="flex flex-wrap gap-4 mt-2">
+                        {/* Información de contacto - compacta en línea */}
+                        <div className="flex flex-wrap gap-4 pt-1">
                             {headerData.contactInfo.map((contact, index) => (
-                                <div key={index} className="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-300">
-                                    <a href={contact.type === 'email' ? `mailto:${contact.value}` : contact.url}
-                                        target={contact.type !== 'email' ? "_blank" : undefined}
-                                        rel={contact.type !== 'email' ? "noopener noreferrer" : undefined}
-                                        className="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                                        aria-label={localData[contact.type] || contact.label}
-                                    >
-                                        <div className="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-sm rounded-none mr-2 group-hover:bg-brand-red transition-all duration-300">
-                                            <i className={contact.icon}></i>
-                                        </div>
-                                        <div>
-                                            <span
-                                                className="text-xs block text-light-text-secondary dark:text-dark-text-secondary"
-                                                data-i18n={`header.${contact.type}`}
-                                            >
-                                                {localData[contact.type] || contact.label}
-                                            </span>
-                                            {contact.value}
-                                        </div>
-                                    </a>
-                                </div>
+                                <a
+                                    key={index}
+                                    href={contact.type === 'email' ? `mailto:${contact.value}` : contact.url}
+                                    target={contact.type !== 'email' ? "_blank" : undefined}
+                                    rel={contact.type !== 'email' ? "noopener noreferrer" : undefined}
+                                    className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red transition-colors duration-200"
+                                    aria-label={localData[contact.type] || contact.label}
+                                >
+                                    <i className={`${contact.icon} text-brand-red`}></i>
+                                    <span className="text-sm">{contact.value}</span>
+                                </a>
                             ))}
-                        </div>
-                    </div>
-
-                    {/* Foto profesional con botones de descarga debajo */}
-                    <div className="md:col-span-4 flex flex-col justify-center md:justify-end">
-                        <div className={`relative w-100 h-100 md:w-100 md:h-100 overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg transition-all duration-700 ${photoLoaded ? 'opacity-100' : 'opacity-80'}`}>
-                            {/* Borde para estructura */}
-                            <div className="absolute inset-0 border border-gray-200 dark:border-gray-700"></div>
-
-                            {/* Foto - ARREGLO: Usamos directamente la imagen de los formatos modernos */}
-                            <div className="w-full h-full bg-white dark:bg-gray-800">
-                                {/* Usar picture para formatos modernos y fallback a placeholder si fallan */}
-                                <picture>
-                                    {/* Formato AVIF - más eficiente */}
-                                    <source
-                                        srcSet="
-                                            /images/oriol_macias-192.avif 192w,
-                                            /images/oriol_macias-320.avif 320w,
-                                            /images/oriol_macias-640.avif 640w,
-                                            /images/oriol_macias-960.avif 960w,
-                                            /images/oriol_macias-1280.avif 1280w
-                                        "
-                                        sizes="(max-width: 767px) 100vw, 400px"
-                                        type="image/avif"
-                                    />
-                                    {/* Formato WebP - amplio soporte */}
-                                    <source
-                                        srcSet="
-                                            /images/oriol_macias-192.webp 192w,
-                                            /images/oriol_macias-320.webp 320w,
-                                            /images/oriol_macias-640.webp 640w,
-                                            /images/oriol_macias-960.webp 960w,
-                                            /images/oriol_macias-1280.webp 1280w
-                                        "
-                                        sizes="(max-width: 767px) 100vw, 400px"
-                                        type="image/webp"
-                                    />
-                                    <img
-                                        src="/images/oriol_macias-640.avif"
-                                        alt={localData.photoAlt}
-                                        width={400}
-                                        height={400}
-                                        loading="eager"
-                                        fetchpriority="high"
-                                        className="w-full h-full object-cover transition-opacity duration-500"
-                                        onLoad={handleImageLoaded}
-                                    />
-                                </picture>
-                            </div>
-
-                            {/* Botones de descarga con estilo consistente */}
-                            <div className="flex flex-col sm:flex-row gap-3 mt-4 justify-center">
-                                <button
-                                    onClick={handleCVDownload}
-                                    className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                                    aria-label={localData.downloadCV}
-                                >
-                                    <i className="fas fa-download mr-1.5"></i>
-                                    <span>{localData.downloadCV}</span>
-                                </button>
-
-                                <button
-                                    onClick={handleCoverLetterDownload}
-                                    className="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                                    aria-label={localData.downloadCoverLetter}
-                                >
-                                    <i className="fas fa-file-alt mr-1.5"></i>
-                                    <span>{localData.downloadCoverLetter}</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>

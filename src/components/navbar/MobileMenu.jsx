@@ -14,16 +14,28 @@ const MobileMenu = ({
 }) => {
     const menuRef = useRef(null);
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside (but not on the menu button itself)
     useEffect(() => {
         const handleClickOutside = (event) => {
+            // Don't close if clicking on the menu button (it has its own toggle logic)
+            const menuButton = document.getElementById('mobile-menu-button');
+            if (menuButton && (menuButton === event.target || menuButton.contains(event.target))) {
+                return;
+            }
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 closeMenu();
             }
         };
 
         if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
+            // Use timeout to avoid immediate close on the same click that opened the menu
+            const timeoutId = setTimeout(() => {
+                document.addEventListener('mousedown', handleClickOutside);
+            }, 10);
+            return () => {
+                clearTimeout(timeoutId);
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
         }
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);

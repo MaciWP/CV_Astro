@@ -85,7 +85,7 @@ const Experience = () => {
     return (
         <section id="experience" className="scroll-mt-20 mb-16">
             <div
-                className={`flex items-center gap-4 mb-10 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                className={`flex items-center gap-4 mb-10 transition-all duration-300 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
             >
                 <div className="h-10 w-10 bg-brand-red dark:bg-brand-red rounded-none flex items-center justify-center flex-shrink-0 transition-colors duration-150">
                     <i className="fas fa-briefcase text-white"></i>
@@ -100,15 +100,15 @@ const Experience = () => {
                 {experiences.map((job, index) => (
                     <div
                         key={job.id}
-                        className={`relative pl-8 pb-12 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:translate-x-1`}
-                        style={{ transitionDelay: `${200 * index}ms` }}
+                        className={`relative pl-8 pb-12 transition-all duration-300 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:translate-x-1`}
+                        style={{ transitionDelay: `${100 * index}ms` }}
                     >
                         {/* Timeline node */}
                         <div
-                            className={`absolute left-0 top-4 w-4 h-4 rounded-none bg-brand-red dark:bg-brand-red border-4 border-white dark:border-gray-900 shadow-sm transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+                            className={`absolute left-0 top-4 w-4 h-4 rounded-none bg-brand-red dark:bg-brand-red border-4 border-white dark:border-gray-900 shadow-sm transition-all duration-300 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
                             style={{
                                 opacity: isVisible ? (1 - (index * 0.15)) : 0,
-                                transitionDelay: `${300 * index}ms`
+                                transitionDelay: `${100 * index}ms`
                             }}
                         ></div>
 

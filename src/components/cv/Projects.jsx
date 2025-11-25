@@ -101,8 +101,8 @@ const Projects = () => {
     const renderPersonalProjectCard = (project, index) => (
         <div
             key={project.id}
-            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-md transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:translate-y-[-8px] ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col cursor-pointer`}
-            style={{ transitionDelay: `${200 * index}ms` }}
+            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 transition-all duration-200 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:-translate-y-1 ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col cursor-pointer`}
+            style={{ transitionDelay: `${100 * index}ms` }}
             onClick={() => project.githubUrl && window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' && project.githubUrl) {
@@ -166,7 +166,7 @@ const Projects = () => {
                         {project.technologies.map((tech, techIndex) => (
                             <span
                                 key={techIndex}
-                                className="px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none 
+                                className="px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none
                                   bg-light-secondary dark:bg-dark-secondary hover:border-brand-red
                                   transition-colors duration-150 flex items-center gap-1.5 z-20 relative"
                                 onClick={(e) => e.stopPropagation()}
@@ -194,8 +194,8 @@ const Projects = () => {
     const renderProfessionalProjectCard = (project, index) => (
         <div
             key={project.id}
-            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-md transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:translate-y-[-8px] ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col`}
-            style={{ transitionDelay: `${200 * index}ms` }}
+            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 transition-all duration-200 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:-translate-y-1 ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col`}
+            style={{ transitionDelay: `${100 * index}ms` }}
             tabIndex={0}
             role="article"
             aria-label={`${project.title}`}
@@ -243,7 +243,7 @@ const Projects = () => {
                         {project.technologies.map((tech, techIndex) => (
                             <span
                                 key={techIndex}
-                                className="px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none 
+                                className="px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none
                                   bg-light-secondary dark:bg-dark-secondary hover:border-brand-red
                                   transition-colors duration-150 flex items-center gap-1.5 z-20 relative"
                             >

@@ -249,6 +249,51 @@
     animation-delay: calc(var(--delay-stagger) * 5);
 }
 
+/*
+ * SCROLL-TRIGGERED ANIMATIONS
+ * ---------------------------
+ * These classes work with IntersectionObserver (animations.js)
+ * Elements start hidden and animate when .is-visible is added
+ */
+
+/* Section-level animation wrapper for page sections */
+.section-animate {
+    opacity: 1;
+    animation: fadeInUp var(--duration-standard) var(--ease-standard) forwards;
+}
+
+/* Initial hidden state for scroll-triggered elements */
+.animate-on-scroll,
+.animate-scale,
+.animate-fade-left,
+.animate-width {
+    opacity: 0;
+    will-change: opacity, transform;
+}
+
+/* Animation triggers when .is-visible is added by IntersectionObserver */
+.animate-on-scroll.is-visible {
+    animation: fadeInUp var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-scale.is-visible {
+    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+}
+
+.animate-fade-left.is-visible {
+    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-width.is-visible {
+    animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
+}
+
+/* Staggered delays for children - use with inline style="transition-delay: Xms" */
+.animate-scale[style*="transition-delay"],
+.animate-fade-left[style*="transition-delay"] {
+    animation-delay: inherit;
+}
+
 /* Configuration for reduced motion */
 @media (prefers-reduced-motion: reduce) {
 
@@ -259,5 +304,13 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    /* Ensure scroll-triggered elements are visible without animation */
+    .animate-on-scroll,
+    .animate-scale,
+    .animate-fade-left,
+    .animate-width {
+        opacity: 1 !important;
     }
 }

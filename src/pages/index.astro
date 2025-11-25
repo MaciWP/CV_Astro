@@ -6,9 +6,9 @@ import ErrorBoundary from "../components/ErrorBoundary";
 // Import CV components
 import ProfileHeader from "../components/cv/ProfileHeader.astro";
 import Experience from "../components/cv/Experience";
-import Skills from "../components/cv/Skills";
+import Skills from "../components/cv/Skills.astro";
 import Languages from "../components/cv/Languages";
-import Education from "../components/cv/Education";
+import Education from "../components/cv/Education.astro";
 import Projects from "../components/cv/Projects";
 
 // Enhanced metadata for SEO
@@ -36,12 +36,12 @@ const frUrl = getRelativeLocaleUrl("fr", "");
 >
   <div
     id="cv-content"
-    class="space-y-16"
+    class="space-y-12"
     itemscope
     itemtype="https://schema.org/Person"
   >
     {/* ProfileHeader - SSG Optimized */}
-    <div>
+    <div class="-mb-4">
       <ProfileHeader lang="en" />
     </div>
 
@@ -55,24 +55,14 @@ const frUrl = getRelativeLocaleUrl("fr", "");
       </ErrorBoundary>
     </div>
 
-    {/* Skills con ErrorBoundary */}
+    {/* Skills - SSG Optimized */}
     <div class="section-animate" style="animation-delay: 200ms">
-      <ErrorBoundary
-        fallbackTitle="Error loading skills"
-        fallbackMessage="Unable to load technical skills information."
-      >
-        <Skills client:visible />
-      </ErrorBoundary>
+      <Skills lang="en" />
     </div>
 
-    {/* Education con ErrorBoundary */}
+    {/* Education - SSG Optimized */}
     <div class="section-animate" style="animation-delay: 300ms">
-      <ErrorBoundary
-        fallbackTitle="Error loading education"
-        fallbackMessage="Unable to load education information."
-      >
-        <Education client:visible />
-      </ErrorBoundary>
+      <Education lang="en" />
     </div>
 
     {/* Languages con ErrorBoundary */}

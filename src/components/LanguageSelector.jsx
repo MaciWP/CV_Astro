@@ -82,13 +82,12 @@ const LanguageSelector = () => {
       {/* Botón principal del dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 p-2 rounded-none border border-gray-300 dark:border-gray-600 
+        className="flex items-center space-x-1 p-2 rounded-none border border-gray-300 dark:border-gray-600
                  hover:border-brand-red focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red
                  bg-light-surface dark:bg-dark-surface transition-colors"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span className="text-sm mr-1">{currentLanguage.flag}</span>
         <span className="text-sm font-medium">{currentLanguage.code.toUpperCase()}</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
@@ -112,14 +111,13 @@ const LanguageSelector = () => {
               <button
                 key={option.code}
                 onClick={() => handleLanguageChange(option.code)}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 
-                         ${lang === option.code ? 'bg-brand-red/10 text-brand-red' : 'text-gray-700 dark:text-gray-200'} 
+                className={`w-full text-left px-4 py-2 text-sm
+                         ${lang === option.code ? 'bg-brand-red/10 text-brand-red' : 'text-gray-700 dark:text-gray-200'}
                          hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors`}
                 role="option"
                 aria-selected={lang === option.code}
               >
-                <span>{option.flag}</span>
-                <span>{option.name}</span>
+                {option.name}
               </button>
             ))}
           </div>

@@ -155,6 +155,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     "
     />
 
+    <!-- Prevent theme flash - must be first script -->
+    <script is:inline>
+      (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
+    </script>
+
     <!-- Critical resource preloading for Core Web Vitals optimization -->
     <link
       rel="preload"
@@ -198,27 +203,70 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Global animations script - Inlined for reliability -->
     <script is:inline>
-      document.addEventListener("DOMContentLoaded", () => {
-        const observerOptions = {
-          root: null,
-          rootMargin: "0px",
-          threshold: 0.1,
-        };
+      (function() {
+        'use strict';
+        var animationObserver = null;
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
+        function initAnimations() {
+          if (animationObserver) animationObserver.disconnect();
+
+          animationObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                var delay = entry.target.style.transitionDelay || '0ms';
+                var delayMs = parseInt(delay) || 0;
+                setTimeout(function() {
+                  entry.target.classList.add('is-visible');
+                }, delayMs);
+                animationObserver.unobserve(entry.target);
+              }
+            });
+          }, { root: null, rootMargin: '100px', threshold: 0.05 });
+
+          var els = document.querySelectorAll('.animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width');
+          els.forEach(function(el) {
+            if (el.classList.contains('is-visible')) return;
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              var delay = parseInt(el.style.transitionDelay) || 0;
+              setTimeout(function() { el.classList.add('is-visible'); }, delay + 50);
+            } else {
+              animationObserver.observe(el);
             }
           });
-        }, observerOptions);
+        }
 
-        const animatedElements = document.querySelectorAll(
-          ".animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width",
-        );
-        animatedElements.forEach((el) => observer.observe(el));
-      });
+        // Run immediately
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initAnimations);
+        } else {
+          initAnimations();
+        }
+
+        // Re-run after React hydration (Astro islands)
+        setTimeout(initAnimations, 100);
+        setTimeout(initAnimations, 500);
+        setTimeout(initAnimations, 1000);
+
+        // Also observe DOM changes for dynamically added elements
+        if (typeof MutationObserver !== 'undefined') {
+          var mutationObserver = new MutationObserver(function(mutations) {
+            var hasNewAnimated = mutations.some(function(m) {
+              return Array.from(m.addedNodes).some(function(n) {
+                return n.nodeType === 1 && (
+                  n.classList && (
+                    n.classList.contains('animate-on-scroll') ||
+                    n.classList.contains('animate-scale') ||
+                    n.classList.contains('animate-fade-left')
+                  )
+                );
+              });
+            });
+            if (hasNewAnimated) setTimeout(initAnimations, 50);
+          });
+          mutationObserver.observe(document.body, { childList: true, subtree: true });
+        }
+      })();
     </script>
 
     <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
@@ -742,10 +790,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       /**
        * Theme initialization with error handling
        * @description Sets up dark/light theme with proper error handling
+       * IMPORTANT: Must remove opposite class to prevent conflicts with ThemeContext
        */
       (function () {
         try {
           const storedTheme = localStorage.getItem("theme") || "dark";
+          // Remove both classes first to prevent conflicts
+          document.documentElement.classList.remove("light", "dark");
           document.documentElement.classList.add(storedTheme);
 
           // Emit theme change event for components
@@ -757,6 +808,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         } catch (error) {
           console.warn("Theme initialization error:", error);
           // Fallback to dark theme
+          document.documentElement.classList.remove("light", "dark");
           document.documentElement.classList.add("dark");
         }
       })();
@@ -1096,6 +1148,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       }
     }
   </script>
+
+  <!-- Scroll Animations Script -->
+  <script src="/scripts/animations.js" defer></script>
 
   <!-- Enhanced Service Worker registration -->
   <script is:inline>

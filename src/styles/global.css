@@ -18,16 +18,19 @@
 /* ===== VARIABLES GLOBALES ===== */
 :root {
     /* Transiciones de tema */
-    --theme-transition-duration: 180ms;
+    --theme-transition-duration: 100ms;
     --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
     --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
 
-    /* Duraciones estándar de animación */
-    --duration-micro: 100ms;
-    --duration-fast: 150ms;
-    --duration-standard: 250ms;
-    --duration-emphasis: 400ms;
-    --duration-complex: 600ms;
+    /* Duraciones estándar de animación - RÁPIDAS Y FLUIDAS */
+    --duration-micro: 80ms;
+    --duration-fast: 120ms;
+    --duration-standard: 200ms;
+    --duration-emphasis: 300ms;
+    --duration-complex: 400ms;
+
+    /* Delays base para stagger */
+    --stagger-delay: 50ms;
 
     /* Curvas de timing */
     --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
@@ -103,28 +106,40 @@
     }
 }
 
-/* ===== TRANSICIONES DE TEMA ===== */
-html.theme-transitioning * {
-    transition-property: color, background-color, border-color;
-    transition-duration: var(--theme-transition-duration);
-    transition-timing-function: var(--theme-curve-color);
-    will-change: color, background-color, border-color;
-}
+/* ===== TRANSICIONES DE TEMA - RÁPIDAS Y FLUIDAS ===== */
+/* Transición muy rápida (100ms) para una experiencia fluida pero casi instantánea */
 
 /* ===== COMPONENTES ===== */
 @layer components {
 
-    /* Clases de transición de tema */
+    /* Clases de transición de tema - muy rápidas (100ms) */
     .theme-transition {
-        @apply transition-all duration-75;
+        transition: background-color 100ms ease-out, color 100ms ease-out, border-color 100ms ease-out;
     }
 
     .theme-transition-text {
-        @apply transition-colors duration-75;
+        transition: color 100ms ease-out;
     }
 
     .theme-transition-bg {
-        @apply transition-colors duration-75;
+        transition: background-color 100ms ease-out;
+    }
+
+    /* Transición global para elementos con colores de tema */
+    html.light, html.dark {
+        transition: background-color 100ms ease-out;
+    }
+
+    /* Aplicar transición a elementos principales */
+    body,
+    main,
+    nav,
+    footer,
+    .bg-light-primary,
+    .bg-dark-primary,
+    .bg-light-surface,
+    .bg-dark-surface {
+        transition: background-color 100ms ease-out, color 100ms ease-out;
     }
 
     /* Botones */
@@ -171,9 +186,80 @@ html.theme-transitioning * {
     ::-webkit-scrollbar-thumb:hover {
         @apply bg-gray-400 dark:bg-gray-500;
     }
+
+    /* Skill badges - hover instantáneo y notorio */
+    .skill-badge {
+        transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s ease-out, background-color 0.1s ease-out !important;
+        transition-delay: 0s !important;
+    }
+
+    .skill-badge:hover {
+        transform: scale(1.05) translateY(-2px) !important;
+        transition-delay: 0s !important;
+    }
 }
 
-/* ===== ANIMACIONES ===== */
+/* ===== SCROLL-TRIGGERED ANIMATIONS ===== */
+/*
+ * Elements start visible by default (progressive enhancement)
+ * Only hide if JavaScript is enabled (.js-enabled class on html)
+ */
+.js-enabled .animate-on-scroll,
+.js-enabled .animate-scale,
+.js-enabled .animate-fade-left,
+.js-enabled .animate-width {
+    opacity: 0;
+    will-change: opacity, transform;
+}
+
+/* Animation triggers when .is-visible is added by IntersectionObserver */
+.animate-on-scroll.is-visible,
+.animate-scale.is-visible,
+.animate-fade-left.is-visible,
+.animate-width.is-visible {
+    opacity: 1 !important;
+}
+
+.animate-on-scroll.is-visible {
+    animation: fadeInUp var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-scale.is-visible {
+    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
+}
+
+.animate-fade-left.is-visible {
+    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
+}
+
+.animate-width.is-visible {
+    animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
+}
+
+/* Fallback: Make elements visible after a short delay if JS fails */
+@supports (animation-timeline: auto) {
+    .animate-on-scroll:not(.is-visible),
+    .animate-scale:not(.is-visible),
+    .animate-fade-left:not(.is-visible),
+    .animate-width:not(.is-visible) {
+        animation: emergencyShow 0.1s 2s forwards;
+    }
+}
+
+@keyframes emergencyShow {
+    to { opacity: 1; }
+}
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes enhanced-appear {
     0% {
         opacity: 0;

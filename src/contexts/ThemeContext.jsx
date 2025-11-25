@@ -73,27 +73,19 @@ export function ThemeProvider({ children }) {
         };
     }, []);
 
-    // Alternar entre temas
+    // Alternar entre temas - INSTANTÁNEO sin transiciones
     const toggleTheme = () => {
         if (!isMounted) return;
 
         const newTheme = theme === themes.LIGHT ? themes.DARK : themes.LIGHT;
 
-        // Añadir clase transitioning para transiciones más suaves
-        document.documentElement.classList.add('theme-transitioning');
-
-        // Actualizar estado y DOM
+        // Actualizar estado y DOM inmediatamente
         setTheme(newTheme);
         document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
         document.documentElement.classList.add(newTheme);
 
         // Guardar la preferencia de tema
         localStorage.setItem('theme', newTheme);
-
-        // Eliminar clase transitioning después de completar la animación
-        setTimeout(() => {
-            document.documentElement.classList.remove('theme-transitioning');
-        }, 300);
     };
 
     // Estado de carga simple para evitar problemas de hidratación
