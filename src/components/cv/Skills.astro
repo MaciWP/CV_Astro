@@ -23,8 +23,8 @@ const titles = {
 ---
 
 <section id="skills" class="mb-16" aria-labelledby="skills-heading">
-  <!-- Section Header -->
-  <div class="flex items-center mb-6 animate-on-scroll">
+  <!-- Section Header - visible immediately, no animation -->
+  <div class="flex items-center mb-6">
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
       <i class="fas fa-code" aria-hidden="true"></i>
     </div>
@@ -32,7 +32,7 @@ const titles = {
   </div>
 
   <!-- Main container -->
-  <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm animate-scale" style="animation-delay: 100ms; transition: background-color 100ms ease-out, border-color 100ms ease-out;">
+  <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm animate-on-scroll" style="transition: background-color 100ms ease-out, border-color 100ms ease-out;">
     <div class="grid grid-cols-1 gap-8">
 
       <!-- Programming Languages -->
@@ -47,7 +47,7 @@ const titles = {
         </div>
         <div class="flex flex-wrap gap-3">
           {skillsData.languages.map((skill, index) => (
-            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`animation-delay: ${index * 30}ms; transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;`}>
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
               <i class={`${skill.icon} text-brand-red`}></i>
               <span>{skill.name}</span>
             </div>
@@ -67,7 +67,7 @@ const titles = {
         </div>
         <div class="flex flex-wrap gap-3">
           {skillsData.libraries.map((lib, index) => (
-            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`animation-delay: ${index * 30}ms; transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;`}>
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
               <i class={`${lib.icon} text-brand-red`}></i>
               <span>{lib.name}</span>
             </div>
@@ -87,7 +87,7 @@ const titles = {
         </div>
         <div class="flex flex-wrap gap-3">
           {skillsData.technologies.map((tech, index) => (
-            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`animation-delay: ${index * 30}ms; transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;`}>
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
               <i class={`${tech.icon} text-brand-red`}></i>
               <span>{tech.name}</span>
             </div>
@@ -107,7 +107,7 @@ const titles = {
         </div>
         <div class="flex flex-wrap gap-3">
           {skillsData.tools.map((tool, index) => (
-            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`animation-delay: ${index * 30}ms; transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;`}>
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
               <i class={`${tool.icon} text-brand-red`}></i>
               <span>{tool.name}</span>
             </div>
@@ -127,7 +127,7 @@ const titles = {
         </div>
         <div class="flex flex-wrap gap-3">
           {skillsData.protocols.map((protocol, index) => (
-            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default animate-scale hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style={`animation-delay: ${index * 30}ms; transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;`}>
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
               <i class={`${protocol.icon} text-brand-red`}></i>
               <span>{protocol.name}</span>
             </div>
