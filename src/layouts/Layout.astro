@@ -147,8 +147,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       base-uri 'self';
       object-src 'none';
       img-src 'self' data: blob:;
-      font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+      font-src 'self' data: https://cdnjs.cloudflare.com;
+      style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
       script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com;
       connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net;
       upgrade-insecure-requests;
@@ -176,24 +176,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       media="(min-width: 768px)"
     />
 
-    <!-- Preconnect to external resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Google Fonts - loaded via JS to avoid render blocking -->
-    <script is:inline>
-      (function(){
-        var f=document.createElement('link');
-        f.rel='stylesheet';
-        f.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap';
-        document.head.appendChild(f);
-      })();
-    </script>
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
+    <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
+    <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- JS Enabled Class -->
     <script is:inline>document.documentElement.classList.add("js-enabled");</script>
@@ -279,7 +264,15 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Critical CSS - Essential for FCP and layout -->
     <style is:inline>
-      /* System font fallback - immediate text visibility */
+      /* Local font definitions - no external requests */
+      @font-face{font-family:Inter;font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-latin-400-normal.woff2') format('woff2')}
+      @font-face{font-family:Inter;font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-latin-500-normal.woff2') format('woff2')}
+      @font-face{font-family:Inter;font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/inter-latin-600-normal.woff2') format('woff2')}
+      @font-face{font-family:Inter;font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/inter-latin-700-normal.woff2') format('woff2')}
+      @font-face{font-family:Outfit;font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/outfit-latin-500-normal.woff2') format('woff2')}
+      @font-face{font-family:Outfit;font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/outfit-latin-600-normal.woff2') format('woff2')}
+      @font-face{font-family:Outfit;font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/outfit-latin-700-normal.woff2') format('woff2')}
+      /* Font stacks with system fallbacks */
       body{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif}
       h1,h2,h3,h4,h5,h6{font-family:Outfit,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
       :root{--brand-red:#d83333;--accessible-brand-red:#991b1b}
@@ -478,7 +471,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       <I18nLoader client:only>
         <header role="banner" class="sticky top-0 z-50">
           <ErrorBoundary>
-            <Navbar client:load />
+            <Navbar client:idle />
           </ErrorBoundary>
         </header>
 
