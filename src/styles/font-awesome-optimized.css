@@ -76,6 +76,10 @@
 .fa-terminal::before{content:"\f120";}
 .fa-cog::before{content:"\f013";}
 .fa-gear::before{content:"\f013";} /* alias v6 */
+.fa-file-alt::before{content:"\f15c";}
+.fa-puzzle-piece::before{content:"\f12e";}
+.fa-tools::before{content:"\f7d9";}
+.fa-screwdriver-wrench::before{content:"\f7d9";} /* alias v6 */
 
 /* 4) Marcas */
 .fa-linkedin::before{content:"\f08c";}
