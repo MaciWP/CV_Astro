@@ -199,7 +199,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Favicons and manifest -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -275,7 +274,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       client:idle
     />
 
-    <!-- Critical CSS - Minimal for FCP -->
+    <!-- Critical CSS - Essential for FCP and layout -->
     <style is:inline>
       :root{--brand-red:#d83333;--accessible-brand-red:#991b1b}
       .text-brand-red,.text-accessible-brand-red{color:var(--accessible-brand-red)!important}
@@ -285,6 +284,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       .fas,.fab{min-width:1em;display:inline-block}
       footer,footer p,footer a{color:#374151!important}
       .dark footer,.dark footer p,.dark footer a{color:#e5e7eb!important}
+      /* Sticky navigation - CRITICAL */
+      nav,header nav,nav[role="navigation"]{position:-webkit-sticky!important;position:sticky!important;top:0!important;z-index:50!important}
+      header[role="banner"]{display:block;position:static;z-index:auto;margin:0;padding:0}
+      /* CLS prevention */
+      .skill-pill{height:32px;margin-bottom:8px}
+      nav .hidden.md\:block{min-height:40px}
+      .w-10.h-10{min-width:2.5rem;min-height:2.5rem}
     </style>
 
     <!-- Alternate language versions -->
@@ -467,7 +473,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       <I18nLoader client:only>
         <header role="banner">
           <ErrorBoundary>
-            <Navbar client:idle />
+            <Navbar client:load />
           </ErrorBoundary>
         </header>
 
