@@ -176,13 +176,26 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       fetchpriority="high"
     />
 
-    <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+    <!-- Google Fonts: Outfit (Headings) & Inter (Body) - Non-blocking load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Font preloading for performance -->
     <link
@@ -249,22 +262,30 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
         setTimeout(initAnimations, 1000);
 
         // Also observe DOM changes for dynamically added elements
-        if (typeof MutationObserver !== 'undefined') {
-          var mutationObserver = new MutationObserver(function(mutations) {
-            var hasNewAnimated = mutations.some(function(m) {
-              return Array.from(m.addedNodes).some(function(n) {
-                return n.nodeType === 1 && (
-                  n.classList && (
-                    n.classList.contains('animate-on-scroll') ||
-                    n.classList.contains('animate-scale') ||
-                    n.classList.contains('animate-fade-left')
-                  )
-                );
+        function setupMutationObserver() {
+          if (typeof MutationObserver !== 'undefined' && document.body) {
+            var mutationObserver = new MutationObserver(function(mutations) {
+              var hasNewAnimated = mutations.some(function(m) {
+                return Array.from(m.addedNodes).some(function(n) {
+                  return n.nodeType === 1 && (
+                    n.classList && (
+                      n.classList.contains('animate-on-scroll') ||
+                      n.classList.contains('animate-scale') ||
+                      n.classList.contains('animate-fade-left')
+                    )
+                  );
+                });
               });
+              if (hasNewAnimated) setTimeout(initAnimations, 50);
             });
-            if (hasNewAnimated) setTimeout(initAnimations, 50);
-          });
-          mutationObserver.observe(document.body, { childList: true, subtree: true });
+            mutationObserver.observe(document.body, { childList: true, subtree: true });
+          }
+        }
+        // Wait for body to exist before setting up MutationObserver
+        if (document.body) {
+          setupMutationObserver();
+        } else {
+          document.addEventListener('DOMContentLoaded', setupMutationObserver);
         }
       })();
     </script>
@@ -635,31 +656,43 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:creator" content="@oriolmacias" />
 
-    <!-- Google Analytics with enhanced tracking -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C98YSPVS02"
-    ></script>
+    <!-- Google Analytics - Deferred loading for better LCP -->
     <script is:inline define:vars={{ marketData, lang }}>
+      // Defer GA loading until after page load for better performance
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-C98YSPVS02", {
-        custom_map: {
-          custom_parameter_1: "market_focus",
-          custom_parameter_2: "target_city",
-        },
-        anonymize_ip: true,
-        allow_google_signals: false,
-      });
+      function gtag() { dataLayer.push(arguments); }
 
-      // Enhanced market-specific tracking
-      gtag("event", "page_view", {
-        market_focus: marketData.market,
-        target_city: marketData.city,
-        language: lang,
-        page_type: "cv_portfolio",
-      });
+      // Load GA after page is interactive
+      if (typeof requestIdleCallback !== 'undefined') {
+        requestIdleCallback(function() { loadGA(); });
+      } else {
+        window.addEventListener('load', function() { setTimeout(loadGA, 100); });
+      }
+
+      function loadGA() {
+        var script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-C98YSPVS02';
+        script.async = true;
+        script.onload = function() {
+          gtag('js', new Date());
+          gtag('config', 'G-C98YSPVS02', {
+            custom_map: {
+              custom_parameter_1: 'market_focus',
+              custom_parameter_2: 'target_city'
+            },
+            anonymize_ip: true,
+            allow_google_signals: false
+          });
+          // Market-specific tracking
+          gtag('event', 'page_view', {
+            market_focus: marketData.market,
+            target_city: marketData.city,
+            language: lang,
+            page_type: 'cv_portfolio'
+          });
+        };
+        document.head.appendChild(script);
+      }
     </script>
 
     <!-- Fixed Structured Data with proper typing -->

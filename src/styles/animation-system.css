@@ -257,9 +257,10 @@
  */
 
 /* Section-level animation wrapper for page sections */
+/* Uses fadeIn (opacity only) instead of fadeInUp to prevent CLS */
 .section-animate {
     opacity: 1;
-    animation: fadeInUp var(--duration-standard) var(--ease-standard) forwards;
+    animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
 }
 
 /* Initial hidden state for scroll-triggered elements */
