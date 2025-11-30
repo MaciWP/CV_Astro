@@ -1,4 +1,4 @@
-﻿---
+---
 /**
  * FIXED - Layout.astro with TypeScript error resolution
  * @file src/layouts/Layout.astro
@@ -231,25 +231,21 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
 
-    <!-- Favicons and manifest -->
+    <!-- Favicons and manifest - FIXED for Google Search compatibility -->
+    <!-- Primary favicon - SVG for modern browsers -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/icons/favicon-180.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/icons/favicon-32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/icons/favicon-16.png"
-    />
+
+    <!-- Fallback PNG favicons for browsers that don't support SVG -->
+    <!-- Note: These files need to be generated from favicon.svg -->
+    <!-- Google Search requires minimum 48x48 PNG or ICO -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+
+    <!-- Apple touch icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#D83333" />
     <meta charset="UTF-8" />
