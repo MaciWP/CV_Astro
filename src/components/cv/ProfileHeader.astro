@@ -114,8 +114,8 @@ const githubLabel = getTranslation("header.github", "GitHub");
             {/* Foto profesional - derecha, con card container */}
             <div class="md:col-span-4 flex flex-col items-center md:items-end order-1 md:order-2">
                 <div class="w-full max-w-xs border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface shadow-sm">
-                    {/* Imagen */}
-                    <div class="w-full aspect-square">
+                    {/* Imagen - Explicit width/height to prevent CLS */}
+                    <div class="w-full aspect-square" style="min-height: 280px;">
                         <picture>
                             <source
                                 srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
