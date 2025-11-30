@@ -1,5 +1,5 @@
 ---
-name: security-scanner
+name: phase-5-security-scanner
 description: >
   Deep security vulnerability analysis (SQL injection, XSS, CSRF, secrets).
   USE PROACTIVELY for auth, payment, admin, API, data handling features.

@@ -1,0 +1,326 @@
+{
+  "$schema": "execution-paths-config-v1.0",
+  "version": "1.0.0",
+  "description": "Mandatory 3-path execution workflow - NO BYPASS POSSIBLE",
+
+  "paths": {
+    "FAST": {
+      "name": "FAST",
+      "complexityRange": { "min": 0, "max": 30 },
+      "description": "Quick tasks - 4 agents minimum",
+      "requiredAgents": [
+        {
+          "agent": "phase-1b-complexity-scorer",
+          "model": "haiku",
+          "phase": 1,
+          "order": 1,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3a-task-lister",
+          "model": "haiku",
+          "phase": 3,
+          "order": 2,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3-planner",
+          "model": "haiku",
+          "phase": 4,
+          "order": 3,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-4-coordinator",
+          "model": "sonnet",
+          "phase": 5,
+          "order": 4,
+          "mandatory": true
+        }
+      ],
+      "minimumAgents": 4,
+      "executionModel": "sonnet"
+    },
+
+    "STANDARD": {
+      "name": "STANDARD",
+      "complexityRange": { "min": 31, "max": 60 },
+      "description": "Standard tasks - 8-10 agents, all phases",
+      "requiredAgents": [
+        {
+          "agent": "phase-1a-keyword-detector",
+          "model": "haiku",
+          "phase": 1,
+          "order": 1,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "phase-1b-complexity-scorer",
+          "model": "haiku",
+          "phase": 1,
+          "order": 1,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "phase-1d-confidence-assessor",
+          "model": "haiku",
+          "phase": 1,
+          "order": 1,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "phase-3a-task-lister",
+          "model": "haiku",
+          "phase": 3,
+          "order": 2,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3b-task-decomposer",
+          "model": "sonnet",
+          "phase": 3,
+          "order": 3,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3-planner",
+          "model": "haiku",
+          "phase": 4,
+          "order": 4,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3-tool-selector",
+          "model": "haiku",
+          "phase": 4,
+          "order": 5,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-4-coordinator",
+          "model": "sonnet",
+          "phase": 5,
+          "order": 6,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-5-quality-validator",
+          "model": "haiku",
+          "phase": 6,
+          "order": 7,
+          "mandatory": true
+        }
+      ],
+      "minimumAgents": 8,
+      "executionModel": "sonnet",
+      "skippableAgents": [
+        "phase-1c-prompt-quality",
+        "phase-3-dependency-analyzer",
+        "phase-3-strategy-determiner",
+        "phase-5-architecture-validator",
+        "phase-5-security-scanner"
+      ]
+    },
+
+    "FULL": {
+      "name": "FULL",
+      "complexityRange": { "min": 61, "max": 100 },
+      "description": "Complex tasks - ALL agents, ALL phases, self-critique after each",
+      "requiredAgents": [
+        {
+          "agent": "phase-0-pre-analysis",
+          "model": "haiku",
+          "phase": 0,
+          "order": 1,
+          "mandatory": true,
+          "condition": "tokenBudget > 75%"
+        },
+        {
+          "agent": "phase-1a-keyword-detector",
+          "model": "haiku",
+          "phase": 1,
+          "order": 2,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "phase-1b-complexity-scorer",
+          "model": "sonnet",
+          "phase": 1,
+          "order": 2,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "phase-1c-prompt-quality",
+          "model": "haiku",
+          "phase": 1,
+          "order": 2,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "phase-1d-confidence-assessor",
+          "model": "haiku",
+          "phase": 1,
+          "order": 2,
+          "mandatory": true,
+          "parallel": true,
+          "parallelGroup": "phase1"
+        },
+        {
+          "agent": "cross-phase-self-critique",
+          "model": "haiku",
+          "phase": 1,
+          "order": 3,
+          "mandatory": true,
+          "afterPhase": true
+        },
+        {
+          "agent": "phase-2-context-loader",
+          "model": "haiku",
+          "phase": 2,
+          "order": 4,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3a-task-lister",
+          "model": "haiku",
+          "phase": 3,
+          "order": 5,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3b-task-decomposer",
+          "model": "sonnet",
+          "phase": 3,
+          "order": 6,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3-dependency-analyzer",
+          "model": "sonnet",
+          "phase": 3,
+          "order": 7,
+          "mandatory": true
+        },
+        {
+          "agent": "cross-phase-self-critique",
+          "model": "haiku",
+          "phase": 3,
+          "order": 8,
+          "mandatory": true,
+          "afterPhase": true
+        },
+        {
+          "agent": "phase-3-planner",
+          "model": "sonnet",
+          "phase": 4,
+          "order": 9,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3-tool-selector",
+          "model": "haiku",
+          "phase": 4,
+          "order": 10,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-3-strategy-determiner",
+          "model": "haiku",
+          "phase": 4,
+          "order": 11,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-4-coordinator",
+          "model": "opus",
+          "phase": 5,
+          "order": 12,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-5-coordinator",
+          "model": "haiku",
+          "phase": 6,
+          "order": 13,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-5-quality-validator",
+          "model": "haiku",
+          "phase": 6,
+          "order": 14,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-5-architecture-validator",
+          "model": "sonnet",
+          "phase": 6,
+          "order": 15,
+          "mandatory": true
+        },
+        {
+          "agent": "phase-5-security-scanner",
+          "model": "sonnet",
+          "phase": 6,
+          "order": 16,
+          "mandatory": true
+        },
+        {
+          "agent": "cross-phase-self-critique",
+          "model": "haiku",
+          "phase": 6,
+          "order": 17,
+          "mandatory": true,
+          "afterPhase": true
+        },
+        {
+          "agent": "phase-6-consolidation",
+          "model": "sonnet",
+          "phase": 7,
+          "order": 18,
+          "mandatory": true
+        }
+      ],
+      "minimumAgents": 18,
+      "executionModel": "opus",
+      "skippableAgents": []
+    }
+  },
+
+  "enforcement": {
+    "mode": "STRICT",
+    "blockOnViolation": true,
+    "exitCodeOnBlock": 2,
+    "allowBypass": false,
+    "logViolations": true,
+    "violationLogPath": ".claude/state/path-violations.jsonl"
+  },
+
+  "validation": {
+    "checkAgentOrder": true,
+    "checkMinimumAgents": true,
+    "checkMandatoryAgents": true,
+    "checkModelCompliance": true
+  },
+
+  "messages": {
+    "pathSelected": "[PATH] Selected {path} path (complexity: {complexity})",
+    "agentRequired": "[BLOCK] Agent '{agent}' is REQUIRED for {path} path but was not invoked",
+    "minimumNotMet": "[BLOCK] {path} path requires minimum {required} agents, only {executed} were invoked",
+    "orderViolation": "[WARN] Agent '{agent}' invoked out of order (expected order: {expected}, actual: {actual})",
+    "modelViolation": "[WARN] Agent '{agent}' should use model '{expected}', but '{actual}' was used",
+    "pathComplete": "[SUCCESS] {path} path completed with {count} agents"
+  }
+}

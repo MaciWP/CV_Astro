@@ -9,7 +9,8 @@
 const translationsCache = {
   en: null,
   es: null,
-  fr: null
+  fr: null,
+  de: null
 };
 
 /**
@@ -25,8 +26,9 @@ export const detectLanguage = () => {
   // Si no está disponible, detectamos por URL
   if (typeof window !== 'undefined') {
     const path = window.location.pathname;
-    if (path.startsWith('/es/')) return 'es';
-    if (path.startsWith('/fr/')) return 'fr';
+    if (path.startsWith('/es/') || path === '/es') return 'es';
+    if (path.startsWith('/fr/') || path === '/fr') return 'fr';
+    if (path.startsWith('/de/') || path === '/de') return 'de';
   }
 
   // Valor por defecto
@@ -146,6 +148,23 @@ const fallbackTranslations = {
       languages: "Langues",
       projects: "Projets"
     }
+  },
+  de: {
+    header: {
+      jobTitle: "Software-Entwickler",
+      email: "E-Mail",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      photoAlt: "Oriol Macias - Software-Entwickler"
+    },
+    sections: {
+      summary: "Berufsprofil",
+      experience: "Berufserfahrung",
+      education: "Ausbildung",
+      skills: "Fähigkeiten",
+      languages: "Sprachen",
+      projects: "Projekte"
+    }
   }
 };
 
@@ -190,7 +209,8 @@ export const preloadTranslations = async () => {
     await Promise.all([
       loadTranslation('en'),
       loadTranslation('es'),
-      loadTranslation('fr')
+      loadTranslation('fr'),
+      loadTranslation('de')
     ]);
     console.log('All translations preloaded successfully');
   } catch (error) {
@@ -224,7 +244,8 @@ export const useI18n = () => {
     languageName: {
       en: 'English',
       es: 'Español',
-      fr: 'Français'
+      fr: 'Français',
+      de: 'Deutsch'
     }[lang] || 'English'
   };
 };

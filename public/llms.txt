@@ -1,0 +1,60 @@
+# Oriol Macias - Backend Developer
+
+> Professional CV and portfolio for Oriol Macias, a Backend Developer with 8+ years of experience specializing in industrial protocol integration (SNMP, MODBUS, BACnet), Python/Django development, and data center infrastructure. Available for opportunities in Switzerland and Spain. EU work permit ready.
+
+## About Me
+Solutions-driven Backend Developer with proven expertise in transforming complex requirements into elegant code architecture. Known for reducing system response times by up to 45% and developing high-performance applications for enterprise clients.
+
+## Professional Experience
+- **Senior Backend Developer** at Bjumper (2018-Present)
+  - Industrial protocol integration (SNMP, MODBUS, BACnet)
+  - DCIM platform development (iTRACS, ITA, DCE)
+  - ETL microservices with REST APIs
+
+- Previous roles at Busmatick, SERES, Educand SCCL
+
+## Technical Skills
+### Languages
+Python, C#, JavaScript, TypeScript, SQL, HTML/CSS
+
+### Frameworks & Libraries
+Django, Django REST Framework, .NET Core, FastAPI, Flask, React, Astro
+
+### Protocols & Integration
+SNMP, MODBUS, BACnet, RS-232/485, NFC, REST API, SOAP
+
+### Databases
+PostgreSQL, MySQL, SQL Server, Redis
+
+### DevOps & Tools
+Docker, GitHub Actions, AWS, CI/CD, Git
+
+## Education
+- UNIR - FP Superior in Multiplatform Application Development (2024-2025)
+- IES Montilivi - Technical Degree in Multiplatform Application Development (2015)
+- Schneider Electric - SP2 EcoStruxure IT Advanced Technical Certification (2019)
+
+## Languages
+- Spanish: Native
+- Catalan: Native
+- English: Intermediate (B1)
+- French: Basic
+- German: Basic
+
+## Contact
+- Email: oriolomb@gmail.com
+- LinkedIn: https://linkedin.com/in/oriolmaciasbadosa
+- GitHub: https://github.com/MaciWP
+- Website: https://oriolmacias.dev
+
+## Availability
+- Work Authorization: EU work permit ready for Switzerland
+- Location: Open to Zurich, Basel, Geneva, Lausanne (Switzerland) or Spain
+- Employment Type: Full-time, Remote-friendly
+
+## Key Links
+- [Homepage](https://oriolmacias.dev/) - Main CV in English
+- [Spanish Version](https://oriolmacias.dev/es/) - CV en Espanol
+- [French Version](https://oriolmacias.dev/fr/) - CV en Francais
+- [German Version](https://oriolmacias.dev/de/) - Lebenslauf auf Deutsch
+- [Switzerland Opportunities](https://oriolmacias.dev/switzerland/) - Swiss market focus

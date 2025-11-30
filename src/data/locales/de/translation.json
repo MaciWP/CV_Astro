@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "Oriol Macias - Software-Entwickler Lebenslauf & Portfolio",
+    "description": "Professioneller Lebenslauf und Portfolio von Oriol Macias, einem Software-Entwickler spezialisiert auf Backend-Entwicklung, Integration industrieller Protokolle und Rechenzentrumsinfrastruktur."
+  },
+  "header": {
+    "fullName": "Oriol Macias",
+    "jobTitle": "Software-Entwickler",
+    "summary": "Lösungsorientierter Backend-Entwickler spezialisiert auf die Integration industrieller Protokolle (SNMP, MODBUS, BACnet) mit über 8 Jahren Erfahrung in der Entwicklung hochperformanter Anwendungen. Bekannt für die Transformation komplexer Anforderungen in elegante Code-Architektur und die Reduzierung von Systemantwortzeiten um bis zu 45%. Derzeit erweitere ich meine Expertise in KI und maschinellem Lernen, um Automatisierungslösungen der nächsten Generation voranzutreiben.",
+    "photoAlt": "Oriol Macias - Software-Entwickler",
+    "email": "E-Mail",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "sections": {
+    "about": "Über mich",
+    "experience": "Berufserfahrung",
+    "skills": "Technische Fähigkeiten",
+    "education": "Ausbildung & Weiterbildung",
+    "languages": "Sprachen",
+    "projects": "Wichtige Projekte"
+  },
+  "experience": {
+    "title": "Berufserfahrung",
+    "responsibilities": "Verantwortlichkeiten",
+    "keyAchievements": "Wichtige Erfolge",
+    "showMore": "Mehr anzeigen",
+    "showLess": "Weniger anzeigen"
+  },
+  "skills": {
+    "title": "Technische Fähigkeiten",
+    "languages": "Programmiersprachen",
+    "libraries": "Bibliotheken & Frameworks",
+    "technologies": "Technologien & Datenbanken",
+    "tools": "Werkzeuge & Anwendungen",
+    "protocols": "Protokolle"
+  },
+  "education": {
+    "title": "Ausbildung & Zertifizierungen",
+    "institution": "Institution",
+    "period": "Zeitraum",
+    "details": "Details"
+  },
+  "languages": {
+    "title": "Sprachen",
+    "native": "Muttersprache",
+    "fluent": "Fliessend (C2)",
+    "advanced": "Fortgeschritten (C1)",
+    "intermediate": "Mittelstufe (B2)",
+    "basic": "Grundkenntnisse (A1/A2)"
+  },
+  "projects": {
+    "title": "Wichtige Projekte",
+    "personalProjects": "Persönliche Projekte",
+    "professionalWork": "Berufliche Arbeit",
+    "technologies": "Technologien",
+    "keyFeatures": "Hauptmerkmale",
+    "viewOnGithub": "Auf GitHub ansehen",
+    "showAllDetails": "Alle Details anzeigen",
+    "showLessDetails": "Weniger Details anzeigen",
+    "personalProjectsNote": "Dies sind persönliche Projekte, die ich entwickelt habe, um Technologien zu erkunden und spezifische Herausforderungen zu lösen.",
+    "professionalProjectsNote": "Dies sind nur einige der professionellen Projekte, die während meiner Arbeit bei Bjumper entwickelt wurden. Die Repositories sind aufgrund von Vertraulichkeitsvereinbarungen privat."
+  },
+  "buttons": {
+    "downloadCV": "Lebenslauf herunterladen",
+    "backToTop": "Nach oben",
+    "switchLanguage": "Sprache wechseln",
+    "switchTheme": "Design wechseln",
+    "downloadCoverLetter": "Anschreiben herunterladen"
+  },
+  "footer": {
+    "copyright": "© 2025 Oriol Macias. Alle Rechte vorbehalten."
+  },
+  "navbar": {
+    "topLink": "↑ Oben"
+  }
+}

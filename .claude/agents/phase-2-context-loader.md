@@ -1,5 +1,5 @@
 ---
-name: context-detector
+name: phase-2-context-loader
 description: >
   Detect project tech stack, structure, and development phase.
   USE PROACTIVELY when starting any task requiring project context

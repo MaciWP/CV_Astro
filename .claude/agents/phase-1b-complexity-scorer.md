@@ -1,5 +1,5 @@
 ---
-name: complexity-analyzer
+name: phase-1b-complexity-scorer
 description: >
   Score task complexity (0-100) for routing decisions.
   USE PROACTIVELY when determining implementation strategy

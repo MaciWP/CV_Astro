@@ -1,0 +1,103 @@
+---
+/**
+ * Pagina especifica Barcelona
+ * @file src/pages/spain/barcelona.astro
+ * @description SEO optimizado para mercado Barcelona
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
+
+const title = "Oriol Macias - Desarrollador Backend Barcelona | Python Django Senior";
+const description = "Desarrollador Backend Senior en Barcelona. Catalan nativo, 8+ anos experiencia Python, Django. Ideal para startups y empresas tech del ecosistema barcelones.";
+
+const breadcrumbs = [
+  { name: "Home", url: "https://oriolmacias.dev/" },
+  { name: "Espana", url: "https://oriolmacias.dev/spain/" },
+  { name: "Barcelona", url: "https://oriolmacias.dev/spain/barcelona" }
+];
+---
+
+<BreadcrumbSchema items={breadcrumbs} />
+<Layout title={title} description={description} lang="es">
+  <div class="max-w-4xl mx-auto">
+    <section class="mb-16">
+      <h1 class="text-4xl font-bold mb-4 text-brand-red">
+        Desarrollador Backend para Barcelona
+      </h1>
+      <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+        Catalan nativo listo para el ecosistema tech de Barcelona
+      </p>
+
+      <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Por que Barcelona?</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="font-semibold text-brand-red">Catalan Nativo</h3>
+            <p class="text-sm">Comunicacion fluida en catalan, castellano e ingles</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Ecosistema Startup</h3>
+            <p class="text-sm">Experiencia con metodologias agiles y equipos dinamicos</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Tech Hub</h3>
+            <p class="text-sm">Familiarizado con el ecosistema tech barcelones y sus necesidades</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Origen Local</h3>
+            <p class="text-sm">Conocimiento del mercado local y red de contactos profesionales</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Barcelona-specific advantages -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Ventajas Competitivas</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-2">Multilingue</h3>
+          <ul class="text-sm space-y-1">
+            <li>• Catalan: Nativo</li>
+            <li>• Castellano: Nativo</li>
+            <li>• Ingles: Intermedio (B1)</li>
+            <li>• Frances: Basico</li>
+          </ul>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-2">Experiencia Enterprise</h3>
+          <ul class="text-sm space-y-1">
+            <li>• Bjumper: 6+ anos</li>
+            <li>• Clientes internacionales</li>
+            <li>• Proyectos DCIM</li>
+            <li>• Integraciones industriales</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Stack Tecnologico</h2>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Python</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Django</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">FastAPI</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">PostgreSQL</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Redis</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Docker</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Kubernetes</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">AWS</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">CI/CD</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Scrum</span>
+      </div>
+    </section>
+
+    <ProfileHeader lang="es" />
+    <Experience client:visible />
+    <Skills lang="es" />
+  </div>
+</Layout>

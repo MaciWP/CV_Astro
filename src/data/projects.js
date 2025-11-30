@@ -13,17 +13,20 @@ const personalProjectsData = [
         title: {
             en: "CV Portfolio",
             es: "Portfolio CV",
-            fr: "Portfolio CV"
+            fr: "Portfolio CV",
+            de: "CV Portfolio"
         },
         description: {
             en: "Professional CV/portfolio website built with a clean, minimalist aesthetic, strong typography and structured layout for optimal presentation of credentials.",
             es: "Sitio web de CV/portfolio profesional construido con una estética limpia y minimalista, tipografía fuerte y diseño estructurado para una presentación óptima de credenciales.",
-            fr: "Site web CV/portfolio professionnel construit avec une esthétique propre et minimaliste, une typographie forte et une mise en page structurée pour une présentation optimale des références."
+            fr: "Site web CV/portfolio professionnel construit avec une esthétique propre et minimaliste, une typographie forte et une mise en page structurée pour une présentation optimale des références.",
+            de: "Professionelle CV/Portfolio-Webseite mit klarer, minimalistischer Ästhetik, starker Typografie und strukturiertem Layout für optimale Präsentation der Qualifikationen."
         },
         longDescription: {
             en: "This project is a responsive web application designed for optimal presentation of professional credentials. It features theme switching between light and dark modes, multilingual support, responsive design for all devices, and the ability to export the CV as PDF with a single click. The design follows international style principles with sharp corners, strong typography, and strategic use of accent colors.",
             es: "Este proyecto es una aplicación web responsiva diseñada para la presentación óptima de credenciales profesionales. Presenta cambio de tema entre modos claro y oscuro, soporte multilingüe, diseño responsivo para todos los dispositivos y la capacidad de exportar el CV como PDF con un solo clic. El diseño sigue principios de estilo internacional con esquinas afiladas, tipografía fuerte y uso estratégico de colores de acento.",
-            fr: "Ce projet est une application web responsive conçue pour une présentation optimale des références professionnelles. Il comprend un changement de thème entre les modes clair et sombre, un support multilingue, un design responsive pour tous les appareils et la possibilité d'exporter le CV au format PDF en un seul clic. Le design suit les principes du style international avec des coins nets, une typographie forte et une utilisation stratégique des couleurs d'accentuation."
+            fr: "Ce projet est une application web responsive conçue pour une présentation optimale des références professionnelles. Il comprend un changement de thème entre les modes clair et sombre, un support multilingue, un design responsive pour tous les appareils et la possibilité d'exporter le CV au format PDF en un seul clic. Le design suit les principes du style international avec des coins nets, une typographie forte et une utilisation stratégique des couleurs d'accentuation.",
+            de: "Dieses Projekt ist eine responsive Webanwendung für die optimale Präsentation beruflicher Qualifikationen. Es bietet Theme-Wechsel zwischen Hell- und Dunkelmodus, mehrsprachige Unterstützung, responsives Design für alle Geräte und die Möglichkeit, den Lebenslauf mit einem Klick als PDF zu exportieren. Das Design folgt internationalen Stilprinzipien mit scharfen Ecken, starker Typografie und strategischem Einsatz von Akzentfarben."
         },
         technologies: ["Astro", "React", "Tailwind CSS", "i18n", "PWA"],
         icon: "fas fa-id-card",
@@ -34,22 +37,29 @@ const personalProjectsData = [
                 "Responsive design optimized for all devices",
                 "Theme switching with smooth transitions",
                 "PDF export functionality",
-                "Multilingual support (EN, ES, FR)",
+                "Multilingual support (EN, ES, FR, DE)",
                 "Progressive Web App capabilities"
             ],
             es: [
                 "Diseño responsivo optimizado para todos los dispositivos",
                 "Cambio de tema con transiciones suaves",
                 "Funcionalidad de exportación a PDF",
-                "Soporte multilingüe (EN, ES, FR)",
+                "Soporte multilingüe (EN, ES, FR, DE)",
                 "Capacidades de Progressive Web App"
             ],
             fr: [
                 "Design responsive optimisé pour tous les appareils",
                 "Changement de thème avec transitions fluides",
                 "Fonctionnalité d'exportation PDF",
-                "Support multilingue (EN, ES, FR)",
+                "Support multilingue (EN, ES, FR, DE)",
                 "Capacités d'application web progressive"
+            ],
+            de: [
+                "Responsives Design für alle Geräte optimiert",
+                "Theme-Wechsel mit fliessenden Übergängen",
+                "PDF-Export-Funktionalität",
+                "Mehrsprachige Unterstützung (EN, ES, FR, DE)",
+                "Progressive Web App Funktionen"
             ]
         }
     },
@@ -58,17 +68,20 @@ const personalProjectsData = [
         title: {
             en: "SNMP Monitor",
             es: "Monitor SNMP",
-            fr: "Moniteur SNMP"
+            fr: "Moniteur SNMP",
+            de: "SNMP-Monitor"
         },
         description: {
             en: "Comprehensive platform for network device monitoring via SNMP protocol, featuring automated discovery, real-time visualization, and MIB management for infrastructure tracking.",
             es: "Plataforma integral para la monitorización de dispositivos de red a través del protocolo SNMP, con descubrimiento automatizado, visualización en tiempo real y gestión MIB para el seguimiento de infraestructura.",
-            fr: "Plateforme complète pour la surveillance des périphériques réseau via le protocole SNMP, comprenant la découverte automatisée, la visualisation en temps réel et la gestion MIB pour le suivi des infrastructures."
+            fr: "Plateforme complète pour la surveillance des périphériques réseau via le protocole SNMP, comprenant la découverte automatisée, la visualisation en temps réel et la gestion MIB pour le suivi des infrastructures.",
+            de: "Umfassende Plattform zur Überwachung von Netzwerkgeräten über das SNMP-Protokoll mit automatischer Erkennung, Echtzeit-Visualisierung und MIB-Verwaltung zur Infrastrukturüberwachung."
         },
         longDescription: {
             en: "SNMP Monitor is a specialized web platform for managing and monitoring network devices using the SNMP Protocol. The system automates the discovery, monitoring, and real-time visualization, significantly reducing problem detection time and improving incident response capability. The application is based on Django with asynchronous processing for intensive tasks.",
             es: "SNMP Monitor es una plataforma web especializada para la gestión y monitorización de dispositivos de red utilizando el Protocolo SNMP. El sistema automatiza el descubrimiento, monitorización y visualización en tiempo real, reduciendo significativamente el tiempo de detección de problemas y mejorando la capacidad de respuesta a incidentes. La aplicación está basada en Django con procesamiento asíncrono para tareas intensivas.",
-            fr: "SNMP Monitor est une plateforme web spécialisée pour la gestion et la surveillance des périphériques réseau utilisant le protocole SNMP. Le système automatise la découverte, la surveillance et la visualisation en temps réel, réduisant considérablement le temps de détection des problèmes et améliorant la capacité de réponse aux incidents. L'application est basée sur Django avec un traitement asynchrone pour les tâches intensives."
+            fr: "SNMP Monitor est une plateforme web spécialisée pour la gestion et la surveillance des périphériques réseau utilisant le protocole SNMP. Le système automatise la découverte, la surveillance et la visualisation en temps réel, réduisant considérablement le temps de détection des problèmes et améliorant la capacité de réponse aux incidents. L'application est basée sur Django avec un traitement asynchrone pour les tâches intensives.",
+            de: "SNMP Monitor ist eine spezialisierte Webplattform zur Verwaltung und Überwachung von Netzwerkgeräten mit dem SNMP-Protokoll. Das System automatisiert Erkennung, Überwachung und Echtzeit-Visualisierung, reduziert die Problemerkennungszeit erheblich und verbessert die Incident-Response-Fähigkeit. Die Anwendung basiert auf Django mit asynchroner Verarbeitung für intensive Aufgaben."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Celery", "Redis", "SNMP"],
         icon: "fas fa-network-wired",
@@ -95,6 +108,13 @@ const personalProjectsData = [
                 "Gestion MIB pour des informations de surveillance enrichies",
                 "Visualisation personnalisable avec différentes plages de temps",
                 "Système de tâches en arrière-plan évolutif pour gérer un grand nombre d'appareils"
+            ],
+            de: [
+                "Automatische Netzwerkgeräte-Erkennung",
+                "Echtzeit-Überwachung mit 5-Sekunden-Updates",
+                "MIB-Verwaltung für erweiterte Überwachungsinformationen",
+                "Anpassbare Visualisierung mit verschiedenen Zeitbereichen",
+                "Skalierbares Hintergrund-Task-System zur Verwaltung grosser Gerätezahlen"
             ]
         }
     },
@@ -103,17 +123,20 @@ const personalProjectsData = [
         title: {
             en: "Pelusas Calculator",
             es: "Calculadora Pelusas",
-            fr: "Calculateur Pelusas"
+            fr: "Calculateur Pelusas",
+            de: "Pelusas-Rechner"
         },
         description: {
             en: "Specialized application for calculating and managing scores for the card game 'Pelusas', featuring both manual score entry and automatic card detection through image processing.",
             es: "Aplicación especializada para calcular y gestionar puntuaciones para el juego de cartas 'Pelusas', con entrada manual de puntuación y detección automática de cartas mediante procesamiento de imágenes.",
-            fr: "Application spécialisée pour calculer et gérer les scores du jeu de cartes 'Pelusas', comprenant à la fois la saisie manuelle des scores et la détection automatique des cartes par traitement d'image."
+            fr: "Application spécialisée pour calculer et gérer les scores du jeu de cartes 'Pelusas', comprenant à la fois la saisie manuelle des scores et la détection automatique des cartes par traitement d'image.",
+            de: "Spezialisierte Anwendung zur Berechnung und Verwaltung von Punkteständen für das Kartenspiel 'Pelusas', mit manueller Punkteeingabe und automatischer Kartenerkennung durch Bildverarbeitung."
         },
         longDescription: {
             en: "This application was developed to automate the calculation and tracking of scores for the card game 'Pelusas'. It provides a versatile tool that allows both manual score entry and automatic card detection using computer vision. The system includes player management, score calculation, image processing, and game history tracking components. The computer vision component uses a trained model to recognize specific numbered cards (values 1-10).",
             es: "Esta aplicación fue desarrollada para automatizar el cálculo y seguimiento de puntuaciones para el juego de cartas 'Pelusas'. Proporciona una herramienta versátil que permite tanto la entrada manual de puntuaciones como la detección automática de cartas mediante visión por computadora. El sistema incluye componentes de gestión de jugadores, cálculo de puntuación, procesamiento de imágenes y seguimiento del historial de juegos. El componente de visión por computadora utiliza un modelo entrenado para reconocer cartas numeradas específicas (valores 1-10).",
-            fr: "Cette application a été développée pour automatiser le calcul et le suivi des scores pour le jeu de cartes 'Pelusas'. Elle fournit un outil polyvalent qui permet à la fois la saisie manuelle des scores et la détection automatique des cartes à l'aide de la vision par ordinateur. Le système comprend des composants de gestion des joueurs, de calcul des scores, de traitement d'images et de suivi de l'historique des jeux. Le composant de vision par ordinateur utilise un modèle entraîné pour reconnaître des cartes numérotées spécifiques (valeurs 1-10)."
+            fr: "Cette application a été développée pour automatiser le calcul et le suivi des scores pour le jeu de cartes 'Pelusas'. Elle fournit un outil polyvalent qui permet à la fois la saisie manuelle des scores et la détection automatique des cartes à l'aide de la vision par ordinateur. Le système comprend des composants de gestion des joueurs, de calcul des scores, de traitement d'images et de suivi de l'historique des jeux. Le composant de vision par ordinateur utilise un modèle entraîné pour reconnaître des cartes numérotées spécifiques (valeurs 1-10).",
+            de: "Diese Anwendung wurde entwickelt, um die Berechnung und Verfolgung von Punkteständen für das Kartenspiel 'Pelusas' zu automatisieren. Sie bietet ein vielseitiges Werkzeug, das sowohl manuelle Punkteeingabe als auch automatische Kartenerkennung mittels Computer Vision ermöglicht. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitung und Spielhistorie-Tracking. Die Computer-Vision-Komponente verwendet ein trainiertes Modell zur Erkennung spezifischer nummerierter Karten (Werte 1-10)."
         },
         technologies: ["Python", "Kivy", "ONNX", "NumPy"],
         icon: "fas fa-calculator",
@@ -143,6 +166,14 @@ const personalProjectsData = [
                 "Suivi de l'historique des jeux",
                 "Réduit le temps de calcul de 80% par rapport aux méthodes manuelles",
                 "Traite jusqu'à 10 cartes simultanément dans une seule image"
+            ],
+            de: [
+                "Plattformübergreifende Oberfläche mit Kivy erstellt",
+                "Computer Vision für automatische Kartenerkennung (>90% Genauigkeit)",
+                "Spielerverwaltungssystem",
+                "Spielhistorie-Tracking",
+                "Reduziert die Berechnungszeit um 80% im Vergleich zu manuellen Methoden",
+                "Verarbeitet bis zu 10 Karten gleichzeitig in einem einzigen Bild"
             ]
         }
     }
@@ -155,18 +186,21 @@ const professionalProjectsData = [
         title: {
             en: "ThinkData Backend",
             es: "Backend ThinkData",
-            fr: "Backend ThinkData"
+            fr: "Backend ThinkData",
+            de: "ThinkData Backend"
         },
         company: "Bjumper",
         description: {
             en: "Advanced datacenter management platform with AI capabilities, providing real-time monitoring, analysis and optimization of datacenter infrastructure.",
             es: "Plataforma avanzada de gestión de centros de datos con capacidades de IA, que proporciona monitorización en tiempo real, análisis y optimización de infraestructura de centros de datos.",
-            fr: "Plateforme avancée de gestion de centre de données avec des capacités d'IA, fournissant une surveillance en temps réel, une analyse et une optimisation de l'infrastructure du centre de données."
+            fr: "Plateforme avancée de gestion de centre de données avec des capacités d'IA, fournissant une surveillance en temps réel, une analyse et une optimisation de l'infrastructure du centre de données.",
+            de: "Fortschrittliche Rechenzentrum-Management-Plattform mit KI-Funktionen, die Echtzeit-Überwachung, Analyse und Optimierung der Rechenzentrumsinfrastruktur bietet."
         },
         longDescription: {
             en: "ThinkData is a comprehensive datacenter management platform that provides a unified experience for infrastructure administration. The system includes advanced features like natural language queries through AI technologies, multitenancy architecture, and real-time metric analysis. The platform supports complex datacenter hierarchies and integrates with various data sources for comprehensive monitoring and management.",
             es: "ThinkData es una plataforma integral de gestión de centros de datos que proporciona una experiencia unificada para la administración de infraestructura. El sistema incluye características avanzadas como consultas en lenguaje natural a través de tecnologías de IA, arquitectura multiinquilino y análisis de métricas en tiempo real. La plataforma admite jerarquías complejas de centros de datos y se integra con varias fuentes de datos para una monitorización y gestión integral.",
-            fr: "ThinkData est une plateforme complète de gestion de centre de données qui offre une expérience unifiée pour l'administration de l'infrastructure. Le système comprend des fonctionnalités avancées comme des requêtes en langage naturel grâce aux technologies d'IA, une architecture multi-locataires et une analyse métrique en temps réel. La plateforme prend en charge des hiérarchies complexes de centres de données et s'intègre à diverses sources de données pour une surveillance et une gestion complètes."
+            fr: "ThinkData est une plateforme complète de gestion de centre de données qui offre une expérience unifiée pour l'administration de l'infrastructure. Le système comprend des fonctionnalités avancées comme des requêtes en langage naturel grâce aux technologies d'IA, une architecture multi-locataires et une analyse métrique en temps réel. La plateforme prend en charge des hiérarchies complexes de centres de données et s'intègre à diverses sources de données pour une surveillance et une gestion complètes.",
+            de: "ThinkData ist eine umfassende Rechenzentrum-Management-Plattform, die eine einheitliche Erfahrung für die Infrastrukturverwaltung bietet. Das System umfasst erweiterte Funktionen wie natürlichsprachliche Abfragen durch KI-Technologien, Mandantenfähigkeit und Echtzeit-Metrikanalyse. Die Plattform unterstützt komplexe Rechenzentrumshierarchien und integriert verschiedene Datenquellen für umfassende Überwachung und Verwaltung."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Docker", "REST API", "AWS"],
         icon: "fas fa-server",
@@ -192,6 +226,13 @@ const professionalProjectsData = [
                 "Modélisation hiérarchique complexe des composants du centre de données",
                 "Surveillance et visualisation en temps réel des métriques d'infrastructure",
                 "Traitement asynchrone des fichiers de métriques et de structure"
+            ],
+            de: [
+                "KI-gestützte natürlichsprachliche Abfragen für Rechenzentrumsdaten",
+                "Mandantenfähige Architektur mit isolierten Datenbanken pro Kunde",
+                "Komplexe hierarchische Modellierung von Rechenzentrumskomponenten",
+                "Echtzeit-Überwachung und Visualisierung von Infrastrukturmetriken",
+                "Asynchrone Verarbeitung von Metrik- und Strukturdateien"
             ]
         }
     },
@@ -200,18 +241,21 @@ const professionalProjectsData = [
         title: {
             en: "iTRACS MicroService",
             es: "MicroServicio iTRACS",
-            fr: "MicroService iTRACS"
+            fr: "MicroService iTRACS",
+            de: "iTRACS MicroService"
         },
         company: "Bjumper",
         description: {
             en: "Bidirectional integration platform for synchronizing datacenter infrastructure data between multiple heterogeneous systems and iTRACS DCIM platform.",
             es: "Plataforma de integración bidireccional para sincronizar datos de infraestructura de centros de datos entre múltiples sistemas heterogéneos y la plataforma iTRACS DCIM.",
-            fr: "Plateforme d'intégration bidirectionnelle pour synchroniser les données d'infrastructure de centre de données entre plusieurs systèmes hétérogènes et la plateforme iTRACS DCIM."
+            fr: "Plateforme d'intégration bidirectionnelle pour synchroniser les données d'infrastructure de centre de données entre plusieurs systèmes hétérogènes et la plateforme iTRACS DCIM.",
+            de: "Bidirektionale Integrationsplattform zur Synchronisierung von Rechenzentrumsinfrastrukturdaten zwischen mehreren heterogenen Systemen und der iTRACS DCIM-Plattform."
         },
         longDescription: {
             en: "This integration platform provides seamless synchronization between various datacenter management systems (HPE IMC, VMware, TakeData, ThinkData) and the iTRACS DCIM platform. The system automates asset documentation, optimizes infrastructure monitoring, and centralizes critical operational data in real-time, significantly improving datacenter management efficiency.",
             es: "Esta plataforma de integración proporciona sincronización perfecta entre varios sistemas de gestión de centros de datos (HPE IMC, VMware, TakeData, ThinkData) y la plataforma iTRACS DCIM. El sistema automatiza la documentación de activos, optimiza la monitorización de infraestructura y centraliza datos operativos críticos en tiempo real, mejorando significativamente la eficiencia en la gestión de centros de datos.",
-            fr: "Cette plateforme d'intégration fournit une synchronisation transparente entre divers systèmes de gestion de centre de données (HPE IMC, VMware, TakeData, ThinkData) et la plateforme iTRACS DCIM. Le système automatise la documentation des actifs, optimise la surveillance de l'infrastructure et centralise les données opérationnelles critiques en temps réel, améliorant considérablement l'efficacité de la gestion des centres de données."
+            fr: "Cette plateforme d'intégration fournit une synchronisation transparente entre divers systèmes de gestion de centre de données (HPE IMC, VMware, TakeData, ThinkData) et la plateforme iTRACS DCIM. Le système automatise la documentation des actifs, optimise la surveillance de l'infrastructure et centralise les données opérationnelles critiques en temps réel, améliorant considérablement l'efficacité de la gestion des centres de données.",
+            de: "Diese Integrationsplattform bietet nahtlose Synchronisation zwischen verschiedenen Rechenzentrum-Managementsystemen (HPE IMC, VMware, TakeData, ThinkData) und der iTRACS DCIM-Plattform. Das System automatisiert Asset-Dokumentation, optimiert Infrastrukturüberwachung und zentralisiert kritische Betriebsdaten in Echtzeit, wodurch die Rechenzentrumsverwaltungseffizienz erheblich verbessert wird."
         },
         technologies: ["Python", "Django", "REST API", "PostgreSQL", "Docker"],
         icon: "fas fa-exchange-alt",
@@ -237,25 +281,36 @@ const professionalProjectsData = [
                 "Gestion complète des erreurs avec informations contextuelles détaillées",
                 "Temps de mise à jour des données entre systèmes réduit de 95%",
                 "Amélioration de la précision de l'inventaire des actifs de 85%"
+            ],
+            de: [
+                "Bidirektionale Datensynchronisation mit 99,5% Erfolgsrate",
+                "Intelligenter Wiederholungsmechanismus mit Stapelverarbeitung",
+                "Umfassende Fehlerbehandlung mit detaillierten Kontextinformationen",
+                "Datenaktualisierungszeit zwischen Systemen um 95% reduziert",
+                "Asset-Inventargenauigkeit um 85% verbessert"
             ]
         }
-    }, {
+    },
+    {
         id: "hpeimc-service",
         title: {
             en: "HPE IMC Service",
             es: "Servicio HPE IMC",
-            fr: "Service HPE IMC"
+            fr: "Service HPE IMC",
+            de: "HPE IMC Service"
         },
         company: "Bjumper",
         description: {
             en: "Service designed to extract, process and synchronize network infrastructure data from HPE Intelligent Management Center (IMC) to external systems.",
             es: "Servicio diseñado para extraer, procesar y sincronizar datos de infraestructura de red desde HPE Intelligent Management Center (IMC) a sistemas externos.",
-            fr: "Service conçu pour extraire, traiter et synchroniser les données d'infrastructure réseau du Centre de Gestion Intelligent HPE (IMC) vers des systèmes externes."
+            fr: "Service conçu pour extraire, traiter et synchroniser les données d'infrastructure réseau du Centre de Gestion Intelligent HPE (IMC) vers des systèmes externes.",
+            de: "Service zur Extraktion, Verarbeitung und Synchronisation von Netzwerkinfrastrukturdaten vom HPE Intelligent Management Center (IMC) zu externen Systemen."
         },
         longDescription: {
             en: "This integration service automates the collection and processing of network performance metrics from HPE IMC, facilitating centralized monitoring and optimizing IT infrastructure management. The system implements a comprehensive ETL process with robust error handling and retry mechanisms to ensure data reliability and consistency.",
             es: "Este servicio de integración automatiza la recolección y procesamiento de métricas de rendimiento de red desde HPE IMC, facilitando la monitorización centralizada y optimizando la gestión de infraestructura de TI. El sistema implementa un proceso ETL integral con manejo robusto de errores y mecanismos de reintento para asegurar la fiabilidad y consistencia de los datos.",
-            fr: "Ce service d'intégration automatise la collecte et le traitement des métriques de performance réseau de HPE IMC, facilitant la surveillance centralisée et optimisant la gestion de l'infrastructure informatique. Le système implémente un processus ETL complet avec une gestion robuste des erreurs et des mécanismes de réessai pour assurer la fiabilité et la cohérence des données."
+            fr: "Ce service d'intégration automatise la collecte et le traitement des métriques de performance réseau de HPE IMC, facilitant la surveillance centralisée et optimisant la gestion de l'infrastructure informatique. Le système implémente un processus ETL complet avec une gestion robuste des erreurs et des mécanismes de réessai pour assurer la fiabilité et la cohérence des données.",
+            de: "Dieser Integrationsservice automatisiert die Erfassung und Verarbeitung von Netzwerk-Performance-Metriken aus HPE IMC, erleichtert zentralisierte Überwachung und optimiert das IT-Infrastrukturmanagement. Das System implementiert einen umfassenden ETL-Prozess mit robuster Fehlerbehandlung und Wiederholungsmechanismen zur Gewährleistung von Datenzuverlässigkeit und -konsistenz."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Docker", "REST API"],
         icon: "fas fa-network-wired",
@@ -281,6 +336,13 @@ const professionalProjectsData = [
                 "Requêtes de base de données optimisées réduisant le temps de réponse de l'API de 60%",
                 "Mécanismes de réessai avancés avec backoff exponentiel",
                 "Système détaillé de journalisation et de suivi des erreurs"
+            ],
+            de: [
+                "Effiziente Datenerfassung von über 1.000 Netzwerkgeräten in unter 5 Minuten",
+                "95% Reduzierung der Infrastruktur-Problemerkennungszeit",
+                "Optimierte Datenbankabfragen reduzieren API-Antwortzeit um 60%",
+                "Erweiterte Wiederholungsmechanismen mit exponentiellem Backoff",
+                "Detailliertes Logging- und Fehlerverfolgungssystem"
             ]
         }
     },
@@ -289,18 +351,21 @@ const professionalProjectsData = [
         title: {
             en: "VMware MicroService",
             es: "MicroServicio VMware",
-            fr: "MicroService VMware"
+            fr: "MicroService VMware",
+            de: "VMware MicroService"
         },
         company: "Bjumper",
         description: {
             en: "Backend service for collecting, storing and exposing VMware infrastructure data, including hypervisors and virtual machines, through RESTful APIs.",
             es: "Servicio backend para recopilar, almacenar y exponer datos de infraestructura VMware, incluyendo hipervisores y máquinas virtuales, a través de APIs RESTful.",
-            fr: "Service backend pour collecter, stocker et exposer les données d'infrastructure VMware, y compris les hyperviseurs et les machines virtuelles, via des API RESTful."
+            fr: "Service backend pour collecter, stocker et exposer les données d'infrastructure VMware, y compris les hyperviseurs et les machines virtuelles, via des API RESTful.",
+            de: "Backend-Service zur Erfassung, Speicherung und Bereitstellung von VMware-Infrastrukturdaten, einschliesslich Hypervisoren und virtuellen Maschinen, über RESTful-APIs."
         },
         longDescription: {
             en: "This project provides an abstraction layer for monitoring virtualized resources and facilitating integration with other enterprise systems. The service implements asynchronous ETL processes to extract data from VMware, transform it according to the domain model, and load it into the database. It includes a synchronization service with external systems and features robust error handling and logging.",
             es: "Este proyecto proporciona una capa de abstracción para monitorizar recursos virtualizados y facilitar la integración con otros sistemas empresariales. El servicio implementa procesos ETL asíncronos para extraer datos de VMware, transformarlos según el modelo de dominio y cargarlos en la base de datos. Incluye un servicio de sincronización con sistemas externos y cuenta con un sólido manejo de errores y registro.",
-            fr: "Ce projet fournit une couche d'abstraction pour surveiller les ressources virtualisées et faciliter l'intégration avec d'autres systèmes d'entreprise. Le service implémente des processus ETL asynchrones pour extraire les données de VMware, les transformer selon le modèle de domaine et les charger dans la base de données. Il comprend un service de synchronisation avec des systèmes externes et dispose d'une gestion robuste des erreurs et de journalisation."
+            fr: "Ce projet fournit une couche d'abstraction pour surveiller les ressources virtualisées et faciliter l'intégration avec d'autres systèmes d'entreprise. Le service implémente des processus ETL asynchrones pour extraire les données de VMware, les transformer selon le modèle de domaine et les charger dans la base de données. Il comprend un service de synchronisation avec des systèmes externes et dispose d'une gestion robuste des erreurs et de journalisation.",
+            de: "Dieses Projekt bietet eine Abstraktionsschicht zur Überwachung virtualisierter Ressourcen und zur Erleichterung der Integration mit anderen Unternehmenssystemen. Der Service implementiert asynchrone ETL-Prozesse zur Extraktion von Daten aus VMware, deren Transformation gemäss Domänenmodell und Laden in die Datenbank. Er umfasst einen Synchronisationsservice mit externen Systemen und verfügt über robuste Fehlerbehandlung und Logging."
         },
         technologies: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
         icon: "fab fa-vmware",
@@ -329,6 +394,14 @@ const professionalProjectsData = [
                 "Précision des données de 99,9% grâce à des processus de capture automatisés",
                 "Journalisation structurée et gestion des erreurs",
                 "Intégration avec des systèmes externes via API"
+            ],
+            de: [
+                "Asynchroner ETL für VMware-Infrastrukturdaten",
+                "FastAPI RESTful-Endpunkte mit automatischer OpenAPI-Dokumentation",
+                "Stapelverarbeitung mit 70% schnellerer Datenerfassung",
+                "99,9% Datengenauigkeit durch automatisierte Erfassungsprozesse",
+                "Strukturiertes Logging und Fehlermanagement",
+                "Integration mit externen Systemen über API"
             ]
         }
     },
@@ -337,18 +410,21 @@ const professionalProjectsData = [
         title: {
             en: "NFC Assets Manager",
             es: "Gestor de Activos NFC",
-            fr: "Gestionnaire d'Actifs NFC"
+            fr: "Gestionnaire d'Actifs NFC",
+            de: "NFC Asset-Manager"
         },
         company: "Bjumper",
         description: {
             en: "Comprehensive IT asset management system using NFC technology to track and manage datacenter equipment and infrastructure assets.",
             es: "Sistema integral de gestión de activos de TI que utiliza tecnología NFC para rastrear y administrar equipos de centro de datos y activos de infraestructura.",
-            fr: "Système complet de gestion des actifs informatiques utilisant la technologie NFC pour suivre et gérer les équipements de centre de données et les actifs d'infrastructure."
+            fr: "Système complet de gestion des actifs informatiques utilisant la technologie NFC pour suivre et gérer les équipements de centre de données et les actifs d'infrastructure.",
+            de: "Umfassendes IT-Asset-Management-System mit NFC-Technologie zur Verfolgung und Verwaltung von Rechenzentrumsausrüstung und Infrastruktur-Assets."
         },
         longDescription: {
             en: "This system provides complete lifecycle management for IT infrastructure assets with NFC tracking capabilities. It features a multi-tenant architecture with separate databases per client, hierarchical location management, and comprehensive asset categorization. The system supports audit workflows, maintenance tracking, and integration with external systems through webhooks.",
             es: "Este sistema proporciona una gestión completa del ciclo de vida de los activos de infraestructura de TI con capacidades de seguimiento NFC. Presenta una arquitectura multiinquilino con bases de datos separadas por cliente, gestión jerárquica de ubicaciones y categorización integral de activos. El sistema admite flujos de trabajo de auditoría, seguimiento de mantenimiento e integración con sistemas externos a través de webhooks.",
-            fr: "Ce système fournit une gestion complète du cycle de vie des actifs d'infrastructure informatique avec des capacités de suivi NFC. Il présente une architecture multi-locataires avec des bases de données séparées par client, une gestion hiérarchique des emplacements et une catégorisation complète des actifs. Le système prend en charge les flux de travail d'audit, le suivi de maintenance et l'intégration avec des systèmes externes via des webhooks."
+            fr: "Ce système fournit une gestion complète du cycle de vie des actifs d'infrastructure informatique avec des capacités de suivi NFC. Il présente une architecture multi-locataires avec des bases de données séparées par client, une gestion hiérarchique des emplacements et une catégorisation complète des actifs. Le système prend en charge les flux de travail d'audit, le suivi de maintenance et l'intégration avec des systèmes externes via des webhooks.",
+            de: "Dieses System bietet vollständiges Lebenszyklusmanagement für IT-Infrastruktur-Assets mit NFC-Tracking-Funktionen. Es verfügt über eine mandantenfähige Architektur mit separaten Datenbanken pro Kunde, hierarchische Standortverwaltung und umfassende Asset-Kategorisierung. Das System unterstützt Audit-Workflows, Wartungsverfolgung und Integration mit externen Systemen über Webhooks."
         },
         technologies: ["Python", "Django", "PostgreSQL", "REST API", "NFC", "AWS"],
         icon: "fas fa-tags",
@@ -377,6 +453,14 @@ const professionalProjectsData = [
                 "Authentification JWT avec 2FA via OTP par e-mail",
                 "Catégorisation complète des actifs (IT, Réseau, Énergie, Climat)",
                 "Intégration S3 pour le stockage d'images et de fichiers"
+            ],
+            de: [
+                "Mandantenfähige Architektur mit Datenbank-Isolation pro Kunde",
+                "NFC-basiertes Asset-Tracking reduziert Inventarzeit um 85%",
+                "Hierarchische Standortverwaltung (Rechenzentrum → Raum → Reihe → Rack)",
+                "JWT-Authentifizierung mit 2FA über E-Mail-OTP",
+                "Umfassende Asset-Kategorisierung (IT, Netzwerk, Energie, Klima)",
+                "S3-Integration für Bild- und Dateispeicherung"
             ]
         }
     },
@@ -385,18 +469,21 @@ const professionalProjectsData = [
         title: {
             en: "PowerIQ-ITA Service",
             es: "Servicio PowerIQ-ITA",
-            fr: "Service PowerIQ-ITA"
+            fr: "Service PowerIQ-ITA",
+            de: "PowerIQ-ITA Service"
         },
         company: "Bjumper",
         description: {
             en: "Bidirectional integration between Data Center Operations (DCO/ITA) and PowerIQ for unified datacenter infrastructure management.",
             es: "Integración bidireccional entre Data Center Operations (DCO/ITA) y PowerIQ para una gestión unificada de infraestructura de centro de datos.",
-            fr: "Intégration bidirectionnelle entre Data Center Operations (DCO/ITA) et PowerIQ pour une gestion unifiée de l'infrastructure de centre de données."
+            fr: "Intégration bidirectionnelle entre Data Center Operations (DCO/ITA) et PowerIQ pour une gestion unifiée de l'infrastructure de centre de données.",
+            de: "Bidirektionale Integration zwischen Data Center Operations (DCO/ITA) und PowerIQ für einheitliches Rechenzentrumsinfrastruktur-Management."
         },
         longDescription: {
             en: "This integration solution enables bidirectional synchronization of devices, configurations, and states between DCO/ITA and PowerIQ systems. The project created a unified system for monitoring, control, and efficient management of datacenter infrastructure, with special focus on energy management.",
             es: "Esta solución de integración permite la sincronización bidireccional de dispositivos, configuraciones y estados entre los sistemas DCO/ITA y PowerIQ. El proyecto creó un sistema unificado para la monitorización, control y gestión eficiente de la infraestructura del centro de datos, con especial enfoque en la gestión energética.",
-            fr: "Cette solution d'intégration permet la synchronisation bidirectionnelle des appareils, des configurations et des états entre les systèmes DCO/ITA et PowerIQ. Le projet a créé un système unifié pour la surveillance, le contrôle et la gestion efficace de l'infrastructure du centre de données, avec un accent particulier sur la gestion de l'énergie."
+            fr: "Cette solution d'intégration permet la synchronisation bidirectionnelle des appareils, des configurations et des états entre les systèmes DCO/ITA et PowerIQ. Le projet a créé un système unifié pour la surveillance, le contrôle et la gestion efficace de l'infrastructure du centre de données, avec un accent particulier sur la gestion de l'énergie.",
+            de: "Diese Integrationslösung ermöglicht bidirektionale Synchronisation von Geräten, Konfigurationen und Zuständen zwischen DCO/ITA- und PowerIQ-Systemen. Das Projekt schuf ein einheitliches System für Überwachung, Steuerung und effizientes Management der Rechenzentrumsinfrastruktur mit besonderem Fokus auf Energiemanagement."
         },
         technologies: ["C#", ".NET", "REST API", "PostgreSQL", "XML"],
         icon: "fas fa-bolt",
@@ -422,20 +509,26 @@ const professionalProjectsData = [
                 "Surveillance en temps réel de l'état d'alimentation de tous les périphériques du centre de données",
                 "Génération automatisée de rapports réduisant le temps de 4 heures à 2 minutes",
                 "Amélioration de 100% de la précision des données par élimination des doublons"
+            ],
+            de: [
+                "Bidirektionale Synchronisation mit Objekt-Mapping-System",
+                "85% Reduzierung der Energieinfrastruktur-Verwaltungszeit",
+                "Echtzeit-Überwachung des Stromstatus aller Rechenzentrumsgeräte",
+                "Automatisierte Berichtserstellung reduziert Zeit von 4 Stunden auf 2 Minuten",
+                "100% Verbesserung der Datengenauigkeit durch Duplikateliminierung"
             ]
         }
     }
-
 ];
 
 /**
  * Get personal projects in the specified language
- * @param {string} lang - Language code (en, es, fr)
+ * @param {string} lang - Language code (en, es, fr, de)
  * @returns {Array} Projects with texts in the specified language
  */
 export function getPersonalProjects(lang = 'en') {
     // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
 
     // Transform data structure to use the specified language
     return personalProjectsData.map(project => ({
@@ -449,12 +542,12 @@ export function getPersonalProjects(lang = 'en') {
 
 /**
  * Get professional projects in the specified language
- * @param {string} lang - Language code (en, es, fr)
+ * @param {string} lang - Language code (en, es, fr, de)
  * @returns {Array} Projects with texts in the specified language
  */
 export function getProfessionalProjects(lang = 'en') {
     // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
 
     // Transform data structure to use the specified language
     return professionalProjectsData.map(project => ({

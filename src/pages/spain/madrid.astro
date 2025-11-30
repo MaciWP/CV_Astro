@@ -1,0 +1,78 @@
+---
+/**
+ * Pagina especifica Madrid
+ * @file src/pages/spain/madrid.astro
+ * @description SEO optimizado para mercado Madrid
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
+
+const title = "Oriol Macias - Desarrollador Backend Madrid | Python Django Senior";
+const description = "Desarrollador Backend Senior buscando oportunidades en Madrid. 8+ anos experiencia Python, Django, REST APIs. Disponible para incorporacion inmediata.";
+
+const breadcrumbs = [
+  { name: "Home", url: "https://oriolmacias.dev/" },
+  { name: "Espana", url: "https://oriolmacias.dev/spain/" },
+  { name: "Madrid", url: "https://oriolmacias.dev/spain/madrid" }
+];
+---
+
+<BreadcrumbSchema items={breadcrumbs} />
+<Layout title={title} description={description} lang="es">
+  <div class="max-w-4xl mx-auto">
+    <section class="mb-16">
+      <h1 class="text-4xl font-bold mb-4 text-brand-red">
+        Desarrollador Backend para Madrid
+      </h1>
+      <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+        Listo para contribuir al ecosistema tecnologico de la capital
+      </p>
+
+      <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Por que Madrid?</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="font-semibold text-brand-red">Hub Financiero</h3>
+            <p class="text-sm">Experiencia en desarrollo backend para sector financiero y banca</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Grandes Empresas</h3>
+            <p class="text-sm">Acostumbrado a trabajar con clientes enterprise y proyectos a gran escala</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Sector Industrial</h3>
+            <p class="text-sm">Especialista en integracion de protocolos industriales SNMP, MODBUS, BACnet</p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brand-red">Disponibilidad</h3>
+            <p class="text-sm">Incorporacion inmediata, presencial, hibrido o remoto</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack for Madrid -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Stack Tecnologico</h2>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Python</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Django</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Django REST Framework</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">PostgreSQL</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Docker</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">AWS</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">C#</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">.NET Core</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">REST APIs</span>
+        <span class="px-3 py-1 bg-brand-red/10 text-brand-red rounded">Git</span>
+      </div>
+    </section>
+
+    <ProfileHeader lang="es" />
+    <Experience client:visible />
+    <Skills lang="es" />
+  </div>
+</Layout>

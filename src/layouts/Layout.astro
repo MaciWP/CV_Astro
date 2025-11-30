@@ -24,6 +24,8 @@ import JobPostingSchema from "../components/JobPostingSchema.astro";
 import {
   detectMarketAndOptimizeSEO,
   generatePersonStructuredData,
+  generateWebSiteStructuredData,
+  generateResumeStructuredData,
   toSafeJsonLd,
 } from "../utils/seo";
 
@@ -69,6 +71,8 @@ const marketData = detectMarketAndOptimizeSEO(
 
 // Generate structured data using centralized utility
 const personSchema = generatePersonStructuredData();
+const websiteSchema = generateWebSiteStructuredData();
+const resumeSchema = generateResumeStructuredData();
 
 // Generate JobPosting schema inline
 const currentDate = new Date();
@@ -128,6 +132,41 @@ const jobPostingSchema = {
       unitText: "YEAR",
     },
   },
+  qualifications: marketData.market === "switzerland"
+    ? [
+        "8+ years backend development experience",
+        "Expert in Python, Django, and Django REST Framework",
+        "Industrial protocol integration (SNMP, MODBUS, BACnet)",
+        "Experience with C#, .NET Framework and Core",
+        "Database management (PostgreSQL, MySQL)",
+        "EU work permit for Switzerland"
+      ]
+    : [
+        "8+ años de experiencia en desarrollo backend",
+        "Experto en Python, Django y Django REST Framework",
+        "Integración de protocolos industriales (SNMP, MODBUS, BACnet)",
+        "Experiencia con C#, .NET Framework y Core",
+        "Gestión de bases de datos (PostgreSQL, MySQL)"
+      ],
+  responsibilities: marketData.market === "switzerland"
+    ? [
+        "Design and develop backend integration solutions",
+        "Industrial protocol integration for DCIM platforms",
+        "ETL microservices development with REST APIs",
+        "Database architecture and optimization",
+        "Code review and technical mentoring"
+      ]
+    : [
+        "Diseñar y desarrollar soluciones de integración backend",
+        "Integración de protocolos industriales para plataformas DCIM",
+        "Desarrollo de microservicios ETL con APIs REST",
+        "Arquitectura y optimización de bases de datos",
+        "Revisión de código y mentoría técnica"
+      ],
+  skills: [
+    "Python", "Django", "Django REST Framework", "C#", ".NET Core",
+    "PostgreSQL", "MySQL", "SNMP", "MODBUS", "BACnet", "Docker", "Git"
+  ],
 };
 
 // Construct full canonical URL
@@ -159,6 +198,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <script is:inline>
       (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
     </script>
+
+    <!-- Preconnect for Google Analytics - improves loading performance -->
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
     <!-- LCP Image Preload - CRITICAL for performance -->
     <link
@@ -330,11 +374,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
             hreflang="fr-CH"
             href={`https://oriolmacias.dev/fr${Astro.url.pathname}`}
           />
-          <link
-            rel="alternate"
-            hreflang="it-CH"
-            href={`https://oriolmacias.dev/it${Astro.url.pathname}`}
-          />
         </Fragment>
       )
     }
@@ -372,6 +411,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <meta property="og:description" content={marketData.description} />
     <meta property="og:url" content={fullCanonicalUrl} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Oriol Macias - Backend Developer" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang} />
     <meta property="og:site_name" content="Oriol Macias Dev" />
@@ -430,6 +472,16 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Fixed Structured Data with proper typing -->
     <Fragment
       set:html={`<script type="application/ld+json">${JSON.stringify(personSchema, null, 2)}</script>`}
+    />
+
+    <!-- WebSite Structured Data for better indexation -->
+    <Fragment
+      set:html={`<script type="application/ld+json">${JSON.stringify(websiteSchema, null, 2)}</script>`}
+    />
+
+    <!-- Resume Structured Data for CV semantic clarity -->
+    <Fragment
+      set:html={`<script type="application/ld+json">${JSON.stringify(resumeSchema, null, 2)}</script>`}
     />
 
     <!-- JobPosting Structured Data -->
@@ -522,7 +574,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                         ? "Volver arriba"
                         : lang === "fr"
                           ? "Retour en haut"
-                          : "Back to top"
+                          : lang === "de"
+                            ? "Nach oben"
+                            : "Back to top"
                     }
                   </a>
                 </div>
@@ -535,7 +589,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                     ? "Descargar CV en formato PDF"
                     : lang === "fr"
                       ? "Télécharger CV en format PDF"
-                      : "Download CV in PDF format"}
+                      : lang === "de"
+                        ? "Lebenslauf als PDF herunterladen"
+                        : "Download CV in PDF format"}
                 >
                   <i class="fas fa-download mr-2" aria-hidden="true"></i>
                   {
@@ -543,7 +599,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                       ? "Descargar CV"
                       : lang === "fr"
                         ? "Télécharger CV"
-                        : "Download CV"
+                        : lang === "de"
+                          ? "Lebenslauf herunterladen"
+                          : "Download CV"
                   }
                 </button>
               </div>

@@ -1,5 +1,5 @@
 ---
-name: quality-validator
+name: phase-5-quality-validator
 description: >
   Execute quality gates: tests, linter, type checker, security.
   USE PROACTIVELY after code modifications to ensure quality standards.

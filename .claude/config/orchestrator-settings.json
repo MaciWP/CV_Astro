@@ -1,0 +1,95 @@
+{
+  "version": "3.7",
+  "name": "adaptive-meta-orchestrator",
+  "description": "Configuration for the orchestrator v3.7 with conflict resolution, graceful degradation, user trust, and explainability",
+
+  "phases": {
+    "enabled": [0, 1, 2, 3, 4, 5, 6, 7],
+    "names": {
+      "0": "Pre-Analysis",
+      "1": "Evaluation",
+      "2": "Context Loading",
+      "3": "Decomposition",
+      "4": "Planning",
+      "5": "Execution",
+      "6": "Validation",
+      "7": "Consolidation"
+    },
+    "selfCritiqueAfterEach": true,
+    "skipPhaseOnCacheHit": [0, 2]
+  },
+
+  "models": {
+    "simple": "haiku",
+    "standard": "sonnet",
+    "complex": "opus"
+  },
+
+  "thresholds": {
+    "complexityForSonnet": 40,
+    "complexityForOpus": 75,
+    "trustLevelForAutoExecute": 3,
+    "promptQualityMinimum": 70,
+    "confidenceThreshold": 70
+  },
+
+  "features": {
+    "conflictResolution": {
+      "enabled": true,
+      "strategies": ["priority", "consensus", "escalation"],
+      "defaultStrategy": "priority"
+    },
+    "gracefulDegradation": {
+      "enabled": true,
+      "levels": 5,
+      "fallbackToHeuristics": true
+    },
+    "userTrustLevels": {
+      "enabled": true,
+      "defaultLevel": 2,
+      "maxLevel": 5,
+      "autoAdjust": true
+    },
+    "explainability": {
+      "enabled": true,
+      "logDecisions": true,
+      "postMortemOnError": true
+    },
+    "promptChainAnalysis": {
+      "enabled": true,
+      "detectIterations": true,
+      "suggestImprovements": true
+    },
+    "selfCritique": {
+      "enabled": true,
+      "afterEachPhase": true,
+      "maxRefinements": 2
+    }
+  },
+
+  "agentCommunication": {
+    "protocols": ["handoff", "broadcast", "query"],
+    "sharedStateEnabled": true,
+    "contextCompression": true,
+    "maxContextTokens": 500
+  },
+
+  "performance": {
+    "parallelExecution": true,
+    "maxParallelAgents": 5,
+    "cacheEnabled": true,
+    "cacheTTL": 300
+  },
+
+  "validation": {
+    "qualityGates": true,
+    "securityChecks": true,
+    "architectureCompliance": true
+  },
+
+  "logging": {
+    "level": "info",
+    "logToFile": true,
+    "maxLogSize": "10MB"
+  }
+}

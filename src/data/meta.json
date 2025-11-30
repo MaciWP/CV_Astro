@@ -41,6 +41,11 @@
             "code": "fr",
             "name": "Français",
             "url": "https://oriolmacias.dev/fr/"
+        },
+        {
+            "code": "de",
+            "name": "Deutsch",
+            "url": "https://oriolmacias.dev/de/"
         }
     ],
     "socialMedia": [

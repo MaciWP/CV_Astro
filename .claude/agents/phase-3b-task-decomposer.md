@@ -1,5 +1,5 @@
 ---
-name: task-decomposer
+name: phase-3b-task-decomposer
 description: >
   Break complex tasks into optimal subtasks with dependencies.
   USE PROACTIVELY when complexity score >40 (medium-high tasks).

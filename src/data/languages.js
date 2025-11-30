@@ -10,12 +10,14 @@ const languagesData = [
         language: {
             en: "Spanish",
             es: "Español",
-            fr: "Espagnol"
+            fr: "Espagnol",
+            de: "Spanisch"
         },
         level: {
             en: "Native",
             es: "Nativo",
-            fr: "Langue Maternelle"
+            fr: "Langue Maternelle",
+            de: "Muttersprache"
         },
         badge: "NATIVE",
         percent: 100
@@ -25,12 +27,14 @@ const languagesData = [
         language: {
             en: "Catalan",
             es: "Catalán",
-            fr: "Catalan"
+            fr: "Catalan",
+            de: "Katalanisch"
         },
         level: {
             en: "Native",
             es: "Nativo",
-            fr: "Langue Maternelle"
+            fr: "Langue Maternelle",
+            de: "Muttersprache"
         },
         badge: "NATIVE",
         percent: 100
@@ -40,12 +44,14 @@ const languagesData = [
         language: {
             en: "English",
             es: "Inglés",
-            fr: "Anglais"
+            fr: "Anglais",
+            de: "Englisch"
         },
         level: {
             en: "Intermediate",
             es: "Intermedio",
-            fr: "Intermédiaire"
+            fr: "Intermédiaire",
+            de: "Mittelstufe"
         },
         badge: "B1",
         percent: 60
@@ -54,19 +60,19 @@ const languagesData = [
 
 /**
  * Get languages data in the specified language
- * @param {string} lang - Language code (en, es, fr)
+ * @param {string} lang - Language code (en, es, fr, de)
  * @returns {Array} Languages with texts in the specified language
  */
 export const getLanguages = (lang = 'en') => {
     // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
 
     // Transform data structure to use the specified language
-    return languagesData.map(lang => ({
-        language: lang.language[language] || lang.language.en,
-        level: lang.level[language] || lang.level.en,
-        badge: lang.badge,
-        percent: lang.percent
+    return languagesData.map(l => ({
+        language: l.language[language] || l.language.en,
+        level: l.level[language] || l.level.en,
+        badge: l.badge,
+        percent: l.percent
     }));
 };
 

@@ -1,0 +1,124 @@
+{
+  "version": "1.0.0",
+  "created": "2025-11-27",
+  "description": "Knowledge graph for adaptive-meta-orchestrator learning",
+
+  "agents": {
+    "astro-component-generator": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["astro component", "create component", "new component"],
+      "avgExecutionTime": null
+    },
+    "astro-react-integrator": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["react component", "client directive", "hydration"],
+      "avgExecutionTime": null
+    },
+    "i18n-manager": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["translation", "i18n", "locale", "language"],
+      "avgExecutionTime": null
+    },
+    "seo-optimizer": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["seo", "structured data", "schema", "meta tags", "sitemap"],
+      "avgExecutionTime": null
+    },
+    "lighthouse-optimizer": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["performance", "lighthouse", "lcp", "cls", "fid", "core web vitals"],
+      "avgExecutionTime": null
+    },
+    "pwa-auditor": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["pwa", "service worker", "manifest", "offline"],
+      "avgExecutionTime": null
+    },
+    "image-optimizer-agent": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["image", "optimize image", "webp", "responsive image"],
+      "avgExecutionTime": null
+    },
+    "astro-expert": {
+      "successCount": 0,
+      "failureCount": 0,
+      "lastUsed": null,
+      "preferredFor": ["astro", "astro question", "astro error", "astro config"],
+      "avgExecutionTime": null
+    }
+  },
+
+  "skills": {
+    "structured-data-generator": {
+      "successCount": 0,
+      "failureCount": 0,
+      "preferredFor": ["json-ld", "schema.org", "person schema", "jobposting"]
+    },
+    "responsive-image-optimizer": {
+      "successCount": 0,
+      "failureCount": 0,
+      "preferredFor": ["sharp", "image resize", "webp generation"]
+    },
+    "tailwind-component-builder": {
+      "successCount": 0,
+      "failureCount": 0,
+      "preferredFor": ["tailwind", "css", "styling", "dark mode"]
+    },
+    "astro-seo-validator": {
+      "successCount": 0,
+      "failureCount": 0,
+      "preferredFor": ["validate seo", "check seo", "seo audit"]
+    },
+    "lighthouse-performance-optimizer": {
+      "successCount": 0,
+      "failureCount": 0,
+      "preferredFor": ["lighthouse audit", "performance audit", "speed"]
+    }
+  },
+
+  "taskPatterns": {
+    "component_creation": {
+      "keywords": ["create", "component", "new"],
+      "preferredAgent": "astro-component-generator",
+      "fallback": "astro-expert"
+    },
+    "translation_management": {
+      "keywords": ["translate", "translation", "i18n", "locale"],
+      "preferredAgent": "i18n-manager",
+      "fallback": null
+    },
+    "seo_optimization": {
+      "keywords": ["seo", "structured data", "meta", "sitemap"],
+      "preferredAgent": "seo-optimizer",
+      "fallback": "astro-seo-validator"
+    },
+    "performance_optimization": {
+      "keywords": ["performance", "lighthouse", "speed", "lcp"],
+      "preferredAgent": "lighthouse-optimizer",
+      "fallback": "lighthouse-performance-optimizer"
+    }
+  },
+
+  "learnings": [],
+
+  "statistics": {
+    "totalTasksRouted": 0,
+    "successfulRoutings": 0,
+    "fallbacksUsed": 0,
+    "lastUpdated": null
+  }
+}

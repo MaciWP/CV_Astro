@@ -8,11 +8,19 @@ import Layout from "../../layouts/Layout.astro";
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
 import Experience from "../../components/cv/Experience";
 import Skills from "../../components/cv/Skills.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
 
 const title = "Oriol Macias - Backend Developer Geneva | Multilingual Tech Professional";
 const description = "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organization tech experience, CERN collaboration ready.";
+
+const breadcrumbs = [
+  { name: "Home", url: "https://oriolmacias.dev/" },
+  { name: "Switzerland", url: "https://oriolmacias.dev/switzerland/" },
+  { name: "Geneva", url: "https://oriolmacias.dev/switzerland/geneva" }
+];
 ---
 
+<BreadcrumbSchema items={breadcrumbs} />
 <Layout title={title} description={description}>
   <div class="max-w-4xl mx-auto">
     <section class="mb-16">

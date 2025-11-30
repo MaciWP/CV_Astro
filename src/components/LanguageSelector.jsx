@@ -18,7 +18,8 @@ const LanguageSelector = () => {
   const languageOptions = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'fr', name: 'Français', flag: '🇨🇭' }
+    { code: 'fr', name: 'Français', flag: '🇨🇭' },
+    { code: 'de', name: 'Deutsch', flag: '🇨🇭' }
   ];
 
   // Encontrar el idioma actual
@@ -49,14 +50,14 @@ const LanguageSelector = () => {
     let path = window.location.pathname;
 
     // Quitar prefijos de idioma existentes
-    const langPrefixes = ['/es/', '/fr/'];
+    const langPrefixes = ['/es/', '/fr/', '/de/'];
     for (const prefix of langPrefixes) {
       if (path.startsWith(prefix)) {
         path = path.substring(prefix.length - 1); // Mantener la barra inicial
         break;
       }
     }
-    if (path === '/es' || path === '/fr') {
+    if (path === '/es' || path === '/fr' || path === '/de') {
       path = '/';
     }
 

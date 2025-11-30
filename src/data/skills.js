@@ -11,32 +11,38 @@ export const sectionTitles = {
     skills: {
         en: "Technical Skills",
         es: "Habilidades Técnicas",
-        fr: "Compétences Techniques"
+        fr: "Compétences Techniques",
+        de: "Technische Fähigkeiten"
     },
     languages: {
         en: "Programming Languages",
         es: "Lenguajes de Programación",
-        fr: "Langages de Programmation"
+        fr: "Langages de Programmation",
+        de: "Programmiersprachen"
     },
     libraries: {
         en: "Libraries & Frameworks",
         es: "Librerías y Frameworks",
-        fr: "Bibliothèques et Frameworks"
+        fr: "Bibliothèques et Frameworks",
+        de: "Bibliotheken & Frameworks"
     },
     technologies: {
         en: "Technologies & Databases",
         es: "Tecnologías y Bases de Datos",
-        fr: "Technologies et Bases de Données"
+        fr: "Technologies et Bases de Données",
+        de: "Technologien & Datenbanken"
     },
     tools: {
         en: "Tools & Applications",
         es: "Herramientas y Aplicaciones",
-        fr: "Outils et Applications"
+        fr: "Outils et Applications",
+        de: "Werkzeuge & Anwendungen"
     },
     protocols: {
         en: "Protocols",
         es: "Protocolos",
-        fr: "Protocoles"
+        fr: "Protocoles",
+        de: "Protokolle"
     }
 };
 
@@ -127,7 +133,7 @@ const skillsData = {
  */
 export const getSectionTitle = (section, lang = 'en') => {
     // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
 
     if (sectionTitles[section] && sectionTitles[section][language]) {
         return sectionTitles[section][language];

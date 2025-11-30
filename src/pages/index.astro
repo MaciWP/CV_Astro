@@ -10,6 +10,7 @@ import Skills from "../components/cv/Skills.astro";
 import Languages from "../components/cv/Languages";
 import Education from "../components/cv/Education.astro";
 import Projects from "../components/cv/Projects";
+import FAQSchema from "../components/FAQSchema.astro";
 
 // Enhanced metadata for SEO
 const pageTitle = "Oriol Macias - Software Developer CV & Portfolio";
@@ -21,6 +22,30 @@ const canonicalUrl = "https://oriolmacias.dev/";
 // Enlaces a versiones en otros idiomas
 const esUrl = getRelativeLocaleUrl("es", "");
 const frUrl = getRelativeLocaleUrl("fr", "");
+
+// FAQs for rich snippets
+const faqs = [
+  {
+    question: "Do you have a work permit for Switzerland?",
+    answer: "Yes, I have an EU work permit and am authorized to work in Switzerland immediately."
+  },
+  {
+    question: "What programming languages do you specialize in?",
+    answer: "I specialize in Python and C#, with extensive experience in Django, .NET Framework and Core, and REST API development."
+  },
+  {
+    question: "What industrial protocols do you work with?",
+    answer: "I have 8+ years of experience integrating SNMP, MODBUS, and BACnet protocols for DCIM platforms and data center infrastructure."
+  },
+  {
+    question: "Are you available for remote work?",
+    answer: "Yes, I am open to remote, hybrid, or on-site positions in Switzerland (Zurich, Basel, Geneva, Lausanne) or Spain."
+  },
+  {
+    question: "What is your notice period?",
+    answer: "I am available for immediate start or with minimal notice period, depending on project requirements."
+  }
+];
 ---
 
 <Layout
@@ -74,6 +99,9 @@ const frUrl = getRelativeLocaleUrl("fr", "");
     >
       <Projects client:visible />
     </ErrorBoundary>
+
+    {/* FAQ Section with structured data */}
+    <FAQSchema faqs={faqs} lang="en" />
 
     {/* Contenido SEO oculto */}
     <div class="sr-only">

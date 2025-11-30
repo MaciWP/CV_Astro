@@ -1,0 +1,37 @@
+---
+/**
+ * BreadcrumbSchema.astro - Structured data for breadcrumb navigation
+ * Improves SEO with rich snippets in Google search results
+ *
+ * Usage:
+ * <BreadcrumbSchema items={[
+ *   { name: "Home", url: "https://oriolmacias.dev/" },
+ *   { name: "Switzerland", url: "https://oriolmacias.dev/switzerland/" },
+ *   { name: "Zurich", url: "https://oriolmacias.dev/switzerland/zurich" }
+ * ]} />
+ */
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": item.url
+  }))
+};
+---
+
+<Fragment set:html={`<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`} />

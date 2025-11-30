@@ -1,0 +1,73 @@
+---
+/**
+ * FAQSchema.astro - Structured data for FAQ section
+ * Enables rich FAQ snippets in Google search results
+ *
+ * Usage:
+ * <FAQSchema faqs={[
+ *   { question: "Your question?", answer: "Your answer." }
+ * ]} lang="en" />
+ */
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs: FAQ[];
+  lang?: string;
+}
+
+const { faqs, lang = 'en' } = Astro.props;
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
+// Translations for section title
+const titles: Record<string, string> = {
+  en: "Frequently Asked Questions",
+  es: "Preguntas Frecuentes",
+  fr: "Questions Fréquentes",
+  de: "Häufig gestellte Fragen"
+};
+
+const title = titles[lang] || titles.en;
+---
+
+<section class="mt-16 mb-8" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="flex items-center mb-6">
+    <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+      <i class="fas fa-question-circle" aria-hidden="true"></i>
+    </div>
+    <h2 class="text-2xl font-bold ml-3">{title}</h2>
+  </div>
+
+  <div class="space-y-4">
+    {faqs.map((faq, index) => (
+      <div
+        class="bg-light-surface dark:bg-dark-surface p-5 border border-light-border dark:border-dark-border rounded-none"
+        itemscope
+        itemprop="mainEntity"
+        itemtype="https://schema.org/Question"
+      >
+        <h3 class="font-bold text-lg mb-2" itemprop="name">{faq.question}</h3>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p class="text-light-text-secondary dark:text-dark-text-secondary" itemprop="text">{faq.answer}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<Fragment set:html={`<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`} />

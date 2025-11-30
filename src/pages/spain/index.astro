@@ -1,0 +1,98 @@
+---
+/**
+ * Pagina principal Espana
+ * @file src/pages/spain/index.astro
+ * @description Landing page para el mercado espanol
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import Experience from "../../components/cv/Experience";
+import Skills from "../../components/cv/Skills.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
+
+const title = "Oriol Macias - Desarrollador Backend Espana | Senior Python";
+const description = "Desarrollador Backend Senior con 8+ anos de experiencia en Python, Django y protocolos industriales. Disponible para oportunidades en Espana.";
+
+const breadcrumbs = [
+  { name: "Home", url: "https://oriolmacias.dev/" },
+  { name: "Espana", url: "https://oriolmacias.dev/spain/" }
+];
+---
+
+<BreadcrumbSchema items={breadcrumbs} />
+<Layout title={title} description={description} lang="es">
+  <div class="max-w-4xl mx-auto">
+    <!-- Spanish Market Hero Section -->
+    <section class="mb-16 text-center">
+      <h1 class="text-4xl font-bold mb-4 text-brand-red">
+        Desarrollador Backend en Espana
+      </h1>
+      <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
+        Desarrollador Senior especializado en Python, Django y protocolos industriales
+      </p>
+      <div class="flex justify-center gap-4 mb-8 flex-wrap">
+        <span class="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded">
+          8+ anos experiencia
+        </span>
+        <span class="px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">
+          Espanol nativo
+        </span>
+        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">
+          Disponibilidad inmediata
+        </span>
+      </div>
+    </section>
+
+    <!-- Spanish Cities Focus -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-8 text-center">Mercados Objetivo</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Madrid -->
+        <a href="/spain/madrid" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
+          <h3 class="text-xl font-semibold mb-2 text-brand-red">Madrid</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Hub Tecnologico de Espana</p>
+          <ul class="text-sm space-y-1">
+            <li>• Centro financiero y tecnologico</li>
+            <li>• Grandes empresas y startups</li>
+            <li>• Ecosistema tech en crecimiento</li>
+          </ul>
+        </a>
+
+        <!-- Barcelona -->
+        <a href="/spain/barcelona" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
+          <h3 class="text-xl font-semibold mb-2 text-brand-red">Barcelona</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Silicon Valley del Mediterraneo</p>
+          <ul class="text-sm space-y-1">
+            <li>• Hub de startups europeo</li>
+            <li>• Mobile World Congress</li>
+            <li>• Talento internacional</li>
+          </ul>
+        </a>
+      </div>
+    </section>
+
+    <!-- Why Spain Section -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Por que trabajar conmigo</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-2">Experiencia Probada</h3>
+          <p class="text-sm">8+ anos desarrollando soluciones backend para empresas como Bjumper, con clientes enterprise.</p>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-2">Stack Moderno</h3>
+          <p class="text-sm">Python, Django, Django REST Framework, PostgreSQL, Docker, AWS y metodologias agiles.</p>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-2">Protocolos Industriales</h3>
+          <p class="text-sm">Especialista en SNMP, MODBUS, BACnet para integracion con plataformas DCIM.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standard CV Sections -->
+    <ProfileHeader lang="es" />
+    <Experience client:visible />
+    <Skills lang="es" />
+  </div>
+</Layout>

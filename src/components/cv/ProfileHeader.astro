@@ -3,6 +3,7 @@ import headerData from "../../data/header";
 import enTranslations from "../../data/locales/en/translation.json";
 import esTranslations from "../../data/locales/es/translation.json";
 import frTranslations from "../../data/locales/fr/translation.json";
+import deTranslations from "../../data/locales/de/translation.json";
 
 interface Props {
     lang?: string;
@@ -15,6 +16,7 @@ const getTranslation = (key: string, fallback: string) => {
     let translations: any = enTranslations;
     if (lang === "es") translations = esTranslations;
     if (lang === "fr") translations = frTranslations;
+    if (lang === "de") translations = deTranslations;
 
     const keys = key.split(".");
     let value = translations;

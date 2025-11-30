@@ -1,5 +1,5 @@
 ---
-name: pattern-learner
+name: phase-6-consolidation
 description: >
   Detect patterns (3+ occurrences), store knowledge, propose improvements.
   USE PROACTIVELY after task completion to learn from execution

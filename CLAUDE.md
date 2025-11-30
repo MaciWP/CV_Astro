@@ -2,57 +2,234 @@
 
 ```
 ═══════════════════════════════════════════════════════════════════════════════
- ██████╗██╗      █████╗ ██╗   ██╗██████╗ ███████╗     ██████╗ ██████╗ ██████╗ ███████╗
-██╔════╝██║     ██╔══██╗██║   ██║██╔══██╗██╔════╝    ██╔════╝██╔═══██╗██╔══██╗██╔════╝
-██║     ██║     ███████║██║   ██║██║  ██║█████╗      ██║     ██║   ██║██║  ██║█████╗
-██║     ██║     ██╔══██║██║   ██║██║  ██║██╔══╝      ██║     ██║   ██║██║  ██║██╔══╝
-╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝███████╗    ╚██████╗╚██████╔╝██████╔╝███████╗
- ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝     ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+                    ADAPTIVE META-ORCHESTRATOR v3.7
 ═══════════════════════════════════════════════════════════════════════════════
 
-🚨 MANDATORY FIRST ACTION - NO EXCEPTIONS 🚨
+   BEHAVIORAL GUIDE: .claude/skills/adaptive-meta-orchestrator/SKILL.md
 
-BEFORE analyzing user's message → EXECUTE: Skill('adaptive-meta-orchestrator')
-
-Applies to: ALL messages (complex, simple, questions, greetings, EVERYTHING)
-The orchestrator decides complexity and routes appropriately.
-YOU just activate it. ALWAYS. FIRST. NO THINKING.
+   This guide ALWAYS EXECUTES on every prompt. It teaches Claude Code:
+   • EVALUATE before claiming (Glob/Grep first)
+   • SCORE complexity (0-100) to select tools
+   • SELECT strategy (sequential/parallel/hybrid)
+   • EXECUTE with native tools (13x faster than Bash)
+   • LEARN from patterns (suggest automation)
 
 ═══════════════════════════════════════════════════════════════════════════════
 ```
 
-## 🚀 QUICK REFERENCE
+## MANDATORY AGENT WORKFLOW (NO EXCEPTIONS)
 
-**Top 5 Rules**: 1) Orchestrator ALWAYS first 2) Validate before claiming (`Glob`/`Grep`) 3) Ask if uncertain (<70% confidence) 4) Verify after claiming (Read to confirm) 5) Parallelize independent ops (3-5x faster)
+**AFTER activating `Skill('adaptive-meta-orchestrator')`, execute these phases:**
 
-| Task | Tool | Example | Time |
-|------|------|---------|------|
-| Check file | Glob | `Glob('src/components/**/*.astro')` | 85ms |
-| Find component | Grep | `Grep('ResponsiveImage', type: 'astro')` | 120ms |
-| Read file | Read | `Read('src/layouts/Layout.astro')` | 15ms |
-| Ask user | AskUserQuestion | When confidence <70% | - |
+### Phase 0: PRE-ANALYSIS (if token budget >75%)
+```
+Task({subagent_type: 'phase-0-pre-analysis', prompt: 'Compress context', model: 'haiku'})
+```
 
-**Key Commands**: `/astro-component`, `/i18n-add`, `/seo-check`, `/performance-check`, `/validate-claim`
+### Phase 1: EVALUATION - Run ALL 4 agents in PARALLEL
+```
+Task({subagent_type: 'phase-1a-keyword-detector', prompt: '...', model: 'haiku'})
+Task({subagent_type: 'phase-1b-complexity-scorer', prompt: '...', model: 'haiku'})
+Task({subagent_type: 'phase-1c-prompt-quality', prompt: '...', model: 'haiku'})
+Task({subagent_type: 'phase-1d-confidence-assessor', prompt: '...', model: 'haiku'})
+```
+THEN: `Task({subagent_type: 'cross-phase-self-critique', prompt: 'Evaluate Phase 1', model: 'haiku'})`
+
+### Phase 2: COMPLEXITY SCORING
+```
+Task({subagent_type: 'phase-1b-complexity-scorer', prompt: 'Score task complexity 0-100', model: 'haiku'})
+```
+
+### Phase 3: DECOMPOSITION (if complexity >40)
+```
+Task({subagent_type: 'phase-3a-task-lister', prompt: 'List tasks', model: 'haiku'})
+Task({subagent_type: 'phase-3b-task-decomposer', prompt: 'Decompose tasks', model: 'sonnet'})
+Task({subagent_type: 'phase-3-dependency-analyzer', prompt: 'Analyze dependencies', model: 'haiku'})
+```
+THEN: `Task({subagent_type: 'cross-phase-self-critique', prompt: 'Evaluate Phase 3', model: 'haiku'})`
+
+### Phase 4: PLANNING
+```
+Task({subagent_type: 'phase-3-planner', prompt: 'Create execution plan', model: 'haiku'})
+Task({subagent_type: 'phase-3-tool-selector', prompt: 'Select optimal tools', model: 'haiku'})
+Task({subagent_type: 'phase-3-strategy-determiner', prompt: 'Determine execution strategy', model: 'haiku'})
+```
+
+### Phase 5: EXECUTION - Delegate to specialists
+```
+Task({subagent_type: 'phase-4-coordinator', prompt: 'Coordinate execution', model: 'sonnet'})
+# Coordinator invokes specialists:
+Task({subagent_type: 'astro-expert' | 'seo-optimizer' | 'i18n-manager' | etc, prompt: '...', model: 'sonnet'})
+```
+
+### Phase 6: VALIDATION
+```
+Task({subagent_type: 'phase-5-coordinator', prompt: 'Coordinate validation', model: 'haiku'})
+Task({subagent_type: 'phase-5-quality-validator', prompt: 'Validate quality', model: 'haiku'})
+Task({subagent_type: 'phase-5-architecture-validator', prompt: 'Validate architecture', model: 'haiku'})
+Task({subagent_type: 'phase-5-security-scanner', prompt: 'Scan for security issues', model: 'haiku'})
+Task({subagent_type: 'cross-phase-self-critique', prompt: 'Evaluate results', model: 'haiku'})
+```
+
+### Phase 7: CONSOLIDATION (for significant tasks)
+```
+Task({subagent_type: 'phase-6-consolidation', prompt: 'Store patterns and update knowledge graph', model: 'sonnet'})
+```
+
+**CRITICAL RULES:**
+- Phase 1 verification (Glob/Grep) is ONLY for checking existence
+- After Phase 1, ALL work is delegated to agents
+- Run `cross-phase-self-critique` after Phases 1, 3, 6
+- NEVER read files to understand code yourself - delegate to specialists
 
 ---
 
-## 🤖 ORCHESTRATOR RULE (ABSOLUTE)
+## 5-TIER COMPLEXITY SYSTEM (NO BYPASS POSSIBLE)
 
-**ACTIVATE `adaptive-meta-orchestrator` ON EVERY USER MESSAGE - NO EXCEPTIONS**
+**MANDATORY**: Based on complexity score (0-100), you MUST follow ONE of these 5 tiers. NO EXCEPTIONS.
+
+### Tier Selection by Complexity Score
+
+| Complexity | Tier | Min Agents | Model | Direct Tools Allowed |
+|------------|------|------------|-------|---------------------|
+| **0-30** | TRIVIAL | 1 | haiku | YES (after scorer) |
+| **31-50** | FAST | 3 | haiku | NO (need coordinator) |
+| **51-70** | STANDARD | 6 | sonnet | NO (need coordinator) |
+| **71-85** | ADVANCED | 10 | sonnet | NO (need coordinator) |
+| **86-100** | FULL | 21+ | opus | NO (need coordinator) |
+
+### TRIVIAL Tier (0-30) - Direct Tool Access
+
+**UNIQUE FEATURE**: After complexity-scorer, main session can use Read/Glob/Grep/Edit/Write/Bash directly.
 
 ```
-Skill('adaptive-meta-orchestrator')
+Workflow:
+1. phase-1b-complexity-scorer (haiku) → Confirms complexity 0-30
+2. THEN: Use tools directly (Read, Glob, Grep, Edit, Write, Bash)
+
+Examples:
+- Add a single translation key
+- Fix a typo in one file
+- Read a configuration file
 ```
 
-**WHY this design?**
-- **Single decision point**: Orchestrator decides complexity, not you (no logic duplication)
-- **Consistent routing**: All tasks through same entry point (predictable behavior)
-- **Adaptive optimization**: Learns patterns over time
-- **If YOU decide when to activate, YOU become the orchestrator** (anti-pattern)
+### FAST Tier (31-50) - Minimal Coordination
 
-**The orchestrator decides**: Trivial → direct response | Complex → full workflow with specialized agents
+```
+Required Agents (3):
+1. phase-1b-complexity-scorer (haiku) → Score complexity
+2. phase-3a-task-lister (haiku) → List tasks
+3. phase-4-coordinator (haiku) → Execute via coordinator
 
-**If you violated**: STOP → Recognize internally → Activate orchestrator NOW → Continue
+Examples:
+- Create a simple component
+- Add translations to multiple locales
+- Update configuration in 2-3 files
+```
+
+### STANDARD Tier (51-70) - Full Planning
+
+```
+Required Agents (6):
+1. phase-1b-complexity-scorer (haiku) → Score complexity
+2. phase-1a-keyword-detector (haiku) → Detect keywords
+3. phase-3a-task-lister (haiku) → List tasks
+4. phase-3-planner (haiku) → Create execution plan
+5. phase-4-coordinator (sonnet) → Execute via coordinator
+6. phase-5-quality-validator (haiku) → Validate quality
+
+Examples:
+- Implement new feature with multiple components
+- SEO optimization across pages
+- Performance improvements with testing
+```
+
+### ADVANCED Tier (71-85) - Architecture Review
+
+```
+Required Agents (10):
+1. phase-1b-complexity-scorer (haiku)
+2. phase-1a-keyword-detector (haiku)
+3. phase-1d-confidence-assessor (haiku)
+4. phase-3a-task-lister (haiku)
+5. phase-3b-task-decomposer (sonnet)
+6. phase-3-planner (haiku)
+7. phase-3-tool-selector (haiku)
+8. phase-4-coordinator (sonnet)
+9. phase-5-quality-validator (haiku)
+10. phase-5-architecture-validator (haiku)
+
+Examples:
+- Major refactoring with architecture changes
+- Multi-page feature with i18n, SEO, and performance
+- Security audit and remediation
+```
+
+### FULL Tier (86-100) - Maximum Validation
+
+```
+Required Agents (21+):
+ALL phases, ALL agents, including:
+- phase-0-pre-analysis
+- All Phase 1 agents (4)
+- cross-phase-self-critique (multiple)
+- All Phase 3 agents (6)
+- All Phase 5 agents (5)
+- phase-6-consolidation
+
+Examples:
+- Complete site redesign
+- Multi-agent system implementation
+- Production deployment with full validation
+```
+
+### Critical Keywords (Force STANDARD or Higher)
+
+Regardless of complexity score, these keywords elevate to STANDARD minimum:
+
+- `security`, `deploy`, `deployment`, `secrets`, `production`, `prod`
+- `database`, `migration`
+
+### Enforcement Rules
+
+1. **Hook validates**: `validate-orchestrator.py` tracks all agent invocations
+2. **Block on violation**: Edit/Write/Bash blocked until minimum agents invoked
+3. **NO BYPASS**: `enforcement.allowBypass = false` in config
+4. **Config location**: `.claude/config/complexity-tiers.json`
+5. **TRIVIAL exception**: ONLY tier that allows direct tool usage (after scorer)
+
+### Trust Level Reduction (Future)
+
+High-trust users (level 5) can reduce tier by 1 level:
+- FAST → TRIVIAL
+- STANDARD → FAST
+- ADVANCED → STANDARD
+- FULL → ADVANCED
+
+Floor: TRIVIAL (cannot reduce below)
+
+---
+
+## QUICK REFERENCE
+
+**Top 5 Rules**:
+1) Orchestrator ALWAYS first
+2) **DELEGATE to agents** (orchestrator does NOT execute, except TRIVIAL tier)
+3) Phase 1 verification only (Glob/Grep to check existence)
+4) Ask if uncertain (<70% confidence)
+5) Parallelize agent invocations (3-5x faster)
+
+### Phase 1 Verification Tools (ONLY for existence checks)
+
+| Check | Tool | Purpose | When OK | When DELEGATE |
+|-------|------|---------|---------|---------------|
+| File exists | Glob | `Glob('src/components/**/*.astro')` | Check existence | Reading content → delegate |
+| Function exists | Grep | `Grep('ResponsiveImage', type: 'astro')` | Verify name exists | Understanding logic → delegate |
+| Pattern search | Grep | `Grep('TODO\|FIXME', output_mode: 'files')` | Count occurrences | Analyzing patterns → delegate |
+
+**Anti-Pattern**: Using Read/Grep to understand code → DELEGATE to `astro-expert`, `code-analyzer`, etc.
+
+**Exception**: TRIVIAL tier (0-30) can use Read/Edit/Write/Bash directly after complexity-scorer
 
 ---
 
@@ -67,6 +244,41 @@ Skill('adaptive-meta-orchestrator')
 5. Rigorous standards (same for user's ideas and your own)
 
 **Goal**: Objective guidance > false agreement
+
+---
+
+## 🎯 SIMPLICITY FIRST
+
+**Every change should impact MINIMUM code necessary.**
+
+### Core Rules
+
+1. **Minimal Impact**: Change only what's necessary for the task - nothing more
+2. **No Cascading Changes**: If 1 file solves it, don't touch 5
+3. **Simple Solutions**: If a fix seems complex, step back and find simpler approach
+4. **Zero New Bugs**: Your goal is to NOT introduce bugs - simplicity prevents them
+5. **Root Cause Only**: Find and fix the real issue - NO temporary patches
+
+### Anti-Patterns to Avoid
+
+```
+❌ "While I'm here, let me also refactor this..."
+❌ "I'll add extra validation just in case..."
+❌ "Let me create an abstraction for future use..."
+❌ "This temporary fix will work for now..."
+```
+
+### Correct Patterns
+
+```
+✅ Fix exactly what was asked
+✅ Minimum lines changed
+✅ No speculative features
+✅ No "improvements" unless requested
+✅ Root cause identified and fixed permanently
+```
+
+**Mantra**: The best code change is the smallest one that solves the problem completely.
 
 ---
 
@@ -221,54 +433,44 @@ Validates: Structured data, meta tags, hreflang, sitemap
 
 ```
 .claude/
-├── skills/                                      # 15 total (7 universal + 8 cv-astro)
-│   ├── adaptive-meta-orchestrator/              # Master orchestrator
-│   │   ├── SKILL.md
-│   │   └── resources/
-│   │       └── agent-routing/
-│   │           └── routing-algorithm.md         # Keyword mapping logic
-│   ├── astro-component-generator/SKILL.md       # YAML frontmatter
-│   ├── astro-react-integrator/SKILL.md          # YAML frontmatter
-│   ├── structured-data-generator/SKILL.md       # YAML frontmatter
-│   ├── pwa-optimizer/SKILL.md                   # YAML frontmatter
-│   ├── responsive-image-optimizer/SKILL.md      # YAML frontmatter
-│   ├── tailwind-component-builder/SKILL.md      # YAML frontmatter
-│   ├── astro-seo-validator/SKILL.md             # YAML frontmatter
-│   ├── lighthouse-performance-optimizer/SKILL.md # YAML frontmatter
-│   ├── auto-discovery/SKILL.md                  # Auto-catalog tools
+├── skills/
+│   └── adaptive-meta-orchestrator/              # Behavioral guide (v3.7)
+│       ├── SKILL.md                             # Always-execute guide
+│       └── resources/                           # Deep-dive docs (11 files)
+│           ├── orchestration-workflow.md
+│           ├── complexity-routing.md
+│           ├── tool-optimization.md
+│           ├── quality-validation.md
+│           ├── prompt-enhancement.md
+│           ├── context-memory.md
+│           ├── conflict-resolution.md          # v3.7
+│           ├── graceful-degradation.md         # v3.7
+│           ├── trust-levels.md                 # v3.7
+│           ├── agent-communication.md          # v3.7
+│           └── explainability.md               # v3.7
+├── agents/                                      # 28+ agents
+│   ├── task-lister.md                          # v3.7 - List tasks
+│   ├── self-critique.md                        # v3.7 - Phase evaluation
+│   ├── prompt-chain-analyzer.md                # v3.7 - Iteration detection
+│   ├── trust-manager.md                        # v3.7 - Trust levels
+│   ├── explainability-engine.md                # v3.7 - Decision explanation
+│   ├── context-compressor.md                   # v3.7 - Context compression
 │   └── ...
-├── agents/                                      # 22 total (16 universal + 6 cv-astro)
-│   ├── i18n-manager.md                          # YAML frontmatter
-│   ├── astro-expert.md                          # YAML frontmatter
-│   ├── seo-optimizer.md                         # YAML frontmatter
-│   ├── lighthouse-optimizer.md                  # YAML frontmatter
-│   ├── pwa-auditor.md                           # YAML frontmatter
-│   ├── image-optimizer-agent.md                 # YAML frontmatter
-│   └── ...
-├── commands/                                    # 23 total (18 universal + 5 cv-astro)
-│   ├── load-project.md                          # Load project context
-│   ├── astro-component.md                       # Quick component generation
-│   ├── i18n-add.md                              # Add translation
-│   ├── seo-check.md                             # SEO validation
-│   ├── i18n-validate.md                         # Translation consistency
-│   ├── performance-check.md                     # Lighthouse audit
-│   ├── validate-claim.md
-│   └── ...
-├── docs/                                        # Reference documentation
-│   ├── ANTI-HALLUCINATION.md
-│   ├── CONTEXT-MANAGEMENT.md
-│   ├── TESTING-STRATEGY.md
-│   └── ...
-└── projects/                                    # Project-specific context
-    └── cv-astro/
-        ├── README.md                            # Quick overview
-        ├── core/                                # Always-loaded (~1,500 tokens)
-        │   ├── architecture.md                  # Astro/React patterns
-        │   ├── i18n.md                          # Translation management
-        │   ├── seo.md                           # Swiss/Spanish SEO
-        │   └── workflows.md                     # Common dev workflows
-        └── knowledge/                           # On-demand references
-            └── (future expansions)
+├── hooks/                                       # Auto-execute hooks
+│   ├── forced-evaluation.py                    # v3.7 - EVALUATE→ACTIVATE→RUN
+│   ├── trust-signal-detector.py                # v3.7 - Trust signals
+│   └── iteration-detector.py                   # v3.7 - Correction detection
+├── config/
+│   ├── orchestrator-settings.json              # v3.7 config
+│   └── complexity-tiers.json                   # v3.7 5-tier system
+├── state/                                       # Runtime state
+│   ├── user-trust.json                         # v3.7 - Trust level
+│   ├── decisions.jsonl                         # v3.7 - Decision log
+│   ├── phase-metrics.json                      # v3.7 - Success rates
+│   └── complexity-calibration.json             # v3.7 - Self-correction
+├── commands/                                    # Slash commands
+├── docs/                                        # Reference docs
+└── projects/cv-astro/                           # Project context
 ```
 
 ### Performance Impact
@@ -447,11 +649,27 @@ Detect patterns (3+ occurrences, >75% confidence) → Suggest: skills, agents, c
 
 ---
 
-### Agents (22)
+### Agents (60 total)
 
-**Universal (16)**: context-detector, complexity-analyzer, question-generator, quality-validator, pattern-learner, task-decomposer, test-generator, security-scanner, performance-profiler, refactor-planner, bug-documenter, decision-documenter, progress-tracker, frontend-expert, backend-expert, code-quality
+**Phase-Specific (20)** - Mandatory per phase:
+- Phase 0: `phase-0-pre-analysis`
+- Phase 1: `phase-1a-keyword-detector`, `phase-1b-complexity-scorer`, `phase-1c-prompt-quality`, `phase-1d-confidence-assessor`
+- Phase 2: `phase-2-context-loader`
+- Phase 3: `phase-3-planner`, `phase-3a-task-lister`, `phase-3b-task-decomposer`, `phase-3-dependency-analyzer`, `phase-3-tool-selector`, `phase-3-strategy-determiner`
+- Phase 4: `phase-4-coordinator`
+- Phase 5: `phase-5-coordinator`, `phase-5-quality-validator`, `phase-5-architecture-validator`, `phase-5-self-validator`, `phase-5-reflexion`, `phase-5-security-scanner`
+- Phase 6: `phase-6-consolidation`
+
+**Cross-Phase (2)**: `cross-phase-self-critique`, `cross-phase-context-compressor`
+
+**Auxiliary (6)** - Conditional activation:
+`auxiliary-trust-manager`, `auxiliary-explainability`, `auxiliary-iteration-detector`, `auxiliary-prompt-enhancer` (opus), `auxiliary-architecture-reviewer` (opus), `auxiliary-strategic-planner` (opus)
+
+**Universal (10)**: question-generator, test-generator, performance-profiler, refactor-planner, bug-documenter, decision-documenter, progress-tracker, frontend-expert, backend-expert, code-quality
 
 **CV_Astro-specific (6)**: i18n-manager, astro-expert, seo-optimizer, lighthouse-optimizer, pwa-auditor, image-optimizer-agent
+
+**Django/Binora (16)**: django-codebase-auditor, django-performance-analyzer, django-security-auditor, django-test-generator, django-feature-planner, django-service-layer-generator, django-contract-compliance-validator, binora-deployment-checker, binora-pre-commit-guardian, binora-multi-tenant-enforcer, security-auditor, performance-analyzer, testing-agent, refactor-agent, pr-comment-generator
 
 **Invocation syntax**:
 ```typescript
@@ -489,33 +707,44 @@ User: "Any request"
   ↓
 adaptive-meta-orchestrator (ALWAYS FIRST - automatic)
   ↓
-Phase 0: Context Loading & Prompt Analysis
-  - Agent: context-detector (analyze what context is needed)
-  - Load relevant knowledge:
-    * /load-anti-hallucination (if files/functions mentioned)
-    * /load-testing-strategy (if "test", "coverage" detected)
-    * /load-security (if "security", "audit", "deploy" detected)
-    * /load-refactoring-patterns (if "refactor", "improve" detected)
-    * /load-project cv-astro (if CV_Astro keywords detected)
+Phase 0: Pre-Analysis (if token budget >75%)
+  - Agent: phase-0-pre-analysis (compress context)
   ↓
-Phase 1: Keyword Analysis
-  - Keywords detected (astro, react, i18n, seo, performance, etc.)
-  - Priority weights (CRITICAL > HIGH > MEDIUM > LOW)
-  - Match against YAML frontmatter
+Phase 1: Evaluation (4 agents in PARALLEL)
+  - Agent: phase-1a-keyword-detector (detect keywords)
+  - Agent: phase-1b-complexity-scorer (score 0-100)
+  - Agent: phase-1c-prompt-quality (assess clarity)
+  - Agent: phase-1d-confidence-assessor (confidence level)
+  - Self-critique after Phase 1
   ↓
-Phase 2: Complexity Scoring (0-100)
-  - Determine tool type needed
-  - Score based on task scope and dependencies
+Phase 2: Complexity Scoring
+  - Re-score based on Phase 1 findings
+  - Determine tier (TRIVIAL/FAST/STANDARD/ADVANCED/FULL)
   ↓
-Phase 3: Workflow Decision
-  - Select tools (commands, agents, skills)
-  - Determine execution strategy (sequential, parallel, hybrid)
-  - Plan validation steps
+Phase 3: Decomposition (if complexity >40)
+  - Agent: phase-3a-task-lister (list all tasks)
+  - Agent: phase-3b-task-decomposer (break down complex tasks)
+  - Agent: phase-3-dependency-analyzer (identify dependencies)
+  - Self-critique after Phase 3
   ↓
-Phase 4: Execution & Validation
-  - Execute workflow with selected tools
-  - Apply skills validation
-  - Verify results
+Phase 4: Planning
+  - Agent: phase-3-planner (create execution plan)
+  - Agent: phase-3-tool-selector (select optimal tools)
+  - Agent: phase-3-strategy-determiner (sequential/parallel/hybrid)
+  ↓
+Phase 5: Execution
+  - Agent: phase-4-coordinator (coordinate execution)
+  - Specialists: astro-expert, seo-optimizer, i18n-manager, etc.
+  ↓
+Phase 6: Validation
+  - Agent: phase-5-coordinator (coordinate validation)
+  - Agent: phase-5-quality-validator (quality checks)
+  - Agent: phase-5-architecture-validator (architecture review)
+  - Agent: phase-5-security-scanner (security scan)
+  - Self-critique after Phase 6
+  ↓
+Phase 7: Consolidation (for significant tasks)
+  - Agent: phase-6-consolidation (update knowledge graph)
 ```
 
 ### Example 1: Create Astro Component
@@ -526,7 +755,7 @@ User: "Create an Astro component for the contact form with i18n"
 adaptive-meta-orchestrator
   ↓
 Keywords detected: "astro component", "i18n"
-Complexity: 45/100 (medium)
+Complexity: 45/100 → FAST tier
   ↓
 Orchestrator workflow:
   1. Auto-load: /load-project cv-astro (auto_load_project: cv-astro)
@@ -538,25 +767,22 @@ Orchestrator workflow:
 Result: Component created with full i18n support
 ```
 
-### Example 2: Add Translation
+### Example 2: Add Translation (TRIVIAL)
 
 ```
-User: "Add translation for the hero section title in all languages"
+User: "Add translation for button text 'Submit'"
   ↓
 adaptive-meta-orchestrator
   ↓
-Keywords detected: "translation", "add", "languages"
-Complexity: 35/100 (low-medium)
+Keywords detected: "translation", "add"
+Complexity: 15/100 → TRIVIAL tier
   ↓
 Orchestrator workflow:
-  1. Auto-load: cv-astro context
-  2. Agent: i18n-manager (manage translations)
-  3. Prompts for: English text, context
-  4. Generates: Spanish (es-ES) and French (Swiss French) translations
-  5. Updates: public/locales/{en,es,fr}/common.json
-  6. Validates: JSON syntax, no duplicates
+  1. phase-1b-complexity-scorer → Confirms TRIVIAL (0-30)
+  2. Direct tool usage allowed → Read locales, Write updates
+  3. Updates: public/locales/{en,es,fr}/common.json
   ↓
-Result: Translation added to all 3 locales
+Result: Translation added (no coordinator needed)
 ```
 
 ### Example 3: SEO Optimization for Swiss Market
@@ -567,7 +793,7 @@ User: "Optimize SEO for Switzerland with structured data"
 adaptive-meta-orchestrator
   ↓
 Keywords detected: "seo", "switzerland", "structured data"
-Complexity: 65/100 (medium-high)
+Complexity: 65/100 → STANDARD tier
   ↓
 Orchestrator workflow:
   1. Auto-load: /load-project cv-astro
@@ -580,7 +806,7 @@ Orchestrator workflow:
 Result: Full SEO optimization + validation report
 ```
 
-### Example 4: Performance Optimization
+### Example 4: Performance Optimization (ADVANCED)
 
 ```
 User: "Optimize Lighthouse score, especially LCP"
@@ -588,7 +814,7 @@ User: "Optimize Lighthouse score, especially LCP"
 adaptive-meta-orchestrator
   ↓
 Keywords detected: "lighthouse", "lcp", "optimize"
-Complexity: 70/100 (high)
+Complexity: 75/100 → ADVANCED tier
   ↓
 Orchestrator workflow:
   1. Auto-load: cv-astro context
@@ -604,40 +830,58 @@ Result: LCP improved from 4.2s to 1.8s, score 92/100
 
 ### Orchestrator Decision Logic
 
-The orchestrator analyzes requests through 4 independent phases:
+The orchestrator analyzes requests through 8 sequential phases:
 
-**Phase 1: Keyword Analysis**
-- Scans user message for technology/domain keywords
-- Assigns priority weights: CRITICAL (security, deploy) > HIGH (performance, SEO) > MEDIUM (i18n, components) > LOW (style, formatting)
-- Matches detected keywords against `activation:` YAML frontmatter in skills/agents
-- Determines if project context auto-loading required (`auto_load_project: cv-astro`)
+**Phase 0: Pre-Analysis (Conditional)**
+- Triggered if token budget >75%
+- Agent: phase-0-pre-analysis
+- Compresses context to reduce token usage
+- Prepares optimized prompt for Phase 1
 
-**Phase 2: Complexity Scoring (0-100)**
+**Phase 1: Evaluation (4 Parallel Agents)**
+- Agent: phase-1a-keyword-detector → Scan for technology/domain keywords
+- Agent: phase-1b-complexity-scorer → Initial complexity score (0-100)
+- Agent: phase-1c-prompt-quality → Assess clarity and completeness
+- Agent: phase-1d-confidence-assessor → Confidence level (0-100%)
+- Self-critique: Evaluate Phase 1 results
 
-Determines *what tools* to use, not *how* to execute:
+**Phase 2: Complexity Scoring**
+- Re-score based on Phase 1 findings
+- Determines tier (TRIVIAL/FAST/STANDARD/ADVANCED/FULL)
+- Categorizes task by tool access requirements
 
-| Score | Response Type | Tool Selection | Example |
-|-------|---------------|----------------|---------|
-| 0-20 | Direct answer | None | "What is Astro?" → Text response |
-| 21-40 | Skill validation | 1 skill | "Check this SEO" → astro-seo-validator |
-| 41-60 | Single agent | 1 agent + skills | "Add translation" → i18n-manager |
-| 61-80 | Multiple agents | 2-3 agents | "Optimize SEO + performance" → seo + lighthouse |
-| 81-100 | Agent cascade | 3+ agents + validation | "Full site audit" → SEO + PWA + performance + i18n |
+**Phase 3: Decomposition (if complexity >40)**
+- Agent: phase-3a-task-lister → List all required tasks
+- Agent: phase-3b-task-decomposer → Break down complex tasks into subtasks
+- Agent: phase-3-dependency-analyzer → Identify task dependencies
+- Self-critique: Evaluate decomposition quality
 
-**Phase 3: Tool Selection**
+**Phase 4: Planning**
+- Agent: phase-3-planner → Create execution plan with validation gates
+- Agent: phase-3-tool-selector → Select optimal tools (commands/agents/skills)
+- Agent: phase-3-strategy-determiner → Sequential/Parallel/Hybrid execution
+- Output: Execution plan with dependency graph
 
-Based on task nature (independent of complexity):
+**Phase 5: Execution**
+- Agent: phase-4-coordinator → Orchestrate execution across specialists
+- Specialists: astro-expert, seo-optimizer, i18n-manager, etc.
+- Execute per strategy (parallel for independent tasks, sequential for dependencies)
+- Track progress with TodoWrite
 
-- **Commands**: Quick checks, validations (≤30s execution)
-  - `/seo-check`, `/performance-check`, `/i18n-validate`
-- **Skills**: Validation rules, pattern enforcement (no heavy computation)
-  - `astro-component-generator`, `structured-data-generator`, `pwa-optimizer`
-- **Agents**: Complex tasks, analysis (>30s execution)
-  - `i18n-manager`, `seo-optimizer`, `lighthouse-optimizer`
+**Phase 6: Validation**
+- Agent: phase-5-coordinator → Coordinate validation activities
+- Agent: phase-5-quality-validator → Validate code quality, tests, linting
+- Agent: phase-5-architecture-validator → Review architectural compliance
+- Agent: phase-5-security-scanner → Scan for security vulnerabilities
+- Self-critique: Evaluate overall results
 
-**Phase 4: Execution Strategy**
+**Phase 7: Consolidation (for significant tasks)**
+- Agent: phase-6-consolidation → Update knowledge graph
+- Store patterns for future use
+- Log decision rationale
+- Update calibration metrics
 
-Determined by *task dependencies* and *work volume* (independent of complexity):
+**Execution Strategy Decision:**
 
 | Strategy | When to Use | Rationale | Example |
 |----------|-------------|-----------|---------|
@@ -660,12 +904,12 @@ Medium complexity (50) + High volume → Parallel
   "Optimize all images"
   → Run responsive-image-optimizer for all images in parallel
 
-Low complexity (30) + Single task → Direct
+TRIVIAL complexity (15) + Single task → Direct
   "Add translation for button"
-  → i18n-manager agent (single operation)
+  → Direct Read/Write (no coordinator needed)
 ```
 
-**Key Principle**: Complexity determines *tool type*, task structure determines *execution strategy*.
+**Key Principle**: Complexity determines *tier*, task structure determines *execution strategy*.
 
 ---
 
@@ -687,8 +931,8 @@ Low complexity (30) + Single task → Direct
 
 ---
 
-**System Version**: 3.0.0 (CV_Astro Specialized)
-**Purpose**: CV_Astro Project Enhancement System
+**System Version**: 3.7.0 (CV_Astro + Orchestrator v3.7)
+**Behavioral Guide**: `.claude/skills/adaptive-meta-orchestrator/SKILL.md`
 **Stack**: Astro 5.5.2 + React 18 + TypeScript + TailwindCSS 3.4.1 + i18next
-**Markets**: Switzerland (Zurich) 🇨🇭 + Spain 🇪🇸
+**Markets**: Switzerland (Zurich) + Spain
 **Scope**: Astro SSG, React islands, i18n, SEO optimization, PWA, performance

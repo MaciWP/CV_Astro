@@ -6,12 +6,20 @@
  */
 import Layout from "../../layouts/Layout.astro";
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
 
 const title = "Oriol Macias - Backend Developer Lausanne | EPFL Tech Ecosystem";
 const description =
     "Backend Developer targeting Lausanne EPFL tech ecosystem. Python, Django specialist with research collaboration experience.";
+
+const breadcrumbs = [
+  { name: "Home", url: "https://oriolmacias.dev/" },
+  { name: "Switzerland", url: "https://oriolmacias.dev/switzerland/" },
+  { name: "Lausanne", url: "https://oriolmacias.dev/switzerland/lausanne" }
+];
 ---
 
+<BreadcrumbSchema items={breadcrumbs} />
 <Layout title={title} description={description}>
     <div class="max-w-4xl mx-auto">
         <!-- Lausanne-specific Hero -->

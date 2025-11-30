@@ -88,7 +88,7 @@ const SEO = ({
             <meta property="og:description" content={description} />
             <meta property="og:image" content={fullOgImage} />
             <meta property="og:site_name" content="Oriol Macias - Developer Portfolio" />
-            <meta property="og:locale" content={lang === 'es' ? 'es_ES' : lang === 'fr' ? 'fr_FR' : 'en_US'} />
+            <meta property="og:locale" content={lang === 'es' ? 'es_ES' : lang === 'fr' ? 'fr_FR' : lang === 'de' ? 'de_DE' : 'en_US'} />
 
             {/* Twitter Card */}
             <meta name="twitter:card" content={twitterCard} />
@@ -110,6 +110,7 @@ const SEO = ({
             <link rel="alternate" hrefLang="en" href={`${domain}/`} />
             <link rel="alternate" hrefLang="es" href={`${domain}/es/`} />
             <link rel="alternate" hrefLang="fr" href={`${domain}/fr/`} />
+            <link rel="alternate" hrefLang="de" href={`${domain}/de/`} />
             <link rel="alternate" hrefLang="x-default" href={`${domain}/`} />
 
             {/* Meta información adicional para SEO */}

@@ -1,0 +1,155 @@
+{
+  "$schema": "complexity-tiers-v1.0",
+  "version": "1.0.0",
+  "description": "5-tier complexity system for orchestrator v3.7",
+
+  "tiers": {
+    "TRIVIAL": {
+      "range": [0, 30],
+      "allowDirectTools": true,
+      "description": "Simple tasks - direct tool usage allowed after complexity scoring",
+      "requiredAgents": [
+        "phase-1b-complexity-scorer"
+      ],
+      "model": "haiku",
+      "minimumAgents": 1,
+      "examples": [
+        "Add a single translation key",
+        "Fix a typo in one file",
+        "Read a configuration file"
+      ]
+    },
+
+    "FAST": {
+      "range": [31, 50],
+      "allowDirectTools": false,
+      "description": "Quick tasks - minimal planning, coordinator required",
+      "requiredAgents": [
+        "phase-1b-complexity-scorer",
+        "phase-3a-task-lister",
+        "phase-4-coordinator"
+      ],
+      "model": "haiku",
+      "minimumAgents": 3,
+      "examples": [
+        "Create a simple component",
+        "Add translations to multiple locales",
+        "Update configuration in 2-3 files"
+      ]
+    },
+
+    "STANDARD": {
+      "range": [51, 70],
+      "allowDirectTools": false,
+      "description": "Standard tasks - requires planning and validation",
+      "requiredAgents": [
+        "phase-1b-complexity-scorer",
+        "phase-1a-keyword-detector",
+        "phase-3a-task-lister",
+        "phase-3-planner",
+        "phase-4-coordinator",
+        "phase-5-quality-validator"
+      ],
+      "model": "sonnet",
+      "minimumAgents": 6,
+      "examples": [
+        "Implement new feature with multiple components",
+        "SEO optimization across pages",
+        "Performance improvements with testing"
+      ]
+    },
+
+    "ADVANCED": {
+      "range": [71, 85],
+      "allowDirectTools": false,
+      "description": "Complex tasks - full decomposition and architecture review",
+      "requiredAgents": [
+        "phase-1b-complexity-scorer",
+        "phase-1a-keyword-detector",
+        "phase-1d-confidence-assessor",
+        "phase-3a-task-lister",
+        "phase-3b-task-decomposer",
+        "phase-3-planner",
+        "phase-3-tool-selector",
+        "phase-4-coordinator",
+        "phase-5-quality-validator",
+        "phase-5-architecture-validator"
+      ],
+      "model": "sonnet",
+      "minimumAgents": 10,
+      "examples": [
+        "Major refactoring with architecture changes",
+        "Multi-page feature with i18n, SEO, and performance",
+        "Security audit and remediation"
+      ]
+    },
+
+    "FULL": {
+      "range": [86, 100],
+      "allowDirectTools": false,
+      "description": "Highly complex tasks - all phases with maximum validation",
+      "requiredAgents": [
+        "phase-0-pre-analysis",
+        "phase-1a-keyword-detector",
+        "phase-1b-complexity-scorer",
+        "phase-1c-prompt-quality",
+        "phase-1d-confidence-assessor",
+        "cross-phase-self-critique",
+        "phase-2-context-loader",
+        "phase-3a-task-lister",
+        "phase-3b-task-decomposer",
+        "phase-3-dependency-analyzer",
+        "phase-3-planner",
+        "phase-3-tool-selector",
+        "phase-3-strategy-determiner",
+        "phase-4-coordinator",
+        "phase-5-coordinator",
+        "phase-5-quality-validator",
+        "phase-5-architecture-validator",
+        "phase-5-self-validator",
+        "phase-5-reflexion",
+        "phase-5-security-scanner",
+        "phase-6-consolidation"
+      ],
+      "model": "opus",
+      "minimumAgents": 21,
+      "examples": [
+        "Complete site redesign",
+        "Multi-agent system implementation",
+        "Production deployment with full validation"
+      ]
+    }
+  },
+
+  "criticalKeywords": {
+    "security": "STANDARD",
+    "deploy": "STANDARD",
+    "deployment": "STANDARD",
+    "secrets": "STANDARD",
+    "production": "STANDARD",
+    "prod": "STANDARD",
+    "database": "STANDARD",
+    "migration": "STANDARD"
+  },
+
+  "trustReduction": {
+    "enabled": true,
+    "description": "High trust users (level 5) can reduce complexity tier by 1 level",
+    "level5CanReduce": 1,
+    "floorTier": "TRIVIAL",
+    "comment": "User with trust level 5 can reduce FAST->TRIVIAL, STANDARD->FAST, etc."
+  },
+
+  "enforcement": {
+    "mode": "STRICT",
+    "blockOnViolation": true,
+    "allowBypass": false,
+    "description": "Hook enforces tier requirements - no bypass possible"
+  },
+
+  "metadata": {
+    "created": "2025-11-30",
+    "author": "orchestrator-v3.7",
+    "lastUpdated": "2025-11-30"
+  }
+}

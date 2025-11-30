@@ -251,3 +251,77 @@ export function toSafeJsonLd(data: any): string {
     // Escape closing </script to avoid early termination in HTML parsing
     return json.replace(/<\/script/gi, '<\\/script');
 }
+
+/**
+ * WebSite Schema interface
+ */
+export interface WebSiteSchema {
+    "@context": string;
+    "@type": "WebSite";
+    "@id": string;
+    url: string;
+    name: string;
+    description: string;
+    publisher: { "@id": string };
+    inLanguage: string[];
+}
+
+/**
+ * Resume Schema interface
+ */
+export interface ResumeSchema {
+    "@context": string;
+    "@type": "Resume";
+    "@id": string;
+    name: string;
+    description: string;
+    url: string;
+    dateCreated: string;
+    dateModified: string;
+    author: { "@id": string };
+    about: { "@id": string };
+    inLanguage: string[];
+}
+
+/**
+ * Generates Schema.org Resume structured data
+ * Improves semantic clarity for search engines
+ */
+export function generateResumeStructuredData(): ResumeSchema {
+    return {
+        "@context": "https://schema.org",
+        "@type": "Resume",
+        "@id": "https://oriolmacias.dev/#resume",
+        name: "Oriol Macias - Backend Developer Resume",
+        description: "Professional resume for Oriol Macias, Backend Developer with 8+ years experience in Python, Django, and industrial protocol integration",
+        url: "https://oriolmacias.dev/",
+        dateCreated: "2024-01-01",
+        dateModified: new Date().toISOString().split('T')[0],
+        author: {
+            "@id": "https://oriolmacias.dev/#oriol-macias-dev"
+        },
+        about: {
+            "@id": "https://oriolmacias.dev/#oriol-macias-dev"
+        },
+        inLanguage: ["en", "es", "fr", "de"]
+    };
+}
+
+/**
+ * Generates Schema.org WebSite structured data
+ * Improves site indexation and Google Knowledge Panel
+ */
+export function generateWebSiteStructuredData(): WebSiteSchema {
+    return {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://oriolmacias.dev/#website",
+        url: "https://oriolmacias.dev",
+        name: "Oriol Macias - Backend Developer Portfolio",
+        description: "Professional CV and portfolio for Oriol Macias, Backend Developer specialized in industrial protocols and Python/Django",
+        publisher: {
+            "@id": "https://oriolmacias.dev/#oriol-macias-dev"
+        },
+        inLanguage: ["en", "es", "fr", "de"]
+    };
+}

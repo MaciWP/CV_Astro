@@ -3,16 +3,18 @@ name: prompt-engineer
 description: Detects and enhances low-quality prompts using Anthropic 2025 best practices (XML, CoT, quote grounding). This skill should be used when users provide vague requests, question-based prompts without context, generic tasks without specifics, or explicitly request prompt improvement.
 activation:
   keywords:
-    - binora
     - enhance prompt
-    - improve request
+    - improve prompt
+    - better prompt
     - vague
     - unclear request
+    - prompt quality
   triggers:
     - Can you
     - Please help
     - How do I
-  auto_load_project: binora
+    - fix it
+    - make better
 ---
 
 # Prompt Engineer v2.0
@@ -47,13 +49,13 @@ Automatically detect prompts scoring **<70/100** and enhance them to **≥85/100
 This skill automatically detects your project type and loads the appropriate template:
 
 **Detection Priority** (checks in order):
-1. **Django Multi-Tenant**: `manage.py` + `apps/core/` exists → `templates/django_multi_tenant.md`
-2. **Django Standard**: `manage.py` exists → `templates/django.md`
-3. **Flask**: `app.py` or `wsgi.py` + "flask" in requirements.txt → `templates/flask.md`
-4. **FastAPI**: "fastapi" in requirements.txt → `templates/fastapi.md`
-5. **Generic**: No match → `templates/generic.md` (universal fallback for any backend)
-
-**For Binora Backend**: Detects **Django Multi-Tenant** ✅
+1. **Astro**: `astro.config.mjs` exists → `templates/astro.md`
+2. **Django Multi-Tenant**: `manage.py` + `apps/core/` exists → `templates/django_multi_tenant.md`
+3. **Django Standard**: `manage.py` exists → `templates/django.md`
+4. **Flask**: `app.py` or `wsgi.py` + "flask" in requirements.txt → `templates/flask.md`
+5. **FastAPI**: "fastapi" in requirements.txt → `templates/fastapi.md`
+6. **React/Vue/Frontend**: `package.json` + framework detected → `templates/frontend.md`
+7. **Generic**: No match → `templates/generic.md` (universal fallback)
 
 ---
 
@@ -200,7 +202,7 @@ Score: 88/100 ✅
 
 ---
 
-**Version**: 2.0.0
-**Last Updated**: 2025-01-23
+**Version**: 2.1.0
+**Last Updated**: 2025-01-29
 **Architecture**: Progressive disclosure (4 layers, -60% tokens vs monolithic)
-**Compatibility**: Django, Flask, FastAPI, Generic (backend-focused)
+**Compatibility**: Astro, Django, Flask, FastAPI, React, Vue, Generic (full-stack)

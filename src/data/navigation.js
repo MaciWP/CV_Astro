@@ -11,7 +11,8 @@ export const navItems = [
         name: {
             en: 'Experience',
             es: 'Experiencia',
-            fr: 'Expérience'
+            fr: 'Expérience',
+            de: 'Erfahrung'
         },
         href: '#experience'
     },
@@ -20,7 +21,8 @@ export const navItems = [
         name: {
             en: 'Skills',
             es: 'Habilidades',
-            fr: 'Compétences'
+            fr: 'Compétences',
+            de: 'Fähigkeiten'
         },
         href: '#skills'
     },
@@ -29,7 +31,8 @@ export const navItems = [
         name: {
             en: 'Education',
             es: 'Educación',
-            fr: 'Formation'
+            fr: 'Formation',
+            de: 'Ausbildung'
         },
         href: '#education'
     },
@@ -38,7 +41,8 @@ export const navItems = [
         name: {
             en: 'Languages',
             es: 'Idiomas',
-            fr: 'Langues'
+            fr: 'Langues',
+            de: 'Sprachen'
         },
         href: '#languages'
     },
@@ -47,7 +51,8 @@ export const navItems = [
         name: {
             en: 'Projects',
             es: 'Proyectos',
-            fr: 'Projets'
+            fr: 'Projets',
+            de: 'Projekte'
         },
         href: '#projects'
     }
@@ -58,33 +63,37 @@ export const uiTranslations = {
     downloadCV: {
         en: 'Download CV',
         es: 'Descargar CV',
-        fr: 'Télécharger CV'
+        fr: 'Télécharger CV',
+        de: 'Lebenslauf herunterladen'
     },
     backToTop: {
         en: 'Back to top',
         es: 'Volver arriba',
-        fr: 'Retour en haut'
+        fr: 'Retour en haut',
+        de: 'Nach oben'
     },
     openMenu: {
         en: 'Open menu',
         es: 'Abrir menú',
-        fr: 'Ouvrir le menu'
+        fr: 'Ouvrir le menu',
+        de: 'Menü öffnen'
     },
     closeMenu: {
         en: 'Close menu',
         es: 'Cerrar menú',
-        fr: 'Fermer le menu'
+        fr: 'Fermer le menu',
+        de: 'Menü schließen'
     }
 };
 
 /**
  * Get navigation items in the specified language
- * @param {string} lang - Language code (en, es, fr)
+ * @param {string} lang - Language code (en, es, fr, de)
  * @returns {Array} Navigation items with names in the specified language
  */
 export const getNavItems = (lang = 'en') => {
     // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
 
     // Transform data structure to use the specified language
     return navItems.map(item => ({
@@ -97,12 +106,12 @@ export const getNavItems = (lang = 'en') => {
 /**
  * Get UI translation in the specified language
  * @param {string} key - UI element key
- * @param {string} lang - Language code (en, es, fr)
+ * @param {string} lang - Language code (en, es, fr, de)
  * @returns {string} Translation in the specified language
  */
 export const getUITranslation = (key, lang = 'en') => {
     // Default to English if language not supported
-    const language = ['en', 'es', 'fr'].includes(lang) ? lang : 'en';
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
 
     if (uiTranslations[key] && uiTranslations[key][language]) {
         return uiTranslations[key][language];

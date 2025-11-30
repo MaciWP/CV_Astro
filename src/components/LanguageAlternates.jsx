@@ -16,7 +16,8 @@ const LanguageAlternates = ({ currentLang = 'en', currentPath = '/' }) => {
     const languages = [
         { code: 'en', hreflang: 'en', region: 'en-US', name: 'English' },
         { code: 'es', hreflang: 'es', region: 'es-ES', name: 'Español' },
-        { code: 'fr', hreflang: 'fr', region: 'fr-FR', name: 'Français' }
+        { code: 'fr', hreflang: 'fr', region: 'fr-CH', name: 'Français' },
+        { code: 'de', hreflang: 'de', region: 'de-CH', name: 'Deutsch' }
     ];
 
     // Generate URLs for each language
