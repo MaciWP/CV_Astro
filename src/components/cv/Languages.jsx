@@ -61,7 +61,7 @@ const Languages = () => {
 
     return (
         <section id="languages" className="mt-16 mb-16" ref={sectionRef}>
-            <div className={`flex items-center mb-6 transition-all duration-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <div className={`flex items-center mb-6 transition-opacity duration-[400ms] ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-language"></i>
                 </div>
@@ -72,8 +72,11 @@ const Languages = () => {
                 {languagesData.map((lang, index) => (
                     <div
                         key={index}
-                        className={`group bg-light-surface dark:bg-dark-surface rounded-none p-4 border border-light-border dark:border-dark-border transition-all duration-200 hover:border-brand-red/50 hover:shadow-md ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                        style={{ transitionDelay: `${index * 80}ms` }}
+                        className={`group bg-light-surface dark:bg-dark-surface rounded-none p-4 border border-light-border dark:border-dark-border hover:border-brand-red/50 hover:shadow-md hover:-translate-y-0.5 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                        style={{
+                            transitionDelay: `${index * 80}ms`,
+                            transition: 'background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out, opacity 200ms ease-out, transform 200ms ease-out'
+                        }}
                     >
                         <div className="flex justify-between items-center mb-4">
                             <span className="font-medium text-lg group-hover:text-brand-red transition-colors duration-150">{lang.language}</span>

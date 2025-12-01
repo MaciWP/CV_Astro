@@ -195,7 +195,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Prevent theme flash - must be first script -->
-    <script is:inline>
+    <script is:inline data-cfasync="false">
       (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
     </script>
 
@@ -205,19 +205,27 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
     <!-- LCP Image Preload - CRITICAL for performance -->
+    <!-- Mobile: preload 320w for screens up to 767px -->
     <link
       rel="preload"
       as="image"
       href="/images/oriol_macias-320.avif"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
+      imagesizes="280px"
       type="image/avif"
       media="(max-width: 767px)"
+      fetchpriority="high"
     />
+    <!-- Desktop: preload 640w for screens 768px and above -->
     <link
       rel="preload"
       as="image"
       href="/images/oriol_macias-640.avif"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
+      imagesizes="320px"
       type="image/avif"
       media="(min-width: 768px)"
+      fetchpriority="high"
     />
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
@@ -227,7 +235,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- JS Enabled Class -->
-    <script is:inline>document.documentElement.classList.add("js-enabled");</script>
+    <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
 
     <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
 
@@ -321,8 +329,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       .bg-brand-red{background-color:var(--brand-red)}
       .dark .text-brand-red,.dark .text-accessible-brand-red{color:#fca5a5!important}
       /* CLS Prevention - reserve space for Skills section */
-      #skills{min-height:750px;contain:layout style paint}
-      .skill-category-animate{contain:layout style paint;min-height:140px}
+      #skills{min-height:600px;contain:layout style paint}
+      .skill-category-animate{contain:layout style paint;min-height:44px}
+      /* Skill badge theme transition fix */
+      .skill-badge{transition:background-color 200ms ease-out,border-color 200ms ease-out,transform 100ms ease-out,box-shadow 100ms ease-out}
       .fas,.fab{min-width:1em;display:inline-block}
       footer,footer p,footer a{color:#374151!important}
       .dark footer,.dark footer p,.dark footer a{color:#e5e7eb!important}

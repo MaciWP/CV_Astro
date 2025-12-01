@@ -115,15 +115,15 @@ const githubLabel = getTranslation("header.github", "GitHub");
             <div class="md:col-span-4 flex flex-col items-center md:items-end order-1 md:order-2">
                 <div class="w-full max-w-xs border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface shadow-sm">
                     {/* Imagen - Explicit width/height to prevent CLS */}
-                    <div class="w-full aspect-square" style="min-height: 280px;">
+                    <div class="w-full aspect-square" style="min-height: 280px; contain: layout size;">
                         <picture>
                             <source
-                                srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
+                                srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
                                 sizes="(max-width: 767px) 280px, 320px"
                                 type="image/avif"
                             />
                             <source
-                                srcset="/images/oriol_macias-320.webp 320w, /images/oriol_macias-640.webp 640w"
+                                srcset="/images/oriol_macias-320.webp 320w, /images/oriol_macias-640.webp 640w, /images/oriol_macias-960.webp 960w"
                                 sizes="(max-width: 767px) 280px, 320px"
                                 type="image/webp"
                             />

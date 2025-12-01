@@ -85,7 +85,7 @@ const Experience = () => {
     return (
         <section id="experience" className="scroll-mt-20 mb-16">
             <div
-                className={`flex items-center gap-4 mb-10 transition-all duration-200 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                className={`flex items-center gap-4 mb-10 transition-opacity duration-[400ms] ${isVisible ? 'opacity-100' : 'opacity-0'}`}
             >
                 <div className="h-10 w-10 bg-brand-red dark:bg-brand-red rounded-none flex items-center justify-center flex-shrink-0 transition-colors duration-150">
                     <i className="fas fa-briefcase text-white"></i>
@@ -140,7 +140,10 @@ const Experience = () => {
                         </div>
 
                         {/* Job description with enhanced hover effects */}
-                        <div className="bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 transition-all duration-150 hover:shadow-md">
+                        <div
+                            className="bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md"
+                            style={{ transition: 'background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out' }}
+                        >
                             {/* Responsibilities section - condensed */}
                             <h4 className="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider" data-i18n="experience.responsibilities">
                                 {translations.responsibilities}

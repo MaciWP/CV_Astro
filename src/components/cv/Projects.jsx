@@ -13,6 +13,7 @@ const Projects = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [showAllDetails, setShowAllDetails] = useState(false);
     const [activeTab, setActiveTab] = useState('personal'); // 'personal' or 'professional'
+    const [isTabTransitioning, setIsTabTransitioning] = useState(false);
     const [personalProjects, setPersonalProjects] = useState([]);
     const [professionalProjects, setProfessionalProjects] = useState([]);
     const [translations, setTranslations] = useState({
@@ -47,25 +48,30 @@ const Projects = () => {
     };
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        const element = document.getElementById('projects');
-        if (element) {
-            observer.observe(element);
-        }
+        let observer;
 
         // Load initial project data and translations
         setPersonalProjects(getCurrentLanguagePersonalProjects());
         setProfessionalProjects(getCurrentLanguageProfessionalProjects());
         loadTranslations();
+
+        // Wait for initial paint before observing (ensures cards render invisible first)
+        const animationFrame = requestAnimationFrame(() => {
+            observer = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) {
+                        setIsVisible(true);
+                        observer.disconnect();
+                    }
+                },
+                { threshold: 0.1 }
+            );
+
+            const element = document.getElementById('projects');
+            if (element) {
+                observer.observe(element);
+            }
+        });
 
         // Listen for language changes
         const handleLanguageChanged = () => {
@@ -78,7 +84,8 @@ const Projects = () => {
         document.addEventListener('translationsLoaded', handleLanguageChanged);
 
         return () => {
-            observer.disconnect();
+            cancelAnimationFrame(animationFrame);
+            observer?.disconnect();
             document.removeEventListener('languageChanged', handleLanguageChanged);
             document.removeEventListener('translationsLoaded', handleLanguageChanged);
         };
@@ -87,6 +94,16 @@ const Projects = () => {
     // Toggle show all project descriptions
     const toggleAllProjectDetails = () => {
         setShowAllDetails(!showAllDetails);
+    };
+
+    // Handle tab switch with fade animation
+    const handleTabSwitch = (newTab) => {
+        if (newTab === activeTab) return;
+        setIsTabTransitioning(true);
+        setTimeout(() => {
+            setActiveTab(newTab);
+            setIsTabTransitioning(false);
+        }, 150);
     };
 
     // Get the proper icon, making sure VMware has its icon
@@ -101,8 +118,11 @@ const Projects = () => {
     const renderPersonalProjectCard = (project, index) => (
         <div
             key={project.id}
-            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 transition-all duration-200 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:-translate-y-1 ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col cursor-pointer`}
-            style={{ transitionDelay: `${100 * index}ms` }}
+            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:-translate-y-1 ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col cursor-pointer`}
+            style={{
+                transitionDelay: `${120 * index}ms`,
+                transition: 'background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out, transform 400ms ease-out, opacity 400ms ease-out'
+            }}
             onClick={() => project.githubUrl && window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' && project.githubUrl) {
@@ -194,8 +214,11 @@ const Projects = () => {
     const renderProfessionalProjectCard = (project, index) => (
         <div
             key={project.id}
-            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 transition-all duration-200 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:-translate-y-1 ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col`}
-            style={{ transitionDelay: `${100 * index}ms` }}
+            className={`group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:-translate-y-1 ${project.highlight ? 'border-l-4 border-l-brand-red' : ''} h-full flex flex-col`}
+            style={{
+                transitionDelay: `${120 * index}ms`,
+                transition: 'background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out, transform 400ms ease-out, opacity 400ms ease-out'
+            }}
             tabIndex={0}
             role="article"
             aria-label={`${project.title}`}
@@ -262,7 +285,7 @@ const Projects = () => {
 
     return (
         <section id="projects" className="pt-4">
-            <div className={`flex items-center mb-6 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <div className={`flex items-center mb-6 transition-opacity duration-[400ms] ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <div className="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
                     <i className="fas fa-project-diagram"></i>
                 </div>
@@ -290,8 +313,8 @@ const Projects = () => {
             {/* Project type tabs - min 48px tap targets */}
             <div className="flex border-b border-light-border dark:border-dark-border mb-6">
                 <button
-                    onClick={() => setActiveTab('personal')}
-                    className={`min-h-[48px] py-3 px-5 font-medium text-base ${activeTab === 'personal'
+                    onClick={() => handleTabSwitch('personal')}
+                    className={`min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 ${activeTab === 'personal'
                         ? 'text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400'
                         : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70'}`}
                     data-i18n="projects.personalProjects"
@@ -299,8 +322,8 @@ const Projects = () => {
                     {translations.personalProjects}
                 </button>
                 <button
-                    onClick={() => setActiveTab('professional')}
-                    className={`min-h-[48px] py-3 px-5 font-medium text-base ${activeTab === 'professional'
+                    onClick={() => handleTabSwitch('professional')}
+                    className={`min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 ${activeTab === 'professional'
                         ? 'text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400'
                         : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70'}`}
                     data-i18n="projects.professionalWork"
@@ -310,7 +333,9 @@ const Projects = () => {
             </div>
 
             {/* Project grid - conditional rendering based on active tab */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+                className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-150 ${isTabTransitioning ? 'opacity-0' : 'opacity-100'}`}
+            >
                 {activeTab === 'personal' ? (
                     personalProjects.map((project, index) => renderPersonalProjectCard(project, index))
                 ) : (
@@ -320,8 +345,7 @@ const Projects = () => {
 
             {/* Footer note - different for each tab */}
             <div
-                className={`mt-8 text-center transition-all duration-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                style={{ transitionDelay: '500ms' }}
+                className={`mt-8 text-center transition-opacity duration-150 ${isVisible && !isTabTransitioning ? 'opacity-100' : 'opacity-0'}`}
             >
                 {activeTab === 'personal' ? (
                     <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary" data-i18n="projects.personalProjectsNote">
