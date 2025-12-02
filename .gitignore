@@ -53,7 +53,7 @@ lerna-debug.log*
 .cache/
 .netlify/
 public/styles/font-awesome.min.css
-public/styles/fonts/
+# Note: public/styles/fonts/ now tracked - required for production
 
 # Temporary files
 .temp
