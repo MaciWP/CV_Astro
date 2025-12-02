@@ -579,10 +579,10 @@ export function getCurrentLanguageProfessionalProjects() {
     return getProfessionalProjects(currentLang);
 }
 
-// Re-exportar getTechIcon para mantener compatibilidad
+// Re-export getTechIcon for compatibility
 export { getTechIcon };
 
-// For compatibility with existing code - ahora después de definir las funciones
+// For compatibility with existing code - now after defining the functions
 export const personalProjects = getPersonalProjects('en');
 export const professionalProjects = getProfessionalProjects('en');
 
@@ -590,3 +590,4 @@ export default {
     personalProjects,
     professionalProjects
 };
+

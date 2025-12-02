@@ -16,10 +16,10 @@ const AccessibilityChecker = () => {
         setIsCheckingA11y(true);
 
         try {
-            // Importar axe-core dinámicamente (solo en desarrollo)
+            // Import axe-core dynamically (only in development)
             const axe = await import('axe-core');
 
-            // Ejecutar análisis de accesibilidad
+            // Run accessibility analysis
             axe.default.run(document, { reporter: 'v2' }, (err, results) => {
                 if (err) throw err;
 
@@ -33,9 +33,9 @@ const AccessibilityChecker = () => {
         }
     };
 
-    // Solo activar en desarrollo y cuando se solicite manualmente
+    // Only activate in development when manually requested
     useEffect(() => {
-        // Añadir evento de teclado para activar la verificación (Ctrl+Shift+A)
+        // Add keyboard event to trigger verification (Ctrl+Shift+A)
         const handleKeyDown = (e) => {
             if (e.ctrlKey && e.shiftKey && e.key === 'A') {
                 runA11yCheck();

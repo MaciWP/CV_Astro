@@ -1,5 +1,5 @@
 /**
- * Astro Configuration - ARREGLADO y compatible con tu setup actual
+ * Astro Configuration - 
  * @file astro.config.mjs
  * @description Configuración arreglada manteniendo tu setup + SEO Suiza/España
  */
@@ -29,14 +29,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default defineConfig({
-  // Site configuration (NECESARIO para SEO)
+  // Site configuration (required for SEO)
   site: 'https://oriolmacias.dev',
 
   // Pure Static Output - No adapter needed for CV/portfolio site
   // This eliminates server overhead and improves performance
   output: 'static',
 
-  // i18n configuration ARREGLADA
+  // i18n configuration
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es", "fr", "de"],

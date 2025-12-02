@@ -9,29 +9,29 @@ export default {
                 heading: ['Outfit', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
             },
             colors: {
-                // Color principal para acentos (WCAG AA compliant - 5.2:1 ratio)
+                // Brand accent color (WCAG AA compliant - 5.2:1 ratio)
                 'brand-red': '#c41e1e',
 
-                // Light theme - Nueva paleta más clara con recuadros grises
-                'light-primary': '#ffffff',       // Fondo principal BLANCO
-                'light-secondary': '#f3f4f6',     // Fondo secundario gris muy claro
-                'light-surface': '#ffffff',       // Superficie de tarjetas en blanco
-                'light-surface-alt': '#f7f8fa',   // Superficie alternativa gris muy suave
-                'light-border': '#e5e7eb',        // Borde gris claro
-                'light-text': '#1f2937',          // Texto principal casi negro
-                'light-text-secondary': '#6b7280', // Texto secundario gris medio
-                'light-card-bg': '#f3f4f6',       // Color de fondo para cards, similar a las fechas
+                // Light theme - Clean palette with gray cards
+                'light-primary': '#ffffff',       // Main background WHITE
+                'light-secondary': '#f3f4f6',     // Secondary background light gray
+                'light-surface': '#ffffff',       // Card surface white
+                'light-surface-alt': '#f7f8fa',   // Alternative surface soft gray
+                'light-border': '#e5e7eb',        // Light gray border
+                'light-text': '#1f2937',          // Main text near-black
+                'light-text-secondary': '#6b7280', // Secondary text medium gray
+                'light-card-bg': '#f3f4f6',       // Card background, similar to dates
 
-                // Dark theme - Optimizado para el CV
-                'dark-primary': '#121620',        // Fondo principal azul muy oscuro
-                'dark-secondary': '#1e2433',      // Fondo secundario azul oscuro
-                'dark-surface': '#262f45',        // Superficie de tarjetas azul medio oscuro
-                'dark-border': '#374151',         // Borde azul grisáceo
-                'dark-text': '#f9fafb',           // Texto principal blanco suave
-                'dark-text-secondary': '#9ca3af', // Texto secundario gris claro
+                // Dark theme - Optimized for CV
+                'dark-primary': '#121620',        // Main background dark blue
+                'dark-secondary': '#1e2433',      // Secondary background dark blue
+                'dark-surface': '#262f45',        // Card surface medium dark blue
+                'dark-border': '#374151',         // Blue-gray border
+                'dark-text': '#f9fafb',           // Main text soft white
+                'dark-text-secondary': '#9ca3af', // Secondary text light gray
             },
             transitionDuration: {
-                '75': '75ms', // Aseguramos que esté disponible
+                '75': '75ms',
             },
             boxShadow: {
                 'card': '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
@@ -101,3 +101,4 @@ export default {
         hoverOnlyWhenSupported: true, // Prevents hover on touch devices
     },
 };
+

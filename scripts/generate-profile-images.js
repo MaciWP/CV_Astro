@@ -1,9 +1,9 @@
-// scripts/generate-profile-images.js
+﻿// scripts/generate-profile-images.js
 import fs from "fs/promises";
 import sharp from "sharp";
 import path from "path";
 
-// Asegúrate de que aquí apuntas a la JPG original real:
+// Ensure this points to the original JPG:
 const INPUT = path.resolve("public/images/original/oriol_macias.jpg");
 const OUTDIR = path.resolve("public/images");
 const SIZES = [192, 320, 640, 960, 1280];

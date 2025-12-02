@@ -3,7 +3,7 @@
  * File: src/data/skills.js
  */
 
-// Importar el nuevo sistema unificado de iconos
+// Import the unified icon system
 import { techIcons, getTechIcon } from './icons';
 
 // Section titles with multilingual support
@@ -177,7 +177,7 @@ export const getCurrentLanguageSkills = () => {
     };
 };
 
-// Re-exportamos tanto getTechIcon como techIcons para mantener compatibilidad con el código existente
+// Re-export both getTechIcon and techIcons for compatibility with existing code
 export { getTechIcon, techIcons };
 
 // For compatibility with existing code

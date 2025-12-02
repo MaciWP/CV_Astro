@@ -83,12 +83,12 @@ export const useNavbar = () => {
         }
     };
 
-    // Toggle theme function - INSTANTÁNEO sin transiciones
+    // Toggle theme function - INSTANT without transitions
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
 
-        // Cambio inmediato sin animación
+        // Immediate change without animation
         document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add(newTheme);
         localStorage.setItem('theme', newTheme);
