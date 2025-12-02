@@ -1,89 +1,41 @@
 /**
- * I18nLoader Component - Simplified Version
- * Acts as a wrapper that ensures translations are loaded
+ * I18nLoader Component - SSG Optimized Version
+ * Translations are inlined at build time, no runtime fetch needed
  * File: src/components/I18nLoader.jsx
  */
 import React, { useState, useEffect } from 'react';
 
 const I18nLoader = ({ children, fallback = null }) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
-        // Detect current language
+        // Check if translations are already inlined (SSG)
         const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
 
-        // Function to load translations
-        const loadTranslations = async () => {
-            try {
-                // Try to use global i18n.init if available
-                if (window.i18n && typeof window.i18n.init === 'function') {
-                    await window.i18n.init(currentLang);
-                    setIsLoaded(true);
-                    return;
-                }
+        if (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) {
+            // Translations already available from SSG inline script
+            setIsLoaded(true);
+            return;
+        }
 
-                // Fallback: directly load the translation file
-                const response = await fetch(`/locales/${currentLang}/translation.json?v=${Date.now()}`);
+        // Fallback: wait for translationsLoaded event (should fire immediately from inline script)
+        const handleLoaded = () => setIsLoaded(true);
+        document.addEventListener('translationsLoaded', handleLoaded);
 
-                if (!response.ok) {
-                    throw new Error(`Failed to load translations for ${currentLang}`);
-                }
+        // Safety timeout - if translations don't load in 100ms, show content anyway
+        const timeout = setTimeout(() => setIsLoaded(true), 100);
 
-                const translations = await response.json();
-
-                // Store translations in global object
-                window.TRANSLATIONS = window.TRANSLATIONS || {};
-                window.TRANSLATIONS[currentLang] = translations;
-
-                // Ensure t() function is available
-                if (!window.t) {
-                    window.t = function (key) {
-                        const keys = key.split('.');
-                        let result = window.TRANSLATIONS[currentLang] || {};
-
-                        for (const k of keys) {
-                            if (result && typeof result === 'object' && k in result) {
-                                result = result[k];
-                            } else {
-                                return key.split('.').pop();
-                            }
-                        }
-
-                        return result || key.split('.').pop();
-                    };
-                }
-
-                // Signal that translations are available
-                setIsLoaded(true);
-
-                // Dispatch event for other components
-                document.dispatchEvent(new CustomEvent('translationsLoaded'));
-            } catch (error) {
-                console.error('Error loading translations:', error);
-                setHasError(true);
-
-                // Even if there's an error, we should show the UI
-                setIsLoaded(true);
-            }
+        return () => {
+            document.removeEventListener('translationsLoaded', handleLoaded);
+            clearTimeout(timeout);
         };
-
-        // Load translations when component mounts
-        loadTranslations();
     }, []);
 
-    // Display loading indicator while translations are loading
+    // SSG: translations are inline, so this should resolve almost instantly
     if (!isLoaded) {
-        return fallback || (
-            <div className="flex items-center justify-center min-h-[200px]">
-                <div className="animate-pulse text-light-text-secondary dark:text-dark-text-secondary">
-                    Loading...
-                </div>
-            </div>
-        );
+        return fallback || null; // Don't show loading spinner for SSG
     }
 
-    // Display content once translations are loaded (even with errors)
     return <>{children}</>;
 };
 
