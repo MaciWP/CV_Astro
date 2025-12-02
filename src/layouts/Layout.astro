@@ -206,12 +206,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- LCP Image Preload - CRITICAL for performance -->
     <!-- Mobile: preload 320w for screens up to 767px -->
+    <!-- IMPORTANT: imagesrcset MUST match <picture> srcset exactly for browser to use preload -->
     <link
       rel="preload"
       as="image"
       href="/images/oriol_macias-320.avif"
-      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
-      imagesizes="280px"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
+      imagesizes="(max-width: 767px) 280px, 320px"
       type="image/avif"
       media="(max-width: 767px)"
       fetchpriority="high"
@@ -229,10 +230,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
-    <!-- OPTIMIZED: Only 3 critical fonts preloaded (was 7) -->
-    <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- OPTIMIZED: Desktop-only preloads to reduce mobile bandwidth competition -->
+    <!-- Mobile uses system fonts (fallback) since Inter/Outfit use font-display:optional -->
+    <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
     <!-- FontAwesome Preload - Prevents CLS by loading icons early -->
     <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
