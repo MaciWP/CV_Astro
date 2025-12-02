@@ -15,48 +15,18 @@ const __dirname = path.dirname(__filename);
 
 /**
  * Asegurarse de que existan las carpetas necesarias en public/
+ * NOTE: Solo public/styles/fonts/ para Font Awesome (los CSS los maneja Astro directamente)
  */
 async function ensurePublicDirectories() {
     console.log('🔍 Verificando directorios...');
 
     try {
-        // Crear directorios si no existen
-        await fs.mkdir(path.join(__dirname, '../public/styles'), { recursive: true });
+        // Solo necesitamos el directorio de fuentes (Font Awesome)
+        // Los CSS de src/styles/ los importa Astro directamente
         await fs.mkdir(path.join(__dirname, '../public/styles/fonts'), { recursive: true });
         console.log('✅ Directorios verificados');
     } catch (error) {
         console.error('❌ Error al verificar directorios:', error);
-        process.exit(1);
-    }
-}
-
-/**
- * Copiar archivos CSS de src/styles a public/styles
- */
-async function copyStylesToDist() {
-    console.log('📝 Copiando estilos...');
-
-    try {
-        const srcDir = path.join(__dirname, '../src/styles');
-        const destDir = path.join(__dirname, '../public/styles');
-
-        // Leer todos los archivos CSS
-        const files = await fs.readdir(srcDir);
-
-        // Copiar cada archivo CSS
-        for (const file of files) {
-            if (file.endsWith('.css')) {
-                await fs.copyFile(
-                    path.join(srcDir, file),
-                    path.join(destDir, file)
-                );
-                console.log(`  ✓ Copiado: ${file}`);
-            }
-        }
-
-        console.log('✅ Estilos copiados correctamente');
-    } catch (error) {
-        console.error('❌ Error al copiar estilos:', error);
         process.exit(1);
     }
 }
@@ -132,7 +102,6 @@ async function build() {
     try {
         // Ejecutar tareas en secuencia
         await ensurePublicDirectories();
-        await copyStylesToDist();
         await generateSitemap();
         await buildAstro();
         await verifyFontFiles();

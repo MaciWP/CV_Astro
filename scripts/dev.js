@@ -58,14 +58,11 @@ async function checkFontAwesome() {
  */
 async function startDevServer() {
     try {
-        // Check and setup Font Awesome if needed
+        // Check Font Awesome fonts are present
         await checkFontAwesome();
 
-        // Copy styles to public directory (for dev server)
-        console.log('\n🔄 Copying styles to public directory...');
-        execSync('node scripts/styles.js', { stdio: 'inherit' });
-
         // Start the development server
+        // NOTE: CSS files are imported directly by Astro from src/styles/
         console.log('\n🚀 Starting development server...');
         execSync('astro dev', { stdio: 'inherit' });
     } catch (error) {

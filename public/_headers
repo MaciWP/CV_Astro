@@ -22,11 +22,7 @@
 /images/*
   Cache-Control: public, max-age=31536000, immutable
 
-/icons/*
-  Cache-Control: public, max-age=31536000, immutable
 
-/styles/critical-mobile.css
-  Cache-Control: public, max-age=86400
 
 /styles/*
   Cache-Control: public, max-age=31536000, immutable
