@@ -193,23 +193,22 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
-    <!-- MOBILE LCP CRITICAL: Preload 320w image first for mobile (before anything else) -->
-    <!-- Mobile-first: 320w covers 280px container at up to 1.14x DPR perfectly -->
-    <!-- For higher DPR mobile, browser will upgrade to 640w from srcset -->
+    <!-- MOBILE LCP CRITICAL: Preload 640w for high-DPR mobile devices -->
+    <!-- Mobile: 280px container × 2.5x DPR = 700px needed → browser picks 640w -->
+    <!-- Direct href to 640w avoids preload/srcset mismatch and double downloads -->
     <link
       rel="preload"
       as="image"
-      href="/images/oriol_macias-320.avif"
+      href="/images/oriol_macias-640.avif"
       type="image/avif"
       fetchpriority="high"
       media="(max-width: 767px)"
     />
-    <!-- Desktop: Preload with full srcset for optimal selection -->
+    <!-- Desktop: 320px container × 2x DPR = 640px → preload 640w -->
     <link
       rel="preload"
       as="image"
-      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-480.avif 480w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
-      imagesizes="320px"
+      href="/images/oriol_macias-640.avif"
       type="image/avif"
       fetchpriority="high"
       media="(min-width: 768px)"
