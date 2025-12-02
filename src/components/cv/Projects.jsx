@@ -14,8 +14,9 @@ const Projects = () => {
     const [showAllDetails, setShowAllDetails] = useState(false);
     const [activeTab, setActiveTab] = useState('personal'); // 'personal' or 'professional'
     const [isTabTransitioning, setIsTabTransitioning] = useState(false);
-    const [personalProjects, setPersonalProjects] = useState([]);
-    const [professionalProjects, setProfessionalProjects] = useState([]);
+    // Initialize with data immediately to prevent CLS
+    const [personalProjects, setPersonalProjects] = useState(() => getCurrentLanguagePersonalProjects());
+    const [professionalProjects, setProfessionalProjects] = useState(() => getCurrentLanguageProfessionalProjects());
     const [translations, setTranslations] = useState({
         title: 'Key Projects',
         technologies: 'Technologies',

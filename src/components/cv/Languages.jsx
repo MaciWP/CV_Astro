@@ -6,7 +6,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { getCurrentLanguageLanguages } from '../../data/languages';
 
 const Languages = () => {
-    const [languagesData, setLanguagesData] = useState([]);
+    // Initialize with data immediately to prevent CLS
+    const [languagesData, setLanguagesData] = useState(() => getCurrentLanguageLanguages());
     const [title, setTitle] = useState('Languages');
     const [isVisible, setIsVisible] = useState(false);
     const [animateProgress, setAnimateProgress] = useState(false);

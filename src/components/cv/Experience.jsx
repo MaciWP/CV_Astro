@@ -12,7 +12,8 @@ import { getCurrentLanguageExperiences } from '../../data/experiences';
 const Experience = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [expandedJobs, setExpandedJobs] = useState({});
-    const [experiences, setExperiences] = useState([]);
+    // Initialize with data immediately to prevent CLS
+    const [experiences, setExperiences] = useState(() => getCurrentLanguageExperiences());
     const [translations, setTranslations] = useState({
         title: 'Work Experience',
         responsibilities: 'Responsibilities',
