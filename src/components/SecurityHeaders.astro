@@ -1,7 +1,7 @@
-<!-- Content Security Policy -->
+<!-- Content Security Policy - aligned with _headers and Layout.astro -->
 <meta
     http-equiv="Content-Security-Policy"
-    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; manifest-src 'self';"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://www.googletagmanager.com https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com;"
 />
 
 <!-- HTTP Strict Transport Security -->
@@ -10,7 +10,7 @@
     content="max-age=31536000; includeSubDomains; preload"
 />
 
-<!-- Additional Security Headers -->
+<!-- Security Headers -->
 <meta http-equiv="X-Frame-Options" content="DENY" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -18,9 +18,6 @@
     http-equiv="Permissions-Policy"
     content="camera=(), microphone=(), geolocation=(), interest-cohort=()"
 />
-<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
 
-<!-- Add Cross-Origin headers for enhanced security -->
-<meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
+<!-- Cross-Origin headers -->
 <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
-<meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin" />

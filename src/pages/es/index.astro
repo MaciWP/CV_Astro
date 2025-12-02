@@ -10,6 +10,7 @@ import Skills from "../../components/cv/Skills.astro";
 import Languages from "../../components/cv/Languages";
 import Education from "../../components/cv/Education.astro";
 import Projects from "../../components/cv/Projects";
+import FAQSchema from "../../components/FAQSchema.astro";
 
 // Enhanced metadata for SEO (Spanish version)
 const pageTitle = "Oriol Macias - Portfolio de Desarrollador de Software";
@@ -22,6 +23,26 @@ const canonicalUrl = "https://oriolmacias.dev/es/";
 const enUrl = getRelativeLocaleUrl("en", "");
 const frUrl = getRelativeLocaleUrl("fr", "");
 const deUrl = getRelativeLocaleUrl("de", "");
+
+// FAQs for rich snippets
+const faqs = [
+  {
+    question: "¿Tienes permiso de trabajo para Suiza?",
+    answer: "Sí, tengo permiso de trabajo de la UE y estoy autorizado para trabajar en Suiza de inmediato."
+  },
+  {
+    question: "¿En qué lenguajes de programación te especializas?",
+    answer: "Me especializo en Python y C#, con amplia experiencia en Django, .NET Framework y Core, y desarrollo de API REST."
+  },
+  {
+    question: "¿Con qué protocolos industriales trabajas?",
+    answer: "Tengo más de 8 años de experiencia integrando protocolos SNMP, MODBUS y BACnet para plataformas DCIM."
+  },
+  {
+    question: "¿Estás disponible para trabajo remoto?",
+    answer: "Sí, estoy abierto a posiciones remotas, híbridas o presenciales en Suiza o España."
+  }
+];
 ---
 
 <Layout
@@ -76,6 +97,9 @@ const deUrl = getRelativeLocaleUrl("de", "");
         >
             <Projects lang="es" client:visible />
         </ErrorBoundary>
+
+        {/* FAQ Section with structured data */}
+        <FAQSchema faqs={faqs} lang="es" />
 
         {/* Contenido SEO oculto */}
         <div class="sr-only">

@@ -57,19 +57,11 @@ export function ThemeProvider({ children }) {
             }
         };
 
-        // Use modern API if available
-        if (mediaQuery.addEventListener) {
-            mediaQuery.addEventListener('change', handleChange);
-        } else {
-            mediaQuery.addListener(handleChange); // Fallback for older browsers
-        }
+        // Modern API (supported by all browsers since 2018)
+        mediaQuery.addEventListener('change', handleChange);
 
         return () => {
-            if (mediaQuery.removeEventListener) {
-                mediaQuery.removeEventListener('change', handleChange);
-            } else {
-                mediaQuery.removeListener(handleChange);
-            }
+            mediaQuery.removeEventListener('change', handleChange);
         };
     }, []);
 

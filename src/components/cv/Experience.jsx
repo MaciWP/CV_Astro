@@ -136,13 +136,10 @@ const Experience = ({ lang = 'en' }) => {
                         className={`relative pl-8 pb-12 transition-all duration-200 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} hover:translate-x-1`}
                         style={{ transitionDelay: `${100 * index}ms` }}
                     >
-                        {/* Timeline node */}
+                        {/* Timeline node - opacity controlled by className to avoid conflicts */}
                         <div
                             className={`absolute left-0 top-4 w-4 h-4 rounded-none bg-brand-red dark:bg-brand-red border-4 border-white dark:border-gray-900 shadow-sm transition-all duration-200 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
-                            style={{
-                                opacity: isVisible ? (1 - (index * 0.15)) : 0,
-                                transitionDelay: `${100 * index}ms`
-                            }}
+                            style={{ transitionDelay: `${100 * index}ms` }}
                         ></div>
 
                         {/* Job header with hover effects */}
