@@ -29,6 +29,12 @@ import {
   toSafeJsonLd,
 } from "../utils/seo";
 
+// Import translations for SSG inline (eliminates runtime fetch requests)
+import enTranslations from "../data/locales/en/translation.json";
+import esTranslations from "../data/locales/es/translation.json";
+import frTranslations from "../data/locales/fr/translation.json";
+import deTranslations from "../data/locales/de/translation.json";
+
 // Import global animations
 // Import global styles (includes animations, theme, etc.)
 import "../styles/global.css";
@@ -60,6 +66,15 @@ const {
   canonicalUrl = "https://oriolmacias.dev/",
   alternateUrls = {},
 } = Astro.props;
+
+// Get current language translations for SSG inline
+const translationsMap: Record<string, any> = {
+  en: enTranslations,
+  es: esTranslations,
+  fr: frTranslations,
+  de: deTranslations,
+};
+const currentTranslations = translationsMap[lang] || enTranslations;
 
 // Execute market detection using centralized utility
 const marketData = detectMarketAndOptimizeSEO(
@@ -510,10 +525,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
     </style>
 
-    <!-- i18n Setup -->
-    <script is:inline define:vars={{ lang }}>
-      window.CURRENT_LANGUAGE=lang;window.TRANSLATIONS=window.TRANSLATIONS||{};
+    <!-- i18n Setup - Translations inlined at build time (SSG) to eliminate fetch requests -->
+    <script is:inline define:vars={{ lang, currentTranslations }}>
+      window.CURRENT_LANGUAGE=lang;
+      window.TRANSLATIONS=window.TRANSLATIONS||{};
+      window.TRANSLATIONS[lang]=currentTranslations;
       window.t=function(k,f){try{var v=window.TRANSLATIONS[window.CURRENT_LANGUAGE];k.split('.').forEach(function(p){v=v&&v[p]});return v||f||k}catch(e){return f||k}};
+      document.dispatchEvent(new CustomEvent('translationsLoaded'));
     </script>
 
     <!-- Font Awesome CSS optimizado (~5KB vs 20KB) - loaded non-blocking for performance -->
