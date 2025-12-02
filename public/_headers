@@ -3,9 +3,32 @@
 # Recommended: Profile without GA/GTM (better score and zero CSP warnings)
 # =========================
 
+# HTTP/103 Early Hints for LCP image - sent BEFORE HTML response
+# This reduces Resource Load Delay by starting image download immediately
 /
   Cache-Control: public, max-age=0, must-revalidate
   Content-Type: text/html; charset=utf-8
+  Link: </images/oriol_macias-320.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/html; charset=utf-8
+  Link: </images/oriol_macias-320.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
+
+/es/
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/html; charset=utf-8
+  Link: </images/oriol_macias-320.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
+
+/fr/
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/html; charset=utf-8
+  Link: </images/oriol_macias-320.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
+
+/de/
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: text/html; charset=utf-8
+  Link: </images/oriol_macias-320.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

@@ -193,7 +193,34 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
-    <!-- Content Security Policy - Enhanced for Analytics -->
+    <!-- MOBILE LCP CRITICAL: Preload 320w image first for mobile (before anything else) -->
+    <!-- Mobile-first: 320w covers 280px container at up to 1.14x DPR perfectly -->
+    <!-- For higher DPR mobile, browser will upgrade to 640w from srcset -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/oriol_macias-320.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(max-width: 767px)"
+    />
+    <!-- Desktop: Preload with full srcset for optimal selection -->
+    <link
+      rel="preload"
+      as="image"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-480.avif 480w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
+      imagesizes="320px"
+      type="image/avif"
+      fetchpriority="high"
+      media="(min-width: 768px)"
+    />
+
+    <!-- Prevent theme flash - must be early -->
+    <script is:inline data-cfasync="false">
+      (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
+    </script>
+
+    <!-- Content Security Policy -->
     <meta
       http-equiv="Content-Security-Policy"
       content="
@@ -209,27 +236,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     "
     />
 
-    <!-- Prevent theme flash - must be first script -->
-    <script is:inline data-cfasync="false">
-      (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
-    </script>
-
-    <!-- Preconnect for Google Analytics - improves loading performance -->
+    <!-- Preconnect for Google Analytics -->
     <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-
-    <!-- LCP Image Preload - CRITICAL for performance -->
-    <!-- MUST use imagesrcset/imagesizes to match the actual <picture> element -->
-    <!-- Otherwise browser won't connect preload to srcset and shows "preload not used" warning -->
-    <link
-      rel="preload"
-      as="image"
-      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
-      imagesizes="(max-width: 767px) 280px, 320px"
-      type="image/avif"
-      fetchpriority="high"
-    />
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
     <!-- OPTIMIZED: Desktop-only preloads to reduce mobile bandwidth competition -->

@@ -6,7 +6,8 @@ import path from "path";
 // Ensure this points to the original JPG:
 const INPUT = path.resolve("public/images/original/oriol_macias.jpg");
 const OUTDIR = path.resolve("public/images");
-const SIZES = [192, 320, 640, 960, 1280];
+// Added 480 for mobile devices with 1.5-2x DPR (better than jumping to 640)
+const SIZES = [192, 320, 480, 640, 960, 1280];
 
 async function build() {
     await fs.mkdir(OUTDIR, { recursive: true });

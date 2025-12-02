@@ -117,16 +117,19 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     {/* Imagen - Explicit width/height to prevent CLS */}
                     <div class="w-full aspect-square" style="min-height: 280px; contain: layout size;">
                         <picture>
+                            {/* AVIF with optimized srcset including 480w for mid-DPR mobile */}
                             <source
-                                srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
+                                srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-480.avif 480w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
                                 sizes="(max-width: 767px) 280px, 320px"
                                 type="image/avif"
                             />
+                            {/* WebP fallback with same optimizations */}
                             <source
-                                srcset="/images/oriol_macias-320.webp 320w, /images/oriol_macias-640.webp 640w, /images/oriol_macias-960.webp 960w"
+                                srcset="/images/oriol_macias-320.webp 320w, /images/oriol_macias-480.webp 480w, /images/oriol_macias-640.webp 640w, /images/oriol_macias-960.webp 960w"
                                 sizes="(max-width: 767px) 280px, 320px"
                                 type="image/webp"
                             />
+                            {/* Default 320w for mobile-first */}
                             <img
                                 src="/images/oriol_macias-320.avif"
                                 alt={photoAlt}
