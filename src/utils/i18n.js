@@ -225,11 +225,14 @@ export const preloadTranslations = async () => {
 export const useI18n = () => {
   const lang = detectLanguage();
 
-  // Cargar las traducciones si aún no están cargadas
+  // SSG OPTIMIZATION: Use inlined translations from Layout.astro if available
+  // This avoids unnecessary HTTP fetches since translations are already in window.TRANSLATIONS
   if (!translationsCache[lang]) {
-    loadTranslation(lang).catch(e =>
-      console.error(`Failed to load translations for ${lang}:`, e)
-    );
+    if (typeof window !== 'undefined' && window.TRANSLATIONS && window.TRANSLATIONS[lang]) {
+      // Use SSG inlined translations - no fetch needed
+      translationsCache[lang] = window.TRANSLATIONS[lang];
+    }
+    // Note: We no longer fetch here - if SSG didn't inline it, use fallbacks
   }
 
   return {
@@ -250,10 +253,10 @@ export const useI18n = () => {
   };
 };
 
-// Intentar precargar traducciones si estamos en el navegador
-if (typeof window !== 'undefined') {
-  preloadTranslations();
-}
+// SSG OPTIMIZATION: Removed auto-preload of ALL 4 translations
+// Layout.astro now inlines the current language's translations at build time
+// This eliminates 4 HTTP requests (~4s latency) that were blocking LCP
+// Translations are available via window.TRANSLATIONS[lang] immediately
 
 export default {
   translate,
