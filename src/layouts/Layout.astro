@@ -236,9 +236,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
     <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
-    <!-- FontAwesome Preload - Prevents CLS by loading icons early -->
-    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- FontAwesome Preload - DESKTOP ONLY to avoid competing with LCP image on mobile -->
+    <!-- Mobile uses font-display:swap in CSS, so icons load after LCP -->
+    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
     <!-- JS Enabled Class -->
     <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
