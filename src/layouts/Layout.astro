@@ -220,13 +220,14 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
     <!-- LCP Image Preload - CRITICAL for performance -->
-    <!-- Mobile with high DPR (2-3x): Browser selects 640w for 280px display × 2 DPR = 560px needed -->
-    <!-- Desktop: Browser selects 640w for 320px display × 2 DPR = 640px needed -->
-    <!-- SIMPLIFIED: Single preload for 640.avif which covers both mobile DPR 2+ and desktop -->
+    <!-- MUST use imagesrcset/imagesizes to match the actual <picture> element -->
+    <!-- Otherwise browser won't connect preload to srcset and shows "preload not used" warning -->
     <link
       rel="preload"
       as="image"
-      href="/images/oriol_macias-640.avif"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
+      imagesizes="(max-width: 767px) 280px, 320px"
+      type="image/avif"
       fetchpriority="high"
     />
 

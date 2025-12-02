@@ -62,22 +62,6 @@ async function copyStylesToDist() {
 }
 
 /**
- * Configurar Font Awesome para asegurar que las fuentes estén disponibles
- */
-async function setupFontAwesome() {
-    console.log('🔤 Configurando Font Awesome...');
-
-    try {
-        // Ejecutar el script existente para Font Awesome
-        execSync('node scripts/font-awesome-setup.js', { stdio: 'inherit' });
-        console.log('✅ Font Awesome configurado');
-    } catch (error) {
-        console.error('❌ Error al configurar Font Awesome:', error);
-        process.exit(1);
-    }
-}
-
-/**
  * Generar sitemap
  */
 async function generateSitemap() {
@@ -148,7 +132,6 @@ async function build() {
     try {
         // Ejecutar tareas en secuencia
         await ensurePublicDirectories();
-        await setupFontAwesome();
         await copyStylesToDist();
         await generateSitemap();
         await buildAstro();

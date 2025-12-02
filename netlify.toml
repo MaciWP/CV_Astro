@@ -40,19 +40,6 @@
     Content-Type = "text/css; charset=utf-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Headers para scripts especiales que no deben ser cacheados
-[[headers]]
-  for = "/scripts/i18n.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "no-cache, no-store, must-revalidate"
-
-[[headers]]
-  for = "/scripts/font-awesome-loader.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "no-cache, no-store, must-revalidate"
-
 # ===== SOLUCIÓN PARA FONT AWESOME =====
 
 # Headers para archivos de fuentes web

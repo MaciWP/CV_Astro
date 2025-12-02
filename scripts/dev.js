@@ -40,10 +40,10 @@ async function checkFontAwesome() {
             }
         }
 
-        // If any files are missing, run the setup script
+        // Warn if any files are missing (fonts should already be committed)
         if (!allFilesExist) {
-            console.log('\n⚠️ Some Font Awesome files are missing. Running setup script...');
-            execSync('node scripts/font-awesome-setup.js', { stdio: 'inherit' });
+            console.log('\n⚠️ Some Font Awesome font files are missing from public/styles/fonts/');
+            console.log('Please ensure the .woff2 files are present in the repository.');
         }
 
         return true;
