@@ -50,7 +50,7 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="hidden md:block">
-                        <div className="h-8 w-48" aria-hidden="true"></div>
+                        <div className="h-8 w-[430px]" aria-hidden="true"></div>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="h-8 w-8" aria-hidden="true"></div>

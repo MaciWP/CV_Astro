@@ -118,44 +118,17 @@
   status = 301
   force = true
 
-# Redirección para SPA
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# NOTE: NO SPA redirect - Astro is a static MPA with separate HTML files per route
+# Routes: /, /es/, /fr/, /de/ each have their own index.html
 
-[[redirects]]
-  from = "/cdn-cgi/speculation"
-  to = "/cdn-cgi/empty-response.js"
-  status = 200
+# ===== BUILD ENVIRONMENT =====
 
-[[redirects]]
-  from = "/cdn-cgi/rum"
-  to = "/cdn-cgi/empty-response.js"
-  status = 200
-
-# ===== OPCIONES DE OPTIMIZACIÓN =====
-
-# Enable Netlify Edge for better TTFB
 [build.environment]
   NODE_VERSION = "22"
 
-[build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-
-[build.processing.html]
-  pretty_urls = true
-
-[build.processing.images]
-  compress = true
+# NOTE: Netlify Asset Optimization was deprecated Oct 2023
+# Astro handles bundling/minification at build time via Vite
+# See: https://answers.netlify.com/t/asset-optimization-deprecated/103986
 
 # ===== FUNCIONES NETLIFY =====
 # Functions disabled - pure static site
