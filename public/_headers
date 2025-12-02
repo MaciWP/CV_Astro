@@ -1,34 +1,13 @@
 # =========================
 # Netlify _headers (production) - with Cloudflare in front
-# Recommended: Profile without GA/GTM (better score and zero CSP warnings)
 # =========================
 
-# HTTP/103 Early Hints for LCP image - sent BEFORE HTML response
-# Preload 640w: most devices (mobile 2.5x DPR, desktop 2x) need this size
+# HTML pages - no cache, must revalidate
+# NOTE: Early Hints (Link header) removed - causes double download when DPR varies
+# The <link rel="preload" imagesrcset> in HTML handles responsive image selection correctly
 /
   Cache-Control: public, max-age=0, must-revalidate
   Content-Type: text/html; charset=utf-8
-  Link: </images/oriol_macias-640.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
-
-/index.html
-  Cache-Control: public, max-age=0, must-revalidate
-  Content-Type: text/html; charset=utf-8
-  Link: </images/oriol_macias-640.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
-
-/es/
-  Cache-Control: public, max-age=0, must-revalidate
-  Content-Type: text/html; charset=utf-8
-  Link: </images/oriol_macias-640.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
-
-/fr/
-  Cache-Control: public, max-age=0, must-revalidate
-  Content-Type: text/html; charset=utf-8
-  Link: </images/oriol_macias-640.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
-
-/de/
-  Cache-Control: public, max-age=0, must-revalidate
-  Content-Type: text/html; charset=utf-8
-  Link: </images/oriol_macias-640.avif>; rel=preload; as=image; type="image/avif"; fetchpriority=high
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
