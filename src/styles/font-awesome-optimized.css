@@ -1,18 +1,18 @@
 /* Font Awesome Optimizado - local, sin CDN */
 
-/* 1) Fuentes - font-display:optional for non-blocking load */
+/* 1) Fuentes */
 @font-face{
   font-family:"Font Awesome 5 Free";
   font-style:normal;
   font-weight:900;
-  font-display:optional;
+  font-display:block;
   src:url('/styles/fonts/fa-solid-900.woff2') format('woff2');
 }
 @font-face{
   font-family:"Font Awesome 5 Brands";
   font-style:normal;
   font-weight:400;
-  font-display:optional;
+  font-display:block;
   src:url('/styles/fonts/fa-brands-400.woff2') format('woff2');
 }
 
