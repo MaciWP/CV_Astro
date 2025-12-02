@@ -59,16 +59,18 @@ const Experience = () => {
         // Load initial translations and data
         loadTranslations();
 
-        // Listen for language changes
+        // Listen for language changes and translations loaded
         const handleLanguageChange = () => {
             loadTranslations();
         };
 
         document.addEventListener('languageChanged', handleLanguageChange);
+        document.addEventListener('translationsLoaded', handleLanguageChange);
 
         return () => {
             observer.disconnect();
             document.removeEventListener('languageChanged', handleLanguageChange);
+            document.removeEventListener('translationsLoaded', handleLanguageChange);
         };
     }, [loadTranslations]);
 
