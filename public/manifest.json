@@ -87,22 +87,6 @@
     }
   ],
   "scope": "/",
-  "screenshots": [
-    {
-      "src": "/screenshots/mobile.jpg",
-      "sizes": "390x844",
-      "type": "image/jpeg",
-      "platform": "narrow",
-      "label": "Oriol Macias CV Mobile View"
-    },
-    {
-      "src": "/screenshots/desktop.jpg",
-      "sizes": "1280x800",
-      "type": "image/jpeg",
-      "platform": "wide",
-      "label": "Oriol Macias CV Desktop View"
-    }
-  ],
   "related_applications": [],
   "prefer_related_applications": false,
   "iarc_rating_id": "",

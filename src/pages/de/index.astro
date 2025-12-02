@@ -48,7 +48,10 @@ const frUrl = getRelativeLocaleUrl("fr", "");
         </div>
 
         {/* Experience con ErrorBoundary */}
-        <ErrorBoundary client:load>
+        <ErrorBoundary
+            fallbackTitle="Fehler beim Laden der Erfahrung"
+            fallbackMessage="Die Berufserfahrung konnte nicht geladen werden."
+        >
             <Experience lang="de" client:visible />
         </ErrorBoundary>
 
@@ -59,13 +62,39 @@ const frUrl = getRelativeLocaleUrl("fr", "");
         <Education lang="de" />
 
         {/* Languages con ErrorBoundary */}
-        <ErrorBoundary client:load>
+        <ErrorBoundary
+            fallbackTitle="Fehler beim Laden der Sprachen"
+            fallbackMessage="Die Sprachkenntnisse konnten nicht geladen werden."
+        >
             <Languages lang="de" client:visible />
         </ErrorBoundary>
 
         {/* Projects con ErrorBoundary */}
-        <ErrorBoundary client:load>
+        <ErrorBoundary
+            fallbackTitle="Fehler beim Laden der Projekte"
+            fallbackMessage="Die Projektinformationen konnten nicht geladen werden."
+        >
             <Projects lang="de" client:visible />
         </ErrorBoundary>
+
+        {/* SEO hidden content */}
+        <div class="sr-only">
+            <div itemprop="name">Oriol Macias</div>
+            <div itemprop="jobTitle">Software-Entwickler</div>
+            <div itemprop="description">
+                Lösungsorientierter Backend-Entwickler, spezialisiert auf
+                industrielle Protokollintegration (SNMP, MODBUS, BACnet) mit
+                über 8 Jahren Erfahrung in Hochleistungsanwendungen.
+            </div>
+            <div itemprop="email">oriolomb@gmail.com</div>
+            <a itemprop="url" href="https://oriolmacias.dev"
+                >https://oriolmacias.dev</a
+            >
+            <a itemprop="sameAs" href="https://github.com/MaciWP">GitHub</a>
+            <a
+                itemprop="sameAs"
+                href="https://linkedin.com/in/oriolmaciasbadosa">LinkedIn</a
+            >
+        </div>
     </div>
 </Layout>
