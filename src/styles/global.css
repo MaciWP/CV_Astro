@@ -1,13 +1,13 @@
 /**
- * CSS Global Optimizado y Unificado
+ * Optimized and Unified Global CSS
  * File: src/styles/global.css
- * 
- * Este archivo combina el contenido esencial de:
+ *
+ * This file combines the essential content from:
  * - global.css
  * - animation-system.css
  * - image-fixes.css
  * - navbar-fix.css
- * - theme-transitions.css (versión reducida)
+ * - theme-transitions.css (reduced version)
  */
 
 /* Base Tailwind directives */
@@ -15,24 +15,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== VARIABLES GLOBALES ===== */
+/* ===== GLOBAL VARIABLES ===== */
 :root {
-    /* Transiciones de tema */
+    /* Theme transitions */
     --theme-transition-duration: 100ms;
     --theme-curve-color: cubic-bezier(0.33, 1, 0.68, 1);
     --theme-curve-shadow: cubic-bezier(0.25, 1, 0.5, 1);
 
-    /* Duraciones estándar de animación - RÁPIDAS Y FLUIDAS */
+    /* Standard animation durations - FAST AND FLUID */
     --duration-micro: 80ms;
     --duration-fast: 120ms;
     --duration-standard: 200ms;
     --duration-emphasis: 300ms;
     --duration-complex: 400ms;
 
-    /* Delays base para stagger */
+    /* Base delays for stagger */
     --stagger-delay: 50ms;
 
-    /* Curvas de timing */
+    /* Timing curves */
     --ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
     --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
     --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
@@ -50,7 +50,7 @@
     color: #fca5a5 !important; /* Tailwind red-300 - 5.5:1 ratio on dark bg */
 }
 
-/* ===== ESTILOS BASE ===== */
+/* ===== BASE STYLES ===== */
 @layer base {
     body {
         @apply antialiased bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text font-sans;
@@ -60,7 +60,7 @@
         text-rendering: optimizeLegibility;
     }
 
-    /* Mejoras de tipografía */
+    /* Typography improvements */
     h1,
     h2,
     h3,
@@ -71,13 +71,13 @@
         @apply font-heading font-bold;
     }
 
-    /* Mejor espaciado para secciones de scroll */
+    /* Better spacing for scroll sections */
     section {
         scroll-margin-top: 80px;
         @apply mb-24;
     }
 
-    /* Accesibilidad */
+    /* Accessibility */
     .sr-only {
         position: absolute;
         width: 1px;
@@ -90,20 +90,20 @@
         border-width: 0;
     }
 
-    /* Estados de foco mejorados para accesibilidad */
+    /* Improved focus states for accessibility */
     :focus-visible {
         outline: 2px solid #D83333 !important;
         outline-offset: 2px !important;
     }
 
-    /* Fix para que las imágenes no tengan filtros en modo claro */
+    /* Fix so images don't have filters in light mode */
     .light img,
     html:not(.dark) img {
         filter: none !important;
         opacity: 1 !important;
     }
 
-    /* Fix sticky para el navbar */
+    /* Sticky fix for navbar */
     nav[role="navigation"] {
         position: sticky !important;
         top: 0 !important;
@@ -117,13 +117,13 @@
     }
 }
 
-/* ===== TRANSICIONES DE TEMA - RÁPIDAS Y FLUIDAS ===== */
-/* Transición muy rápida (100ms) para una experiencia fluida pero casi instantánea */
+/* ===== THEME TRANSITIONS - FAST AND FLUID ===== */
+/* Very fast transition (100ms) for a fluid but almost instant experience */
 
-/* ===== COMPONENTES ===== */
+/* ===== COMPONENTS ===== */
 @layer components {
 
-    /* Clases de transición de tema - muy rápidas (100ms) */
+    /* Theme transition classes - very fast (100ms) */
     .theme-transition {
         transition: background-color 100ms ease-out, color 100ms ease-out, border-color 100ms ease-out;
     }
@@ -136,12 +136,12 @@
         transition: background-color 100ms ease-out;
     }
 
-    /* Transición global para elementos con colores de tema */
+    /* Global transition for elements with theme colors */
     html.light, html.dark {
         transition: background-color 100ms ease-out;
     }
 
-    /* Aplicar transición a elementos principales */
+    /* Apply transition to main elements */
     body,
     main,
     nav,
@@ -156,7 +156,7 @@
         transition: background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out;
     }
 
-    /* Botones */
+    /* Buttons */
     .btn {
         @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
     }
@@ -169,12 +169,12 @@
         @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
     }
 
-    /* Tarjetas */
+    /* Cards */
     .card {
         @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
     }
 
-    /* Encabezado de sección con icono */
+    /* Section header with icon */
     .section-header {
         @apply flex items-center gap-3 mb-6;
     }
@@ -183,7 +183,7 @@
         @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
     }
 
-    /* Scrollbar personalizada */
+    /* Custom scrollbar */
     ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -201,7 +201,7 @@
         @apply bg-gray-400 dark:bg-gray-500;
     }
 
-    /* Skill badges - hover sutil sin scale (evita overflow) */
+    /* Skill badges - subtle hover without scale (avoids overflow) */
     .skill-badge {
         transition: transform 100ms ease-out, box-shadow 100ms ease-out, border-color 100ms ease-out, background-color 100ms ease-out !important;
     }
@@ -434,7 +434,7 @@
     animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
 }
 
-/* Sistema de animación escalonada */
+/* Staggered animation system */
 .stagger-container>* {
     opacity: 0;
 }
@@ -463,14 +463,14 @@
     animation-delay: 180ms;
 }
 
-/* ===== ESTILOS DE IMPRESIÓN ===== */
+/* ===== PRINT STYLES ===== */
 @media print {
     body {
         background-color: white !important;
         color: black !important;
     }
 
-    /* Ocultar elementos no necesarios para impresión */
+    /* Hide elements not needed for printing */
     nav,
     footer,
     button:not(#cv-download-button),
@@ -478,14 +478,14 @@
         display: none !important;
     }
 
-    /* Asegurar que todo el contenido sea visible */
+    /* Ensure all content is visible */
     .opacity-0,
     .translate-y-10 {
         opacity: 1 !important;
         transform: none !important;
     }
 
-    /* Eliminar efectos visuales */
+    /* Remove visual effects */
     * {
         animation: none !important;
         transition: none !important;
@@ -493,7 +493,7 @@
         box-shadow: none !important;
     }
 
-    /* Asegurar colores de marca para impresión */
+    /* Ensure brand colors for printing */
     .text-brand-red {
         color: #D83333 !important;
     }
@@ -502,14 +502,14 @@
         background-color: #D83333 !important;
     }
 
-    /* Configuración de página para PDF */
+    /* Page configuration for PDF */
     @page {
         size: A4 portrait;
         margin: 1.5cm;
     }
 }
 
-/* ===== ESTILOS RESPONSIVOS ===== */
+/* ===== RESPONSIVE STYLES ===== */
 @media (max-width: 768px) {
     section {
         margin-bottom: 3rem !important;
@@ -531,7 +531,7 @@
     }
 }
 
-/* ===== MEJORAS DE ACCESIBILIDAD ===== */
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -541,7 +541,7 @@
     }
 }
 
-/* Objetivos táctiles adecuados para accesibilidad */
+/* Proper touch targets for accessibility */
 .touch-target {
     min-height: 44px;
     min-width: 44px;

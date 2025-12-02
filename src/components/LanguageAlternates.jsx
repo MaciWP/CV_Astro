@@ -1,6 +1,6 @@
 /**
- * Componente de alternativas de idioma mejorado para SEO
- * Implementa correctamente hreflang para Google
+ * Improved language alternates component for SEO
+ * Correctly implements hreflang for Google
  * File: src/components/LanguageAlternates.jsx
  */
 import React from 'react';

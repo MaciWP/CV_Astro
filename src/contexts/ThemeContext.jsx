@@ -1,39 +1,39 @@
 /**
- * Contexto de tema optimizado y simplificado
+ * Optimized and simplified theme context
  * File: src/contexts/ThemeContext.jsx
- * 
- * Versión simplificada que mantiene la funcionalidad clave 
- * y elimina código innecesario.
+ *
+ * Simplified version that maintains key functionality
+ * and removes unnecessary code.
  */
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Define opciones de tema
+// Define theme options
 export const themes = {
     LIGHT: 'light',
     DARK: 'dark'
 };
 
-// Crear el contexto
+// Create the context
 const ThemeContext = createContext(null);
 
-// Hook personalizado para usar el contexto
+// Custom hook to use the context
 export const useTheme = () => {
     const context = useContext(ThemeContext);
     if (!context) {
-        throw new Error('useTheme debe usarse dentro de un ThemeProvider');
+        throw new Error('useTheme must be used within a ThemeProvider');
     }
     return context;
 };
 
-// Componente proveedor de tema
+// Theme provider component
 export function ThemeProvider({ children }) {
-    // Inicializar con null para evitar problemas de hidratación
+    // Initialize with null to avoid hydration issues
     const [theme, setTheme] = useState(null);
     const [isMounted, setIsMounted] = useState(false);
 
-    // Una vez montado, establecer el tema desde localStorage o preferencia del sistema
+    // Once mounted, set theme from localStorage or system preference
     useEffect(() => {
-        // Obtener tema inicial desde localStorage o preferencia del sistema
+        // Get initial theme from localStorage or system preference
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const initialTheme = storedTheme || (systemPrefersDark ? themes.DARK : themes.LIGHT);
@@ -41,14 +41,14 @@ export function ThemeProvider({ children }) {
         setTheme(initialTheme);
         setIsMounted(true);
 
-        // Asegurar que la clase se aplique al elemento html
+        // Ensure the class is applied to the html element
         document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
         document.documentElement.classList.add(initialTheme);
 
-        // Escuchar cambios de preferencia del sistema
+        // Listen for system preference changes
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = (e) => {
-            // Solo actualizar si el usuario no ha establecido una preferencia
+            // Only update if user hasn't set a preference
             if (!localStorage.getItem('theme')) {
                 const newTheme = e.matches ? themes.DARK : themes.LIGHT;
                 setTheme(newTheme);
@@ -57,11 +57,11 @@ export function ThemeProvider({ children }) {
             }
         };
 
-        // Usar API moderna si está disponible
+        // Use modern API if available
         if (mediaQuery.addEventListener) {
             mediaQuery.addEventListener('change', handleChange);
         } else {
-            mediaQuery.addListener(handleChange); // Fallback para navegadores antiguos
+            mediaQuery.addListener(handleChange); // Fallback for older browsers
         }
 
         return () => {
@@ -73,22 +73,22 @@ export function ThemeProvider({ children }) {
         };
     }, []);
 
-    // Alternar entre temas - INSTANTÁNEO sin transiciones
+    // Toggle between themes - INSTANT without transitions
     const toggleTheme = () => {
         if (!isMounted) return;
 
         const newTheme = theme === themes.LIGHT ? themes.DARK : themes.LIGHT;
 
-        // Actualizar estado y DOM inmediatamente
+        // Update state and DOM immediately
         setTheme(newTheme);
         document.documentElement.classList.remove(themes.LIGHT, themes.DARK);
         document.documentElement.classList.add(newTheme);
 
-        // Guardar la preferencia de tema
+        // Save theme preference
         localStorage.setItem('theme', newTheme);
     };
 
-    // Estado de carga simple para evitar problemas de hidratación
+    // Simple loading state to avoid hydration issues
     if (!isMounted) {
         return <div className="invisible">{children}</div>;
     }

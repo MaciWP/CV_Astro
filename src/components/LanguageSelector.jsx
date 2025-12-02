@@ -1,7 +1,7 @@
 /**
- * Selector de idioma mejorado
- * Muestra y permite cambiar entre los idiomas disponibles
- * 
+ * Improved language selector
+ * Displays and allows switching between available languages
+ *
  * File: src/components/LanguageSelector.jsx
  */
 import React, { useState, useRef, useEffect } from 'react';
@@ -11,10 +11,10 @@ const LanguageSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Usar el hook mejorado de i18n
+  // Use the improved i18n hook
   const { lang } = useI18n();
 
-  // Opciones de idioma con banderas y nombres
+  // Language options with flags and names
   const languageOptions = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'es', name: 'Español', flag: '🇪🇸' },
@@ -22,10 +22,10 @@ const LanguageSelector = () => {
     { code: 'de', name: 'Deutsch', flag: '🇨🇭' }
   ];
 
-  // Encontrar el idioma actual
+  // Find the current language
   const currentLanguage = languageOptions.find(option => option.code === lang) || languageOptions[0];
 
-  // Cerrar al hacer clic fuera del dropdown
+  // Close when clicking outside the dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -39,21 +39,21 @@ const LanguageSelector = () => {
     };
   }, []);
 
-  // Cambiar idioma y navegar a la URL correspondiente
+  // Change language and navigate to corresponding URL
   const handleLanguageChange = (langCode) => {
     if (langCode === lang) {
       setIsOpen(false);
       return;
     }
 
-    // Construir la URL para el idioma seleccionado
+    // Build the URL for the selected language
     let path = window.location.pathname;
 
-    // Quitar prefijos de idioma existentes
+    // Remove existing language prefixes
     const langPrefixes = ['/es/', '/fr/', '/de/'];
     for (const prefix of langPrefixes) {
       if (path.startsWith(prefix)) {
-        path = path.substring(prefix.length - 1); // Mantener la barra inicial
+        path = path.substring(prefix.length - 1); // Keep the initial slash
         break;
       }
     }
@@ -61,26 +61,26 @@ const LanguageSelector = () => {
       path = '/';
     }
 
-    // Normalizar path
+    // Normalize path
     if (!path || path === '') path = '/';
 
-    // Construir nueva URL
+    // Build new URL
     let newUrl;
     if (langCode === 'en') {
-      // Para inglés (idioma por defecto) usamos la ruta sin prefijo
+      // For English (default language) use path without prefix
       newUrl = path;
     } else {
-      // Para otros idiomas, añadir el prefijo de idioma
+      // For other languages, add language prefix
       newUrl = `/${langCode}${path === '/' ? '' : path}`;
     }
 
-    // Navegar a la nueva URL
+    // Navigate to the new URL
     window.location.href = newUrl;
   };
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Botón principal del dropdown */}
+      {/* Main dropdown button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-1 p-2 rounded-none border border-gray-300 dark:border-gray-600
@@ -100,7 +100,7 @@ const LanguageSelector = () => {
         </svg>
       </button>
 
-      {/* Opciones de idioma */}
+      {/* Language options */}
       {isOpen && (
         <div
           className="absolute right-0 mt-2 w-36 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border 

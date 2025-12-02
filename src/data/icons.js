@@ -1,13 +1,13 @@
 /**
- * Sistema unificado de iconos para tecnologías y UI
- * Reemplaza techIcons.js y consolida referencias de iconos dispersas en otros archivos
- * 
+ * Unified icon system for technologies and UI
+ * Replaces techIcons.js and consolidates scattered icon references from other files
+ *
  * File: src/data/icons.js
  */
 
-// Mapeo de nombres de tecnologías a iconos de Font Awesome
+// Mapping of technology names to Font Awesome icons
 export const techIcons = {
-    // Lenguajes de programación
+    // Programming languages
     'Python': 'fab fa-python',
     'JavaScript': 'fab fa-js',
     'TypeScript': 'fab fa-js',
@@ -18,7 +18,7 @@ export const techIcons = {
     'XML': 'fas fa-file-code',
     'JSON': 'fas fa-file-code',
 
-    // Frameworks y librerías
+    // Frameworks and libraries
     'React': 'fab fa-react',
     'Angular': 'fab fa-angular',
     'Vue.js': 'fab fa-vuejs',
@@ -44,7 +44,7 @@ export const techIcons = {
     'Flake8': 'fas fa-ruler',
     'Mypy': 'fas fa-check-circle',
 
-    // Tecnologías y bases de datos
+    // Technologies and databases
     'Docker': 'fab fa-docker',
     'Kubernetes': 'fab fa-dharmachakra',
     'AWS': 'fab fa-aws',
@@ -71,14 +71,14 @@ export const techIcons = {
     'PWA': 'fas fa-globe',
     'i18n': 'fas fa-language',
 
-    // Protocolos
+    // Protocols
     'SNMP': 'fas fa-network-wired',
     'MODBUS': 'fas fa-plug',
     'BACnet': 'fas fa-building',
     'HTTP': 'fas fa-exchange-alt',
     'WebSockets': 'fas fa-plug',
 
-    // Herramientas
+    // Tools
     'VS Code': 'fas fa-code',
     'Visual Studio': 'fas fa-tv',
     'PyCharm': 'fas fa-edit',
@@ -102,11 +102,11 @@ export const techIcons = {
     'Gunicorn': 'fas fa-server',
     'Nginx': 'fas fa-server',
 
-    // Valor por defecto
+    // Default value
     'default': 'fas fa-code'
 };
 
-// Iconos para secciones de la UI
+// Icons for UI sections
 export const sectionIcons = {
     'about': 'fas fa-user',
     'experience': 'fas fa-briefcase',
@@ -122,7 +122,7 @@ export const sectionIcons = {
     'default': 'fas fa-star'
 };
 
-// Iconos para redes sociales
+// Icons for social networks
 export const socialIcons = {
     'github': 'fab fa-github',
     'linkedin': 'fab fa-linkedin',
@@ -143,7 +143,7 @@ export const socialIcons = {
     'default': 'fas fa-link'
 };
 
-// Iconos para la UI/UX
+// Icons for UI/UX
 export const uiIcons = {
     'download': 'fas fa-download',
     'upload': 'fas fa-upload',
@@ -192,42 +192,42 @@ export const uiIcons = {
 };
 
 /**
- * Obtener el icono para una tecnología específica
- * @param {string} techName - Nombre de la tecnología
- * @returns {string} - Clase de icono de Font Awesome
+ * Get the icon for a specific technology
+ * @param {string} techName - Technology name
+ * @returns {string} - Font Awesome icon class
  */
 export const getTechIcon = (techName) => {
     return techIcons[techName] || techIcons.default;
 };
 
 /**
- * Obtener el icono para una sección específica
- * @param {string} sectionName - Nombre de la sección
- * @returns {string} - Clase de icono de Font Awesome
+ * Get the icon for a specific section
+ * @param {string} sectionName - Section name
+ * @returns {string} - Font Awesome icon class
  */
 export const getSectionIcon = (sectionName) => {
     return sectionIcons[sectionName] || sectionIcons.default;
 };
 
 /**
- * Obtener el icono para una red social específica
- * @param {string} socialName - Nombre de la red social
- * @returns {string} - Clase de icono de Font Awesome
+ * Get the icon for a specific social network
+ * @param {string} socialName - Social network name
+ * @returns {string} - Font Awesome icon class
  */
 export const getSocialIcon = (socialName) => {
     return socialIcons[socialName] || socialIcons.default;
 };
 
 /**
- * Obtener el icono para un elemento de UI específico
- * @param {string} uiElement - Nombre del elemento de UI
- * @returns {string} - Clase de icono de Font Awesome
+ * Get the icon for a specific UI element
+ * @param {string} uiElement - UI element name
+ * @returns {string} - Font Awesome icon class
  */
 export const getUIIcon = (uiElement) => {
     return uiIcons[uiElement] || uiIcons.default;
 };
 
-// Exportación por defecto para compatibilidad con código existente
+// Default export for compatibility with existing code
 export default {
     techIcons,
     sectionIcons,

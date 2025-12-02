@@ -1,11 +1,11 @@
 /**
- * Sistema de internacionalización que carga traducciones dinámicamente
- * Evita importar archivos de la carpeta public directamente
- * 
+ * Internationalization system that loads translations dynamically
+ * Avoids importing files from the public folder directly
+ *
  * src/utils/i18n.js
  */
 
-// Cache para almacenar traducciones cargadas
+// Cache to store loaded translations
 const translationsCache = {
   en: null,
   es: null,
@@ -14,16 +14,16 @@ const translationsCache = {
 };
 
 /**
- * Detecta el idioma actual basado en la URL o el valor almacenado
- * @returns {string} Código del idioma (en, es, fr)
+ * Detects the current language based on the URL or stored value
+ * @returns {string} Language code (en, es, fr)
  */
 export const detectLanguage = () => {
-  // Primero intentamos usar la variable global establecida en el layout
+  // First, try to use the global variable set in the layout
   if (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) {
     return window.CURRENT_LANGUAGE;
   }
 
-  // Si no está disponible, detectamos por URL
+  // If not available, detect by URL
   if (typeof window !== 'undefined') {
     const path = window.location.pathname;
     if (path.startsWith('/es/') || path === '/es') return 'es';
@@ -31,28 +31,28 @@ export const detectLanguage = () => {
     if (path.startsWith('/de/') || path === '/de') return 'de';
   }
 
-  // Valor por defecto
+  // Default value
   return 'en';
 };
 
 /**
- * Carga un archivo de traducción
- * @param {string} lang - Código de idioma
- * @returns {Promise<Object>} - Promesa que resuelve al objeto de traducción
+ * Loads a translation file
+ * @param {string} lang - Language code
+ * @returns {Promise<Object>} - Promise that resolves to the translation object
  */
 export const loadTranslation = async (lang) => {
-  // Si ya tenemos la traducción en cache, la usamos
+  // If we already have the translation in cache, use it
   if (translationsCache[lang]) {
     return translationsCache[lang];
   }
 
   try {
-    // Usar URL relativa para que funcione en desarrollo y producción
+    // Use relative URL to work in development and production
     const response = await fetch(`/locales/${lang}/translation.json?v=${new Date().getTime()}`);
 
     if (!response.ok) {
       console.warn(`Failed to load ${lang} translations, status: ${response.status}`);
-      // Si falla, intentamos con inglés como fallback
+      // If it fails, try English as fallback
       if (lang !== 'en') {
         return loadTranslation('en');
       }
@@ -60,12 +60,12 @@ export const loadTranslation = async (lang) => {
     }
 
     const translations = await response.json();
-    // Guardar en cache
+    // Save in cache
     translationsCache[lang] = translations;
     return translations;
   } catch (error) {
     console.error(`Error loading ${lang} translations:`, error);
-    // Si hay error y no es inglés, intentar con inglés
+    // If there's an error and it's not English, try English
     if (lang !== 'en') {
       return loadTranslation('en');
     }
@@ -74,10 +74,10 @@ export const loadTranslation = async (lang) => {
 };
 
 /**
- * Obtiene el valor de traducción de un objeto anidado usando una ruta de punto
- * @param {Object} obj - Objeto de traducciones
- * @param {string} path - Ruta de acceso con puntos (por ej. 'header.title')
- * @returns {*} Valor encontrado o undefined
+ * Gets the translation value from a nested object using a dot-separated path
+ * @param {Object} obj - Translations object
+ * @param {string} path - Access path with dots (e.g. 'header.title')
+ * @returns {*} Found value or undefined
  */
 const getValueByPath = (obj, path) => {
   if (!obj || !path) return undefined;
@@ -96,7 +96,7 @@ const getValueByPath = (obj, path) => {
   return result;
 };
 
-// Datos de traducción en memoria para uso inmediato (fallbacks básicos)
+// In-memory translation data for immediate use (basic fallbacks)
 const fallbackTranslations = {
   en: {
     header: {
@@ -169,39 +169,39 @@ const fallbackTranslations = {
 };
 
 /**
- * Función de traducción principal - versión síncrona con fallbacks
- * @param {string} key - Clave de traducción (con notación de puntos)
- * @param {string} lang - Código de idioma (opcional, detecta automáticamente si no se proporciona)
- * @returns {string} Texto traducido o clave original como fallback
+ * Main translation function - synchronous version with fallbacks
+ * @param {string} key - Translation key (with dot notation)
+ * @param {string} lang - Language code (optional, auto-detects if not provided)
+ * @returns {string} Translated text or original key as fallback
  */
 export const translate = (key, lang = null) => {
-  // Determinar idioma a usar
+  // Determine language to use
   const langToUse = lang || detectLanguage();
 
-  // Primero buscar en las traducciones cargadas
+  // First, search in loaded translations
   const cached = translationsCache[langToUse];
   if (cached) {
     const translated = getValueByPath(cached, key);
     if (translated !== undefined) return translated;
   }
 
-  // Luego buscar en los fallbacks
+  // Then search in fallbacks
   const fallback = getValueByPath(fallbackTranslations[langToUse], key);
   if (fallback !== undefined) return fallback;
 
-  // Si aún no hay traducción, intentar con el idioma inglés
+  // If still no translation, try English
   if (langToUse !== 'en') {
     const enFallback = getValueByPath(fallbackTranslations.en, key);
     if (enFallback !== undefined) return enFallback;
   }
 
-  // Último recurso: devolver la última parte de la clave
+  // Last resort: return the last part of the key
   const parts = key.split('.');
   return parts[parts.length - 1];
 };
 
 /**
- * Función para precargar todas las traducciones
+ * Function to preload all translations
  * @returns {Promise<void>}
  */
 export const preloadTranslations = async () => {
@@ -219,8 +219,8 @@ export const preloadTranslations = async () => {
 };
 
 /**
- * Hook para usar en componentes React
- * @returns {Object} Objeto con funciones útiles
+ * Hook for use in React components
+ * @returns {Object} Object with useful functions
  */
 export const useI18n = () => {
   const lang = detectLanguage();
@@ -238,12 +238,12 @@ export const useI18n = () => {
   return {
     t: (key) => translate(key, lang),
     lang,
-    // Función para crear URLs localizadas
+    // Function to create localized URLs
     localizeUrl: (path) => {
       if (lang === 'en') return path.startsWith('/') ? path : `/${path}`;
       return `/${lang}${path.startsWith('/') ? path : `/${path}`}`;
     },
-    // Obtener nombre nativo del idioma actual
+    // Get native name of the current language
     languageName: {
       en: 'English',
       es: 'Español',

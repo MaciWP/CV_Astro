@@ -22,7 +22,7 @@ async function generateSitemap() {
 
   const today = isoDate();
 
-  // Lista explícita basada en tu estructura actual
+  // Explicit list based on current structure
   const pages = [
     { url: '/', priority: '1.0' },
     { url: '/es/', priority: '0.8' },

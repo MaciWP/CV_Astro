@@ -1,6 +1,6 @@
 /**
- * Script unificado para el proceso de compilación
- * Ejecuta todas las tareas necesarias en el orden correcto
+ * Unified script for the build process
+ * Executes all necessary tasks in the correct order
  * File: scripts/build.js
  */
 
@@ -9,60 +9,60 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Obtener dirname en ES Modules
+// Get dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Asegurarse de que existan las carpetas necesarias en public/
- * NOTE: Solo public/styles/fonts/ para Font Awesome (los CSS los maneja Astro directamente)
+ * Ensure required folders exist in public/
+ * NOTE: Only public/styles/fonts/ for Font Awesome (CSS files handled directly by Astro)
  */
 async function ensurePublicDirectories() {
-    console.log('🔍 Verificando directorios...');
+    console.log('🔍 Verifying directories...');
 
     try {
-        // Solo necesitamos el directorio de fuentes (Font Awesome)
-        // Los CSS de src/styles/ los importa Astro directamente
+        // We only need the fonts directory (Font Awesome)
+        // CSS files from src/styles/ are imported directly by Astro
         await fs.mkdir(path.join(__dirname, '../public/styles/fonts'), { recursive: true });
-        console.log('✅ Directorios verificados');
+        console.log('✅ Directories verified');
     } catch (error) {
-        console.error('❌ Error al verificar directorios:', error);
+        console.error('❌ Error verifying directories:', error);
         process.exit(1);
     }
 }
 
 /**
- * Generar sitemap
+ * Generate sitemap
  */
 async function generateSitemap() {
-    console.log('🗺️ Generando sitemap...');
+    console.log('🗺️ Generating sitemap...');
 
     try {
         execSync('node scripts/generate-sitemap.js', { stdio: 'inherit' });
-        console.log('✅ Sitemap generado');
+        console.log('✅ Sitemap generated');
     } catch (error) {
-        console.error('❌ Error al generar sitemap:', error);
-        // No salir en este caso, no es crítico
+        console.error('❌ Error generating sitemap:', error);
+        // Don't exit in this case, not critical
     }
 }
 
 /**
- * Ejecutar la compilación de Astro
+ * Execute Astro build
  */
 async function buildAstro() {
-    console.log('🚀 Compilando con Astro...');
+    console.log('🚀 Building with Astro...');
 
     try {
         execSync('astro build', { stdio: 'inherit' });
-        console.log('✅ Compilación completada');
+        console.log('✅ Build completed');
     } catch (error) {
-        console.error('❌ Error durante la compilación:', error);
+        console.error('❌ Error during build:', error);
         process.exit(1);
     }
 }
 
 async function verifyFontFiles() {
-    console.log('🔍 Verificando archivos de fuentes...');
+    console.log('🔍 Verifying font files...');
 
     const fontFiles = [
         'dist/styles/fonts/fa-solid-900.woff2',
@@ -72,47 +72,47 @@ async function verifyFontFiles() {
     for (const fontFile of fontFiles) {
         try {
             await fs.access(path.join(__dirname, '..', fontFile));
-            console.log(`  ✓ Archivo presente: ${fontFile}`);
+            console.log(`  ✓ File present: ${fontFile}`);
         } catch (error) {
-            console.warn(`  ⚠️ Archivo faltante: ${fontFile}`);
+            console.warn(`  ⚠️ File missing: ${fontFile}`);
 
-            // Copiar desde el directorio public si existe
+            // Copy from public directory if it exists
             try {
                 const sourceFile = fontFile.replace('dist/', 'public/');
                 await fs.copyFile(
                     path.join(__dirname, '..', sourceFile),
                     path.join(__dirname, '..', fontFile)
                 );
-                console.log(`  ✓ Copiado desde public: ${fontFile}`);
+                console.log(`  ✓ Copied from public: ${fontFile}`);
             } catch (copyError) {
-                console.error(`  ❌ No se pudo copiar: ${fontFile}`);
+                console.error(`  ❌ Could not copy: ${fontFile}`);
             }
         }
     }
 }
 
 /**
- * Función principal que ejecuta todo el proceso de compilación
+ * Main function that executes the entire build process
  */
 async function build() {
-    console.log('🏗️ Iniciando proceso de compilación...');
+    console.log('🏗️ Starting build process...');
 
     const startTime = Date.now();
 
     try {
-        // Ejecutar tareas en secuencia
+        // Execute tasks in sequence
         await ensurePublicDirectories();
         await generateSitemap();
         await buildAstro();
         await verifyFontFiles();
 
         const duration = ((Date.now() - startTime) / 1000).toFixed(2);
-        console.log(`✨ Compilación completada en ${duration}s`);
+        console.log(`✨ Build completed in ${duration}s`);
     } catch (error) {
-        console.error('❌ Error en el proceso de compilación:', error);
+        console.error('❌ Error in build process:', error);
         process.exit(1);
     }
 }
 
-// Ejecutar la función principal
+// Execute main function
 build();

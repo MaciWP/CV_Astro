@@ -1,18 +1,18 @@
 // scripts/check-contrast.js
 /**
- * Script para verificar problemas de contraste de color
- * Utiliza wcag-contrast para evaluar el cumplimiento de WCAG 2.1
+ * Script to verify color contrast issues
+ * Uses wcag-contrast to evaluate WCAG 2.1 compliance
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import contrast from 'wcag-contrast';
 
-// Obtener dirname en ESM
+// Get dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Colores extraídos del archivo tailwind.config.js
+// Colors extracted from tailwind.config.js file
 const colors = {
     'brand-red': '#D83333',
 
@@ -60,9 +60,9 @@ function checkContrast(colorName1, colorName2) {
     };
 }
 
-// Combinaciones críticas a verificar
+// Critical combinations to verify
 const combinations = [
-    // Tema claro - texto sobre fondos
+    // Light theme - text on backgrounds
     ['light-text', 'light-primary'],
     ['light-text', 'light-secondary'],
     ['light-text', 'light-surface'],
@@ -71,7 +71,7 @@ const combinations = [
     ['brand-red', 'light-primary'],
     ['brand-red', 'light-secondary'],
 
-    // Tema oscuro - texto sobre fondos
+    // Dark theme - text on backgrounds
     ['dark-text', 'dark-primary'],
     ['dark-text', 'dark-secondary'],
     ['dark-text', 'dark-surface'],
@@ -80,14 +80,14 @@ const combinations = [
     ['brand-red', 'dark-primary'],
     ['brand-red', 'dark-secondary'],
 
-    // Combinaciones específicas de componentes
-    ['light-primary', 'brand-red'], // Texto claro sobre rojo
-    ['dark-primary', 'brand-red'], // Texto oscuro sobre rojo
+    // Specific component combinations
+    ['light-primary', 'brand-red'], // Light text on red
+    ['dark-primary', 'brand-red'], // Dark text on red
 ];
 
-console.log('🔍 Analizando contrastes de color para cumplimiento WCAG...\n');
+console.log('🔍 Analyzing color contrasts for WCAG compliance...\n');
 
-// Verificar cada combinación
+// Check each combination
 const results = [];
 for (const [color1, color2] of combinations) {
     const result = checkContrast(color1, color2);
@@ -96,29 +96,29 @@ for (const [color1, color2] of combinations) {
     }
 }
 
-// Mostrar resultados
-console.log('📊 RESULTADOS DEL ANÁLISIS DE CONTRASTE:\n');
+// Display results
+console.log('📊 CONTRAST ANALYSIS RESULTS:\n');
 results.forEach(result => {
-    console.log(`${result.color1} sobre ${result.color2}:`);
+    console.log(`${result.color1} on ${result.color2}:`);
     console.log(`  Ratio: ${result.ratio}:1`);
-    console.log(`  AA-large: ${result.passes['AA-large'] ? '✅ PASA' : '❌ FALLA'}`);
-    console.log(`  AA-normal: ${result.passes['AA-normal'] ? '✅ PASA' : '❌ FALLA'}`);
-    console.log(`  AAA-large: ${result.passes['AAA-large'] ? '✅ PASA' : '❌ FALLA'}`);
-    console.log(`  AAA-normal: ${result.passes['AAA-normal'] ? '✅ PASA' : '❌ FALLA'}\n`);
+    console.log(`  AA-large: ${result.passes['AA-large'] ? '✅ PASS' : '❌ FAIL'}`);
+    console.log(`  AA-normal: ${result.passes['AA-normal'] ? '✅ PASS' : '❌ FAIL'}`);
+    console.log(`  AAA-large: ${result.passes['AAA-large'] ? '✅ PASS' : '❌ FAIL'}`);
+    console.log(`  AAA-normal: ${result.passes['AAA-normal'] ? '✅ PASS' : '❌ FAIL'}\n`);
 });
 
-// Identificar problemas
+// Identify issues
 const issues = results.filter(r => !r.passes['AA-normal']);
 if (issues.length > 0) {
-    console.log('⚠️ PROBLEMAS DE CONTRASTE DETECTADOS:');
+    console.log('⚠️ CONTRAST ISSUES DETECTED:');
     issues.forEach(issue => {
-        console.log(`- ${issue.color1} sobre ${issue.color2} (${issue.ratio}:1) no cumple AA para texto normal`);
+        console.log(`- ${issue.color1} on ${issue.color2} (${issue.ratio}:1) does not meet AA for normal text`);
     });
 } else {
-    console.log('✅ Todas las combinaciones cumplen con los requisitos AA para texto normal.');
+    console.log('✅ All combinations meet AA requirements for normal text.');
 }
 
-// Guardar informe en un archivo
+// Save report to file
 const reportPath = path.join(__dirname, '../contrast-report.json');
 fs.writeFileSync(reportPath, JSON.stringify(results, null, 2));
-console.log(`\n📝 Informe guardado en: ${reportPath}`);
+console.log(`\n📝 Report saved to: ${reportPath}`);
