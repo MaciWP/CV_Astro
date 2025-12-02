@@ -3,12 +3,20 @@
  * File: src/components/cv/Languages.jsx
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { getCurrentLanguageLanguages } from '../../data/languages';
+import { getLanguages, getCurrentLanguageLanguages } from '../../data/languages';
 
-const Languages = () => {
-    // Initialize with data immediately to prevent CLS
-    const [languagesData, setLanguagesData] = useState(() => getCurrentLanguageLanguages());
-    const [title, setTitle] = useState('Languages');
+// SSR-safe translations
+const titleByLang = {
+    en: 'Languages',
+    es: 'Idiomas',
+    fr: 'Langues',
+    de: 'Sprachen'
+};
+
+const Languages = ({ lang = 'en' }) => {
+    // Initialize with SSR-safe language prop to prevent hydration mismatch
+    const [languagesData, setLanguagesData] = useState(() => getLanguages(lang));
+    const [title, setTitle] = useState(titleByLang[lang] || titleByLang.en);
     const [isVisible, setIsVisible] = useState(false);
     const [animateProgress, setAnimateProgress] = useState(false);
     const sectionRef = useRef(null);

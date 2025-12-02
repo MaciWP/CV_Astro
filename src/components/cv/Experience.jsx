@@ -3,24 +3,54 @@
  * File: src/components/cv/Experience.jsx
  */
 import React, { useEffect, useState, useCallback } from 'react';
-import { getCurrentLanguageExperiences } from '../../data/experiences';
+import { getExperiences, getCurrentLanguageExperiences } from '../../data/experiences';
 
-/**
- * Experience component displays work history in a timeline format
- * Uses multilingual data and supports language switching
- */
-const Experience = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [expandedJobs, setExpandedJobs] = useState({});
-    // Initialize with data immediately to prevent CLS
-    const [experiences, setExperiences] = useState(() => getCurrentLanguageExperiences());
-    const [translations, setTranslations] = useState({
+// SSR-safe initial translations based on lang prop
+const translationsByLang = {
+    en: {
         title: 'Work Experience',
         responsibilities: 'Responsibilities',
         keyAchievements: 'Key Achievements',
         showMore: 'Show more',
         showLess: 'Show less'
-    });
+    },
+    es: {
+        title: 'Experiencia Laboral',
+        responsibilities: 'Responsabilidades',
+        keyAchievements: 'Logros Clave',
+        showMore: 'Ver más',
+        showLess: 'Ver menos'
+    },
+    fr: {
+        title: 'Expérience Professionnelle',
+        responsibilities: 'Responsabilités',
+        keyAchievements: 'Réalisations Clés',
+        showMore: 'Voir plus',
+        showLess: 'Voir moins'
+    },
+    de: {
+        title: 'Berufserfahrung',
+        responsibilities: 'Verantwortlichkeiten',
+        keyAchievements: 'Wichtige Erfolge',
+        showMore: 'Mehr anzeigen',
+        showLess: 'Weniger anzeigen'
+    }
+};
+
+const getInitialTranslations = (lang) => translationsByLang[lang] || translationsByLang.en;
+
+/**
+ * Experience component displays work history in a timeline format
+ * Uses multilingual data and supports language switching
+ * @param {Object} props
+ * @param {string} props.lang - Language code passed from Astro (prevents hydration mismatch)
+ */
+const Experience = ({ lang = 'en' }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [expandedJobs, setExpandedJobs] = useState({});
+    // Initialize with SSR-safe language prop to prevent hydration mismatch
+    const [experiences, setExperiences] = useState(() => getExperiences(lang));
+    const [translations, setTranslations] = useState(() => getInitialTranslations(lang));
 
     // Load translations and experiences data safely
     const loadTranslations = useCallback(() => {

@@ -4,20 +4,16 @@
  */
 import React, { useEffect, useState } from 'react';
 import {
+    getPersonalProjects,
+    getProfessionalProjects,
     getCurrentLanguagePersonalProjects,
     getCurrentLanguageProfessionalProjects,
     getTechIcon
 } from '../../data/projects';
 
-const Projects = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [showAllDetails, setShowAllDetails] = useState(false);
-    const [activeTab, setActiveTab] = useState('personal'); // 'personal' or 'professional'
-    const [isTabTransitioning, setIsTabTransitioning] = useState(false);
-    // Initialize with data immediately to prevent CLS
-    const [personalProjects, setPersonalProjects] = useState(() => getCurrentLanguagePersonalProjects());
-    const [professionalProjects, setProfessionalProjects] = useState(() => getCurrentLanguageProfessionalProjects());
-    const [translations, setTranslations] = useState({
+// SSR-safe translations
+const translationsByLang = {
+    en: {
         title: 'Key Projects',
         technologies: 'Technologies',
         keyFeatures: 'Key Features',
@@ -28,7 +24,56 @@ const Projects = () => {
         professionalWork: 'Professional Work',
         personalProjectsNote: 'These are personal projects I\'ve developed to explore technologies and solve specific challenges.',
         professionalProjectsNote: 'These are just some of the professional projects developed during my work at Bjumper. Repositories are private due to confidentiality agreements.'
-    });
+    },
+    es: {
+        title: 'Proyectos Clave',
+        technologies: 'Tecnologías',
+        keyFeatures: 'Características Clave',
+        viewOnGithub: 'Ver en GitHub',
+        showAllDetails: 'Mostrar todos los detalles',
+        showLessDetails: 'Mostrar menos detalles',
+        personalProjects: 'Proyectos Personales',
+        professionalWork: 'Trabajo Profesional',
+        personalProjectsNote: 'Estos son proyectos personales que he desarrollado para explorar tecnologías y resolver desafíos específicos.',
+        professionalProjectsNote: 'Estos son solo algunos de los proyectos profesionales desarrollados durante mi trabajo en Bjumper. Los repositorios son privados debido a acuerdos de confidencialidad.'
+    },
+    fr: {
+        title: 'Projets Clés',
+        technologies: 'Technologies',
+        keyFeatures: 'Fonctionnalités Clés',
+        viewOnGithub: 'Voir sur GitHub',
+        showAllDetails: 'Afficher tous les détails',
+        showLessDetails: 'Afficher moins de détails',
+        personalProjects: 'Projets Personnels',
+        professionalWork: 'Travail Professionnel',
+        personalProjectsNote: 'Ce sont des projets personnels que j\'ai développés pour explorer des technologies et résoudre des défis spécifiques.',
+        professionalProjectsNote: 'Voici quelques-uns des projets professionnels développés pendant mon travail chez Bjumper. Les dépôts sont privés en raison d\'accords de confidentialité.'
+    },
+    de: {
+        title: 'Schlüsselprojekte',
+        technologies: 'Technologien',
+        keyFeatures: 'Hauptmerkmale',
+        viewOnGithub: 'Auf GitHub ansehen',
+        showAllDetails: 'Alle Details anzeigen',
+        showLessDetails: 'Weniger Details anzeigen',
+        personalProjects: 'Persönliche Projekte',
+        professionalWork: 'Berufliche Arbeit',
+        personalProjectsNote: 'Dies sind persönliche Projekte, die ich entwickelt habe, um Technologien zu erkunden und spezifische Herausforderungen zu lösen.',
+        professionalProjectsNote: 'Dies sind nur einige der professionellen Projekte, die während meiner Arbeit bei Bjumper entwickelt wurden. Repositories sind aufgrund von Vertraulichkeitsvereinbarungen privat.'
+    }
+};
+
+const getInitialTranslations = (lang) => translationsByLang[lang] || translationsByLang.en;
+
+const Projects = ({ lang = 'en' }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [showAllDetails, setShowAllDetails] = useState(false);
+    const [activeTab, setActiveTab] = useState('personal'); // 'personal' or 'professional'
+    const [isTabTransitioning, setIsTabTransitioning] = useState(false);
+    // Initialize with SSR-safe language prop to prevent hydration mismatch
+    const [personalProjects, setPersonalProjects] = useState(() => getPersonalProjects(lang));
+    const [professionalProjects, setProfessionalProjects] = useState(() => getProfessionalProjects(lang));
+    const [translations, setTranslations] = useState(() => getInitialTranslations(lang));
 
     // Load translations for UI elements
     const loadTranslations = () => {
