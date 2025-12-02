@@ -535,22 +535,27 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       <SkipToContent client:idle />
       <A11yAnnouncer client:idle />
 
-      <I18nLoader client:only>
-        <header role="banner" class="sticky top-0 z-50">
-          <ErrorBoundary>
-            <Navbar client:idle />
-          </ErrorBoundary>
-        </header>
+      <!-- CRITICAL: Header rendered OUTSIDE I18nLoader for immediate SSG -->
+      <header role="banner" class="sticky top-0 z-50">
+        <ErrorBoundary>
+          <Navbar client:idle />
+        </ErrorBoundary>
+      </header>
 
-        <main
-          id="cv-content"
-          role="main"
-          class="container mx-auto px-4 py-8 max-w-5xl"
-        >
-          <ErrorBoundary>
-            <slot />
-          </ErrorBoundary>
-        </main>
+      <!-- CRITICAL: LCP content slot rendered OUTSIDE I18nLoader (SSG) -->
+      <!-- This ensures the profile image renders immediately without waiting for React -->
+      <main
+        id="cv-content"
+        role="main"
+        class="container mx-auto px-4 py-8 max-w-5xl"
+      >
+        <ErrorBoundary>
+          <slot />
+        </ErrorBoundary>
+      </main>
+
+      <!-- I18nLoader only wraps components that NEED runtime translations -->
+      <I18nLoader client:idle>
 
         <ErrorBoundary>
           <footer
