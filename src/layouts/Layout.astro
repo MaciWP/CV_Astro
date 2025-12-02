@@ -335,9 +335,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       .text-brand-red,.text-accessible-brand-red{color:var(--accessible-brand-red)!important}
       .bg-brand-red{background-color:var(--brand-red)}
       .dark .text-brand-red,.dark .text-accessible-brand-red{color:#fca5a5!important}
-      /* CLS Prevention - reserve space for Skills section */
+      /* CLS Prevention - contain prevents layout recalculation */
       #skills{min-height:600px;contain:layout style paint}
-      .skill-category-animate{contain:layout style paint;min-height:44px}
+      .skill-category-animate{contain:layout style paint}
       /* Skill badge theme transition fix */
       .skill-badge{transition:background-color 200ms ease-out,border-color 200ms ease-out,transform 100ms ease-out,box-shadow 100ms ease-out}
       .fas,.fab{min-width:1em;display:inline-block}

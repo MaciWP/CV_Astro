@@ -236,12 +236,11 @@
 }
 
 /* Skill category animation - staggered fade in */
-/* CLS-SAFE: contain prevents layout recalculation, min-height reserves space */
+/* CLS-SAFE: contain prevents layout recalculation */
 .skill-category-animate {
     animation: sectionFadeIn 0.4s ease-out forwards;
     animation-delay: var(--anim-delay, 150ms);
     contain: layout style paint;
-    min-height: 44px;
 }
 
 /* ===== PROJECT CARD ANIMATIONS ===== */
