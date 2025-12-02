@@ -1,6 +1,6 @@
 # =========================
-# Netlify _headers (production) — con Cloudflare delante
-# Recomendado: PERFIL SIN GA/GTM (mejor score y cero avisos CSP)
+# Netlify _headers (production) - with Cloudflare in front
+# Recommended: Profile without GA/GTM (better score and zero CSP warnings)
 # =========================
 
 /
@@ -46,9 +46,9 @@
   Cache-Control: no-store
   Service-Worker-Allowed: /
 
-# CSP original (bloqueaba Google Analytics) - DESACTIVADA
+# Original CSP (blocked Google Analytics) - DISABLED
 #/*
-#  # CSP estricta sin Google Analytics / Tag Manager
+#  # Strict CSP without Google Analytics / Tag Manager
 #  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 #  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; script-src-elem 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'
 #  Cross-Origin-Opener-Policy: same-origin
@@ -57,7 +57,7 @@
 #  Referrer-Policy: strict-origin-when-cross-origin
 
 # ===========================================================
-# CSP ALTERNATIVA - ACTIVADA para permitir Google Analytics
+# ALTERNATIVE CSP - ENABLED to allow Google Analytics
 # ===========================================================
 /*
   Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://cloudflareinsights.com https://static.cloudflareinsights.com; manifest-src 'self'

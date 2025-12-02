@@ -32,7 +32,7 @@ A professional CV/portfolio website following Swiss design standards. This proje
 
 ### Prerequisites
 
-- Node.js 18 or higher
+- Node.js 22 or higher
 - npm 9.5 or higher
 
 ### Setup
@@ -64,11 +64,12 @@ npm run preview
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
-- `npm run generate:favicons` - Generate favicons
-- `npm run generate:sitemap` - Generate sitemap
-- `npm run optimize:images` - Optimize images
-- `npm run seo:audit` - Run Lighthouse audit
-- `npm run analyze:bundle` - Analyze bundle size
+- `npm run generate-images` - Generate responsive profile images
+- `npm run check` - Run all validation checks (contrast, translations, structured data)
+- `npm run a11y:audit` - Run Lighthouse accessibility audit
+- `npm run analyze` - Analyze bundle size
+- `npm run lint` - Run ESLint
+- `npm run clean` - Clean build artifacts
 
 ## 📂 Project Structure
 

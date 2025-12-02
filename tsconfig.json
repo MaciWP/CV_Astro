@@ -14,9 +14,6 @@
   "exclude": [
     "dist",
     "node_modules",
-    "src/components/ContactForm.jsx",
-    "src/components/Icon.jsx",
-    "src/components/Icons.jsx",
     "**/*.spec.ts",
     "**/*.test.ts"
   ],
