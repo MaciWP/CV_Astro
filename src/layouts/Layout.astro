@@ -206,11 +206,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- LCP Image Preload - CRITICAL for performance -->
     <!-- Mobile: preload 320w for screens up to 767px -->
+    <!-- FIXED: srcset must match picture element exactly for preload matching -->
     <link
       rel="preload"
       as="image"
       href="/images/oriol_macias-320.avif"
-      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
       imagesizes="280px"
       type="image/avif"
       media="(max-width: 767px)"
@@ -229,14 +230,15 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
-    <!-- OPTIMIZED: Only 3 critical fonts preloaded (was 7) -->
+    <!-- OPTIMIZED for LCP: Only Inter 400 preloaded on mobile, full set on desktop -->
     <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
-    <!-- FontAwesome Preload - Prevents CLS by loading icons early -->
-    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- FontAwesome Preload - Desktop only to prioritize LCP image on mobile -->
+    <!-- Mobile: LCP image is higher priority than icons -->
+    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
     <!-- JS Enabled Class -->
     <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
@@ -335,6 +337,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       /* CLS Prevention - reserve space for Skills section */
       #skills{min-height:600px;contain:layout style paint}
       .skill-category-animate{contain:layout style paint;min-height:44px}
+      /* content-visibility: auto for below-the-fold sections - reduces initial render work */
+      #experience,#education,#projects,#languages{content-visibility:auto;contain-intrinsic-size:auto 500px}
       /* Skill badge theme transition fix */
       .skill-badge{transition:background-color 200ms ease-out,border-color 200ms ease-out,transform 100ms ease-out,box-shadow 100ms ease-out}
       .fas,.fab{min-width:1em;display:inline-block}
@@ -500,11 +504,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     />
 
     <!-- Font Awesome Critical Styles -->
+    <!-- font-display:optional - non-blocking, uses cached fonts, no render delay -->
     <style is:inline>
-      @font-face{font-family:"Font Awesome 5 Free";font-weight:900;font-display:swap;src:url("/styles/fonts/fa-solid-900.woff2") format("woff2")}
-      @font-face{font-family:"Font Awesome 5 Brands";font-weight:400;font-display:swap;src:url("/styles/fonts/fa-brands-400.woff2") format("woff2")}
-      .fas,.fa-solid{font-family:"Font Awesome 5 Free";font-weight:900;display:inline-block;font-style:normal;line-height:1}
-      .fab,.fa-brands{font-family:"Font Awesome 5 Brands";font-weight:400;display:inline-block;font-style:normal;line-height:1}
+      @font-face{font-family:"Font Awesome 5 Free";font-weight:900;font-display:optional;src:url("/styles/fonts/fa-solid-900.woff2") format("woff2")}
+      @font-face{font-family:"Font Awesome 5 Brands";font-weight:400;font-display:optional;src:url("/styles/fonts/fa-brands-400.woff2") format("woff2")}
+      .fas,.fa-solid{font-family:"Font Awesome 5 Free";font-weight:900;display:inline-block;font-style:normal;line-height:1;width:1em;height:1em}
+      .fab,.fa-brands{font-family:"Font Awesome 5 Brands";font-weight:400;display:inline-block;font-style:normal;line-height:1;width:1em;height:1em}
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
     </style>
 
