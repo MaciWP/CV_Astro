@@ -36,6 +36,12 @@ export default defineConfig({
   // This eliminates server overhead and improves performance
   output: 'static',
 
+  // NOTE: Astro experimental CSP (csp: true) is NOT compatible with:
+  // - Tailwind CSS (uses dynamic inline style="" attributes)
+  // - Scripts with define:vars (dynamic content changes hashes)
+  // - External script domains (GA, Cloudflare)
+  // Keeping 'unsafe-inline' in CSP headers for now.
+
   // i18n configuration
   i18n: {
     defaultLocale: "en",
