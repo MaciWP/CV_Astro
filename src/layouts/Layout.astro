@@ -191,13 +191,14 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
-    <!-- LCP Image Preload - 480w is optimal for mobile (24KB vs 35KB for 640w) -->
-    <!-- Mobile: 280px slot × DPR 2 = 560px needed, 480w is close enough -->
-    <!-- Desktop: 320px slot × DPR 2 = 640px, but 480w still acceptable -->
+    <!-- LCP Image Preload with imagesrcset/imagesizes for optimal resource discovery -->
+    <!-- Browser knows exact size needed before parsing HTML body -->
     <link
       rel="preload"
       as="image"
       href="/images/oriol_macias-480.avif"
+      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-480.avif 480w, /images/oriol_macias-640.avif 640w"
+      imagesizes="(max-width: 767px) 280px, 320px"
       type="image/avif"
       fetchpriority="high"
     />
@@ -207,23 +208,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
     </script>
 
-    <!-- Content Security Policy -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="
-      default-src 'self';
-      base-uri 'self';
-      object-src 'none';
-      img-src 'self' data: blob:;
-      font-src 'self' data: https://cdnjs.cloudflare.com;
-      style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
-      script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com;
-      connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net;
-      upgrade-insecure-requests;
-    "
-    />
-
-    <!-- Removed unused Google Analytics preconnects - not using GA on this site -->
+    <!-- CSP is defined via HTTP headers in public/_headers (Netlify) -->
+    <!-- Removing meta tag CSP to avoid "CSP in meta tag" penalty in Best Practices -->
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
     <!-- OPTIMIZED: Desktop-only preloads to reduce mobile bandwidth competition -->
@@ -233,9 +219,9 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
     <!-- FontAwesome Preload - Critical for icons throughout the page -->
-    <!-- fa-solid is most used, fa-brands for social icons -->
+    <!-- fa-solid is most used everywhere, fa-brands only for social icons (desktop navbar) -->
     <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
     <!-- JS Enabled Class -->
     <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
