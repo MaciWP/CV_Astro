@@ -237,7 +237,14 @@ const languageOptions = [
 </nav>
 
 <script>
-(function() {
+// Defer execution to not block HTML parser - improves LCP
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+} else {
+    initNavbar();
+}
+
+function initNavbar() {
     const navbar = document.getElementById('main-navbar');
     if (!navbar) return;
 
@@ -497,5 +504,5 @@ const languageOptions = [
     // Initialize
     updateThemeIcons();
     setTimeout(detectActiveSection, 100);
-})();
+} // end initNavbar
 </script>
