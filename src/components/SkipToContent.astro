@@ -1,0 +1,65 @@
+---
+/**
+ * Skip to content component for keyboard navigation - Pure Astro
+ * Uses CSS :focus for visibility, minimal inline JS for click handling
+ * @file src/components/SkipToContent.astro
+ */
+
+interface Props {
+    targetId?: string;
+}
+
+const { targetId = "cv-content" } = Astro.props;
+---
+
+<a
+    href={`#${targetId}`}
+    class="skip-to-content"
+    data-target={targetId}
+>
+    Skip to main content
+</a>
+
+<style>
+    .skip-to-content {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 9999;
+        transform: translateY(-3rem);
+        opacity: 0;
+        transition: transform 200ms ease, opacity 200ms ease;
+        background-color: var(--brand-red, #d83333);
+        color: white;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .skip-to-content:focus {
+        transform: translateY(0);
+        opacity: 1;
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
+</style>
+
+<script>
+    // Minimal script for enhanced click behavior
+    document.querySelector('.skip-to-content')?.addEventListener('click', (e) => {
+        const target = document.getElementById((e.currentTarget as HTMLAnchorElement).dataset.target || 'cv-content');
+        if (target) {
+            e.preventDefault();
+            target.tabIndex = -1;
+            target.focus({ preventScroll: false });
+            target.scrollIntoView({ behavior: 'smooth' });
+            target.addEventListener('blur', () => target.removeAttribute('tabIndex'), { once: true });
+
+            // Announce to screen reader if available
+            if (typeof window !== 'undefined' && (window as any).announceToScreenReader) {
+                (window as any).announceToScreenReader('Skipped to main content');
+            }
+        }
+    });
+</script>

@@ -1,0 +1,67 @@
+---
+/**
+ * Accessibility announcer component - Pure Astro
+ * Provides screen reader announcements via global function
+ * @file src/components/A11yAnnouncer.astro
+ */
+---
+
+<!-- Screen reader live region -->
+<div
+    id="a11y-announcer"
+    aria-live="polite"
+    aria-atomic="true"
+    class="sr-only"
+></div>
+
+<style>
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+</style>
+
+<script>
+    // Global function for screen reader announcements
+    (function() {
+        const announcer = document.getElementById('a11y-announcer');
+        let clearTimeout: ReturnType<typeof setTimeout> | null = null;
+
+        (window as any).announceToScreenReader = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
+            if (!announcer) return;
+
+            // Clear previous timeout
+            if (clearTimeout) {
+                window.clearTimeout(clearTimeout);
+            }
+
+            // Set priority
+            announcer.setAttribute('aria-live', priority);
+
+            // Clear and set message (forces screen reader to announce)
+            announcer.textContent = '';
+            requestAnimationFrame(() => {
+                announcer.textContent = message;
+            });
+
+            // Clear after 3 seconds
+            clearTimeout = setTimeout(() => {
+                announcer.textContent = '';
+            }, 3000);
+        };
+
+        // Support custom event announcements
+        document.addEventListener('a11y-announce', ((e: CustomEvent) => {
+            if (e.detail?.message) {
+                (window as any).announceToScreenReader(e.detail.message, e.detail.priority || 'polite');
+            }
+        }) as EventListener);
+    })();
+</script>
