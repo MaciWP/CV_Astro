@@ -117,33 +117,33 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     {/* Imagen - Explicit width/height to prevent CLS */}
                     <div class="w-full aspect-square" style="min-height: 280px; contain: layout size;">
                         <picture>
-                            {/* Mobile AVIF - uses 640w for all DPR (preloaded in Layout.astro) */}
+                            {/* Mobile AVIF - 480w is optimal for 280px slot at DPR 2 (saves 11KB vs 640w) */}
                             <source
-                                srcset="/images/oriol_macias-640.avif"
+                                srcset="/images/oriol_macias-480.avif"
                                 media="(max-width: 767px)"
                                 type="image/avif"
                             />
-                            {/* Desktop AVIF - larger screens may need higher res */}
+                            {/* Desktop AVIF - 320px slot needs up to 640w at DPR 2 */}
                             <source
-                                srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
+                                srcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-480.avif 480w, /images/oriol_macias-640.avif 640w"
                                 sizes="320px"
                                 type="image/avif"
                             />
                             {/* WebP fallback for mobile */}
                             <source
-                                srcset="/images/oriol_macias-640.webp"
+                                srcset="/images/oriol_macias-480.webp"
                                 media="(max-width: 767px)"
                                 type="image/webp"
                             />
                             {/* WebP fallback for desktop */}
                             <source
-                                srcset="/images/oriol_macias-320.webp 320w, /images/oriol_macias-640.webp 640w, /images/oriol_macias-960.webp 960w"
+                                srcset="/images/oriol_macias-320.webp 320w, /images/oriol_macias-480.webp 480w, /images/oriol_macias-640.webp 640w"
                                 sizes="320px"
                                 type="image/webp"
                             />
-                            {/* Fallback img - uses 640w to match preload */}
+                            {/* Fallback img - 480w matches mobile preload */}
                             <img
-                                src="/images/oriol_macias-640.avif"
+                                src="/images/oriol_macias-480.avif"
                                 alt={photoAlt}
                                 width="320"
                                 height="320"

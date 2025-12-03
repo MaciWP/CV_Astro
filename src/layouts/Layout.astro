@@ -191,13 +191,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
-    <!-- LCP Image Preload - Direct preload for mobile (most common LCP bottleneck) -->
-    <!-- Mobile with DPR 2-2.5 needs 560-700px, so 640w is optimal -->
-    <!-- Desktop with DPR 1-2 at 320px slot needs 320-640px, same image works -->
+    <!-- LCP Image Preload - 480w is optimal for mobile (24KB vs 35KB for 640w) -->
+    <!-- Mobile: 280px slot × DPR 2 = 560px needed, 480w is close enough -->
+    <!-- Desktop: 320px slot × DPR 2 = 640px, but 480w still acceptable -->
     <link
       rel="preload"
       as="image"
-      href="/images/oriol_macias-640.avif"
+      href="/images/oriol_macias-480.avif"
       type="image/avif"
       fetchpriority="high"
     />
@@ -223,10 +223,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     "
     />
 
-    <!-- Preconnect for Google Analytics -->
-    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <!-- Removed unused Google Analytics preconnects - not using GA on this site -->
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
     <!-- OPTIMIZED: Desktop-only preloads to reduce mobile bandwidth competition -->
@@ -235,10 +232,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
     <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
-    <!-- FontAwesome Preload - DESKTOP ONLY to avoid competing with LCP image on mobile -->
-    <!-- Mobile uses font-display:swap in CSS, so icons load after LCP -->
-    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
-    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <!-- FontAwesome Preload - Critical for icons throughout the page -->
+    <!-- fa-solid is most used, fa-brands for social icons -->
+    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- JS Enabled Class -->
     <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
@@ -455,8 +452,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 
     <!-- Font Awesome Critical Styles -->
     <style is:inline>
-      @font-face{font-family:"Font Awesome 5 Free";font-weight:900;font-display:swap;src:url("/styles/fonts/fa-solid-900.woff2") format("woff2")}
-      @font-face{font-family:"Font Awesome 5 Brands";font-weight:400;font-display:swap;src:url("/styles/fonts/fa-brands-400.woff2") format("woff2")}
+      @font-face{font-family:"Font Awesome 5 Free";font-weight:900;font-display:optional;src:url("/styles/fonts/fa-solid-900.woff2") format("woff2")}
+      @font-face{font-family:"Font Awesome 5 Brands";font-weight:400;font-display:optional;src:url("/styles/fonts/fa-brands-400.woff2") format("woff2")}
       .fas,.fa-solid{font-family:"Font Awesome 5 Free";font-weight:900;display:inline-block;font-style:normal;line-height:1}
       .fab,.fa-brands{font-family:"Font Awesome 5 Brands";font-weight:400;display:inline-block;font-style:normal;line-height:1}
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
