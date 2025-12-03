@@ -192,14 +192,13 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
-    <!-- LCP Image Preload - MUST match <picture> srcset exactly to avoid double download -->
-    <!-- Uses imagesrcset+imagesizes so browser picks same image as the actual <picture> element -->
-    <!-- Mobile: sizes=280px, Desktop: sizes=320px - browser applies DPR automatically -->
+    <!-- LCP Image Preload - Direct preload for mobile (most common LCP bottleneck) -->
+    <!-- Mobile with DPR 2-2.5 needs 560-700px, so 640w is optimal -->
+    <!-- Desktop with DPR 1-2 at 320px slot needs 320-640px, same image works -->
     <link
       rel="preload"
       as="image"
-      imagesrcset="/images/oriol_macias-320.avif 320w, /images/oriol_macias-480.avif 480w, /images/oriol_macias-640.avif 640w, /images/oriol_macias-960.avif 960w"
-      imagesizes="(max-width: 767px) 280px, 320px"
+      href="/images/oriol_macias-640.avif"
       type="image/avif"
       fetchpriority="high"
     />
