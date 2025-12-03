@@ -45,8 +45,8 @@ const titles: Record<string, string> = {
 const title = titles[lang] || titles.en;
 ---
 
-<section class="mt-16 mb-8" itemscope itemtype="https://schema.org/FAQPage">
-  <div class="flex items-center mb-6">
+<section class="mt-16 mb-8 faq-section" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="flex items-center mb-6 section-header">
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
       <i class="fas fa-question-circle" aria-hidden="true"></i>
     </div>
@@ -56,7 +56,8 @@ const title = titles[lang] || titles.en;
   <div class="space-y-4">
     {faqs.map((faq, index) => (
       <div
-        class="bg-light-surface dark:bg-dark-surface p-5 border border-light-border dark:border-dark-border rounded-none"
+        class="faq-item bg-light-surface dark:bg-dark-surface p-5 border border-light-border dark:border-dark-border rounded-none hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md transition-all duration-150"
+        style={`--delay: ${100 * index}ms`}
         itemscope
         itemprop="mainEntity"
         itemtype="https://schema.org/Question"
@@ -69,5 +70,60 @@ const title = titles[lang] || titles.en;
     ))}
   </div>
 </section>
+
+<style>
+    /* Initial state - hidden */
+    .section-header,
+    .faq-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 200ms ease-out, transform 200ms ease-out,
+                    background-color 100ms ease-out, border-color 100ms ease-out,
+                    box-shadow 150ms ease-out;
+        transition-delay: var(--delay, 0ms);
+    }
+
+    /* Visible state */
+    .faq-section.visible .section-header,
+    .faq-section.visible .faq-item {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    function initFAQSection() {
+        const sections = document.querySelectorAll('.faq-section:not(.initialized)');
+
+        sections.forEach(section => {
+            section.classList.add('initialized');
+
+            // IntersectionObserver for scroll animation
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.disconnect();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            observer.observe(section);
+        });
+    }
+
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFAQSection);
+    } else {
+        initFAQSection();
+    }
+
+    // Re-run on Astro page transitions
+    document.addEventListener('astro:page-load', initFAQSection);
+</script>
 
 <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`} />

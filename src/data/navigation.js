@@ -64,7 +64,7 @@ export const uiTranslations = {
         en: 'Download CV',
         es: 'Descargar CV',
         fr: 'Télécharger CV',
-        de: 'Lebenslauf herunterladen'
+        de: 'CV laden'
     },
     backToTop: {
         en: 'Back to top',
