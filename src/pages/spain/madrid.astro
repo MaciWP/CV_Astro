@@ -6,7 +6,7 @@
  */
 import Layout from "../../layouts/Layout.astro";
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
-import Experience from "../../components/cv/Experience";
+import Experience from "../../components/cv/Experience.astro";
 import Skills from "../../components/cv/Skills.astro";
 import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
 
@@ -72,7 +72,7 @@ const breadcrumbs = [
     </section>
 
     <ProfileHeader lang="es" />
-    <Experience lang="es" client:visible />
+    <Experience lang="es" />
     <Skills lang="es" />
   </div>
 </Layout>

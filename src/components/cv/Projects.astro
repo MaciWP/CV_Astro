@@ -1,0 +1,455 @@
+---
+/**
+ * Projects component - Pure Astro with vanilla JS for tabs and expand/collapse
+ * @file src/components/cv/Projects.astro
+ */
+import { getPersonalProjects, getProfessionalProjects, getTechIcon } from '../../data/projects';
+
+interface Props {
+    lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Get translated data at build time
+const personalProjects = getPersonalProjects(lang);
+const professionalProjects = getProfessionalProjects(lang);
+
+// UI translations
+const translationsByLang: Record<string, Record<string, string>> = {
+    en: {
+        title: 'Key Projects',
+        technologies: 'Technologies',
+        keyFeatures: 'Key Features',
+        viewOnGithub: 'View on GitHub',
+        showAllDetails: 'Show all details',
+        showLessDetails: 'Show less details',
+        personalProjects: 'Personal Projects',
+        professionalWork: 'Professional Work',
+        personalProjectsNote: "These are personal projects I've developed to explore technologies and solve specific challenges.",
+        professionalProjectsNote: 'These are just some of the professional projects developed during my work at Bjumper. Repositories are private due to confidentiality agreements.'
+    },
+    es: {
+        title: 'Proyectos Clave',
+        technologies: 'Tecnologías',
+        keyFeatures: 'Características Clave',
+        viewOnGithub: 'Ver en GitHub',
+        showAllDetails: 'Mostrar todos los detalles',
+        showLessDetails: 'Mostrar menos detalles',
+        personalProjects: 'Proyectos Personales',
+        professionalWork: 'Trabajo Profesional',
+        personalProjectsNote: 'Estos son proyectos personales que he desarrollado para explorar tecnologías y resolver desafíos específicos.',
+        professionalProjectsNote: 'Estos son solo algunos de los proyectos profesionales desarrollados durante mi trabajo en Bjumper. Los repositorios son privados debido a acuerdos de confidencialidad.'
+    },
+    fr: {
+        title: 'Projets Clés',
+        technologies: 'Technologies',
+        keyFeatures: 'Fonctionnalités Clés',
+        viewOnGithub: 'Voir sur GitHub',
+        showAllDetails: 'Afficher tous les détails',
+        showLessDetails: 'Afficher moins de détails',
+        personalProjects: 'Projets Personnels',
+        professionalWork: 'Travail Professionnel',
+        personalProjectsNote: "Ce sont des projets personnels que j'ai développés pour explorer des technologies et résoudre des défis spécifiques.",
+        professionalProjectsNote: "Voici quelques-uns des projets professionnels développés pendant mon travail chez Bjumper. Les dépôts sont privés en raison d'accords de confidentialité."
+    },
+    de: {
+        title: 'Schlüsselprojekte',
+        technologies: 'Technologien',
+        keyFeatures: 'Hauptmerkmale',
+        viewOnGithub: 'Auf GitHub ansehen',
+        showAllDetails: 'Alle Details anzeigen',
+        showLessDetails: 'Weniger Details anzeigen',
+        personalProjects: 'Persönliche Projekte',
+        professionalWork: 'Berufliche Arbeit',
+        personalProjectsNote: 'Dies sind persönliche Projekte, die ich entwickelt habe, um Technologien zu erkunden und spezifische Herausforderungen zu lösen.',
+        professionalProjectsNote: 'Dies sind nur einige der professionellen Projekte, die während meiner Arbeit bei Bjumper entwickelt wurden. Repositories sind aufgrund von Vertraulichkeitsvereinbarungen privat.'
+    }
+};
+
+const t = translationsByLang[lang] || translationsByLang.en;
+
+// Helper to get icon with fallback
+function getProjectIcon(project: any): string {
+    if (project.id === "vmware-service" && !project.icon) {
+        return "fab fa-vmware";
+    }
+    return project.icon || "fas fa-code";
+}
+---
+
+<section id="projects" class="pt-4 projects-section">
+    <!-- Header -->
+    <div class="flex items-center mb-6 section-header">
+        <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+            <i class="fas fa-project-diagram"></i>
+        </div>
+        <h2 class="text-2xl font-bold ml-3">{t.title}</h2>
+
+        <!-- Toggle all details button -->
+        <button
+            id="toggle-all-details"
+            class="ml-auto text-brand-red hover:text-brand-red/80 text-sm inline-flex items-center gap-2 focus:outline-none min-h-[48px] px-3 py-2"
+            data-show-all={t.showAllDetails}
+            data-show-less={t.showLessDetails}
+        >
+            <i class="fas fa-chevron-down text-sm"></i>
+            <span class="btn-text">{t.showAllDetails}</span>
+        </button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex border-b border-light-border dark:border-dark-border mb-6">
+        <button
+            class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400"
+            data-tab="personal"
+        >
+            {t.personalProjects}
+        </button>
+        <button
+            class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70"
+            data-tab="professional"
+        >
+            {t.professionalWork}
+        </button>
+    </div>
+
+    <!-- Personal Projects Grid -->
+    <div id="personal-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {personalProjects.map((project, index) => (
+            <div
+                class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col cursor-pointer"
+                style={`--delay: ${120 * index}ms`}
+                data-github-url={project.githubUrl}
+                tabindex="0"
+                role="link"
+                aria-label={`${t.viewOnGithub}: ${project.title}`}
+            >
+                <!-- Header -->
+                <div class={`bg-brand-red p-3 flex items-center justify-between gap-3 text-white ${project.highlight ? 'border-l-4 border-l-white/50' : ''}`}>
+                    <div class="flex items-center gap-2">
+                        <i class={`${getProjectIcon(project)} text-xl`}></i>
+                        <h3 class="font-bold text-lg">{project.title}</h3>
+                    </div>
+                    {project.githubUrl && (
+                        <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="github-link hover:text-white/80 transition-colors z-30 relative"
+                            aria-label={`GitHub: ${project.title}`}
+                        >
+                            <i class="fab fa-github text-lg"></i>
+                        </a>
+                    )}
+                </div>
+
+                <div class="p-5 flex-grow flex flex-col">
+                    <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">
+                        {project.description}
+                    </p>
+                    <p class="long-description mb-4 text-light-text-secondary dark:text-dark-text-secondary hidden">
+                        {project.longDescription}
+                    </p>
+
+                    <!-- Key Features - hidden by default -->
+                    <div class="key-features mb-4 hidden">
+                        <h4 class="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider">
+                            {t.keyFeatures}
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            {project.keyFeatures.map((feature: string) => (
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-brand-red flex-shrink-0 mt-1"></i>
+                                    <span>{feature}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="mt-auto">
+                        <h4 class="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">
+                            {t.technologies}
+                        </h4>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            {project.technologies.map((tech: string) => (
+                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center gap-1.5">
+                                    <i class={`${getTechIcon(tech)} text-brand-red`}></i>
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <!-- Click indicator -->
+                    <div class="mt-3 flex items-center text-xs text-light-text-secondary dark:text-dark-text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-external-link-alt mr-1 text-brand-red"></i>
+                        {t.viewOnGithub}
+                    </div>
+
+                    <!-- Bottom indicator line -->
+                    <div class="w-0 h-0.5 bg-brand-red mt-4 transition-all duration-150 group-hover:w-full"></div>
+                </div>
+            </div>
+        ))}
+    </div>
+
+    <!-- Professional Projects Grid -->
+    <div id="professional-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+        {professionalProjects.map((project, index) => (
+            <div
+                class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col"
+                style={`--delay: ${120 * index}ms`}
+                tabindex="0"
+                role="article"
+                aria-label={project.title}
+            >
+                <!-- Header -->
+                <div class={`bg-brand-red p-3 flex items-center justify-between gap-3 text-white ${project.highlight ? 'border-l-4 border-l-white/50' : ''}`}>
+                    <div class="flex items-center gap-2">
+                        <i class={`${getProjectIcon(project)} text-xl`}></i>
+                        <h3 class="font-bold text-lg">{project.title}</h3>
+                    </div>
+                    <div class="px-2 py-0.5 text-xs bg-white/20 rounded-none">
+                        {project.company}
+                    </div>
+                </div>
+
+                <div class="p-5 flex-grow flex flex-col">
+                    <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">
+                        {project.description}
+                    </p>
+                    <p class="long-description mb-4 text-light-text-secondary dark:text-dark-text-secondary hidden">
+                        {project.longDescription}
+                    </p>
+
+                    <!-- Key Features - hidden by default -->
+                    <div class="key-features mb-4 hidden">
+                        <h4 class="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider">
+                            {t.keyFeatures}
+                        </h4>
+                        <ul class="space-y-2 text-sm">
+                            {project.keyFeatures.map((feature: string) => (
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-brand-red flex-shrink-0 mt-1"></i>
+                                    <span>{feature}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="mt-auto">
+                        <h4 class="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">
+                            {t.technologies}
+                        </h4>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            {project.technologies.map((tech: string) => (
+                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center gap-1.5">
+                                    <i class={`${getTechIcon(tech)} text-brand-red`}></i>
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <!-- Bottom indicator line -->
+                    <div class="w-0 h-0.5 bg-brand-red mt-4 transition-all duration-150 group-hover:w-full"></div>
+                </div>
+            </div>
+        ))}
+    </div>
+
+    <!-- Footer note -->
+    <div class="mt-8 text-center footer-note">
+        <p id="personal-note" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+            {t.personalProjectsNote}
+        </p>
+        <p id="professional-note" class="text-sm text-light-text-secondary dark:text-dark-text-secondary hidden">
+            {t.professionalProjectsNote}
+        </p>
+    </div>
+</section>
+
+<style>
+    /* Initial state - hidden */
+    .section-header,
+    .project-card,
+    .footer-note {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 400ms ease-out, transform 400ms ease-out,
+                    background-color 100ms ease-out, border-color 100ms ease-out,
+                    box-shadow 150ms ease-out;
+    }
+
+    .project-card {
+        transition-delay: var(--delay, 0ms);
+    }
+
+    /* Visible state */
+    .projects-section.visible .section-header,
+    .projects-section.visible .project-card,
+    .projects-section.visible .footer-note {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Tab transitions */
+    .projects-grid {
+        transition: opacity 150ms ease-out;
+    }
+
+    .projects-grid.transitioning {
+        opacity: 0;
+    }
+
+    /* Tab button states */
+    .tab-btn.active {
+        color: var(--brand-red, #d83333);
+        border-bottom: 2px solid var(--brand-red, #d83333);
+    }
+
+    .dark .tab-btn.active {
+        color: #f87171;
+        border-color: #f87171;
+    }
+
+    .tab-btn:not(.active) {
+        border-bottom: 2px solid transparent;
+    }
+</style>
+
+<script>
+    function initProjectsSection() {
+        const section = document.querySelector('.projects-section');
+        if (!section) return;
+
+        // IntersectionObserver for scroll animation
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        section.classList.add('visible');
+                        observer.disconnect();
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(section);
+
+        // Tab switching
+        const tabBtns = section.querySelectorAll('.tab-btn');
+        const personalGrid = document.getElementById('personal-projects');
+        const professionalGrid = document.getElementById('professional-projects');
+        const personalNote = document.getElementById('personal-note');
+        const professionalNote = document.getElementById('professional-note');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.getAttribute('data-tab');
+
+                // Update button styles
+                tabBtns.forEach(b => {
+                    b.classList.remove('active', 'text-brand-red', 'dark:text-red-400', 'border-b-2', 'border-brand-red', 'dark:border-red-400');
+                    b.classList.add('text-light-text-secondary', 'dark:text-dark-text-secondary');
+                });
+                btn.classList.add('active', 'text-brand-red', 'dark:text-red-400', 'border-b-2', 'border-brand-red', 'dark:border-red-400');
+                btn.classList.remove('text-light-text-secondary', 'dark:text-dark-text-secondary');
+
+                // Fade transition
+                personalGrid?.classList.add('transitioning');
+                professionalGrid?.classList.add('transitioning');
+
+                setTimeout(() => {
+                    if (tab === 'personal') {
+                        personalGrid?.classList.remove('hidden');
+                        professionalGrid?.classList.add('hidden');
+                        personalNote?.classList.remove('hidden');
+                        professionalNote?.classList.add('hidden');
+                    } else {
+                        personalGrid?.classList.add('hidden');
+                        professionalGrid?.classList.remove('hidden');
+                        personalNote?.classList.add('hidden');
+                        professionalNote?.classList.remove('hidden');
+                    }
+
+                    personalGrid?.classList.remove('transitioning');
+                    professionalGrid?.classList.remove('transitioning');
+                }, 150);
+            });
+        });
+
+        // Toggle all details
+        const toggleBtn = document.getElementById('toggle-all-details');
+        let showingDetails = false;
+
+        toggleBtn?.addEventListener('click', () => {
+            showingDetails = !showingDetails;
+            const icon = toggleBtn.querySelector('i');
+            const textSpan = toggleBtn.querySelector('.btn-text');
+            const showAll = toggleBtn.getAttribute('data-show-all');
+            const showLess = toggleBtn.getAttribute('data-show-less');
+
+            // Toggle all project cards
+            section.querySelectorAll('.project-card').forEach(card => {
+                const desc = card.querySelector('.description');
+                const longDesc = card.querySelector('.long-description');
+                const features = card.querySelector('.key-features');
+
+                if (showingDetails) {
+                    desc?.classList.add('hidden');
+                    longDesc?.classList.remove('hidden');
+                    features?.classList.remove('hidden');
+                } else {
+                    desc?.classList.remove('hidden');
+                    longDesc?.classList.add('hidden');
+                    features?.classList.add('hidden');
+                }
+            });
+
+            // Update button
+            if (showingDetails) {
+                icon?.classList.remove('fa-chevron-down');
+                icon?.classList.add('fa-chevron-up');
+                if (textSpan) textSpan.textContent = showLess || 'Show less details';
+            } else {
+                icon?.classList.remove('fa-chevron-up');
+                icon?.classList.add('fa-chevron-down');
+                if (textSpan) textSpan.textContent = showAll || 'Show all details';
+            }
+        });
+
+        // Click to open GitHub (personal projects)
+        section.querySelectorAll('#personal-projects .project-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't trigger if clicking on github link or tech tags
+                const target = e.target as HTMLElement;
+                if (target.closest('.github-link') || target.closest('.tech-tag')) return;
+
+                const githubUrl = card.getAttribute('data-github-url');
+                if (githubUrl) {
+                    window.open(githubUrl, '_blank', 'noopener,noreferrer');
+                }
+            });
+
+            card.addEventListener('keydown', (e) => {
+                if ((e as KeyboardEvent).key === 'Enter') {
+                    const githubUrl = card.getAttribute('data-github-url');
+                    if (githubUrl) {
+                        window.open(githubUrl, '_blank', 'noopener,noreferrer');
+                    }
+                }
+            });
+        });
+    }
+
+    // Run on page load
+    initProjectsSection();
+
+    // Re-run on Astro page transitions
+    document.addEventListener('astro:page-load', initProjectsSection);
+</script>

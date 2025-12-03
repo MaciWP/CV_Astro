@@ -15,7 +15,6 @@
  */
 
 import Navbar from "../components/Navbar.astro";
-import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent.astro";
 import A11yAnnouncer from "../components/A11yAnnouncer.astro";
 import LanguageAlternates from "../components/LanguageAlternates.astro";
@@ -491,29 +490,22 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       <SkipToContent />
       <A11yAnnouncer />
 
-      <!-- CRITICAL: Header rendered OUTSIDE I18nLoader for immediate SSG -->
-      <!-- Navbar is now pure Astro + vanilla JS - no React runtime needed -->
+      <!-- Header - Pure Astro + vanilla JS -->
       <header role="banner" class="sticky top-0 z-50">
-        <ErrorBoundary>
-          <Navbar lang={lang} />
-        </ErrorBoundary>
+        <Navbar lang={lang} />
       </header>
 
-      <!-- CRITICAL: LCP content slot rendered OUTSIDE I18nLoader (SSG) -->
-      <!-- This ensures the profile image renders immediately without waiting for React -->
+      <!-- Main content - Pure SSG -->
       <main
         id="cv-content"
         role="main"
         class="container mx-auto px-4 py-8 max-w-5xl"
       >
-        <ErrorBoundary>
-          <slot />
-        </ErrorBoundary>
+        <slot />
       </main>
 
-      <!-- Footer - SSG rendered, no React wrapper needed -->
-      <ErrorBoundary>
-          <footer
+      <!-- Footer -->
+      <footer
             role="contentinfo"
             class="py-8 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-100"
           >
@@ -579,7 +571,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
               </div>
             </div>
           </footer>
-      </ErrorBoundary>
     </div>
 
   </body>

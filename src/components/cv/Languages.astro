@@ -1,0 +1,130 @@
+---
+/**
+ * Languages component - Pure Astro with CSS animations
+ * @file src/components/cv/Languages.astro
+ */
+import { getLanguages } from '../../data/languages';
+
+interface Props {
+    lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Get translated data at build time
+const languagesData = getLanguages(lang);
+
+// UI translations
+const titleByLang: Record<string, string> = {
+    en: 'Languages',
+    es: 'Idiomas',
+    fr: 'Langues',
+    de: 'Sprachen'
+};
+
+const title = titleByLang[lang] || titleByLang.en;
+---
+
+<section id="languages" class="mt-16 mb-16 languages-section">
+    <div class="flex items-center mb-6 section-header">
+        <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+            <i class="fas fa-language"></i>
+        </div>
+        <h2 class="text-2xl font-bold ml-3">{title}</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {languagesData.map((langItem, index) => (
+            <div
+                class="language-card group bg-light-surface dark:bg-dark-surface rounded-none p-4 border border-light-border dark:border-dark-border hover:border-brand-red/50 hover:shadow-md hover:-translate-y-0.5"
+                style={`--delay: ${index * 80}ms`}
+                data-percent={langItem.percent}
+            >
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-medium text-lg group-hover:text-brand-red transition-colors duration-150">
+                        {langItem.language}
+                    </span>
+                    <span class="px-2 py-0.5 rounded-none text-xs font-semibold bg-brand-red text-white">
+                        {langItem.badge}
+                    </span>
+                </div>
+
+                <div class="mt-2 space-y-2">
+                    <div class="text-light-text-secondary dark:text-dark-text-secondary text-sm mb-1">
+                        {langItem.level}
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="h-1.5 bg-light-secondary dark:bg-dark-secondary rounded-none overflow-hidden">
+                        <div
+                            class="progress-bar h-full bg-brand-red"
+                            style={`--target-width: ${langItem.percent}%; --bar-delay: ${index * 100 + 100}ms`}
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    /* Initial state - hidden */
+    .section-header,
+    .language-card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 400ms ease-out, transform 400ms ease-out,
+                    background-color 100ms ease-out, border-color 100ms ease-out,
+                    box-shadow 150ms ease-out;
+    }
+
+    .language-card {
+        transition-delay: var(--delay, 0ms);
+    }
+
+    /* Visible state */
+    .languages-section.visible .section-header,
+    .languages-section.visible .language-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Progress bar animation */
+    .progress-bar {
+        width: 0%;
+        transition: width 500ms ease-out;
+        transition-delay: var(--bar-delay, 0ms);
+    }
+
+    .languages-section.visible .progress-bar {
+        width: var(--target-width, 0%);
+    }
+</style>
+
+<script>
+    // IntersectionObserver for scroll animation
+    function initLanguagesSection() {
+        const section = document.querySelector('.languages-section');
+        if (!section) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        section.classList.add('visible');
+                        observer.disconnect();
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(section);
+    }
+
+    // Run on page load
+    initLanguagesSection();
+
+    // Re-run on Astro page transitions
+    document.addEventListener('astro:page-load', initLanguagesSection);
+</script>

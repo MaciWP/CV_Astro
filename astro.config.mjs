@@ -6,9 +6,9 @@
 
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
+// React removed - all components are now pure Astro + vanilla JS
 // Netlify adapter removed - pure static site doesn't need it
 
 // Check required environment variables
@@ -51,7 +51,6 @@ export default defineConfig({
       applyBaseStyles: false,
       config: { path: './tailwind.config.js' },
     }),
-    react(),
     sitemap({
       i18n: {
         defaultLocale: 'en',
@@ -83,14 +82,6 @@ export default defineConfig({
       assetsInlineLimit: 4096,
       sourcemap: true,
       cssCodeSplit: true,
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'vendor-react': ['react', 'react-dom'],
-            'vendor-i18n': ['i18next', 'react-i18next'],
-          },
-        },
-      },
     },
     define: {
       __SWISS_SEO_ENABLED__: process.env.SWISS_SEO_ENABLED === 'true',

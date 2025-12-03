@@ -1,15 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import ErrorBoundary from "../../components/ErrorBoundary";
 
-// Import CV components
+// Import CV components - All pure Astro now (no React)
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
-import Experience from "../../components/cv/Experience";
+import Experience from "../../components/cv/Experience.astro";
 import Skills from "../../components/cv/Skills.astro";
-import Languages from "../../components/cv/Languages";
+import Languages from "../../components/cv/Languages.astro";
 import Education from "../../components/cv/Education.astro";
-import Projects from "../../components/cv/Projects";
+import Projects from "../../components/cv/Projects.astro";
 import FAQSchema from "../../components/FAQSchema.astro";
 
 // Enhanced metadata for SEO (Spanish version)
@@ -68,35 +67,20 @@ const faqs = [
             <ProfileHeader lang="es" />
         </div>
 
-        {/* Experience con ErrorBoundary */}
-        <ErrorBoundary
-            fallbackTitle="Error loading experience"
-            fallbackMessage="Unable to load work experience information."
-        >
-            <Experience lang="es" client:visible />
-        </ErrorBoundary>
+        {/* Experience - Pure Astro */}
+        <Experience lang="es" />
 
-        {/* Skills - SSG Optimized */}
+        {/* Skills */}
         <Skills lang="es" />
 
-        {/* Education - SSG Optimized */}
+        {/* Education */}
         <Education lang="es" />
 
-        {/* Languages con ErrorBoundary */}
-        <ErrorBoundary
-            fallbackTitle="Error loading languages"
-            fallbackMessage="Unable to load language proficiency information."
-        >
-            <Languages lang="es" client:visible />
-        </ErrorBoundary>
+        {/* Languages - Pure Astro */}
+        <Languages lang="es" />
 
-        {/* Projects con ErrorBoundary */}
-        <ErrorBoundary
-            fallbackTitle="Error loading projects"
-            fallbackMessage="Unable to load project information."
-        >
-            <Projects lang="es" client:visible />
-        </ErrorBoundary>
+        {/* Projects - Pure Astro */}
+        <Projects lang="es" />
 
         {/* FAQ Section with structured data */}
         <FAQSchema faqs={faqs} lang="es" />
