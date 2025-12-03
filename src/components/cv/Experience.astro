@@ -210,63 +210,69 @@ const t = translationsByLang[lang] || translationsByLang.en;
 
 <script>
     function initExperienceSection() {
-        const section = document.querySelector('.experience-section');
-        if (!section) return;
+        const sections = document.querySelectorAll('.experience-section:not(.initialized)');
 
-        // IntersectionObserver for scroll animation
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        section.classList.add('visible');
-                        observer.disconnect();
+        sections.forEach(section => {
+            section.classList.add('initialized');
+
+            // IntersectionObserver for scroll animation
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.disconnect();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            observer.observe(section);
+
+            // Expand/collapse functionality
+            const expandBtns = section.querySelectorAll('.expand-btn');
+            expandBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const jobId = btn.getAttribute('data-job-id');
+                    const extraList = section.querySelector(`.extra-responsibilities[data-job-id="${jobId}"]`);
+                    const icon = btn.querySelector('i');
+                    const textSpan = btn.querySelector('.btn-text');
+                    const showMore = btn.getAttribute('data-show-more');
+                    const showLess = btn.getAttribute('data-show-less');
+
+                    if (extraList) {
+                        const isExpanded = extraList.classList.contains('expanded');
+
+                        if (isExpanded) {
+                            extraList.classList.remove('expanded');
+                            extraList.classList.add('hidden');
+                            icon?.classList.remove('fa-chevron-up');
+                            icon?.classList.add('fa-chevron-down');
+                            if (textSpan) textSpan.textContent = showMore || 'Show more';
+                            btn.setAttribute('aria-expanded', 'false');
+                        } else {
+                            extraList.classList.remove('hidden');
+                            requestAnimationFrame(() => {
+                                extraList.classList.add('expanded');
+                            });
+                            icon?.classList.remove('fa-chevron-down');
+                            icon?.classList.add('fa-chevron-up');
+                            if (textSpan) textSpan.textContent = showLess || 'Show less';
+                            btn.setAttribute('aria-expanded', 'true');
+                        }
                     }
                 });
-            },
-            { threshold: 0.1 }
-        );
-
-        observer.observe(section);
-
-        // Expand/collapse functionality
-        const expandBtns = section.querySelectorAll('.expand-btn');
-        expandBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const jobId = btn.getAttribute('data-job-id');
-                const extraList = section.querySelector(`.extra-responsibilities[data-job-id="${jobId}"]`);
-                const icon = btn.querySelector('i');
-                const textSpan = btn.querySelector('.btn-text');
-                const showMore = btn.getAttribute('data-show-more');
-                const showLess = btn.getAttribute('data-show-less');
-
-                if (extraList) {
-                    const isExpanded = extraList.classList.contains('expanded');
-
-                    if (isExpanded) {
-                        extraList.classList.remove('expanded');
-                        extraList.classList.add('hidden');
-                        icon?.classList.remove('fa-chevron-up');
-                        icon?.classList.add('fa-chevron-down');
-                        if (textSpan) textSpan.textContent = showMore || 'Show more';
-                        btn.setAttribute('aria-expanded', 'false');
-                    } else {
-                        extraList.classList.remove('hidden');
-                        // Small delay to allow display change before animation
-                        requestAnimationFrame(() => {
-                            extraList.classList.add('expanded');
-                        });
-                        icon?.classList.remove('fa-chevron-down');
-                        icon?.classList.add('fa-chevron-up');
-                        if (textSpan) textSpan.textContent = showLess || 'Show less';
-                        btn.setAttribute('aria-expanded', 'true');
-                    }
-                }
             });
         });
     }
 
-    // Run on page load
-    initExperienceSection();
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initExperienceSection);
+    } else {
+        initExperienceSection();
+    }
 
     // Re-run on Astro page transitions
     document.addEventListener('astro:page-load', initExperienceSection);

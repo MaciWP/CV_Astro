@@ -323,30 +323,32 @@ function getProjectIcon(project: any): string {
 
 <script>
     function initProjectsSection() {
-        const section = document.querySelector('.projects-section');
-        if (!section) return;
+        const sections = document.querySelectorAll('.projects-section:not(.initialized)');
 
-        // IntersectionObserver for scroll animation
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        section.classList.add('visible');
-                        observer.disconnect();
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
+        sections.forEach(section => {
+            section.classList.add('initialized');
 
-        observer.observe(section);
+            // IntersectionObserver for scroll animation
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.disconnect();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
 
-        // Tab switching
-        const tabBtns = section.querySelectorAll('.tab-btn');
-        const personalGrid = document.getElementById('personal-projects');
-        const professionalGrid = document.getElementById('professional-projects');
-        const personalNote = document.getElementById('personal-note');
-        const professionalNote = document.getElementById('professional-note');
+            observer.observe(section);
+
+            // Tab switching
+            const tabBtns = section.querySelectorAll('.tab-btn');
+            const personalGrid = section.querySelector('#personal-projects');
+            const professionalGrid = section.querySelector('#professional-projects');
+            const personalNote = section.querySelector('#personal-note');
+            const professionalNote = section.querySelector('#professional-note');
 
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -384,8 +386,8 @@ function getProjectIcon(project: any): string {
         });
 
         // Toggle all details
-        const toggleBtn = document.getElementById('toggle-all-details');
-        let showingDetails = false;
+            const toggleBtn = section.querySelector('#toggle-all-details');
+            let showingDetails = false;
 
         toggleBtn?.addEventListener('click', () => {
             showingDetails = !showingDetails;
@@ -424,31 +426,35 @@ function getProjectIcon(project: any): string {
         });
 
         // Click to open GitHub (personal projects)
-        section.querySelectorAll('#personal-projects .project-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                // Don't trigger if clicking on github link or tech tags
-                const target = e.target as HTMLElement;
-                if (target.closest('.github-link') || target.closest('.tech-tag')) return;
+            section.querySelectorAll('#personal-projects .project-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const target = e.target as HTMLElement;
+                    if (target.closest('.github-link') || target.closest('.tech-tag')) return;
 
-                const githubUrl = card.getAttribute('data-github-url');
-                if (githubUrl) {
-                    window.open(githubUrl, '_blank', 'noopener,noreferrer');
-                }
-            });
-
-            card.addEventListener('keydown', (e) => {
-                if ((e as KeyboardEvent).key === 'Enter') {
                     const githubUrl = card.getAttribute('data-github-url');
                     if (githubUrl) {
                         window.open(githubUrl, '_blank', 'noopener,noreferrer');
                     }
-                }
+                });
+
+                card.addEventListener('keydown', (e) => {
+                    if ((e as KeyboardEvent).key === 'Enter') {
+                        const githubUrl = card.getAttribute('data-github-url');
+                        if (githubUrl) {
+                            window.open(githubUrl, '_blank', 'noopener,noreferrer');
+                        }
+                    }
+                });
             });
         });
     }
 
-    // Run on page load
-    initProjectsSection();
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initProjectsSection);
+    } else {
+        initProjectsSection();
+    }
 
     // Re-run on Astro page transitions
     document.addEventListener('astro:page-load', initProjectsSection);

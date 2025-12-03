@@ -104,26 +104,33 @@ const title = titleByLang[lang] || titleByLang.en;
 <script>
     // IntersectionObserver for scroll animation
     function initLanguagesSection() {
-        const section = document.querySelector('.languages-section');
-        if (!section) return;
+        const sections = document.querySelectorAll('.languages-section:not(.initialized)');
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        section.classList.add('visible');
-                        observer.disconnect();
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
+        sections.forEach(section => {
+            section.classList.add('initialized');
 
-        observer.observe(section);
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.disconnect();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            observer.observe(section);
+        });
     }
 
-    // Run on page load
-    initLanguagesSection();
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLanguagesSection);
+    } else {
+        initLanguagesSection();
+    }
 
     // Re-run on Astro page transitions
     document.addEventListener('astro:page-load', initLanguagesSection);
