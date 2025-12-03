@@ -14,7 +14,7 @@
  * ✅ Performance optimizations for Core Web Vitals
  */
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar.astro";
 import ErrorBoundary from "../components/ErrorBoundary";
 import SkipToContent from "../components/SkipToContent.astro";
 import A11yAnnouncer from "../components/A11yAnnouncer.astro";
@@ -493,9 +493,10 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       <A11yAnnouncer />
 
       <!-- CRITICAL: Header rendered OUTSIDE I18nLoader for immediate SSG -->
+      <!-- Navbar is now pure Astro + vanilla JS - no React runtime needed -->
       <header role="banner" class="sticky top-0 z-50">
         <ErrorBoundary>
-          <Navbar client:idle />
+          <Navbar lang={lang} />
         </ErrorBoundary>
       </header>
 
