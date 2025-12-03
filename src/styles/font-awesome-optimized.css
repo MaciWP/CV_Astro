@@ -150,3 +150,13 @@
 .fa-brain::before{content:"\f5dc";}
 .fa-globe::before{content:"\f0ac";}
 .fa-question-circle::before{content:"\f059";}
+
+/* 7) Reset vertical-align for icons inside flex containers */
+/* The default -0.125em offset conflicts with flexbox items-center */
+.flex > .fas,
+.flex > .fab,
+.flex > .fa,
+.flex > i.fas,
+.flex > i.fab {
+  vertical-align: baseline;
+}
