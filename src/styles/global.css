@@ -200,6 +200,15 @@
         @apply w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none;
     }
 
+    /* Normalize icon alignment within section headers */
+    .section-icon i,
+    .section-icon svg {
+        font-size: 1rem;
+        line-height: 1;
+        width: 1em;
+        text-align: center;
+    }
+
     /* Custom scrollbar */
     ::-webkit-scrollbar {
         width: 8px;

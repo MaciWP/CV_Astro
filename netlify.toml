@@ -92,6 +92,137 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://www.googletagmanager.com https://www.google-analytics.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com data: https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net; manifest-src 'self';"
 
+# ===== LANGUAGE REDIRECTS =====
+# Redirect trailing slash versions to non-trailing (Astro uses trailingSlash: 'never')
+
+[[redirects]]
+  from = "/es/"
+  to = "/es"
+  status = 301
+
+[[redirects]]
+  from = "/fr/"
+  to = "/fr"
+  status = 301
+
+[[redirects]]
+  from = "/de/"
+  to = "/de"
+  status = 301
+
+# ===== INVALID ROUTE CLEANUP =====
+# Fix routes that were incorrectly generated (e.g., /es/es from previous bug)
+
+[[redirects]]
+  from = "/es/es"
+  to = "/es"
+  status = 301
+
+[[redirects]]
+  from = "/es/fr"
+  to = "/fr"
+  status = 301
+
+[[redirects]]
+  from = "/es/de"
+  to = "/de"
+  status = 301
+
+[[redirects]]
+  from = "/fr/es"
+  to = "/es"
+  status = 301
+
+[[redirects]]
+  from = "/fr/fr"
+  to = "/fr"
+  status = 301
+
+[[redirects]]
+  from = "/fr/de"
+  to = "/de"
+  status = 301
+
+[[redirects]]
+  from = "/de/es"
+  to = "/es"
+  status = 301
+
+[[redirects]]
+  from = "/de/fr"
+  to = "/fr"
+  status = 301
+
+[[redirects]]
+  from = "/de/de"
+  to = "/de"
+  status = 301
+
+# ===== LOCALE-PREFIXED REGIONAL ROUTES =====
+# Redirect /es/switzerland to /switzerland (regional pages are not localized)
+
+[[redirects]]
+  from = "/es/switzerland/*"
+  to = "/switzerland/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/es/switzerland"
+  to = "/switzerland"
+  status = 301
+
+[[redirects]]
+  from = "/fr/switzerland/*"
+  to = "/switzerland/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/fr/switzerland"
+  to = "/switzerland"
+  status = 301
+
+[[redirects]]
+  from = "/de/switzerland/*"
+  to = "/switzerland/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de/switzerland"
+  to = "/switzerland"
+  status = 301
+
+[[redirects]]
+  from = "/es/spain/*"
+  to = "/spain/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/es/spain"
+  to = "/spain"
+  status = 301
+
+[[redirects]]
+  from = "/fr/spain/*"
+  to = "/spain/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/fr/spain"
+  to = "/spain"
+  status = 301
+
+[[redirects]]
+  from = "/de/spain/*"
+  to = "/spain/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de/spain"
+  to = "/spain"
+  status = 301
+
+# ===== 404 HANDLING =====
+
 # Handle 404 pages
 [[redirects]]
   from = "/*"

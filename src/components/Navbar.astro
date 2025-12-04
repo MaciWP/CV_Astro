@@ -42,20 +42,16 @@ const languageOptions = [
         <div class="flex items-center gap-4">
             <button
                 id="navbar-logo"
-                class="flex items-center cursor-pointer bg-transparent border-none p-0"
+                class="flex items-center gap-2 cursor-pointer bg-transparent border-none p-0"
                 type="button"
                 aria-label="Go to top of page"
             >
-                <div class="w-12 h-12 flex items-center justify-center bg-brand-red text-white rounded-none">
-                    <span class="text-lg font-bold">OM</span>
-                </div>
-                <div class="ml-2 font-medium tracking-tight whitespace-nowrap">
-                    Oriol Macias
-                </div>
+                <span class="w-12 h-12 flex items-center justify-center bg-brand-red text-white text-lg font-bold">OM</span>
+                <span class="font-medium tracking-tight whitespace-nowrap">Oriol Macias</span>
             </button>
 
             <!-- Social links (desktop) -->
-            <div class="hidden md:flex items-center gap-3 ml-2">
+            <div class="hidden md:flex items-center gap-3">
                 <a
                     href="https://github.com/MaciWP"
                     target="_blank"
@@ -78,24 +74,20 @@ const languageOptions = [
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:block">
-            <div class="container mx-auto px-4 w-full max-w-6xl">
-                <ul class="flex justify-center space-x-1" id="desktop-nav">
-                    {translatedNavItems.map((item) => (
-                        <li class="flex-shrink-0">
-                            <a
-                                href={item.href}
-                                class="nav-link relative px-2 py-2 text-sm font-medium transition-colors duration-100 block text-center whitespace-nowrap text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-                                data-section={item.id}
-                            >
-                                {item.name}
-                                <span class="nav-indicator absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-red dark:bg-brand-red hidden" aria-hidden="true"></span>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+        <ul class="hidden md:flex justify-center space-x-1" id="desktop-nav">
+            {translatedNavItems.map((item) => (
+                <li class="flex-shrink-0">
+                    <a
+                        href={item.href}
+                        class="nav-link relative px-2 py-2 text-sm font-medium transition-colors duration-100 block text-center whitespace-nowrap text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                        data-section={item.id}
+                    >
+                        {item.name}
+                        <span class="nav-indicator absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-red dark:bg-brand-red hidden" aria-hidden="true"></span>
+                    </a>
+                </li>
+            ))}
+        </ul>
 
         <!-- Controls -->
         <div class="flex items-center gap-2">
@@ -236,7 +228,8 @@ const languageOptions = [
     </div>
 </nav>
 
-<script>
+<script is:inline>
+// Inline script eliminates HTTP request from critical path
 // Defer execution to not block HTML parser - improves LCP
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initNavbar);
@@ -282,7 +275,7 @@ function initNavbar() {
     }
 
     // Update active nav link
-    function updateActiveLink(sectionId: string) {
+    function updateActiveLink(sectionId) {
         activeSection = sectionId;
         navLinks.forEach(link => {
             const isActive = link.getAttribute('data-section') === sectionId;
@@ -347,7 +340,7 @@ function initNavbar() {
     }
 
     // Navigation click handler
-    function handleNavClick(e: Event, targetId: string) {
+    function handleNavClick(e, targetId) {
         e.preventDefault();
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
@@ -355,8 +348,8 @@ function initNavbar() {
             const position = targetElement.getBoundingClientRect().top + window.pageYOffset - NAVBAR_HEIGHT;
             window.scrollTo({ top: position, behavior: 'smooth' });
             history.pushState(null, '', `#${targetId}`);
-            if ((window as any).announceToScreenReader) {
-                (window as any).announceToScreenReader(`Navigated to ${targetId} section`);
+            if (window.announceToScreenReader) {
+                window.announceToScreenReader(`Navigated to ${targetId} section`);
             }
         }
     }
@@ -398,20 +391,25 @@ function initNavbar() {
     }
 
     // Language change handler
-    function handleLanguageChange(langCode: string) {
+    function handleLanguageChange(langCode) {
         if (langCode === lang) {
             closeLangDropdown();
             return;
         }
         let path = window.location.pathname;
+        // Handle both with and without trailing slash
         const langPrefixes = ['/es/', '/fr/', '/de/'];
+        const langPaths = ['/es', '/fr', '/de'];
+
+        // Strip locale prefix from path
         for (const prefix of langPrefixes) {
             if (path.startsWith(prefix)) {
-                path = path.substring(prefix.length - 1);
+                path = '/' + path.substring(prefix.length);
                 break;
             }
         }
-        if (path === '/es' || path === '/fr' || path === '/de') {
+        // Handle exact locale paths (e.g., /es, /fr, /de)
+        if (langPaths.includes(path)) {
             path = '/';
         }
         if (!path || path === '') path = '/';
@@ -427,8 +425,8 @@ function initNavbar() {
         document.documentElement.classList.add(newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcons();
-        if ((window as any).announceToScreenReader) {
-            (window as any).announceToScreenReader(`Theme changed to ${newTheme} mode`);
+        if (window.announceToScreenReader) {
+            window.announceToScreenReader(`Theme changed to ${newTheme} mode`);
         }
     }
 
@@ -437,8 +435,8 @@ function initNavbar() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         updateActiveLink('experience');
         history.pushState(null, '', window.location.pathname);
-        if ((window as any).announceToScreenReader) {
-            (window as any).announceToScreenReader('Returned to the top of the page');
+        if (window.announceToScreenReader) {
+            window.announceToScreenReader('Returned to the top of the page');
         }
     }
 
@@ -481,7 +479,7 @@ function initNavbar() {
 
     // Close dropdowns when clicking outside
     document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
+        const target = e.target;
         if (!langToggle?.contains(target) && !langDropdown?.contains(target)) {
             closeLangDropdown();
         }

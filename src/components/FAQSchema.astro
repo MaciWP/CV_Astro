@@ -45,9 +45,9 @@ const titles: Record<string, string> = {
 const title = titles[lang] || titles.en;
 ---
 
-<section class="mt-16 mb-8 faq-section" itemscope itemtype="https://schema.org/FAQPage">
+<section class="mt-16 mb-8 faq-section">
   <div class="flex items-center mb-6 section-header">
-    <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none">
+    <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
       <i class="fas fa-question-circle" aria-hidden="true"></i>
     </div>
     <h2 class="text-2xl font-bold ml-3">{title}</h2>
@@ -58,13 +58,10 @@ const title = titles[lang] || titles.en;
       <div
         class="faq-item bg-light-surface dark:bg-dark-surface p-5 border border-light-border dark:border-dark-border rounded-none hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md transition-all duration-150"
         style={`--delay: ${100 * index}ms`}
-        itemscope
-        itemprop="mainEntity"
-        itemtype="https://schema.org/Question"
       >
-        <h3 class="font-bold text-lg mb-2" itemprop="name">{faq.question}</h3>
-        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-          <p class="text-light-text-secondary dark:text-dark-text-secondary" itemprop="text">{faq.answer}</p>
+        <h3 class="font-bold text-lg mb-2">{faq.question}</h3>
+        <div>
+          <p class="text-light-text-secondary dark:text-dark-text-secondary">{faq.answer}</p>
         </div>
       </div>
     ))}

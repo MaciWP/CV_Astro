@@ -368,7 +368,7 @@ const professionalProjectsData = [
             de: "Dieses Projekt bietet eine Abstraktionsschicht zur Überwachung virtualisierter Ressourcen und zur Erleichterung der Integration mit anderen Unternehmenssystemen. Der Service implementiert asynchrone ETL-Prozesse zur Extraktion von Daten aus VMware, deren Transformation gemäss Domänenmodell und Laden in die Datenbank. Er umfasst einen Synchronisationsservice mit externen Systemen und verfügt über robuste Fehlerbehandlung und Logging."
         },
         technologies: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
-        icon: "fab fa-vmware",
+        icon: "fas fa-cloud",
         highlight: true,
         keyFeatures: {
             en: [

@@ -146,7 +146,8 @@
 .fa-calculator::before{content:"\f1ec";}
 .fa-tags::before{content:"\f02c";}
 
-/* 6) Additional icons - PWA, ONNX, FAQ */
+/* 6) Additional icons - PWA, ONNX, FAQ, VMware */
 .fa-brain::before{content:"\f5dc";}
 .fa-globe::before{content:"\f0ac";}
 .fa-question-circle::before{content:"\f059";}
+.fa-cloud::before{content:"\f0c2";}

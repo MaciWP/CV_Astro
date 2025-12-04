@@ -75,9 +75,6 @@ const skillsData = {
         { id: "wpf", name: "WPF", icon: "fas fa-desktop" },
         { id: "pandas", name: "Pandas", icon: "fas fa-table" },
         { id: "kivy", name: "Kivy", icon: "fas fa-mobile-alt" },
-        { id: "black", name: "Black", icon: "fas fa-check" },
-        { id: "flake8", name: "Flake8", icon: "fas fa-ruler" },
-        { id: "mypy", name: "Mypy", icon: "fas fa-check-circle" },
     ],
 
     // Technologies and Databases
@@ -94,7 +91,7 @@ const skillsData = {
         { id: "rest-api", name: "REST API", icon: "fas fa-exchange-alt" },
         { id: "soap-api", name: "SOAP API", icon: "fas fa-envelope-open-text" },
         { id: "jwt", name: "JWT", icon: "fas fa-key" },
-        { id: "vmware", name: "VMware", icon: "fab fa-vmware" },
+        { id: "vmware", name: "VMware", icon: "fas fa-cloud" },
         { id: "nfc", name: "NFC", icon: "fas fa-wifi" },
     ],
 
