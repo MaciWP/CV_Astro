@@ -302,36 +302,41 @@ function initNavbar() {
         });
     }
 
-    // Scroll detection for active section
-    function detectActiveSection() {
-        const scrollPosition = window.scrollY + NAVBAR_HEIGHT + 100;
-        let currentSection = 'experience';
-        for (const id of SECTION_IDS) {
-            const element = document.getElementById(id);
-            if (element && scrollPosition >= element.offsetTop) {
-                currentSection = id;
+    // IntersectionObserver for active section detection (no reflow)
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.id;
+                if (sectionId && sectionId !== activeSection) {
+                    updateActiveLink(sectionId);
+                }
             }
-        }
-        if (currentSection !== activeSection) {
-            updateActiveLink(currentSection);
-        }
-    }
+        });
+    }, {
+        rootMargin: `-${NAVBAR_HEIGHT + 50}px 0px -50% 0px`,
+        threshold: 0
+    });
+
+    // Observe all sections
+    SECTION_IDS.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) sectionObserver.observe(element);
+    });
 
     // Scroll effect for navbar - optimized single class toggle
     let wasScrolled = false;
     function updateNavbarScroll() {
         const isScrolled = window.scrollY > 50;
-        if (isScrolled === wasScrolled) return; // Skip if no change
+        if (isScrolled === wasScrolled) return;
         wasScrolled = isScrolled;
         navbar.classList.toggle('navbar-scrolled', isScrolled);
     }
 
-    // Throttled scroll handler
+    // Throttled scroll handler (only for navbar effect now)
     let ticking = false;
     function handleScroll() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                detectActiveSection();
                 updateNavbarScroll();
                 ticking = false;
             });
