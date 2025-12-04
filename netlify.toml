@@ -5,6 +5,30 @@
   publish = "dist"
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
 
+# ===== EARLY HINTS (103) FOR LCP =====
+# Tells browser to start loading resources BEFORE HTML arrives
+# Reduces "Resource load delay" significantly
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+
+[[headers]]
+  for = "/es"
+  [headers.values]
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+
+[[headers]]
+  for = "/fr"
+  [headers.values]
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+
+[[headers]]
+  for = "/de"
+  [headers.values]
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+
 # ===== MIME HEADERS CONFIGURATION =====
 
 # Headers for Astro build output (hashed filenames = immutable)
