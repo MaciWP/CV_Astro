@@ -158,22 +158,22 @@ const experiencesData = [
         period: "2017",
         keyResponsibilities: {
             en: [
-                "Provided bilingual customer support for electronic invoicing in EDI, XML, and proprietary formats",
+                "Provided bilingual (Spanish-Catalan) customer support for electronic invoicing in EDI, XML, and proprietary formats",
                 "Assisted clients in troubleshooting invoicing and data exchange issues",
                 "Developed small internal applications to streamline invoice processing workflows"
             ],
             es: [
-                "Proporcioné soporte al cliente bilingüe para facturación electrónica en formatos EDI, XML y propietarios",
+                "Proporcioné soporte al cliente bilingüe (español-catalán) para facturación electrónica en formatos EDI, XML y propietarios",
                 "Asistencia a clientes en la resolución de problemas de facturación e intercambio de datos",
                 "Desarrollo de pequeñas aplicaciones internas para agilizar los flujos de trabajo de procesamiento de facturas"
             ],
             fr: [
-                "Fourniture d'un support client bilingue pour la facturation électronique en formats EDI, XML et propriétaires",
+                "Fourniture d'un support client bilingue (espagnol-catalan) pour la facturation électronique en formats EDI, XML et propriétaires",
                 "Assistance aux clients pour la résolution des problèmes de facturation et d'échange de données",
                 "Développement de petites applications internes pour simplifier les flux de travail de traitement des factures"
             ],
             de: [
-                "Zweisprachiger Kundensupport für elektronische Rechnungsstellung in EDI-, XML- und proprietären Formaten",
+                "Zweisprachiger (Spanisch-Katalanisch) Kundensupport für elektronische Rechnungsstellung in EDI-, XML- und proprietären Formaten",
                 "Unterstützung von Kunden bei der Fehlerbehebung von Rechnungs- und Datenaustauschproblemen",
                 "Entwicklung kleiner interner Anwendungen zur Optimierung der Rechnungsverarbeitungsabläufe"
             ]
