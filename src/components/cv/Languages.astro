@@ -73,13 +73,19 @@ const title = titleByLang[lang] || titleByLang.en;
     .language-card {
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 400ms ease-out, transform 400ms ease-out,
-                    background-color 100ms ease-out, border-color 100ms ease-out,
-                    box-shadow 150ms ease-out;
+        transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out;
     }
 
     .language-card {
         transition-delay: var(--delay, 0ms);
+    }
+
+    /* Theme transitions handled by global.css - ensure they work */
+    .language-card {
+        transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out,
+                    background-color var(--theme-transition-duration, 100ms) ease-out,
+                    border-color var(--theme-transition-duration, 100ms) ease-out,
+                    color var(--theme-transition-duration, 100ms) ease-out;
     }
 
     /* Visible state */

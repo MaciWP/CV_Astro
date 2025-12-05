@@ -74,10 +74,16 @@ const title = titles[lang] || titles.en;
     .faq-item {
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 200ms ease-out, transform 200ms ease-out,
-                    background-color 100ms ease-out, border-color 100ms ease-out,
-                    box-shadow 150ms ease-out;
+        transition: opacity 200ms ease-out, transform 200ms ease-out, box-shadow 150ms ease-out;
         transition-delay: var(--delay, 0ms);
+    }
+
+    /* Theme transitions - use CSS variable for sync with global theme */
+    .faq-item {
+        transition: opacity 200ms ease-out, transform 200ms ease-out, box-shadow 150ms ease-out,
+                    background-color var(--theme-transition-duration, 100ms) ease-out,
+                    border-color var(--theme-transition-duration, 100ms) ease-out,
+                    color var(--theme-transition-duration, 100ms) ease-out;
     }
 
     /* Visible state */
