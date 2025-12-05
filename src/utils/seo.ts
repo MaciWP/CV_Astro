@@ -101,7 +101,7 @@ export function detectMarketAndOptimizeSEO(
                         title:
                             "Oriol Macias - Software Engineer Basel | Industrial Automation",
                         description:
-                            "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, MODBUS, BACnet) expert.",
+                            "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, Modbus, BACnet) expert.",
                         keywords:
                             "software engineer basel, industrial automation basel, pharmaceutical developer basel",
                     },
@@ -230,7 +230,7 @@ export function generatePersonStructuredData(): PersonSchema {
             "Backend Development",
             "Industrial Protocols",
             "SNMP",
-            "MODBUS",
+            "Modbus",
             "BACnet",
             "Data Center Infrastructure",
         ],

@@ -73,7 +73,7 @@ export const techIcons = {
 
     // Protocols
     'SNMP': 'fas fa-network-wired',
-    'MODBUS': 'fas fa-plug',
+    'Modbus': 'fas fa-plug',
     'BACnet': 'fas fa-building',
     'HTTP': 'fas fa-exchange-alt',
     'WebSockets': 'fas fa-plug',
