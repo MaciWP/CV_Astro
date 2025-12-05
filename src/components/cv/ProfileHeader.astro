@@ -36,6 +36,14 @@ const summary = getTranslation("header.summary", headerData.summary);
 const photoAlt = getTranslation("header.photoAlt", headerData.photoAlt);
 const downloadCoverLetter = getTranslation("buttons.downloadCoverLetter", "Download Cover Letter");
 
+// Swiss market fields
+const dateOfBirth = headerData.dateOfBirth;
+const nationality = headerData.nationality;
+const workPermit = headerData.workPermit;
+const location = headerData.location;
+const relocation = headerData.relocation;
+const noticePeriod = headerData.noticePeriod;
+
 // Labels for contact info
 const emailLabel = getTranslation("header.email", "Email");
 const linkedinLabel = getTranslation("header.linkedin", "LinkedIn");
@@ -54,6 +62,43 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     <h2 class="text-xl md:text-2xl text-accessible-brand-red font-semibold">
                         {jobTitle}
                     </h2>
+                    {/* Swiss market personal details - elegant inline design */}
+                    <div class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                        {/* Row 1: Location, Nationality, Work Permit */}
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-map-marker-alt text-brand-red text-xs"></i>
+                                {location}
+                            </span>
+                            <span class="text-gray-400 dark:text-gray-600">•</span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-flag text-brand-red text-xs"></i>
+                                {nationality}
+                            </span>
+                            <span class="text-gray-400 dark:text-gray-600">•</span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-id-card text-brand-red text-xs"></i>
+                                {workPermit}
+                            </span>
+                        </div>
+                        {/* Row 2: Birth year, Notice period, Relocation */}
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-calendar-alt text-brand-red text-xs"></i>
+                                Born {dateOfBirth}
+                            </span>
+                            <span class="text-gray-400 dark:text-gray-600">•</span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-clock text-brand-red text-xs"></i>
+                                {noticePeriod}
+                            </span>
+                            <span class="text-gray-400 dark:text-gray-600">•</span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-plane text-brand-red text-xs"></i>
+                                {relocation}
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg max-w-2xl text-justify">

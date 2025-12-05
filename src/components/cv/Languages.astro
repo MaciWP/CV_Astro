@@ -33,29 +33,29 @@ const title = titleByLang[lang] || titleByLang.en;
         <h2 class="text-2xl font-bold ml-3">{title}</h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
         {languagesData.map((langItem, index) => (
             <div
-                class="language-card group bg-light-surface dark:bg-dark-surface rounded-none p-4 border border-light-border dark:border-dark-border hover:border-brand-red/50 hover:shadow-md hover:-translate-y-0.5"
+                class="language-card group bg-light-surface dark:bg-dark-surface rounded-none p-3 border border-light-border dark:border-dark-border hover:border-brand-red/50 hover:shadow-md hover:-translate-y-0.5"
                 style={`--delay: ${index * 80}ms`}
                 data-percent={langItem.percent}
             >
-                <div class="flex justify-between items-center mb-4">
-                    <span class="font-medium text-lg group-hover:text-brand-red transition-colors duration-150">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium text-base group-hover:text-brand-red transition-colors duration-150">
                         {langItem.language}
                     </span>
-                    <span class="px-2 py-0.5 rounded-none text-xs font-semibold bg-brand-red text-white">
+                    <span class="px-1.5 py-0.5 rounded-none text-xs font-semibold bg-brand-red text-white">
                         {langItem.badge}
                     </span>
                 </div>
 
-                <div class="mt-2 space-y-2">
-                    <div class="text-light-text-secondary dark:text-dark-text-secondary text-sm mb-1">
+                <div class="space-y-1.5">
+                    <div class="text-light-text-secondary dark:text-dark-text-secondary text-xs">
                         {langItem.level}
                     </div>
 
                     <!-- Progress bar -->
-                    <div class="h-1.5 bg-light-secondary dark:bg-dark-secondary rounded-none overflow-hidden">
+                    <div class="h-1 bg-light-secondary dark:bg-dark-secondary rounded-none overflow-hidden">
                         <div
                             class="progress-bar h-full bg-brand-red"
                             style={`--target-width: ${langItem.percent}%; --bar-delay: ${index * 100 + 100}ms`}

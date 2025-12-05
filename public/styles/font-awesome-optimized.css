@@ -151,3 +151,14 @@
 .fa-globe::before{content:"\f0ac";}
 .fa-question-circle::before{content:"\f059";}
 .fa-cloud::before{content:"\f0c2";}
+
+/* 7) Header personal info icons - Swiss market */
+.fa-map-marker-alt::before{content:"\f3c5";}
+.fa-location-dot::before{content:"\f3c5";} /* alias v6 */
+.fa-passport::before{content:"\f5ab";}
+.fa-clock::before{content:"\f017";}
+.fa-plane::before{content:"\f072";}
+.fa-plane-departure::before{content:"\f5b0";}
+.fa-flag::before{content:"\f024";}
+.fa-user-tie::before{content:"\f508";}
+.fa-eye::before{content:"\f06e";}

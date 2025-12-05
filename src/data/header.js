@@ -14,6 +14,38 @@ const headerData = {
     fr: "Développeur Backend",
     de: "Backend-Entwickler"
   },
+  // Swiss market required fields
+  dateOfBirth: "1994",
+  nationality: {
+    en: "Spanish (EU Citizen)",
+    es: "Española (Ciudadano UE)",
+    fr: "Espagnole (Citoyen UE)",
+    de: "Spanisch (EU-Bürger)"
+  },
+  workPermit: {
+    en: "B-Permit Eligible",
+    es: "Elegible para Permiso B",
+    fr: "Éligible Permis B",
+    de: "B-Bewilligung berechtigt"
+  },
+  location: {
+    en: "Madrid, Spain",
+    es: "Madrid, España",
+    fr: "Madrid, Espagne",
+    de: "Madrid, Spanien"
+  },
+  relocation: {
+    en: "Open to relocation to Switzerland",
+    es: "Abierto a reubicación en Suiza",
+    fr: "Ouvert à la relocalisation en Suisse",
+    de: "Offen für Umzug in die Schweiz"
+  },
+  noticePeriod: {
+    en: "2 weeks notice",
+    es: "Preaviso de 2 semanas",
+    fr: "Préavis de 2 semaines",
+    de: "2 Wochen Kündigungsfrist"
+  },
   summary: {
     en: "Backend developer with over 8 years of programming experience, specialized in Python/Django and REST APIs. Experienced in integrating industrial protocols (SNMP, Modbus, BACnet) and delivering reliable solutions. Practical experience with CI/CD and testing, currently expanding knowledge in performance optimization and AI-assisted automation.",
     es: "Desarrollador backend con más de 8 años de experiencia en programación, especializado en Python/Django y APIs REST. Experiencia en integración de protocolos industriales (SNMP, Modbus, BACnet) y entrega de soluciones fiables. Experiencia práctica con CI/CD y testing, actualmente ampliando conocimientos en optimización de rendimiento y automatización asistida por IA.",
@@ -78,6 +110,13 @@ export const getHeader = (lang = 'en') => {
   return {
     fullName: headerData.fullName,
     jobTitle: headerData.jobTitle[language] || headerData.jobTitle.en,
+    // Swiss market fields
+    dateOfBirth: headerData.dateOfBirth,
+    nationality: headerData.nationality[language] || headerData.nationality.en,
+    workPermit: headerData.workPermit[language] || headerData.workPermit.en,
+    location: headerData.location[language] || headerData.location.en,
+    relocation: headerData.relocation[language] || headerData.relocation.en,
+    noticePeriod: headerData.noticePeriod[language] || headerData.noticePeriod.en,
     summary: headerData.summary[language] || headerData.summary.en,
     photoAlt: headerData.photoAlt[language] || headerData.photoAlt.en,
     photoUrl: headerData.photoUrl,
@@ -101,6 +140,13 @@ export const getCurrentLanguageHeader = () => {
 const defaultHeader = {
   fullName: headerData.fullName,
   jobTitle: headerData.jobTitle.en,
+  // Swiss market fields
+  dateOfBirth: headerData.dateOfBirth,
+  nationality: headerData.nationality.en,
+  workPermit: headerData.workPermit.en,
+  location: headerData.location.en,
+  relocation: headerData.relocation.en,
+  noticePeriod: headerData.noticePeriod.en,
   summary: headerData.summary.en,
   photoAlt: headerData.photoAlt.en,
   photoUrl: headerData.photoUrl,

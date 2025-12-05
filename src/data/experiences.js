@@ -146,86 +146,36 @@ const experiencesData = [
         }
     },
     {
-        id: "seres",
+        id: "early-career",
         title: {
-            en: "Support Technician",
-            es: "Técnico de Soporte",
-            fr: "Technicien Support",
-            de: "Support-Techniker"
+            en: "Early Career: IT Support & Development",
+            es: "Carrera Inicial: Soporte IT y Desarrollo",
+            fr: "Début de Carrière: Support IT et Développement",
+            de: "Frühe Karriere: IT-Support & Entwicklung"
         },
-        company: "SERES",
-        companyUrl: "https://www.groupseres.com/",
-        period: "2017",
+        company: "SERES, Educand SCCL, Salt City Council",
+        companyUrl: null,
+        period: "2014 - 2017",
         keyResponsibilities: {
             en: [
-                "Provided bilingual (Spanish-Catalan) customer support for electronic invoicing in EDI, XML, and proprietary formats",
-                "Assisted clients in troubleshooting invoicing and data exchange issues",
-                "Developed small internal applications to streamline invoice processing workflows"
+                "IT support and technical customer service for electronic invoicing systems (EDI, XML formats)",
+                "Installation, configuration, and maintenance of computer equipment and network infrastructure",
+                "Development of internal applications using WPF and C# for database management"
             ],
             es: [
-                "Proporcioné soporte al cliente bilingüe (español-catalán) para facturación electrónica en formatos EDI, XML y propietarios",
-                "Asistencia a clientes en la resolución de problemas de facturación e intercambio de datos",
-                "Desarrollo de pequeñas aplicaciones internas para agilizar los flujos de trabajo de procesamiento de facturas"
-            ],
-            fr: [
-                "Fourniture d'un support client bilingue (espagnol-catalan) pour la facturation électronique en formats EDI, XML et propriétaires",
-                "Assistance aux clients pour la résolution des problèmes de facturation et d'échange de données",
-                "Développement de petites applications internes pour simplifier les flux de travail de traitement des factures"
-            ],
-            de: [
-                "Zweisprachiger (Spanisch-Katalanisch) Kundensupport für elektronische Rechnungsstellung in EDI-, XML- und proprietären Formaten",
-                "Unterstützung von Kunden bei der Fehlerbehebung von Rechnungs- und Datenaustauschproblemen",
-                "Entwicklung kleiner interner Anwendungen zur Optimierung der Rechnungsverarbeitungsabläufe"
-            ]
-        },
-        extraResponsibilities: {
-            en: [],
-            es: [],
-            fr: [],
-            de: []
-        },
-        achievements: {
-            en: [
-                "Helped improve overall client satisfaction with faster and more accurate issue resolution"
-            ],
-            es: [
-                "Contribuí a mejorar la satisfacción general del cliente con una resolución de problemas más rápida y precisa"
-            ],
-            fr: [
-                "Contribution à l'amélioration de la satisfaction globale des clients grâce à une résolution plus rapide et plus précise des problèmes"
-            ],
-            de: [
-                "Beitrag zur Verbesserung der Gesamtkundenzufriedenheit durch schnellere und präzisere Problemlösung"
-            ]
-        }
-    },
-    {
-        id: "educand",
-        title: {
-            en: "IT Technician",
-            es: "Técnico Informático",
-            fr: "Technicien Informatique",
-            de: "IT-Techniker"
-        },
-        company: "Educand SCCL",
-        companyUrl: "https://iesnx.xtec.cat/",
-        period: "2015 - 2017",
-        keyResponsibilities: {
-            en: [
-                "Installed, configured, and maintained computer equipment and network infrastructure",
-                "Mentored an intern and guided practical IT training"
-            ],
-            es: [
+                "Soporte IT y atención técnica al cliente para sistemas de facturación electrónica (formatos EDI, XML)",
                 "Instalación, configuración y mantenimiento de equipos informáticos e infraestructura de red",
-                "Tutoría de un becario y guía de formación práctica en TI"
+                "Desarrollo de aplicaciones internas usando WPF y C# para gestión de bases de datos"
             ],
             fr: [
+                "Support IT et service client technique pour systèmes de facturation électronique (formats EDI, XML)",
                 "Installation, configuration et maintenance d'équipements informatiques et d'infrastructure réseau",
-                "Mentorat d'un stagiaire et guidage de formation pratique en informatique"
+                "Développement d'applications internes utilisant WPF et C# pour la gestion de bases de données"
             ],
             de: [
+                "IT-Support und technischer Kundenservice für elektronische Rechnungssysteme (EDI-, XML-Formate)",
                 "Installation, Konfiguration und Wartung von Computerausrüstung und Netzwerkinfrastruktur",
-                "Betreuung eines Praktikanten und Anleitung zur praktischen IT-Ausbildung"
+                "Entwicklung interner Anwendungen mit WPF und C# für Datenbankverwaltung"
             ]
         },
         extraResponsibilities: {
@@ -236,66 +186,20 @@ const experiencesData = [
         },
         achievements: {
             en: [
-                "Increased operational efficiency by implementing structured maintenance schedules"
+                "Built foundational skills in customer support, network administration, and software development",
+                "Completed professional internship as part of Higher Technical Degree program"
             ],
             es: [
-                "Aumenté la eficiencia operativa mediante la implementación de programas de mantenimiento estructurados"
+                "Desarrollé habilidades fundamentales en soporte al cliente, administración de redes y desarrollo de software",
+                "Completé prácticas profesionales como parte del programa de Grado Superior"
             ],
             fr: [
-                "Augmentation de l'efficacité opérationnelle par la mise en œuvre de calendriers de maintenance structurés"
+                "Acquisition de compétences fondamentales en support client, administration réseau et développement logiciel",
+                "Stage professionnel complété dans le cadre du programme de Diplôme Supérieur"
             ],
             de: [
-                "Steigerung der betrieblichen Effizienz durch Implementierung strukturierter Wartungspläne"
-            ]
-        }
-    },
-    {
-        id: "saltcity",
-        title: {
-            en: "Development Intern",
-            es: "Becario de Desarrollo",
-            fr: "Stagiaire Développeur",
-            de: "Entwicklungspraktikant"
-        },
-        company: "Salt City Council",
-        companyUrl: "https://www.viladesalt.cat/",
-        period: "2014 - 2015",
-        keyResponsibilities: {
-            en: [
-                "Developed a database management application for the local police using WPF and C#"
-            ],
-            es: [
-                "Desarrollé una aplicación de gestión de bases de datos para la policía local utilizando WPF y C#"
-            ],
-            fr: [
-                "Développement d'une application de gestion de base de données pour la police locale utilisant WPF et C#"
-            ],
-            de: [
-                "Entwicklung einer Datenbankverwaltungsanwendung für die lokale Polizei mit WPF und C#"
-            ]
-        },
-        extraResponsibilities: {
-            en: [],
-            es: [],
-            fr: [],
-            de: []
-        },
-        achievements: {
-            en: [
-                "Successfully delivered a comprehensive database management system for the local police department",
-                "Completed tasks as part of a Superior Degree professional internship program"
-            ],
-            es: [
-                "Entregué con éxito un sistema integral de gestión de bases de datos para el departamento de policía local",
-                "Completé tareas como parte de un programa de prácticas profesionales de Grado Superior"
-            ],
-            fr: [
-                "Livraison réussie d'un système complet de gestion de base de données pour le département de police locale",
-                "Réalisation des tâches dans le cadre d'un programme de stage professionnel de Degré Supérieur"
-            ],
-            de: [
-                "Erfolgreiche Lieferung eines umfassenden Datenbankverwaltungssystems für die lokale Polizeibehörde",
-                "Abschluss der Aufgaben im Rahmen eines Berufspraktikums für höhere Fachausbildung"
+                "Aufbau grundlegender Fähigkeiten in Kundenbetreuung, Netzwerkadministration und Softwareentwicklung",
+                "Berufspraktikum im Rahmen des höheren Fachdiplom-Programms abgeschlossen"
             ]
         }
     }

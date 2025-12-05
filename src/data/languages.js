@@ -48,13 +48,30 @@ const languagesData = [
             de: "Englisch"
         },
         level: {
-            en: "Intermediate",
-            es: "Intermedio",
-            fr: "Intermédiaire",
-            de: "Mittelstufe"
+            en: "Professional Working Proficiency",
+            es: "Competencia Profesional",
+            fr: "Compétence Professionnelle",
+            de: "Berufliche Kompetenz"
         },
-        badge: "B1",
-        percent: 60
+        badge: "B2",
+        percent: 75
+    },
+    {
+        id: "german",
+        language: {
+            en: "German",
+            es: "Alemán",
+            fr: "Allemand",
+            de: "Deutsch"
+        },
+        level: {
+            en: "Learning",
+            es: "Aprendiendo",
+            fr: "En apprentissage",
+            de: "Lernend"
+        },
+        badge: "A1",
+        percent: 20
     }
 ];
 

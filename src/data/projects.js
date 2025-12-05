@@ -119,61 +119,61 @@ const personalProjectsData = [
         }
     },
     {
-        id: "pelusas-calculator",
+        id: "card-vision-tracker",
         title: {
-            en: "Pelusas Calculator",
-            es: "Calculadora Pelusas",
-            fr: "Calculateur Pelusas",
-            de: "Pelusas-Rechner"
+            en: "Card Vision Tracker",
+            es: "Rastreador de Cartas con Visión",
+            fr: "Suivi de Cartes par Vision",
+            de: "Karten-Vision-Tracker"
         },
         description: {
-            en: "Specialized application for calculating and managing scores for the card game 'Pelusas', featuring both manual score entry and automatic card detection through image processing.",
-            es: "Aplicación especializada para calcular y gestionar puntuaciones para el juego de cartas 'Pelusas', con entrada manual de puntuación y detección automática de cartas mediante procesamiento de imágenes.",
-            fr: "Application spécialisée pour calculer et gérer les scores du jeu de cartes 'Pelusas', comprenant à la fois la saisie manuelle des scores et la détection automatique des cartes par traitement d'image.",
-            de: "Spezialisierte Anwendung zur Berechnung und Verwaltung von Punkteständen für das Kartenspiel 'Pelusas', mit manueller Punkteeingabe und automatischer Kartenerkennung durch Bildverarbeitung."
+            en: "Computer vision application for real-time card detection and score tracking using ONNX models, achieving >90% accuracy in card recognition.",
+            es: "Aplicación de visión por computadora para detección de cartas en tiempo real y seguimiento de puntuación usando modelos ONNX, logrando >90% de precisión en reconocimiento.",
+            fr: "Application de vision par ordinateur pour la détection de cartes en temps réel et le suivi des scores utilisant des modèles ONNX, atteignant >90% de précision.",
+            de: "Computer-Vision-Anwendung für Echtzeit-Kartenerkennung und Punkteverfolgung mit ONNX-Modellen, >90% Genauigkeit bei der Kartenerkennung."
         },
         longDescription: {
-            en: "This application was developed to automate the calculation and tracking of scores for the card game 'Pelusas'. It provides a versatile tool that allows both manual score entry and automatic card detection using computer vision. The system includes player management, score calculation, image processing, and game history tracking components. The computer vision component uses a trained model to recognize specific numbered cards (values 1-10).",
-            es: "Esta aplicación fue desarrollada para automatizar el cálculo y seguimiento de puntuaciones para el juego de cartas 'Pelusas'. Proporciona una herramienta versátil que permite tanto la entrada manual de puntuaciones como la detección automática de cartas mediante visión por computadora. El sistema incluye componentes de gestión de jugadores, cálculo de puntuación, procesamiento de imágenes y seguimiento del historial de juegos. El componente de visión por computadora utiliza un modelo entrenado para reconocer cartas numeradas específicas (valores 1-10).",
-            fr: "Cette application a été développée pour automatiser le calcul et le suivi des scores pour le jeu de cartes 'Pelusas'. Elle fournit un outil polyvalent qui permet à la fois la saisie manuelle des scores et la détection automatique des cartes à l'aide de la vision par ordinateur. Le système comprend des composants de gestion des joueurs, de calcul des scores, de traitement d'images et de suivi de l'historique des jeux. Le composant de vision par ordinateur utilise un modèle entraîné pour reconnaître des cartes numérotées spécifiques (valeurs 1-10).",
-            de: "Diese Anwendung wurde entwickelt, um die Berechnung und Verfolgung von Punkteständen für das Kartenspiel 'Pelusas' zu automatisieren. Sie bietet ein vielseitiges Werkzeug, das sowohl manuelle Punkteeingabe als auch automatische Kartenerkennung mittels Computer Vision ermöglicht. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitung und Spielhistorie-Tracking. Die Computer-Vision-Komponente verwendet ein trainiertes Modell zur Erkennung spezifischer nummerierter Karten (Werte 1-10)."
+            en: "This computer vision application automates card detection and score tracking using machine learning. It provides real-time card recognition through a trained ONNX model, capable of processing multiple cards simultaneously with over 90% accuracy. The system includes player management, score calculation, image processing pipeline, and game history tracking components.",
+            es: "Esta aplicación de visión por computadora automatiza la detección de cartas y el seguimiento de puntuación usando aprendizaje automático. Proporciona reconocimiento de cartas en tiempo real a través de un modelo ONNX entrenado, capaz de procesar múltiples cartas simultáneamente con más del 90% de precisión. El sistema incluye gestión de jugadores, cálculo de puntuación, pipeline de procesamiento de imágenes y seguimiento del historial.",
+            fr: "Cette application de vision par ordinateur automatise la détection des cartes et le suivi des scores en utilisant l'apprentissage automatique. Elle fournit une reconnaissance des cartes en temps réel grâce à un modèle ONNX entraîné, capable de traiter plusieurs cartes simultanément avec plus de 90% de précision. Le système comprend la gestion des joueurs, le calcul des scores, le pipeline de traitement d'images et le suivi de l'historique.",
+            de: "Diese Computer-Vision-Anwendung automatisiert Kartenerkennung und Punkteverfolgung mittels maschinellem Lernen. Sie bietet Echtzeit-Kartenerkennung durch ein trainiertes ONNX-Modell, das mehrere Karten gleichzeitig mit über 90% Genauigkeit verarbeiten kann. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitungs-Pipeline und Spielhistorie-Tracking."
         },
         technologies: ["Python", "Kivy", "ONNX", "NumPy"],
-        icon: "fas fa-calculator",
+        icon: "fas fa-eye",
         githubUrl: "https://github.com/MaciWP/SnapScore",
         highlight: true,
         keyFeatures: {
             en: [
+                "Real-time card detection using ONNX neural network",
+                "Computer vision achieving >90% recognition accuracy",
                 "Cross-platform interface built with Kivy",
-                "Computer vision for automatic card detection (>90% accuracy)",
-                "Player management system",
-                "Game history tracking",
-                "Reduces calculation time by 80% compared to manual methods",
-                "Processes up to 10 cards simultaneously in a single image"
+                "Processes up to 10 cards simultaneously per image",
+                "80% faster than manual score tracking",
+                "Complete player and game history management"
             ],
             es: [
+                "Detección de cartas en tiempo real usando red neuronal ONNX",
+                "Visión por computadora con >90% de precisión en reconocimiento",
                 "Interfaz multiplataforma construida con Kivy",
-                "Visión por computadora para detección automática de cartas (>90% de precisión)",
-                "Sistema de gestión de jugadores",
-                "Seguimiento del historial de juegos",
-                "Reduce el tiempo de cálculo en un 80% comparado con métodos manuales",
-                "Procesa hasta 10 cartas simultáneamente en una sola imagen"
+                "Procesa hasta 10 cartas simultáneamente por imagen",
+                "80% más rápido que el seguimiento manual de puntuación",
+                "Gestión completa de jugadores e historial de juegos"
             ],
             fr: [
+                "Détection de cartes en temps réel utilisant un réseau neuronal ONNX",
+                "Vision par ordinateur atteignant >90% de précision de reconnaissance",
                 "Interface multiplateforme construite avec Kivy",
-                "Vision par ordinateur pour la détection automatique des cartes (précision >90%)",
-                "Système de gestion des joueurs",
-                "Suivi de l'historique des jeux",
-                "Réduit le temps de calcul de 80% par rapport aux méthodes manuelles",
-                "Traite jusqu'à 10 cartes simultanément dans une seule image"
+                "Traite jusqu'à 10 cartes simultanément par image",
+                "80% plus rapide que le suivi manuel des scores",
+                "Gestion complète des joueurs et de l'historique des jeux"
             ],
             de: [
+                "Echtzeit-Kartenerkennung mit ONNX-Neuronalnetz",
+                "Computer Vision mit >90% Erkennungsgenauigkeit",
                 "Plattformübergreifende Oberfläche mit Kivy erstellt",
-                "Computer Vision für automatische Kartenerkennung (>90% Genauigkeit)",
-                "Spielerverwaltungssystem",
-                "Spielhistorie-Tracking",
-                "Reduziert die Berechnungszeit um 80% im Vergleich zu manuellen Methoden",
-                "Verarbeitet bis zu 10 Karten gleichzeitig in einem einzigen Bild"
+                "Verarbeitet bis zu 10 Karten gleichzeitig pro Bild",
+                "80% schneller als manuelle Punkteverfolgung",
+                "Vollständige Spieler- und Spielhistorie-Verwaltung"
             ]
         }
     }

@@ -4,39 +4,23 @@
  */
 
 // Base education data structure with translations
+// Cleaned for Swiss market: only most relevant entries (3 max)
 const educationData = [
     {
         id: "unir-dev",
         title: {
-            en: "UNIR - FP Superior in Multiplatform Application Development",
-            es: "UNIR - FP Superior en Desarrollo de Aplicaciones Multiplataforma",
-            fr: "UNIR - FP Supérieur en Développement d'Applications Multiplateforme",
-            de: "UNIR - Höhere Fachausbildung in Multiplattform-Anwendungsentwicklung"
+            en: "Higher Technical Diploma in Multiplatform Application Development",
+            es: "FP Superior en Desarrollo de Aplicaciones Multiplataforma",
+            fr: "Diplôme Technique Supérieur en Développement d'Applications Multiplateforme",
+            de: "Höhere Fachausbildung in Multiplattform-Anwendungsentwicklung"
         },
-        institution: "Universidad Internacional de La Rioja",
-        period: "2024 - 2025",
+        institution: "UNIR - Universidad Internacional de La Rioja",
+        period: "2025",
         details: {
-            en: "Currently expanding knowledge in application development focusing on cross-platform solutions.",
-            es: "Actualmente ampliando conocimientos en desarrollo de aplicaciones centrándome en soluciones multiplataforma.",
-            fr: "Élargissement actuel des connaissances en développement d'applications axé sur les solutions multiplateforme.",
-            de: "Derzeit Erweiterung der Kenntnisse in der Anwendungsentwicklung mit Fokus auf plattformübergreifende Lösungen."
-        }
-    },
-    {
-        id: "english-course",
-        title: {
-            en: "English Course B1-B2",
-            es: "Curso de Inglés B1-B2",
-            fr: "Cours d'Anglais B1-B2",
-            de: "Englischkurs B1-B2"
-        },
-        institution: "IBOUX",
-        period: "2024",
-        details: {
-            en: "Improving English language skills for professional environments.",
-            es: "Mejorando habilidades de inglés para entornos profesionales.",
-            fr: "Amélioration des compétences en anglais pour les environnements professionnels.",
-            de: "Verbesserung der Englischkenntnisse für berufliche Umgebungen."
+            en: "Completed advanced training in cross-platform application development, software architecture, and modern development practices.",
+            es: "Formación avanzada completada en desarrollo de aplicaciones multiplataforma, arquitectura de software y prácticas modernas de desarrollo.",
+            fr: "Formation avancée complétée en développement d'applications multiplateforme, architecture logicielle et pratiques de développement modernes.",
+            de: "Abgeschlossene Weiterbildung in plattformübergreifender Anwendungsentwicklung, Software-Architektur und modernen Entwicklungspraktiken."
         }
     },
     {
@@ -59,10 +43,10 @@ const educationData = [
     {
         id: "tech-degree",
         title: {
-            en: "Technical Degree in Multiplatform Application Development",
+            en: "Higher Technical Diploma in Multiplatform Application Development",
             es: "Grado Superior en Desarrollo de Aplicaciones Multiplataforma",
-            fr: "Diplôme Technique en Développement d'Applications Multiplateforme",
-            de: "Technischer Abschluss in Multiplattform-Anwendungsentwicklung"
+            fr: "Diplôme Technique Supérieur en Développement d'Applications Multiplateforme",
+            de: "Höherer Fachabschluss in Multiplattform-Anwendungsentwicklung"
         },
         institution: "IES Montilivi",
         period: "2015",
@@ -71,57 +55,6 @@ const educationData = [
             es: "Especializado en desarrollo de aplicaciones web y móviles, diseño de bases de datos y arquitectura de software.",
             fr: "Spécialisé dans le développement d'applications web et mobiles, la conception de bases de données et l'architecture logicielle.",
             de: "Spezialisiert auf Web- und Mobile-Anwendungsentwicklung, Datenbankdesign und Software-Architektur."
-        }
-    },
-    {
-        id: "cas-course",
-        title: {
-            en: "Access Course to Higher Technical Education (CAS)",
-            es: "Curso de Acceso a Grado Superior (CAS)",
-            fr: "Cours d'Accès à l'Enseignement Technique Supérieur (CAS)",
-            de: "Zugangskurs zur höheren Fachausbildung (CAS)"
-        },
-        institution: "IES Santa Eugènia",
-        period: "2013",
-        details: {
-            en: "Preparatory course for higher technical education.",
-            es: "Curso preparatorio para educación técnica superior.",
-            fr: "Cours préparatoire pour l'enseignement technique supérieur.",
-            de: "Vorbereitungskurs für die höhere Fachausbildung."
-        }
-    },
-    {
-        id: "micro-systems",
-        title: {
-            en: "Microcomputer Systems and Networks",
-            es: "Sistemas Microinformáticos y Redes",
-            fr: "Systèmes Micro-informatiques et Réseaux",
-            de: "Mikrocomputersysteme und Netzwerke"
-        },
-        institution: "IES Salvador Espriu",
-        period: "2012",
-        details: {
-            en: "Medium-grade training in computer systems and networking.",
-            es: "Formación de grado medio en sistemas informáticos y redes.",
-            fr: "Formation de niveau moyen en systèmes informatiques et réseaux.",
-            de: "Mittlere Ausbildung in Computersystemen und Netzwerken."
-        }
-    },
-    {
-        id: "secondary",
-        title: {
-            en: "Secondary Education (ESO)",
-            es: "Educación Secundaria Obligatoria (ESO)",
-            fr: "Enseignement Secondaire Obligatoire (ESO)",
-            de: "Sekundarschulbildung (ESO)"
-        },
-        institution: "IES Josep Brugulat",
-        period: "2010",
-        details: {
-            en: "Focus on technology and computer science.",
-            es: "Enfoque en tecnología e informática.",
-            fr: "Accent sur la technologie et l'informatique.",
-            de: "Schwerpunkt auf Technologie und Informatik."
         }
     }
 ];
