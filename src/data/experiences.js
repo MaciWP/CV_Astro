@@ -156,21 +156,8 @@ const experiencesData = [
         company: "SERES, Educand SCCL, Salt City Council",
         companyUrl: null,
         period: "2014 - 2017",
+        collapsible: true, // This job will be collapsed by default at the card level
         keyResponsibilities: {
-            en: [
-                "IT Support, Electronic Invoicing (EDI/XML), and WPF Development across multiple companies"
-            ],
-            es: [
-                "Soporte IT, Facturación Electrónica (EDI/XML), y Desarrollo WPF en diversas empresas"
-            ],
-            fr: [
-                "Support IT, Facturation Électronique (EDI/XML), et Développement WPF dans plusieurs entreprises"
-            ],
-            de: [
-                "IT-Support, Elektronische Rechnungsstellung (EDI/XML), und WPF-Entwicklung in mehreren Unternehmen"
-            ]
-        },
-        extraResponsibilities: {
             en: [
                 "IT support and technical customer service for electronic invoicing systems (EDI, XML formats)",
                 "Installation, configuration, and maintenance of computer equipment and network infrastructure",
@@ -191,6 +178,12 @@ const experiencesData = [
                 "Installation, Konfiguration und Wartung von Computerausrüstung und Netzwerkinfrastruktur",
                 "Entwicklung interner Anwendungen mit WPF und C# für Datenbankverwaltung"
             ]
+        },
+        extraResponsibilities: {
+            en: [],
+            es: [],
+            fr: [],
+            de: []
         },
         achievements: {
             en: [
@@ -231,7 +224,8 @@ export const getExperiences = (lang = 'en') => {
         period: typeof exp.period === 'object' ? (exp.period[language] || exp.period.en) : exp.period,
         keyResponsibilities: exp.keyResponsibilities[language] || exp.keyResponsibilities.en,
         extraResponsibilities: exp.extraResponsibilities[language] || exp.extraResponsibilities.en,
-        achievements: exp.achievements[language] || exp.achievements.en
+        achievements: exp.achievements[language] || exp.achievements.en,
+        collapsible: exp.collapsible || false
     }));
 };
 

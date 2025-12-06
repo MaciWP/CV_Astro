@@ -5,7 +5,8 @@
 
 // Base education data structure with translations
 // Cleaned for Swiss market: only most relevant entries (3 max)
-const educationData = [
+// Primary education items (always visible)
+const primaryEducationData = [
     {
         id: "unir-dev",
         title: {
@@ -22,7 +23,11 @@ const educationData = [
             fr: "Formation avancée complétée en développement d'applications multiplateforme, architecture logicielle et pratiques de développement modernes.",
             de: "Abgeschlossene Weiterbildung in plattformübergreifender Anwendungsentwicklung, Software-Architektur und modernen Entwicklungspraktiken."
         }
-    },
+    }
+];
+
+// Secondary education items (collapsible)
+const secondaryEducationData = [
     {
         id: "schneider-cert",
         title: {
@@ -59,22 +64,46 @@ const educationData = [
     }
 ];
 
+// Combined for backwards compatibility
+const educationData = [...primaryEducationData, ...secondaryEducationData];
+
+// Helper to transform education data to language-specific format
+const transformEducation = (data, language) => data.map(edu => ({
+    id: edu.id,
+    title: edu.title[language] || edu.title.en,
+    institution: edu.institution,
+    period: edu.period,
+    details: edu.details[language] || edu.details.en
+}));
+
 /**
- * Get education items in the specified language
+ * Get all education items in the specified language
  * @param {string} lang - Language code (en, es, fr, de)
  * @returns {Array} Education items with texts in the specified language
  */
 export const getEducation = (lang = 'en') => {
-    // Default to English if language not supported
     const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    return transformEducation(educationData, language);
+};
 
-    // Transform data structure to use the specified language
-    return educationData.map(edu => ({
-        title: edu.title[language] || edu.title.en,
-        institution: edu.institution,
-        period: edu.period,
-        details: edu.details[language] || edu.details.en
-    }));
+/**
+ * Get primary education items (always visible)
+ * @param {string} lang - Language code (en, es, fr, de)
+ * @returns {Array} Primary education items
+ */
+export const getPrimaryEducation = (lang = 'en') => {
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    return transformEducation(primaryEducationData, language);
+};
+
+/**
+ * Get secondary education items (collapsible)
+ * @param {string} lang - Language code (en, es, fr, de)
+ * @returns {Array} Secondary education items
+ */
+export const getSecondaryEducation = (lang = 'en') => {
+    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    return transformEducation(secondaryEducationData, language);
 };
 
 /**
@@ -82,7 +111,6 @@ export const getEducation = (lang = 'en') => {
  * @returns {Array} Education items with texts in the current UI language
  */
 export const getCurrentLanguageEducation = () => {
-    // Get current language from window object if available
     const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
     return getEducation(currentLang);
 };

@@ -2,8 +2,9 @@
 /**
  * Education.astro - SSG optimized version
  * Static generation for better performance
+ * Updated: Primary education visible, secondary collapsible
  */
-import { getEducation } from '../../data/education';
+import { getPrimaryEducation, getSecondaryEducation } from '../../data/education';
 
 interface Props {
   lang?: string;
@@ -12,7 +13,8 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 
 // Get education items in the specified language
-const educationItems = getEducation(lang);
+const primaryEducation = getPrimaryEducation(lang);
+const secondaryEducation = getSecondaryEducation(lang);
 
 // Get title translation
 const titles = {
@@ -20,6 +22,20 @@ const titles = {
   es: 'Educación y Certificaciones',
   fr: 'Éducation et Certifications',
   de: 'Ausbildung & Zertifizierungen'
+};
+
+const showMoreText: Record<string, string> = {
+  en: 'Show more certifications',
+  es: 'Ver más certificaciones',
+  fr: 'Voir plus de certifications',
+  de: 'Mehr Zertifizierungen anzeigen'
+};
+
+const showLessText: Record<string, string> = {
+  en: 'Show less',
+  es: 'Ver menos',
+  fr: 'Voir moins',
+  de: 'Weniger anzeigen'
 };
 
 const title = titles[lang as keyof typeof titles] || titles.en;
@@ -34,8 +50,9 @@ const title = titles[lang as keyof typeof titles] || titles.en;
     <h2 id="education-heading" class="text-2xl font-bold ml-3">{title}</h2>
   </div>
 
-  <div class="space-y-6">
-    {educationItems.map((item, index) => (
+  <div class="space-y-6 education-section">
+    <!-- Primary Education (always visible) -->
+    {primaryEducation.map((item, index) => (
       <div
         class="group bg-light-surface dark:bg-dark-surface p-5
                border border-light-border dark:border-dark-border
@@ -58,10 +75,101 @@ const title = titles[lang as keyof typeof titles] || titles.en;
           </div>
         </div>
         <p class="text-sm" style="transition: color 100ms ease-out;">{item.details}</p>
-
-        <!-- Indicator line with smoother animation -->
         <div class="w-0 h-0.5 bg-brand-red mt-3 group-hover:w-full" style="transition: width 300ms ease-out;"></div>
       </div>
     ))}
+
+    <!-- Toggle button for secondary education -->
+    {secondaryEducation.length > 0 && (
+      <button
+        class="education-toggle text-sm inline-flex items-center gap-2 text-brand-red hover:text-brand-red/80 focus:outline-none focus:underline py-2"
+        data-show-text={showMoreText[lang]}
+        data-hide-text={showLessText[lang]}
+        aria-expanded="false"
+      >
+        <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+        <span class="btn-text">{showMoreText[lang]}</span>
+      </button>
+    )}
+
+    <!-- Secondary Education (collapsible) -->
+    <div class="secondary-education space-y-6 hidden" style="max-height: 0; overflow: hidden; opacity: 0; transition: max-height 300ms ease-out, opacity 200ms ease-out;">
+      {secondaryEducation.map((item, index) => (
+        <div
+          class="group bg-light-surface dark:bg-dark-surface p-5
+                 border border-light-border dark:border-dark-border
+                 rounded-none shadow-sm hover:shadow-md hover:border-brand-red/50 dark:hover:border-brand-red/50
+                 hover:translate-x-1"
+          style="transition: background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out, transform 150ms ease-out;"
+        >
+          <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
+            <div>
+              <h3 class="font-bold text-lg group-hover:text-brand-red" style="transition: color 100ms ease-out;">
+                {item.title}
+              </h3>
+              <p class="text-light-text-secondary dark:text-dark-text-secondary italic mb-2" style="transition: color 100ms ease-out;">
+                {item.institution}
+              </p>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white" style="transition: background-color 100ms ease-out, color 100ms ease-out;">
+              <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+              {item.period}
+            </div>
+          </div>
+          <p class="text-sm" style="transition: color 100ms ease-out;">{item.details}</p>
+          <div class="w-0 h-0.5 bg-brand-red mt-3 group-hover:w-full" style="transition: width 300ms ease-out;"></div>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
+
+<script>
+  function initEducationSection() {
+    const sections = document.querySelectorAll('.education-section:not(.initialized)');
+
+    sections.forEach(section => {
+      section.classList.add('initialized');
+
+      const toggleBtn = section.querySelector('.education-toggle');
+      const secondaryContent = section.querySelector('.secondary-education');
+
+      if (toggleBtn && secondaryContent) {
+        toggleBtn.addEventListener('click', () => {
+          const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+          const icon = toggleBtn.querySelector('i');
+          const textSpan = toggleBtn.querySelector('.btn-text');
+          const showText = toggleBtn.getAttribute('data-show-text');
+          const hideText = toggleBtn.getAttribute('data-hide-text');
+
+          if (isExpanded) {
+            secondaryContent.style.maxHeight = '0';
+            secondaryContent.style.opacity = '0';
+            setTimeout(() => secondaryContent.classList.add('hidden'), 300);
+            icon?.classList.remove('fa-chevron-up');
+            icon?.classList.add('fa-chevron-down');
+            if (textSpan) textSpan.textContent = showText || 'Show more';
+            toggleBtn.setAttribute('aria-expanded', 'false');
+          } else {
+            secondaryContent.classList.remove('hidden');
+            requestAnimationFrame(() => {
+              secondaryContent.style.maxHeight = '2000px';
+              secondaryContent.style.opacity = '1';
+            });
+            icon?.classList.remove('fa-chevron-down');
+            icon?.classList.add('fa-chevron-up');
+            if (textSpan) textSpan.textContent = hideText || 'Show less';
+            toggleBtn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEducationSection);
+  } else {
+    initEducationSection();
+  }
+  document.addEventListener('astro:page-load', initEducationSection);
+</script>

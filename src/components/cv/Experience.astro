@@ -47,6 +47,20 @@ const translationsByLang: Record<string, Record<string, string>> = {
 };
 
 const t = translationsByLang[lang] || translationsByLang.en;
+
+// Additional translations for collapsible sections
+const showDetailsText: Record<string, string> = {
+    en: 'Show details',
+    es: 'Ver detalles',
+    fr: 'Voir détails',
+    de: 'Details anzeigen'
+};
+const hideDetailsText: Record<string, string> = {
+    en: 'Hide details',
+    es: 'Ocultar detalles',
+    fr: 'Masquer détails',
+    de: 'Details ausblenden'
+};
 ---
 
 <section id="experience" class="scroll-mt-20 mb-16 experience-section">
@@ -63,32 +77,47 @@ const t = translationsByLang[lang] || translationsByLang.en;
 
         {experiences.map((job, index) => (
             <div
-                class="experience-item relative pl-8 pb-12 hover:translate-x-1 transition-all duration-200"
+                class={`experience-item relative pl-8 pb-12 hover:translate-x-1 transition-all duration-200 ${job.collapsible ? 'collapsible-job' : ''}`}
                 style={`--delay: ${100 * index}ms`}
+                data-collapsible={job.collapsible ? 'true' : 'false'}
             >
                 <!-- Timeline node now via CSS ::before -->
 
                 <!-- Job header -->
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4 group">
-                    <div>
-                        <h3 class="text-xl font-bold group-hover:text-brand-red transition-colors duration-150">
-                            {job.title}
-                        </h3>
-                        <p class="text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-150 flex items-center">
-                            <i class="fas fa-building mr-2 text-brand-red/70"></i>
-                            {job.companyUrl ? (
-                                <a
-                                    href={job.companyUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                                >
-                                    {job.company}
-                                </a>
-                            ) : (
-                                job.company
-                            )}
-                        </p>
+                    <div class="flex items-center gap-3">
+                        {job.collapsible && (
+                            <button
+                                class="collapsible-toggle w-8 h-8 flex items-center justify-center text-brand-red hover:bg-brand-red/10 rounded-none transition-colors"
+                                data-job-id={job.id}
+                                data-show-text={showDetailsText[lang]}
+                                data-hide-text={hideDetailsText[lang]}
+                                aria-expanded="false"
+                                aria-label={showDetailsText[lang]}
+                            >
+                                <i class="fas fa-chevron-right text-sm transition-transform duration-200"></i>
+                            </button>
+                        )}
+                        <div>
+                            <h3 class="text-xl font-bold group-hover:text-brand-red transition-colors duration-150">
+                                {job.title}
+                            </h3>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-150 flex items-center">
+                                <i class="fas fa-building mr-2 text-brand-red/70"></i>
+                                {job.companyUrl ? (
+                                    <a
+                                        href={job.companyUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="hover:text-brand-red dark:hover:text-brand-red transition-colors"
+                                    >
+                                        {job.company}
+                                    </a>
+                                ) : (
+                                    job.company
+                                )}
+                            </p>
+                        </div>
                     </div>
                     <div class="flex items-center gap-2 text-sm text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary px-3 py-1 rounded-none transition-all duration-150 group-hover:bg-brand-red group-hover:text-white">
                         <i class="fas fa-calendar-alt"></i>
@@ -97,7 +126,7 @@ const t = translationsByLang[lang] || translationsByLang.en;
                 </div>
 
                 <!-- Job description card -->
-                <div class="bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md job-card">
+                <div class={`bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md job-card ${job.collapsible ? 'collapsible-content hidden' : ''}`} data-job-content={job.id}>
                     <!-- Responsibilities -->
                     <h4 class="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider">
                         {t.responsibilities}
@@ -216,6 +245,37 @@ const t = translationsByLang[lang] || translationsByLang.en;
         max-height: 1000px;
         opacity: 1;
     }
+
+    /* Collapsible job card animation */
+    .collapsible-content {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+        transition: max-height 300ms ease-out, opacity 200ms ease-out, padding 200ms ease-out;
+    }
+
+    .collapsible-content.expanded {
+        max-height: 2000px;
+        opacity: 1;
+        padding: 1.5rem;
+        border: 1px solid;
+    }
+
+    .collapsible-toggle i {
+        transition: transform 200ms ease-out;
+    }
+
+    .collapsible-toggle[aria-expanded="true"] i {
+        transform: rotate(90deg);
+    }
+
+    /* Reduce bottom padding when collapsed */
+    .collapsible-job:not(.expanded) {
+        padding-bottom: 1.5rem;
+    }
 </style>
 
 <script>
@@ -239,6 +299,36 @@ const t = translationsByLang[lang] || translationsByLang.en;
             );
 
             observer.observe(section);
+
+            // Collapsible job card functionality (for Early Career, etc.)
+            const collapsibleToggles = section.querySelectorAll('.collapsible-toggle');
+            collapsibleToggles.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const jobId = btn.getAttribute('data-job-id');
+                    const content = section.querySelector(`.collapsible-content[data-job-content="${jobId}"]`);
+                    const jobItem = btn.closest('.collapsible-job');
+                    const icon = btn.querySelector('i');
+                    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+                    if (content) {
+                        if (isExpanded) {
+                            content.classList.remove('expanded');
+                            content.classList.add('hidden');
+                            jobItem?.classList.remove('expanded');
+                            btn.setAttribute('aria-expanded', 'false');
+                            btn.setAttribute('aria-label', btn.getAttribute('data-show-text') || 'Show details');
+                        } else {
+                            content.classList.remove('hidden');
+                            requestAnimationFrame(() => {
+                                content.classList.add('expanded');
+                            });
+                            jobItem?.classList.add('expanded');
+                            btn.setAttribute('aria-expanded', 'true');
+                            btn.setAttribute('aria-label', btn.getAttribute('data-hide-text') || 'Hide details');
+                        }
+                    }
+                });
+            });
 
             // Expand/collapse functionality
             const expandBtns = section.querySelectorAll('.expand-btn');

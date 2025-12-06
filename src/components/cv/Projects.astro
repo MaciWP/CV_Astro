@@ -98,24 +98,24 @@ function getProjectIcon(project: any): string {
         </button>
     </div>
 
-    <!-- Tabs -->
+    <!-- Tabs - Professional first -->
     <div class="flex border-b border-light-border dark:border-dark-border mb-6">
         <button
             class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400"
-            data-tab="personal"
-        >
-            {t.personalProjects}
-        </button>
-        <button
-            class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70"
             data-tab="professional"
         >
             {t.professionalWork}
         </button>
+        <button
+            class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70"
+            data-tab="personal"
+        >
+            {t.personalProjects}
+        </button>
     </div>
 
-    <!-- Personal Projects Grid -->
-    <div id="personal-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Personal Projects Grid (hidden by default now) -->
+    <div id="personal-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
         {personalProjects.map((project, index) => (
             <div
                 class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col cursor-pointer"
@@ -187,8 +187,8 @@ function getProjectIcon(project: any): string {
         ))}
     </div>
 
-    <!-- Professional Projects Grid - Lazy loaded via JS -->
-    <div id="professional-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"
+    <!-- Professional Projects Grid - Visible by default, load immediately -->
+    <div id="professional-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
          data-projects={JSON.stringify(professionalProjects.map(p => ({
             id: p.id,
             title: p.title,
@@ -209,11 +209,11 @@ function getProjectIcon(project: any): string {
 
     <!-- Footer note -->
     <div class="mt-8 text-center footer-note">
-        <p id="personal-note" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-            {t.personalProjectsNote}
-        </p>
-        <p id="professional-note" class="text-sm text-light-text-secondary dark:text-dark-text-secondary hidden">
+        <p id="professional-note" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
             {t.professionalProjectsNote}
+        </p>
+        <p id="personal-note" class="text-sm text-light-text-secondary dark:text-dark-text-secondary hidden">
+            {t.personalProjectsNote}
         </p>
     </div>
 </section>
@@ -353,6 +353,9 @@ function getProjectIcon(project: any): string {
             const professionalGrid = section.querySelector('#professional-projects');
             const personalNote = section.querySelector('#personal-note');
             const professionalNote = section.querySelector('#professional-note');
+
+            // Load professional projects immediately (since they're shown by default now)
+            if (professionalGrid) renderProfessionalProjects(professionalGrid);
 
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {

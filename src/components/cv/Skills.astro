@@ -35,7 +35,7 @@ const titles = {
 
   <!-- Main container - visible immediately, categories animate separately -->
   <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm section-content-animate" style="--anim-delay: 100ms; transition: background-color 100ms ease-out, border-color 100ms ease-out;">
-    <div class="grid grid-cols-1 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
 
       <!-- Programming Languages - Category 1 -->
       <div class="space-y-4 skill-category-animate" style="--anim-delay: 150ms;">
@@ -58,7 +58,7 @@ const titles = {
       </div>
 
       <!-- Libraries & Frameworks - Category 2 -->
-      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 250ms;">
+      <div class="space-y-4 skill-category-animate" style="--anim-delay: 250ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -78,7 +78,7 @@ const titles = {
       </div>
 
       <!-- Protocols & Data Formats - Category 3 -->
-      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 350ms;">
+      <div class="space-y-4 skill-category-animate" style="--anim-delay: 350ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -98,7 +98,7 @@ const titles = {
       </div>
 
       <!-- DevOps & Tools - Category 4 -->
-      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 450ms;">
+      <div class="space-y-4 skill-category-animate" style="--anim-delay: 450ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -117,8 +117,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- Databases - Category 5 -->
-      <div class="space-y-4 pt-2 skill-category-animate" style="--anim-delay: 550ms;">
+      <!-- Databases - Category 5 (spans full width) -->
+      <div class="space-y-4 skill-category-animate md:col-span-2" style="--anim-delay: 550ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
