@@ -158,6 +158,20 @@ const experiencesData = [
         period: "2014 - 2017",
         keyResponsibilities: {
             en: [
+                "IT Support, Electronic Invoicing (EDI/XML), and WPF Development across multiple companies"
+            ],
+            es: [
+                "Soporte IT, Facturación Electrónica (EDI/XML), y Desarrollo WPF en diversas empresas"
+            ],
+            fr: [
+                "Support IT, Facturation Électronique (EDI/XML), et Développement WPF dans plusieurs entreprises"
+            ],
+            de: [
+                "IT-Support, Elektronische Rechnungsstellung (EDI/XML), und WPF-Entwicklung in mehreren Unternehmen"
+            ]
+        },
+        extraResponsibilities: {
+            en: [
                 "IT support and technical customer service for electronic invoicing systems (EDI, XML formats)",
                 "Installation, configuration, and maintenance of computer equipment and network infrastructure",
                 "Development of internal applications using WPF and C# for database management"
@@ -177,12 +191,6 @@ const experiencesData = [
                 "Installation, Konfiguration und Wartung von Computerausrüstung und Netzwerkinfrastruktur",
                 "Entwicklung interner Anwendungen mit WPF und C# für Datenbankverwaltung"
             ]
-        },
-        extraResponsibilities: {
-            en: [],
-            es: [],
-            fr: [],
-            de: []
         },
         achievements: {
             en: [

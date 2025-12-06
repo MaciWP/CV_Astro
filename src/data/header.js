@@ -9,10 +9,10 @@
 const headerData = {
   fullName: "Oriol Macias",
   jobTitle: {
-    en: "Backend Developer",
-    es: "Desarrollador Backend",
-    fr: "Développeur Backend",
-    de: "Backend-Entwickler"
+    en: "Backend Engineer | Industrial IoT & AI Integration",
+    es: "Ingeniero Backend | IoT Industrial e Integración IA",
+    fr: "Ingénieur Backend | IoT Industriel & Intégration IA",
+    de: "Backend-Ingenieur | Industrielles IoT & KI-Integration"
   },
   // Swiss market required fields
   dateOfBirth: "1994",
