@@ -52,23 +52,6 @@ const primaryEducationData = [
 // Secondary education items (collapsible)
 const secondaryEducationData = [
     {
-        id: "schneider-cert",
-        title: {
-            en: "SP2 EcoStruxure IT Advanced Technical Certification",
-            es: "Certificación Técnica Avanzada SP2 EcoStruxure IT",
-            fr: "Certification Technique Avancée SP2 EcoStruxure IT",
-            de: "SP2 EcoStruxure IT Fortgeschrittene Technische Zertifizierung"
-        },
-        institution: "Schneider Electric",
-        period: "2019",
-        details: {
-            en: "Professional certification in advanced IT infrastructure management and monitoring systems.",
-            es: "Certificación profesional en gestión de infraestructura de TI avanzada y sistemas de monitorización.",
-            fr: "Certification professionnelle en gestion d'infrastructure IT avancée et systèmes de surveillance.",
-            de: "Professionelle Zertifizierung in fortgeschrittenem IT-Infrastrukturmanagement und Überwachungssystemen."
-        }
-    },
-    {
         id: "english-course",
         title: {
             en: "English Language Course (B1-B2)",
@@ -83,6 +66,23 @@ const secondaryEducationData = [
             es: "Formación intensiva en inglés alcanzando nivel intermedio a intermedio-alto.",
             fr: "Formation intensive en anglais atteignant un niveau intermédiaire à intermédiaire-avancé.",
             de: "Intensives Englischtraining mit Erreichen des Niveaus Mittelstufe bis obere Mittelstufe."
+        }
+    },
+    {
+        id: "schneider-cert",
+        title: {
+            en: "SP2 EcoStruxure IT Advanced Technical Certification",
+            es: "Certificación Técnica Avanzada SP2 EcoStruxure IT",
+            fr: "Certification Technique Avancée SP2 EcoStruxure IT",
+            de: "SP2 EcoStruxure IT Fortgeschrittene Technische Zertifizierung"
+        },
+        institution: "Schneider Electric",
+        period: "2019",
+        details: {
+            en: "Professional certification in advanced IT infrastructure management and monitoring systems.",
+            es: "Certificación profesional en gestión de infraestructura de TI avanzada y sistemas de monitorización.",
+            fr: "Certification professionnelle en gestion d'infrastructure IT avancée et systèmes de surveillance.",
+            de: "Professionelle Zertifizierung in fortgeschrittenem IT-Infrastrukturmanagement und Überwachungssystemen."
         }
     },
     {
