@@ -69,9 +69,17 @@ const title = titles[lang as keyof typeof titles] || titles.en;
               {item.institution}
             </p>
           </div>
-          <div class="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white" style="transition: background-color 100ms ease-out, color 100ms ease-out;">
-            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
-            {item.period}
+          <div class="flex flex-wrap gap-2">
+            <div class="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white" style="transition: background-color 100ms ease-out, color 100ms ease-out;">
+              <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+              {item.period}
+            </div>
+            {item.badge && (
+              <div class="inline-flex items-center px-3 py-1 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
+                <i class="fas fa-award mr-2" aria-hidden="true"></i>
+                {item.badge}
+              </div>
+            )}
           </div>
         </div>
         <p class="text-sm" style="transition: color 100ms ease-out;">{item.details}</p>

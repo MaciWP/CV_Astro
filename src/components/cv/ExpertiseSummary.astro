@@ -1,0 +1,142 @@
+---
+/**
+ * ExpertiseSummary.astro - Key expertise areas showcase
+ * Displays 3 cards highlighting core competencies
+ * @file src/components/cv/ExpertiseSummary.astro
+ */
+interface Props {
+    lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Translations for expertise areas
+const expertiseData: Record<string, { title: string; areas: { icon: string; title: string; description: string }[] }> = {
+    en: {
+        title: "Core Expertise",
+        areas: [
+            {
+                icon: "fas fa-industry",
+                title: "Industrial Protocols",
+                description: "SNMP, Modbus, BACnet"
+            },
+            {
+                icon: "fas fa-code",
+                title: "Backend & AI",
+                description: "Python, C#, LLM Integration"
+            },
+            {
+                icon: "fas fa-network-wired",
+                title: "Infrastructure",
+                description: "On-Premise & Cloud"
+            }
+        ]
+    },
+    es: {
+        title: "Experiencia Principal",
+        areas: [
+            {
+                icon: "fas fa-industry",
+                title: "Protocolos Industriales",
+                description: "SNMP, Modbus, BACnet"
+            },
+            {
+                icon: "fas fa-code",
+                title: "Backend e IA",
+                description: "Python, C#, Integracion LLM"
+            },
+            {
+                icon: "fas fa-network-wired",
+                title: "Infraestructura",
+                description: "On-Premise y Cloud"
+            }
+        ]
+    },
+    fr: {
+        title: "Expertise Principale",
+        areas: [
+            {
+                icon: "fas fa-industry",
+                title: "Protocoles Industriels",
+                description: "SNMP, Modbus, BACnet"
+            },
+            {
+                icon: "fas fa-code",
+                title: "Backend & IA",
+                description: "Python, C#, Integration LLM"
+            },
+            {
+                icon: "fas fa-network-wired",
+                title: "Infrastructure",
+                description: "On-Premise & Cloud"
+            }
+        ]
+    },
+    de: {
+        title: "Kernkompetenzen",
+        areas: [
+            {
+                icon: "fas fa-industry",
+                title: "Industrieprotokolle",
+                description: "SNMP, Modbus, BACnet"
+            },
+            {
+                icon: "fas fa-code",
+                title: "Backend & KI",
+                description: "Python, C#, LLM-Integration"
+            },
+            {
+                icon: "fas fa-network-wired",
+                title: "Infrastruktur",
+                description: "On-Premise & Cloud"
+            }
+        ]
+    }
+};
+
+const t = expertiseData[lang] || expertiseData.en;
+---
+
+<section class="py-6 mb-4 expertise-section" aria-label={t.title}>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {t.areas.map((area, index) => (
+            <div
+                class="expertise-card group flex items-center gap-4 p-4 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border hover:border-brand-red/50 dark:hover:border-brand-red/50 hover:shadow-md rounded-none"
+                style={`--delay: ${index * 100}ms; transition: border-color 150ms ease-out, box-shadow 150ms ease-out, background-color 100ms ease-out;`}
+            >
+                <div class="w-12 h-12 flex items-center justify-center bg-brand-red/10 dark:bg-brand-red/20 text-brand-red flex-shrink-0 rounded-none">
+                    <i class={`${area.icon} text-xl`} aria-hidden="true"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-sm text-light-text dark:text-dark-text">
+                        {area.title}
+                    </h3>
+                    <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+                        {area.description}
+                    </p>
+                </div>
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    /* Animation for expertise cards */
+    .expertise-card {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: expertiseFadeIn 400ms ease-out forwards;
+        animation-delay: var(--delay, 0ms);
+    }
+
+    @keyframes expertiseFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

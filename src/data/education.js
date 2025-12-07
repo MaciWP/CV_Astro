@@ -17,6 +17,12 @@ const primaryEducationData = [
         },
         institution: "UNIR - Universidad Internacional de La Rioja",
         period: "2025",
+        badge: {
+            en: "Degree Completion (Combined with professional activity)",
+            es: "Finalización de Grado (Combinado con actividad profesional)",
+            fr: "Obtention du Diplôme (Combiné avec activité professionnelle)",
+            de: "Studienabschluss (Kombiniert mit Berufstätigkeit)"
+        },
         details: {
             en: "Completed advanced training in cross-platform application development, software architecture, and modern development practices.",
             es: "Formación avanzada completada en desarrollo de aplicaciones multiplataforma, arquitectura de software y prácticas modernas de desarrollo.",
@@ -141,6 +147,7 @@ const transformEducation = (data, language) => data.map(edu => ({
     title: edu.title[language] || edu.title.en,
     institution: edu.institution,
     period: edu.period,
+    badge: edu.badge ? (edu.badge[language] || edu.badge.en) : null,
     details: edu.details[language] || edu.details.en
 }));
 

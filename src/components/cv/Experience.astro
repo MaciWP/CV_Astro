@@ -77,7 +77,7 @@ const hideDetailsText: Record<string, string> = {
 
         {experiences.map((job, index) => (
             <div
-                class={`experience-item relative pl-8 pb-12 hover:translate-x-1 transition-all duration-200 ${job.collapsible ? 'collapsible-job' : ''}`}
+                class={`experience-item relative pl-8 pb-16 hover:translate-x-1 transition-all duration-200 ${job.collapsible ? 'collapsible-job' : ''}`}
                 style={`--delay: ${100 * index}ms`}
                 data-collapsible={job.collapsible ? 'true' : 'false'}
             >
@@ -177,6 +177,19 @@ const hideDetailsText: Record<string, string> = {
                             </li>
                         ))}
                     </ul>
+
+                    {/* Tech Stack Tags */}
+                    {job.techStack && job.techStack.length > 0 && (
+                        <div class="mt-4 pt-4 border-t border-light-border dark:border-dark-border">
+                            <div class="flex flex-wrap gap-2">
+                                {job.techStack.map((tech: string) => (
+                                    <span class="px-2 py-1 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     <!-- Hover indicator line -->
                     <div class="w-0 h-0.5 bg-brand-red mt-4 transition-all duration-150 group-hover:w-full"></div>

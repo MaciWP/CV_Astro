@@ -10,6 +10,7 @@ import Skills from "../../components/cv/Skills.astro";
 import Languages from "../../components/cv/Languages.astro";
 import Education from "../../components/cv/Education.astro";
 import Projects from "../../components/cv/Projects.astro";
+import ExpertiseSummary from "../../components/cv/ExpertiseSummary.astro";
 import FAQSchema from "../../components/FAQSchema.astro";
 
 // Enhanced metadata for SEO (French version)
@@ -71,6 +72,9 @@ const faqs = [
         <div class="-mb-8">
             <ProfileHeader lang="fr" />
         </div>
+
+        {/* Expertise Summary - Key competencies */}
+        <ExpertiseSummary lang="fr" />
 
         {/* Experience - Pure Astro */}
         <Experience lang="fr" />

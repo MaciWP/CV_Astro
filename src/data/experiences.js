@@ -81,7 +81,8 @@ const experiencesData = [
                 "Erstellung einer Anwendung zur Generierung von DDF-Konfigurationsdateien mit MIBs und SNMP-Walks, wodurch die Entwicklungszeit um 90% reduziert wurde",
                 "Leitung der Entwicklung mehrerer Kernsysteme für grosse Unternehmenskunden"
             ]
-        }
+        },
+        techStack: ["Python", "Django", "Docker", "Modbus/SNMP", "PostgreSQL"]
     },
     {
         id: "busmatick",
@@ -143,7 +144,8 @@ const experiencesData = [
                 "Erstellung eines sicheren Systems für verschlüsselte sensible Kartenoperationen",
                 "Entwicklung von Bluetooth-Druckfunktionalität für Transaktionsbelege"
             ]
-        }
+        },
+        techStack: ["C#", "Android", "SOAP", "NFC"]
     },
     {
         id: "early-career",
@@ -160,22 +162,22 @@ const experiencesData = [
         keyResponsibilities: {
             en: [
                 "SERES (2017): Technical support for electronic invoicing platform, resolving EDI/XML format issues and ensuring compliance with Spanish e-invoicing regulations",
-                "Educand SCCL (2015-2017): Full IT support for educational cooperative including hardware deployment, network troubleshooting, and user training across 50+ workstations",
+                "Educand SCCL (2015-2017): End-to-end administration of IT infrastructure for an educational center (800+ users). Managed deployment and maintenance of 500 workstations, 300 laptops, 10 physical servers, and full network topology (cabling, switching, and 20+ Access Points).",
                 "Salt City Council (2014-2016): Development intern creating internal WPF/C# applications for municipal database management and citizen services"
             ],
             es: [
                 "SERES (2017): Soporte técnico para plataforma de facturación electrónica, resolviendo incidencias en formatos EDI/XML y asegurando cumplimiento con normativa española de factura-e",
-                "Educand SCCL (2015-2017): Soporte IT completo para cooperativa educativa incluyendo despliegue de hardware, resolución de problemas de red y formación de usuarios en más de 50 estaciones",
+                "Educand SCCL (2015-2017): Administración integral de infraestructura IT para centro educativo (800+ usuarios). Gestión de despliegue y mantenimiento de 500 estaciones de trabajo, 300 portátiles, 10 servidores físicos y topología de red completa (cableado, switching y 20+ puntos de acceso).",
                 "Ayuntamiento de Salt (2014-2016): Becario de desarrollo creando aplicaciones internas WPF/C# para gestión de bases de datos municipales y servicios ciudadanos"
             ],
             fr: [
                 "SERES (2017): Support technique pour plateforme de facturation électronique, résolution des problèmes de formats EDI/XML et conformité aux réglementations espagnoles",
-                "Educand SCCL (2015-2017): Support IT complet pour coopérative éducative incluant déploiement matériel, dépannage réseau et formation utilisateurs sur 50+ postes",
+                "Educand SCCL (2015-2017): Administration complète de l'infrastructure IT pour un centre éducatif (800+ utilisateurs). Gestion du déploiement et maintenance de 500 postes de travail, 300 ordinateurs portables, 10 serveurs physiques et topologie réseau complète (câblage, commutation et 20+ points d'accès).",
                 "Mairie de Salt (2014-2016): Stagiaire développement créant des applications internes WPF/C# pour gestion de bases de données municipales et services citoyens"
             ],
             de: [
                 "SERES (2017): Technischer Support für elektronische Rechnungsplattform, Lösung von EDI/XML-Formatproblemen und Einhaltung spanischer E-Rechnungsvorschriften",
-                "Educand SCCL (2015-2017): Vollständiger IT-Support für Bildungsgenossenschaft inkl. Hardware-Bereitstellung, Netzwerk-Fehlerbehebung und Benutzerschulung für 50+ Arbeitsplätze",
+                "Educand SCCL (2015-2017): Vollständige IT-Infrastrukturverwaltung für ein Bildungszentrum (800+ Benutzer). Verwaltung von Bereitstellung und Wartung von 500 Arbeitsplätzen, 300 Laptops, 10 physischen Servern und vollständiger Netzwerktopologie (Verkabelung, Switching und 20+ Access Points).",
                 "Stadtverwaltung Salt (2014-2016): Entwicklungspraktikant mit Erstellung interner WPF/C#-Anwendungen für kommunale Datenbankverwaltung und Bürgerdienste"
             ]
         },
@@ -210,7 +212,8 @@ const experiencesData = [
                 "Bereitstellung einer kommunalen Datenbankanwendung, die bei der Stadtverwaltung Salt noch aktiv genutzt wird",
                 "Berufspraktikum des höheren Fachdiploms mit Auszeichnung abgeschlossen"
             ]
-        }
+        },
+        techStack: ["Windows Server", "Network Admin", "Hardware Maintenance"]
     }
 ];
 
@@ -233,6 +236,7 @@ export const getExperiences = (lang = 'en') => {
         keyResponsibilities: exp.keyResponsibilities[language] || exp.keyResponsibilities.en,
         extraResponsibilities: exp.extraResponsibilities[language] || exp.extraResponsibilities.en,
         achievements: exp.achievements[language] || exp.achievements.en,
+        techStack: exp.techStack || [],
         collapsible: exp.collapsible || false
     }));
 };
