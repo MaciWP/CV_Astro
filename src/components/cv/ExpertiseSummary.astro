@@ -2,8 +2,11 @@
 /**
  * ExpertiseSummary.astro - Key expertise areas showcase
  * Displays 3 cards highlighting core competencies
+ * Uses inline SVG icons for above-the-fold performance
  * @file src/components/cv/ExpertiseSummary.astro
  */
+import SvgIcons from '../icons/SvgIcons.astro';
+
 interface Props {
     lang?: string;
 }
@@ -105,7 +108,7 @@ const t = expertiseData[lang] || expertiseData.en;
                 style={`--delay: ${index * 100}ms; transition: border-color 150ms ease-out, box-shadow 150ms ease-out, background-color 100ms ease-out;`}
             >
                 <div class="w-12 h-12 flex items-center justify-center bg-brand-red/10 dark:bg-brand-red/20 text-brand-red flex-shrink-0 rounded-none">
-                    <i class={`${area.icon} text-xl`} aria-hidden="true"></i>
+                    <SvgIcons name={area.icon} class="w-5 h-5" />
                 </div>
                 <div>
                     <h3 class="font-semibold text-sm text-light-text dark:text-dark-text">
