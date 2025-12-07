@@ -121,22 +121,8 @@ const t = expertiseData[lang] || expertiseData.en;
 </section>
 
 <style>
-    /* Animation for expertise cards */
+    /* No animation - prevents CLS */
     .expertise-card {
-        opacity: 0;
-        transform: translateY(10px);
-        animation: expertiseFadeIn 400ms ease-out forwards;
-        animation-delay: var(--delay, 0ms);
-    }
-
-    @keyframes expertiseFadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        opacity: 1;
     }
 </style>
