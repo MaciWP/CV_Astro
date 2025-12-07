@@ -10,7 +10,17 @@
     "photoAlt": "Oriol Macias - Ingénieur Backend",
     "email": "Email",
     "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "github": "GitHub",
+    "nationality": "Espagnole (Citoyen UE)",
+    "nationalityShort": "Espagnole (UE)",
+    "workPermit": "Éligible Permis B",
+    "workPermitShort": "Permis B",
+    "location": "Madrid, Espagne",
+    "locationShort": "Madrid",
+    "relocation": "Ouvert à la relocalisation en Suisse",
+    "relocationShort": "Ouvert à CH",
+    "noticePeriod": "Préavis de 2 semaines",
+    "noticePeriodShort": "2 semaines"
   },
   "sections": {
     "about": "À Propos",

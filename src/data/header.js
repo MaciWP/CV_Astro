@@ -22,11 +22,23 @@ const headerData = {
     fr: "Espagnole (Citoyen UE)",
     de: "Spanisch (EU-Bürger)"
   },
+  nationalityShort: {
+    en: "Spanish (EU)",
+    es: "Española (UE)",
+    fr: "Espagnole (UE)",
+    de: "Spanisch (EU)"
+  },
   workPermit: {
     en: "B-Permit Eligible",
     es: "Elegible para Permiso B",
     fr: "Éligible Permis B",
     de: "B-Bewilligung berechtigt"
+  },
+  workPermitShort: {
+    en: "B-Permit",
+    es: "Permiso B",
+    fr: "Permis B",
+    de: "B-Bewilligung"
   },
   location: {
     en: "Madrid, Spain",
@@ -34,17 +46,35 @@ const headerData = {
     fr: "Madrid, Espagne",
     de: "Madrid, Spanien"
   },
+  locationShort: {
+    en: "Madrid",
+    es: "Madrid",
+    fr: "Madrid",
+    de: "Madrid"
+  },
   relocation: {
     en: "Open to relocation to Switzerland",
     es: "Abierto a reubicación en Suiza",
     fr: "Ouvert à la relocalisation en Suisse",
     de: "Offen für Umzug in die Schweiz"
   },
+  relocationShort: {
+    en: "Open to CH",
+    es: "Abierto a CH",
+    fr: "Ouvert à CH",
+    de: "Offen für CH"
+  },
   noticePeriod: {
     en: "2 weeks notice",
     es: "Preaviso de 2 semanas",
     fr: "Préavis de 2 semaines",
     de: "2 Wochen Kündigungsfrist"
+  },
+  noticePeriodShort: {
+    en: "2 weeks",
+    es: "2 semanas",
+    fr: "2 semaines",
+    de: "2 Wochen"
   },
   summary: {
     en: "Backend developer with over 8 years of programming experience, specialized in Python/Django and REST APIs. Experienced in integrating industrial protocols (SNMP, Modbus, BACnet) and delivering reliable solutions. Practical experience with CI/CD and testing, currently expanding knowledge in performance optimization and AI-assisted automation.",

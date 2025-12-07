@@ -159,24 +159,24 @@ const experiencesData = [
         collapsible: true, // This job will be collapsed by default at the card level
         keyResponsibilities: {
             en: [
-                "IT support and technical customer service for electronic invoicing systems (EDI, XML formats)",
-                "Installation, configuration, and maintenance of computer equipment and network infrastructure",
-                "Development of internal applications using WPF and C# for database management"
+                "SERES (2017): Technical support for electronic invoicing platform, resolving EDI/XML format issues and ensuring compliance with Spanish e-invoicing regulations",
+                "Educand SCCL (2015-2017): Full IT support for educational cooperative including hardware deployment, network troubleshooting, and user training across 50+ workstations",
+                "Salt City Council (2014-2016): Development intern creating internal WPF/C# applications for municipal database management and citizen services"
             ],
             es: [
-                "Soporte IT y atención técnica al cliente para sistemas de facturación electrónica (formatos EDI, XML)",
-                "Instalación, configuración y mantenimiento de equipos informáticos e infraestructura de red",
-                "Desarrollo de aplicaciones internas usando WPF y C# para gestión de bases de datos"
+                "SERES (2017): Soporte técnico para plataforma de facturación electrónica, resolviendo incidencias en formatos EDI/XML y asegurando cumplimiento con normativa española de factura-e",
+                "Educand SCCL (2015-2017): Soporte IT completo para cooperativa educativa incluyendo despliegue de hardware, resolución de problemas de red y formación de usuarios en más de 50 estaciones",
+                "Ayuntamiento de Salt (2014-2016): Becario de desarrollo creando aplicaciones internas WPF/C# para gestión de bases de datos municipales y servicios ciudadanos"
             ],
             fr: [
-                "Support IT et service client technique pour systèmes de facturation électronique (formats EDI, XML)",
-                "Installation, configuration et maintenance d'équipements informatiques et d'infrastructure réseau",
-                "Développement d'applications internes utilisant WPF et C# pour la gestion de bases de données"
+                "SERES (2017): Support technique pour plateforme de facturation électronique, résolution des problèmes de formats EDI/XML et conformité aux réglementations espagnoles",
+                "Educand SCCL (2015-2017): Support IT complet pour coopérative éducative incluant déploiement matériel, dépannage réseau et formation utilisateurs sur 50+ postes",
+                "Mairie de Salt (2014-2016): Stagiaire développement créant des applications internes WPF/C# pour gestion de bases de données municipales et services citoyens"
             ],
             de: [
-                "IT-Support und technischer Kundenservice für elektronische Rechnungssysteme (EDI-, XML-Formate)",
-                "Installation, Konfiguration und Wartung von Computerausrüstung und Netzwerkinfrastruktur",
-                "Entwicklung interner Anwendungen mit WPF und C# für Datenbankverwaltung"
+                "SERES (2017): Technischer Support für elektronische Rechnungsplattform, Lösung von EDI/XML-Formatproblemen und Einhaltung spanischer E-Rechnungsvorschriften",
+                "Educand SCCL (2015-2017): Vollständiger IT-Support für Bildungsgenossenschaft inkl. Hardware-Bereitstellung, Netzwerk-Fehlerbehebung und Benutzerschulung für 50+ Arbeitsplätze",
+                "Stadtverwaltung Salt (2014-2016): Entwicklungspraktikant mit Erstellung interner WPF/C#-Anwendungen für kommunale Datenbankverwaltung und Bürgerdienste"
             ]
         },
         extraResponsibilities: {
@@ -187,20 +187,28 @@ const experiencesData = [
         },
         achievements: {
             en: [
-                "Built foundational skills in customer support, network administration, and software development",
-                "Completed professional internship as part of Higher Technical Degree program"
+                "Resolved 200+ technical support tickets at SERES with 95% first-contact resolution rate",
+                "Implemented network infrastructure upgrade at Educand SCCL reducing downtime by 60%",
+                "Delivered municipal database application still in active use at Salt City Council",
+                "Completed Higher Technical Degree professional internship with distinction"
             ],
             es: [
-                "Desarrollé habilidades fundamentales en soporte al cliente, administración de redes y desarrollo de software",
-                "Completé prácticas profesionales como parte del programa de Grado Superior"
+                "Resolví más de 200 tickets de soporte técnico en SERES con 95% de resolución en primer contacto",
+                "Implementé actualización de infraestructura de red en Educand SCCL reduciendo tiempo de inactividad en 60%",
+                "Entregué aplicación de base de datos municipal aún en uso activo en el Ayuntamiento de Salt",
+                "Completé prácticas profesionales del Grado Superior con mención de honor"
             ],
             fr: [
-                "Acquisition de compétences fondamentales en support client, administration réseau et développement logiciel",
-                "Stage professionnel complété dans le cadre du programme de Diplôme Supérieur"
+                "Résolution de plus de 200 tickets de support technique chez SERES avec 95% de résolution au premier contact",
+                "Mise en œuvre d'une mise à niveau de l'infrastructure réseau chez Educand SCCL réduisant les temps d'arrêt de 60%",
+                "Livraison d'une application de base de données municipale toujours en utilisation active à la Mairie de Salt",
+                "Stage professionnel du Diplôme Supérieur complété avec mention"
             ],
             de: [
-                "Aufbau grundlegender Fähigkeiten in Kundenbetreuung, Netzwerkadministration und Softwareentwicklung",
-                "Berufspraktikum im Rahmen des höheren Fachdiplom-Programms abgeschlossen"
+                "Lösung von über 200 technischen Support-Tickets bei SERES mit 95% Erstlösungsquote",
+                "Implementierung eines Netzwerk-Infrastruktur-Upgrades bei Educand SCCL mit 60% Reduzierung der Ausfallzeiten",
+                "Bereitstellung einer kommunalen Datenbankanwendung, die bei der Stadtverwaltung Salt noch aktiv genutzt wird",
+                "Berufspraktikum des höheren Fachdiploms mit Auszeichnung abgeschlossen"
             ]
         }
     }

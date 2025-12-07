@@ -2,7 +2,8 @@
 /**
  * Skills.astro - SSG optimized version
  * Static generation for better performance
- * Updated for Swiss market: 5 categories (languages, libraries, protocols, devops, databases)
+ * Swiss market: 5 categories (languages, libraries, protocols, devops, databases)
+ * Layout optimized: Libraries full width, DevOps at bottom full width
  */
 import skillsData, { getSectionTitle } from '../../data/skills';
 
@@ -13,7 +14,6 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 
 // Get section titles in the specified language
-// Updated categories for Swiss market
 const titles = {
   main: getSectionTitle('skills', lang),
   languages: getSectionTitle('languages', lang),
@@ -33,11 +33,11 @@ const titles = {
     <h2 id="skills-heading" class="text-2xl font-bold ml-3">{titles.main}</h2>
   </div>
 
-  <!-- Main container - visible immediately, categories animate separately -->
+  <!-- Main container -->
   <div class="bg-white dark:bg-dark-surface p-6 border border-gray-200 dark:border-dark-border rounded-none shadow-sm section-content-animate" style="--anim-delay: 100ms; transition: background-color 100ms ease-out, border-color 100ms ease-out;">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
 
-      <!-- Programming Languages - Category 1 -->
+      <!-- Row 1: Programming Languages (left) -->
       <div class="space-y-4 skill-category-animate" style="--anim-delay: 150ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
@@ -57,8 +57,28 @@ const titles = {
         </div>
       </div>
 
-      <!-- Libraries & Frameworks - Category 2 -->
-      <div class="space-y-4 skill-category-animate" style="--anim-delay: 250ms;">
+      <!-- Row 1: Databases (right) -->
+      <div class="space-y-4 skill-category-animate" style="--anim-delay: 200ms;">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <i class="fas fa-fw fa-database text-brand-red" aria-hidden="true"></i>
+            </div>
+            {titles.databases}
+          </h3>
+        </div>
+        <div class="flex flex-wrap gap-3 min-h-[44px]">
+          {skillsData.databases.map((db, index) => (
+            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
+              <i class={`${db.icon} fa-fw text-brand-red`}></i>
+              <span>{db.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Row 2: Libraries & Frameworks (full width) -->
+      <div class="space-y-4 skill-category-animate md:col-span-2" style="--anim-delay: 250ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -77,8 +97,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- Protocols & Data Formats - Category 3 -->
-      <div class="space-y-4 skill-category-animate" style="--anim-delay: 350ms;">
+      <!-- Row 3: Protocols & Data Formats (full width) -->
+      <div class="space-y-4 skill-category-animate md:col-span-2" style="--anim-delay: 350ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -97,8 +117,8 @@ const titles = {
         </div>
       </div>
 
-      <!-- DevOps & Tools - Category 4 -->
-      <div class="space-y-4 skill-category-animate" style="--anim-delay: 450ms;">
+      <!-- Row 4: DevOps & Tools (full width, bottom) -->
+      <div class="space-y-4 skill-category-animate md:col-span-2" style="--anim-delay: 450ms;">
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
@@ -112,26 +132,6 @@ const titles = {
             <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
               <i class={`${tool.icon} fa-fw text-brand-red`}></i>
               <span>{tool.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- Databases - Category 5 (spans full width) -->
-      <div class="space-y-4 skill-category-animate md:col-span-2" style="--anim-delay: 550ms;">
-        <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
-          <h3 class="text-lg font-semibold flex items-center gap-2">
-            <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
-              <i class="fas fa-fw fa-database text-brand-red" aria-hidden="true"></i>
-            </div>
-            {titles.databases}
-          </h3>
-        </div>
-        <div class="flex flex-wrap gap-3 min-h-[44px]">
-          {skillsData.databases.map((db, index) => (
-            <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
-              <i class={`${db.icon} fa-fw text-brand-red`}></i>
-              <span>{db.name}</span>
             </div>
           ))}
         </div>

@@ -36,13 +36,20 @@ const summary = getTranslation("header.summary", headerData.summary);
 const photoAlt = getTranslation("header.photoAlt", headerData.photoAlt);
 const downloadCoverLetter = getTranslation("buttons.downloadCoverLetter", "Download Cover Letter");
 
-// Swiss market fields
+// Swiss market fields - full versions for desktop
 const dateOfBirth = headerData.dateOfBirth;
-const nationality = headerData.nationality;
-const workPermit = headerData.workPermit;
-const location = headerData.location;
-const relocation = headerData.relocation;
-const noticePeriod = headerData.noticePeriod;
+const nationality = getTranslation("header.nationality", headerData.nationality);
+const workPermit = getTranslation("header.workPermit", headerData.workPermit);
+const location = getTranslation("header.location", headerData.location);
+const relocation = getTranslation("header.relocation", headerData.relocation);
+const noticePeriod = getTranslation("header.noticePeriod", headerData.noticePeriod);
+
+// Short versions for mobile
+const nationalityShort = getTranslation("header.nationalityShort", "Spanish (EU)");
+const workPermitShort = getTranslation("header.workPermitShort", "B-Permit");
+const locationShort = getTranslation("header.locationShort", "Madrid");
+const relocationShort = getTranslation("header.relocationShort", "Open to CH");
+const noticePeriodShort = getTranslation("header.noticePeriodShort", "2 weeks");
 
 // Labels for contact info
 const emailLabel = getTranslation("header.email", "Email");
@@ -50,54 +57,128 @@ const linkedinLabel = getTranslation("header.linkedin", "LinkedIn");
 const githubLabel = getTranslation("header.github", "GitHub");
 ---
 
-<div id="about" class="pt-4 pb-4">
+<div id="about" class="pt-2 sm:pt-4 pb-0 sm:pb-4">
     <section>
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-center">
             {/* Información personal - izquierda */}
-            <div class="md:col-span-8 space-y-4 order-2 md:order-1">
-                <div>
+            <div class="md:col-span-8 space-y-3 sm:space-y-4 order-2 md:order-1">
+                {/* Mobile: Name + Title at top */}
+                <div class="sm:hidden">
+                    <h1 class="text-2xl font-bold mb-1 leading-tight">
+                        {headerData.fullName}
+                    </h1>
+                    <h2 class="text-base text-accessible-brand-red font-semibold leading-tight">
+                        {jobTitle}
+                    </h2>
+                </div>
+
+                {/* Mobile: Personal info + Photo side by side */}
+                <div class="flex gap-1 sm:hidden items-start">
+                    {/* Left: Personal info */}
+                    <div class="flex-1 min-w-0 text-xs text-gray-600 dark:text-gray-400">
+                        <div class="flex flex-col gap-0.5">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-map-marker-alt text-brand-red text-xs"></i>
+                                {locationShort}
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-flag text-brand-red text-xs"></i>
+                                {nationalityShort}
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-id-card text-brand-red text-xs"></i>
+                                {workPermitShort}
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-calendar-alt text-brand-red text-xs"></i>
+                                {dateOfBirth}
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-clock text-brand-red text-xs"></i>
+                                {noticePeriodShort}
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fas fa-plane text-brand-red text-xs"></i>
+                                {relocationShort}
+                            </span>
+                        </div>
+                    </div>
+                    {/* Right: Photo + Download button */}
+                    <div class="flex-shrink-0 w-40">
+                        <div class="border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface shadow-sm">
+                            <div class="w-full aspect-square">
+                                <picture>
+                                    <source
+                                        srcset="/images/oriol_macias-320.webp 320w"
+                                        type="image/webp"
+                                    />
+                                    <img
+                                        src="/images/oriol_macias-320.webp"
+                                        alt={photoAlt}
+                                        width="128"
+                                        height="128"
+                                        loading="eager"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </picture>
+                            </div>
+                            {/* Download Cover Letter button */}
+                            <a
+                                href="/OriolMacias_CoverLetter.pdf"
+                                download="OriolMacias_CoverLetter.pdf"
+                                target="_blank"
+                                class="w-full inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-white bg-brand-red hover:bg-red-700 transition-colors focus:outline-none cursor-pointer no-underline"
+                                aria-label={downloadCoverLetter}
+                            >
+                                <i class="fas fa-file-alt mr-1"></i>
+                                <span>Cover Letter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Desktop: Name and Title (hidden on mobile, shown on sm+) */}
+                <div class="hidden sm:block">
                     <h1 class="text-4xl md:text-5xl font-bold mb-2">
                         {headerData.fullName}
                     </h1>
                     <h2 class="text-xl md:text-2xl text-accessible-brand-red font-semibold">
                         {jobTitle}
                     </h2>
-                    {/* Swiss market personal details - elegant inline design */}
-                    <div class="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                        {/* Row 1: Location, Nationality, Work Permit */}
-                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <span class="flex items-center gap-1.5">
-                                <i class="fas fa-map-marker-alt text-brand-red text-xs"></i>
-                                {location}
-                            </span>
-                            <span class="text-gray-400 dark:text-gray-600">•</span>
-                            <span class="flex items-center gap-1.5">
-                                <i class="fas fa-flag text-brand-red text-xs"></i>
-                                {nationality}
-                            </span>
-                            <span class="text-gray-400 dark:text-gray-600">•</span>
-                            <span class="flex items-center gap-1.5">
-                                <i class="fas fa-id-card text-brand-red text-xs"></i>
-                                {workPermit}
-                            </span>
-                        </div>
-                        {/* Row 2: Birth year, Notice period, Relocation */}
-                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1">
-                            <span class="flex items-center gap-1.5">
-                                <i class="fas fa-calendar-alt text-brand-red text-xs"></i>
-                                Born {dateOfBirth}
-                            </span>
-                            <span class="text-gray-400 dark:text-gray-600">•</span>
-                            <span class="flex items-center gap-1.5">
-                                <i class="fas fa-clock text-brand-red text-xs"></i>
-                                {noticePeriod}
-                            </span>
-                            <span class="text-gray-400 dark:text-gray-600">•</span>
-                            <span class="flex items-center gap-1.5">
-                                <i class="fas fa-plane text-brand-red text-xs"></i>
-                                {relocation}
-                            </span>
-                        </div>
+                </div>
+
+                {/* Desktop: Personal info inline with dots */}
+                <div class="hidden sm:block text-sm text-gray-600 dark:text-gray-400">
+                    <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span class="flex items-center gap-1.5">
+                            <i class="fas fa-map-marker-alt text-brand-red text-xs"></i>
+                            {location}
+                        </span>
+                        <span class="text-gray-400 dark:text-gray-600">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <i class="fas fa-flag text-brand-red text-xs"></i>
+                            {nationality}
+                        </span>
+                        <span class="text-gray-400 dark:text-gray-600">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <i class="fas fa-id-card text-brand-red text-xs"></i>
+                            {workPermit}
+                        </span>
+                        <span class="text-gray-400 dark:text-gray-600">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <i class="fas fa-calendar-alt text-brand-red text-xs"></i>
+                            Born {dateOfBirth}
+                        </span>
+                        <span class="text-gray-400 dark:text-gray-600">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <i class="fas fa-clock text-brand-red text-xs"></i>
+                            {noticePeriod}
+                        </span>
+                        <span class="text-gray-400 dark:text-gray-600">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <i class="fas fa-plane text-brand-red text-xs"></i>
+                            {relocation}
+                        </span>
                     </div>
                 </div>
 
@@ -105,8 +186,8 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     {summary}
                 </p>
 
-                {/* Información de contacto con iconos cuadrados */}
-                <div class="flex flex-wrap gap-4 mt-2">
+                {/* Contact info - stack on mobile, flex on tablet+ */}
+                <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-2">
                     {
                         headerData.contactInfo.map((contact) => {
                             const label =
@@ -156,11 +237,11 @@ const githubLabel = getTranslation("header.github", "GitHub");
                 </div>
             </div>
 
-            {/* Foto profesional - derecha, con card container */}
-            <div class="md:col-span-4 flex flex-col items-center md:items-end order-1 md:order-2">
+            {/* Foto profesional - derecha, hidden on mobile (shown inline instead) */}
+            <div class="hidden sm:flex md:col-span-4 flex-col items-center md:items-end order-1 md:order-2">
                 <div class="w-full max-w-xs border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface shadow-sm">
-                    {/* Imagen - Explicit width/height to prevent CLS */}
-                    <div class="w-full aspect-square" style="min-height: 280px; contain: layout size;">
+                    {/* Imagen - full size on tablet+ */}
+                    <div class="w-full aspect-square" style="contain: layout size;">
                         <picture>
                             {/* WebP first - smaller than AVIF for this image (8.6KB vs 13KB) */}
                             <source

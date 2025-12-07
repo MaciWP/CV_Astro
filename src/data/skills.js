@@ -44,45 +44,38 @@ export const sectionTitles = {
         es: "Bases de Datos",
         fr: "Bases de Données",
         de: "Datenbanken"
-    }
+    },
 };
 
 // Base skills data with consistent IDs
 // Reorganized for Swiss market: cleaner categories, removed IDEs, focused on ATS keywords
 const skillsData = {
-    // Programming Languages (removed HTML, XML, JSON - moved to protocols)
+    // Programming Languages (backend focused - removed JavaScript)
     languages: [
         { id: "python", name: "Python", icon: "fab fa-python" },
         { id: "csharp", name: "C#", icon: "fab fa-microsoft" },
         { id: "dotnet", name: ".NET", icon: "fab fa-windows" },
         { id: "java", name: "Java", icon: "fab fa-java" },
-        { id: "javascript", name: "JavaScript", icon: "fab fa-js" },
     ],
 
-    // Libraries and Frameworks
+    // Libraries and Frameworks (backend focused)
     libraries: [
         { id: "django", name: "Django", icon: "fas fa-cubes" },
         { id: "fastapi", name: "FastAPI", icon: "fas fa-bolt" },
         { id: "flask", name: "Flask", icon: "fas fa-flask" },
-        { id: "react", name: "React", icon: "fab fa-react" },
-        { id: "astro", name: "Astro", icon: "fas fa-rocket" },
-        { id: "tailwind", name: "Tailwind CSS", icon: "fab fa-css3-alt" },
-        { id: "pytest", name: "Pytest", icon: "fas fa-vial" },
         { id: "sqlalchemy", name: "SQLAlchemy", icon: "fas fa-database" },
         { id: "alembic", name: "Alembic", icon: "fas fa-code-branch" },
         { id: "celery", name: "Celery", icon: "fas fa-tasks" },
         { id: "wpf", name: "WPF", icon: "fas fa-desktop" },
-        { id: "pandas", name: "Pandas", icon: "fas fa-table" },
-        { id: "kivy", name: "Kivy", icon: "fas fa-mobile-alt" },
+        { id: "pytest", name: "Pytest", icon: "fas fa-vial" },
     ],
 
-    // Protocols & Data Formats (merged industrial protocols + API formats + data formats)
+    // Protocols & Data Formats (industrial protocols + API formats + data formats)
     protocols: [
         { id: "snmp", name: "SNMP", icon: "fas fa-exchange-alt" },
         { id: "modbus", name: "Modbus", icon: "fas fa-plug" },
         { id: "bacnet", name: "BACnet", icon: "fas fa-building" },
         { id: "rest-api", name: "REST API", icon: "fas fa-exchange-alt" },
-        { id: "soap-api", name: "SOAP API", icon: "fas fa-envelope-open-text" },
         { id: "json", name: "JSON", icon: "fas fa-file-code" },
         { id: "xml", name: "XML", icon: "fas fa-file-code" },
         { id: "jwt", name: "JWT", icon: "fas fa-key" },
@@ -136,7 +129,7 @@ export const getCurrentLanguageSkills = () => {
     const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
 
     // Return the structure with translated section titles
-    // Updated categories for Swiss market: languages, libraries, protocols, devops, databases
+    // Swiss market categories: languages, libraries, protocols, devops, databases (5 total)
     return {
         title: getSectionTitle('skills', currentLang),
         languages: {

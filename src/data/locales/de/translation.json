@@ -5,12 +5,22 @@
   },
   "header": {
     "fullName": "Oriol Macias",
-    "jobTitle": "Senior Backend-Entwickler | Industrielles IoT, Integrationen & KI",
+    "jobTitle": "Senior Backend | Industrie-IoT, Integrationen & KI",
     "summary": "Lösungsorientierter Backend-Entwickler spezialisiert auf die Integration industrieller Protokolle (SNMP, Modbus, BACnet) mit über 8 Jahren Erfahrung in der Entwicklung hochperformanter Anwendungen. Bekannt für die Transformation komplexer Anforderungen in elegante Code-Architektur und die Reduzierung von Systemantwortzeiten um bis zu 45%. Derzeit erweitere ich meine Expertise in KI und maschinellem Lernen, um Automatisierungslösungen der nächsten Generation voranzutreiben.",
     "photoAlt": "Oriol Macias - Backend-Ingenieur",
     "email": "E-Mail",
     "linkedin": "LinkedIn",
-    "github": "GitHub"
+    "github": "GitHub",
+    "nationality": "Spanisch (EU-Bürger)",
+    "nationalityShort": "Spanisch (EU)",
+    "workPermit": "B-Bewilligung berechtigt",
+    "workPermitShort": "B-Bewilligung",
+    "location": "Madrid, Spanien",
+    "locationShort": "Madrid",
+    "relocation": "Offen für Umzug in die Schweiz",
+    "relocationShort": "Offen für CH",
+    "noticePeriod": "2 Wochen Kündigungsfrist",
+    "noticePeriodShort": "2 Wochen"
   },
   "sections": {
     "about": "Über mich",

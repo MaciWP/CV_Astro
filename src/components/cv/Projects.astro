@@ -79,7 +79,7 @@ function getProjectIcon(project: any): string {
 ---
 
 <section id="projects" class="pt-4 projects-section">
-    <!-- Header -->
+    <!-- Header with CSS animation (via .projects-section.visible) -->
     <div class="flex items-center mb-6 section-header">
         <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
             <i class="fas fa-project-diagram text-[0.9rem]"></i>
@@ -221,28 +221,41 @@ function getProjectIcon(project: any): string {
 <style>
     /* Initial state - hidden */
     .section-header,
-    .project-card,
     .footer-note {
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out;
+        transition: opacity 400ms ease-out, transform 400ms ease-out;
     }
 
+    /* Project cards use CSS animation for both static and dynamically loaded cards */
     .project-card {
-        transition-delay: var(--delay, 0ms);
+        animation: projectCardFadeIn 400ms ease-out forwards;
+        animation-delay: var(--delay, 0ms);
+        opacity: 0;
+        transform: translateY(20px);
     }
 
-    /* Theme transitions - use CSS variable for sync with global theme */
+    @keyframes projectCardFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Theme transitions */
     .project-card {
-        transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out,
+        transition: box-shadow 150ms ease-out,
                     background-color var(--theme-transition-duration, 100ms) ease-out,
                     border-color var(--theme-transition-duration, 100ms) ease-out,
                     color var(--theme-transition-duration, 100ms) ease-out;
     }
 
-    /* Visible state */
+    /* Visible state for header and footer */
     .projects-section.visible .section-header,
-    .projects-section.visible .project-card,
     .projects-section.visible .footer-note {
         opacity: 1;
         transform: translateY(0);
@@ -305,7 +318,7 @@ function getProjectIcon(project: any): string {
                         <i class="${project.icon} text-xl"></i>
                         <h3 class="font-bold text-lg">${project.title}</h3>
                     </div>
-                    <div class="px-2 py-0.5 text-xs bg-white/20 rounded-none">${project.company}</div>
+                    <div class="px-2 py-0.5 text-xs bg-white/40 rounded-none font-medium">${project.company}</div>
                 </div>
                 <div class="p-5 flex-grow flex flex-col">
                     <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">${project.description}</p>
