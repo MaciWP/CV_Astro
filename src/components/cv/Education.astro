@@ -5,6 +5,7 @@
  * Updated: Primary education visible, secondary collapsible
  */
 import { getPrimaryEducation, getSecondaryEducation } from '../../data/education';
+import SvgIcons from '../icons/SvgIcons.astro';
 
 interface Props {
   lang?: string;
@@ -45,7 +46,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
   <!-- Section Header with CSS animation -->
   <div class="flex items-center mb-6 section-header-animate" style="--anim-delay: 0ms;">
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
-      <i class="fas fa-graduation-cap text-[0.9rem]" aria-hidden="true"></i>
+      <SvgIcons name="graduation-cap" class="w-4 h-4" />
     </div>
     <h2 id="education-heading" class="text-2xl font-bold ml-3">{title}</h2>
   </div>
@@ -70,14 +71,14 @@ const title = titles[lang as keyof typeof titles] || titles.en;
             </p>
           </div>
           <div class="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white flex-shrink-0" style="transition: background-color 100ms ease-out, color 100ms ease-out;">
-            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+            <SvgIcons name="calendar-alt" class="w-3 h-3 mr-2" />
             {item.period}
           </div>
         </div>
         <p class="text-sm mb-2" style="transition: color 100ms ease-out;">{item.details}</p>
         {item.badge && (
           <div class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
-            <i class="fas fa-check-circle mr-1.5" aria-hidden="true"></i>
+            <SvgIcons name="check-circle" class="w-3 h-3 mr-1.5" />
             {item.badge}
           </div>
         )}
@@ -93,7 +94,9 @@ const title = titles[lang as keyof typeof titles] || titles.en;
         data-hide-text={showLessText[lang]}
         aria-expanded="false"
       >
-        <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+        <span class="toggle-icon transition-transform duration-200">
+          <SvgIcons name="chevron-down" class="w-3 h-3" />
+        </span>
         <span class="btn-text">{showMoreText[lang]}</span>
       </button>
     )}
@@ -118,7 +121,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
               </p>
             </div>
             <div class="inline-flex items-center px-3 py-1 text-xs text-light-text-secondary dark:text-dark-text-secondary bg-light-secondary dark:bg-dark-secondary rounded-none group-hover:bg-brand-red group-hover:text-white" style="transition: background-color 100ms ease-out, color 100ms ease-out;">
-              <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>
+              <SvgIcons name="calendar-alt" class="w-3 h-3 mr-2" />
               {item.period}
             </div>
           </div>
@@ -143,7 +146,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
       if (toggleBtn && secondaryContent) {
         toggleBtn.addEventListener('click', () => {
           const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-          const icon = toggleBtn.querySelector('i');
+          const iconWrapper = toggleBtn.querySelector('.toggle-icon');
           const textSpan = toggleBtn.querySelector('.btn-text');
           const showText = toggleBtn.getAttribute('data-show-text');
           const hideText = toggleBtn.getAttribute('data-hide-text');
@@ -152,8 +155,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
             secondaryContent.style.maxHeight = '0';
             secondaryContent.style.opacity = '0';
             setTimeout(() => secondaryContent.classList.add('hidden'), 300);
-            icon?.classList.remove('fa-chevron-up');
-            icon?.classList.add('fa-chevron-down');
+            iconWrapper?.classList.remove('rotate-180');
             if (textSpan) textSpan.textContent = showText || 'Show more';
             toggleBtn.setAttribute('aria-expanded', 'false');
           } else {
@@ -162,8 +164,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
               secondaryContent.style.maxHeight = '2000px';
               secondaryContent.style.opacity = '1';
             });
-            icon?.classList.remove('fa-chevron-down');
-            icon?.classList.add('fa-chevron-up');
+            iconWrapper?.classList.add('rotate-180');
             if (textSpan) textSpan.textContent = hideText || 'Show less';
             toggleBtn.setAttribute('aria-expanded', 'true');
           }

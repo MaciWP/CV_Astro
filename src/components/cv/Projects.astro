@@ -4,6 +4,7 @@
  * @file src/components/cv/Projects.astro
  */
 import { getPersonalProjects, getProfessionalProjects, getTechIcon } from '../../data/projects';
+import SvgIcons from '../icons/SvgIcons.astro';
 
 interface Props {
     lang?: string;
@@ -82,7 +83,7 @@ function getProjectIcon(project: any): string {
     <!-- Header with CSS animation (via .projects-section.visible) -->
     <div class="flex items-center mb-6 section-header">
         <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
-            <i class="fas fa-project-diagram text-[0.9rem]"></i>
+            <SvgIcons name="project-diagram" class="w-4 h-4" />
         </div>
         <h2 class="text-2xl font-bold ml-3">{t.title}</h2>
 
@@ -93,7 +94,9 @@ function getProjectIcon(project: any): string {
             data-show-all={t.showAllDetails}
             data-show-less={t.showLessDetails}
         >
-            <i class="fas fa-chevron-down text-sm"></i>
+            <span class="toggle-icon transition-transform duration-200">
+                <SvgIcons name="chevron-down" class="w-3 h-3" />
+            </span>
             <span class="btn-text">{t.showAllDetails}</span>
         </button>
     </div>
@@ -160,7 +163,7 @@ function getProjectIcon(project: any): string {
                         <ul class="space-y-2 text-sm">
                             {project.keyFeatures.map((feature: string) => (
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-brand-red flex-shrink-0 mt-1"></i>
+                                    <span class="text-brand-red flex-shrink-0 mt-1"><SvgIcons name="check" class="w-3 h-3" /></span>
                                     <span>{feature}</span>
                                 </li>
                             ))}
@@ -283,6 +286,16 @@ function getProjectIcon(project: any): string {
 
     .tab-btn:not(.active) {
         border-bottom: 2px solid transparent;
+    }
+
+    /* Toggle icon rotation */
+    #toggle-all-details .toggle-icon {
+        display: inline-block;
+        transition: transform 200ms ease-out;
+    }
+
+    #toggle-all-details.expanded .toggle-icon {
+        transform: rotate(180deg);
     }
 </style>
 
@@ -409,7 +422,6 @@ function getProjectIcon(project: any): string {
 
             toggleBtn?.addEventListener('click', () => {
                 showingDetails = !showingDetails;
-                const icon = toggleBtn.querySelector('i');
                 const textSpan = toggleBtn.querySelector('.btn-text');
                 const showAll = toggleBtn.getAttribute('data-show-all');
                 const showLess = toggleBtn.getAttribute('data-show-less');
@@ -431,12 +443,10 @@ function getProjectIcon(project: any): string {
                 });
 
                 if (showingDetails) {
-                    icon?.classList.remove('fa-chevron-down');
-                    icon?.classList.add('fa-chevron-up');
+                    toggleBtn.classList.add('expanded');
                     if (textSpan) textSpan.textContent = showLess || 'Show less details';
                 } else {
-                    icon?.classList.remove('fa-chevron-up');
-                    icon?.classList.add('fa-chevron-down');
+                    toggleBtn.classList.remove('expanded');
                     if (textSpan) textSpan.textContent = showAll || 'Show all details';
                 }
             });

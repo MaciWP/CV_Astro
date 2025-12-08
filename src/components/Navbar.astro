@@ -5,6 +5,7 @@
  * @file src/components/Navbar.astro
  */
 import { navItems, uiTranslations, getNavItems, getUITranslation } from '../data/navigation';
+import SvgIcons from './icons/SvgIcons.astro';
 
 interface Props {
     lang?: string;
@@ -59,7 +60,7 @@ const languageOptions = [
                     class="text-brand-red dark:text-red-400 hover:text-brand-red/80 dark:hover:text-red-400/80 transition-colors"
                     aria-label="GitHub Profile"
                 >
-                    <i class="fab fa-github text-lg"></i>
+                    <SvgIcons name="github" class="w-5 h-5" />
                 </a>
                 <a
                     href="https://linkedin.com/in/oriolmaciasbadosa"
@@ -68,7 +69,7 @@ const languageOptions = [
                     class="text-brand-red dark:text-red-400 hover:text-brand-red/80 dark:hover:text-red-400/80 transition-colors"
                     aria-label="LinkedIn Profile"
                 >
-                    <i class="fab fa-linkedin text-lg"></i>
+                    <SvgIcons name="linkedin" class="w-5 h-5" />
                 </a>
             </div>
         </div>
@@ -150,7 +151,7 @@ const languageOptions = [
                 class="hidden sm:inline-flex items-center px-3 py-1.5 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900 whitespace-nowrap"
                 id="cv-download-button"
             >
-                <i class="fas fa-download mr-1.5"></i>
+                <span class="mr-1.5"><SvgIcons name="download" class="w-4 h-4" /></span>
                 <span>{uiTexts.downloadCV}</span>
             </a>
 
@@ -200,7 +201,7 @@ const languageOptions = [
                     aria-label="GitHub Profile"
                     role="menuitem"
                 >
-                    <i class="fab fa-github text-lg"></i>
+                    <SvgIcons name="github" class="w-5 h-5" />
                 </a>
                 <a
                     href="https://linkedin.com/in/oriolmaciasbadosa"
@@ -210,7 +211,7 @@ const languageOptions = [
                     aria-label="LinkedIn Profile"
                     role="menuitem"
                 >
-                    <i class="fab fa-linkedin text-lg"></i>
+                    <SvgIcons name="linkedin" class="w-5 h-5" />
                 </a>
             </div>
 
@@ -221,7 +222,7 @@ const languageOptions = [
                 class="inline-flex items-center justify-center mt-3 px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 transition-colors"
                 role="menuitem"
             >
-                <i class="fas fa-download mr-1.5"></i>
+                <span class="mr-1.5"><SvgIcons name="download" class="w-4 h-4" /></span>
                 <span>{uiTexts.downloadCV}</span>
             </a>
         </div>

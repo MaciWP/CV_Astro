@@ -4,6 +4,7 @@
  * @file src/components/cv/Languages.astro
  */
 import { getLanguages } from '../../data/languages';
+import SvgIcons from '../icons/SvgIcons.astro';
 
 interface Props {
     lang?: string;
@@ -28,7 +29,7 @@ const title = titleByLang[lang] || titleByLang.en;
 <section id="languages" class="mt-16 mb-16 languages-section">
     <div class="flex items-center mb-6 section-header">
         <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
-            <i class="fas fa-language text-[0.95rem]"></i>
+            <SvgIcons name="language" class="w-4 h-4" />
         </div>
         <h2 class="text-2xl font-bold ml-3">{title}</h2>
     </div>
