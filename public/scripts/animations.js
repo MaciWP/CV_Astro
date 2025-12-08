@@ -59,14 +59,14 @@
         }
       });
 
-      // Above-the-fold: staggered fade-in (no CLS - only opacity)
+      // Above-the-fold: fast staggered fade-in (no CLS - only opacity)
       aboveFoldElements.forEach(function(el, index) {
         // Add class for CSS-only fade (no transform = no CLS)
         el.classList.add('above-fold');
-        // Stagger the reveal with noticeable delays
+        // Fast stagger - no base delay, 40ms between elements for LCP optimization
         setTimeout(function() {
           el.classList.add('is-visible');
-        }, 100 + (index * 120)); // 100ms base + 120ms stagger for visible effect
+        }, index * 40); // No base delay, minimal stagger for fast LCP
       });
     });
   }

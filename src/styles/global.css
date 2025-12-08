@@ -173,6 +173,11 @@
         transition: background-color 100ms ease-out, color 100ms ease-out, border-color 100ms ease-out;
     }
 
+    /* LCP critical elements - no transition delay for faster paint */
+    .lcp-critical {
+        transition: none !important;
+    }
+
     /* Buttons */
     .btn {
         @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
