@@ -8,26 +8,27 @@
 # ===== EARLY HINTS (103) FOR LCP =====
 # Tells browser to start loading resources BEFORE HTML arrives
 # Reduces "Resource load delay" significantly
+# NOTE: FontAwesome fonts removed - using inline SVG icons
 
 [[headers]]
   for = "/"
   [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
 
 [[headers]]
   for = "/es"
   [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
 
 [[headers]]
   for = "/fr"
   [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
 
 [[headers]]
   for = "/de"
   [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high, </styles/fonts/fa-solid-900.woff2>; rel=preload; as=font; type=font/woff2; crossorigin"
+    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
 
 # ===== MIME HEADERS CONFIGURATION =====
 
@@ -64,44 +65,16 @@
     Content-Type = "text/css; charset=utf-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
-# ===== FONT AWESOME SOLUTION =====
+# ===== FONT HEADERS =====
+# FontAwesome removed - using inline SVG icons
+# Generic woff2 headers for system fonts only
 
-# Headers for web font files
 [[headers]]
   for = "*.woff2"
   [headers.values]
     Content-Type = "font/woff2"
     Cache-Control = "public, max-age=31536000, immutable"
     Access-Control-Allow-Origin = "*"
-
-# Specific headers for Font Awesome
-[[headers]]
-  for = "/styles/fonts/fa-solid-900.woff2"
-  [headers.values]
-    Content-Type = "font/woff2"
-    Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
-[[headers]]
-  for = "/styles/fonts/fa-brands-400.woff2"
-  [headers.values]
-    Content-Type = "font/woff2"
-    Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
-[[headers]]
-  for = "/styles/fonts/fa-regular-400.woff2"
-  [headers.values]
-    Content-Type = "font/woff2"
-    Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
-# Headers for Font Awesome CSS
-[[headers]]
-  for = "/styles/font-awesome*.css"
-  [headers.values]
-    Content-Type = "text/css; charset=utf-8"
-    Cache-Control = "public, max-age=31536000"
 
 # ===== SECURITY HEADERS =====
 

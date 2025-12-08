@@ -14,24 +14,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Ensure required folders exist in public/
- * NOTE: Only public/styles/fonts/ for Font Awesome (CSS files handled directly by Astro)
- */
-async function ensurePublicDirectories() {
-    console.log('🔍 Verifying directories...');
-
-    try {
-        // We only need the fonts directory (Font Awesome)
-        // CSS files from src/styles/ are imported directly by Astro
-        await fs.mkdir(path.join(__dirname, '../public/styles/fonts'), { recursive: true });
-        console.log('✅ Directories verified');
-    } catch (error) {
-        console.error('❌ Error verifying directories:', error);
-        process.exit(1);
-    }
-}
-
-/**
  * Generate sitemap
  */
 async function generateSitemap() {
@@ -61,36 +43,6 @@ async function buildAstro() {
     }
 }
 
-async function verifyFontFiles() {
-    console.log('🔍 Verifying font files...');
-
-    const fontFiles = [
-        'dist/styles/fonts/fa-solid-900.woff2',
-        'dist/styles/fonts/fa-brands-400.woff2'
-    ];
-
-    for (const fontFile of fontFiles) {
-        try {
-            await fs.access(path.join(__dirname, '..', fontFile));
-            console.log(`  ✓ File present: ${fontFile}`);
-        } catch (error) {
-            console.warn(`  ⚠️ File missing: ${fontFile}`);
-
-            // Copy from public directory if it exists
-            try {
-                const sourceFile = fontFile.replace('dist/', 'public/');
-                await fs.copyFile(
-                    path.join(__dirname, '..', sourceFile),
-                    path.join(__dirname, '..', fontFile)
-                );
-                console.log(`  ✓ Copied from public: ${fontFile}`);
-            } catch (copyError) {
-                console.error(`  ❌ Could not copy: ${fontFile}`);
-            }
-        }
-    }
-}
-
 /**
  * Main function that executes the entire build process
  */
@@ -101,10 +53,8 @@ async function build() {
 
     try {
         // Execute tasks in sequence
-        await ensurePublicDirectories();
         await generateSitemap();
         await buildAstro();
-        await verifyFontFiles();
 
         const duration = ((Date.now() - startTime) / 1000).toFixed(2);
         console.log(`✨ Build completed in ${duration}s`);
