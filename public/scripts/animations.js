@@ -34,36 +34,38 @@
       });
     }, observerOptions);
 
-    // Use rAF to avoid forced reflow - read all positions first, then write
+    // Use rAF to batch DOM operations - CRITICAL: read ALL first, then write ALL
     requestAnimationFrame(function() {
       var animatedElements = document.querySelectorAll(
         '.animate-on-scroll, .animate-scale, .animate-fade-left, .animate-width'
       );
 
       var viewportHeight = window.innerHeight;
-      var aboveFoldElements = [];
 
-      // First pass: collect all elements and classify them
+      // PHASE 1: BATCH ALL DOM READS (single reflow)
+      var measurements = [];
       animatedElements.forEach(function(el) {
         if (el.classList.contains('is-visible')) return;
+        measurements.push({
+          el: el,
+          top: el.getBoundingClientRect().top
+        });
+      });
 
-        var rect = el.getBoundingClientRect();
-        var isAboveFold = rect.top < viewportHeight;
-
-        if (isAboveFold) {
-          // Collect above-fold elements for staggered reveal
-          aboveFoldElements.push(el);
+      // PHASE 2: BATCH ALL DOM WRITES (no new reflows)
+      var aboveFoldElements = [];
+      measurements.forEach(function(m) {
+        if (m.top < viewportHeight) {
+          aboveFoldElements.push(m.el);
         } else {
-          // Below-the-fold: use IntersectionObserver for scroll animation
-          animationObserver.observe(el);
+          animationObserver.observe(m.el);
         }
       });
 
-      // Above-the-fold: instant for first 3, then fast stagger (no CLS - only opacity)
+      // PHASE 3: Apply above-fold classes (batched writes)
       aboveFoldElements.forEach(function(el, index) {
-        // Add class for CSS-only fade (no transform = no CLS)
         el.classList.add('above-fold');
-        // First 3 elements show instantly, then 30ms stagger for subtle effect
+        // First 3 elements show instantly, then 30ms stagger
         var delay = index < 3 ? 0 : (index - 3) * 30;
         setTimeout(function() {
           el.classList.add('is-visible');
@@ -71,6 +73,13 @@
       });
     });
   }
+
+  // Event delegation for print button (avoids inline onclick)
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('[data-print], [data-print] *')) {
+      window.print();
+    }
+  });
 
   // Single initialization - no repeated calls
   if (document.readyState === 'loading') {

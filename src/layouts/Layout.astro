@@ -212,11 +212,12 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <!-- Removing meta tag CSP to avoid "CSP in meta tag" penalty in Best Practices -->
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->
-    <!-- OPTIMIZED: Desktop-only preloads to reduce mobile bandwidth competition -->
-    <!-- Mobile uses system fonts (fallback) since Inter/Outfit use font-display:optional -->
+    <!-- Font preloads - Outfit always preloaded (above-fold headings), Inter desktop-only -->
+    <!-- Outfit is critical for h1/h2 above-fold, must load on all devices to prevent CLS -->
+    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Inter body text can use system fallback on mobile (font-display:optional) -->
     <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
     <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
-    <link rel="preload" href="/fonts/outfit-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
     <!-- FontAwesome Preload - Critical for icons throughout the page -->
     <!-- fa-solid is most used everywhere, fa-brands only for social icons (desktop navbar) -->
@@ -541,7 +542,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
                 <button
                   id="footer-cv-download-button"
                   class="cv-download-btn text-xs h-8 flex items-center px-3 py-1 border border-brand-red dark:border-red-300 text-brand-red dark:text-red-300 hover:bg-brand-red hover:text-white dark:hover:bg-red-400 dark:hover:text-white transition-colors duration-150"
-                  onclick="window.print()"
+                  data-print
                   aria-label={lang === "es"
                     ? "Descargar CV en formato PDF"
                     : lang === "fr"
