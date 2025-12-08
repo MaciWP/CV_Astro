@@ -174,8 +174,11 @@
     }
 
     /* LCP critical elements - no transition delay for faster paint */
-    .lcp-critical {
+    .lcp-critical,
+    .lcp-critical[class*="dark:text-"],
+    [class*="dark:text-"].lcp-critical {
         transition: none !important;
+        animation: none !important;
     }
 
     /* Buttons */
