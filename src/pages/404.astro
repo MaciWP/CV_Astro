@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SvgIcons from '../components/icons/SvgIcons.astro';
 
 const pageTitle = "Page Not Found | Oriol Macias";
 const pageDescription = "The page you're looking for could not be found on Oriol Macias's CV Portfolio.";
@@ -23,11 +24,11 @@ const pageDescription = "The page you're looking for could not be found on Oriol
     </p>
 
     <div class="space-y-4">
-      <a 
+      <a
         href="/"
         class="inline-flex items-center px-6 py-3 bg-brand-red text-white rounded-none hover:bg-red-700 transition-colors"
       >
-        <i class="fas fa-home mr-2"></i>
+        <SvgIcons name="home" class="w-4 h-4 mr-2" />
         Return to Homepage
       </a>
 

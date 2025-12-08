@@ -8,6 +8,7 @@
  *   { question: "Your question?", answer: "Your answer." }
  * ]} lang="en" />
  */
+import SvgIcons from './icons/SvgIcons.astro';
 
 interface FAQ {
   question: string;
@@ -48,7 +49,7 @@ const title = titles[lang] || titles.en;
 <section class="mt-16 mb-8 faq-section">
   <div class="flex items-center mb-6 section-header">
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
-      <i class="fas fa-question-circle" aria-hidden="true"></i>
+      <SvgIcons name="question-circle" class="w-4 h-4" />
     </div>
     <h2 class="text-2xl font-bold ml-3">{title}</h2>
   </div>

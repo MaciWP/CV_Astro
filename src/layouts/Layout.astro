@@ -219,10 +219,7 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
     <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
-    <!-- FontAwesome Preload - Critical for icons throughout the page -->
-    <!-- fa-solid is most used everywhere, fa-brands only for social icons (desktop navbar) -->
-    <link rel="preload" href="/styles/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/styles/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
+    <!-- FontAwesome fonts REMOVED - All icons now use inline SVG (SvgIcons.astro) -->
 
     <!-- JS Enabled Class -->
     <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
@@ -437,12 +434,8 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       set:html={`<script type="application/ld+json">${JSON.stringify(jobPostingSchema, null, 2)}</script>`}
     />
 
-    <!-- Font Awesome Critical Styles -->
+    <!-- Print Styles (FontAwesome removed - using inline SVG) -->
     <style is:inline>
-      @font-face{font-family:"Font Awesome 5 Free";font-weight:900;font-display:optional;src:url("/styles/fonts/fa-solid-900.woff2") format("woff2")}
-      @font-face{font-family:"Font Awesome 5 Brands";font-weight:400;font-display:optional;src:url("/styles/fonts/fa-brands-400.woff2") format("woff2")}
-      .fas,.fa-solid{font-family:"Font Awesome 5 Free";font-weight:900;display:inline-block;font-style:normal;line-height:1}
-      .fab,.fa-brands{font-family:"Font Awesome 5 Brands";font-weight:400;display:inline-block;font-style:normal;line-height:1}
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
     </style>
 

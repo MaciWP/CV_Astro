@@ -13,86 +13,38 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 
-// Translations for expertise areas
+// Translations for expertise areas (icons use SVG names directly)
 const expertiseData: Record<string, { title: string; areas: { icon: string; title: string; description: string }[] }> = {
     en: {
         title: "Core Expertise",
         areas: [
-            {
-                icon: "fas fa-cogs",
-                title: "Industrial Protocols",
-                description: "SNMP, Modbus, BACnet"
-            },
-            {
-                icon: "fas fa-code",
-                title: "Backend & AI",
-                description: "Python, C#, LLM Integration"
-            },
-            {
-                icon: "fas fa-network-wired",
-                title: "Infrastructure",
-                description: "On-Premise & Cloud"
-            }
+            { icon: "cogs", title: "Industrial Protocols", description: "SNMP, Modbus, BACnet" },
+            { icon: "code", title: "Backend & AI", description: "Python, C#, LLM Integration" },
+            { icon: "network-wired", title: "Infrastructure", description: "On-Premise & Cloud" }
         ]
     },
     es: {
         title: "Experiencia Principal",
         areas: [
-            {
-                icon: "fas fa-cogs",
-                title: "Protocolos Industriales",
-                description: "SNMP, Modbus, BACnet"
-            },
-            {
-                icon: "fas fa-code",
-                title: "Backend e IA",
-                description: "Python, C#, Integracion LLM"
-            },
-            {
-                icon: "fas fa-network-wired",
-                title: "Infraestructura",
-                description: "On-Premise y Cloud"
-            }
+            { icon: "cogs", title: "Protocolos Industriales", description: "SNMP, Modbus, BACnet" },
+            { icon: "code", title: "Backend e IA", description: "Python, C#, Integracion LLM" },
+            { icon: "network-wired", title: "Infraestructura", description: "On-Premise y Cloud" }
         ]
     },
     fr: {
         title: "Expertise Principale",
         areas: [
-            {
-                icon: "fas fa-cogs",
-                title: "Protocoles Industriels",
-                description: "SNMP, Modbus, BACnet"
-            },
-            {
-                icon: "fas fa-code",
-                title: "Backend & IA",
-                description: "Python, C#, Integration LLM"
-            },
-            {
-                icon: "fas fa-network-wired",
-                title: "Infrastructure",
-                description: "On-Premise & Cloud"
-            }
+            { icon: "cogs", title: "Protocoles Industriels", description: "SNMP, Modbus, BACnet" },
+            { icon: "code", title: "Backend & IA", description: "Python, C#, Integration LLM" },
+            { icon: "network-wired", title: "Infrastructure", description: "On-Premise & Cloud" }
         ]
     },
     de: {
         title: "Kernkompetenzen",
         areas: [
-            {
-                icon: "fas fa-cogs",
-                title: "Industrieprotokolle",
-                description: "SNMP, Modbus, BACnet"
-            },
-            {
-                icon: "fas fa-code",
-                title: "Backend & KI",
-                description: "Python, C#, LLM-Integration"
-            },
-            {
-                icon: "fas fa-network-wired",
-                title: "Infrastruktur",
-                description: "On-Premise & Cloud"
-            }
+            { icon: "cogs", title: "Industrieprotokolle", description: "SNMP, Modbus, BACnet" },
+            { icon: "code", title: "Backend & KI", description: "Python, C#, LLM-Integration" },
+            { icon: "network-wired", title: "Infrastruktur", description: "On-Premise & Cloud" }
         ]
     }
 };

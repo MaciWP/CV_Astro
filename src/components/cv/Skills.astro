@@ -4,6 +4,7 @@
  * Static generation for better performance
  * Swiss market: 5 categories (languages, libraries, protocols, devops, databases)
  * Layout optimized: Libraries full width, DevOps at bottom full width
+ * Uses inline SVG icons (no FontAwesome fonts)
  */
 import skillsData, { getSectionTitle } from '../../data/skills';
 import SvgIcons from '../icons/SvgIcons.astro';
@@ -22,6 +23,11 @@ const titles = {
   protocols: getSectionTitle('protocols', lang),
   devops: getSectionTitle('devops', lang),
   databases: getSectionTitle('databases', lang)
+};
+
+// Helper to extract icon name from FA class (e.g., "fab fa-python" -> "python")
+const getIconName = (faClass: string): string => {
+  return faClass.replace(/^(fas|fab|fa-solid|fa-brands)\s+fa-/, '');
 };
 ---
 
@@ -43,15 +49,15 @@ const titles = {
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
-              <i class="fas fa-fw fa-code text-brand-red" aria-hidden="true"></i>
+              <SvgIcons name="code" class="w-4 h-4 text-brand-red" />
             </div>
             {titles.languages}
           </h3>
         </div>
         <div class="flex flex-wrap gap-3 min-h-[44px]">
-          {skillsData.languages.map((skill, index) => (
+          {skillsData.languages.map((skill) => (
             <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
-              <i class={`${skill.icon} fa-fw text-brand-red`}></i>
+              <SvgIcons name={getIconName(skill.icon)} class="w-4 h-4 text-brand-red" />
               <span>{skill.name}</span>
             </div>
           ))}
@@ -63,15 +69,15 @@ const titles = {
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
-              <i class="fas fa-fw fa-database text-brand-red" aria-hidden="true"></i>
+              <SvgIcons name="database" class="w-4 h-4 text-brand-red" />
             </div>
             {titles.databases}
           </h3>
         </div>
         <div class="flex flex-wrap gap-3 min-h-[44px]">
-          {skillsData.databases.map((db, index) => (
+          {skillsData.databases.map((db) => (
             <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
-              <i class={`${db.icon} fa-fw text-brand-red`}></i>
+              <SvgIcons name={getIconName(db.icon)} class="w-4 h-4 text-brand-red" />
               <span>{db.name}</span>
             </div>
           ))}
@@ -83,15 +89,15 @@ const titles = {
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
-              <i class="fas fa-fw fa-puzzle-piece text-brand-red" aria-hidden="true"></i>
+              <SvgIcons name="puzzle-piece" class="w-4 h-4 text-brand-red" />
             </div>
             {titles.libraries}
           </h3>
         </div>
         <div class="flex flex-wrap gap-3 min-h-[44px]">
-          {skillsData.libraries.map((lib, index) => (
+          {skillsData.libraries.map((lib) => (
             <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
-              <i class={`${lib.icon} fa-fw text-brand-red`}></i>
+              <SvgIcons name={getIconName(lib.icon)} class="w-4 h-4 text-brand-red" />
               <span>{lib.name}</span>
             </div>
           ))}
@@ -103,15 +109,15 @@ const titles = {
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
-              <i class="fas fa-fw fa-network-wired text-brand-red" aria-hidden="true"></i>
+              <SvgIcons name="network-wired" class="w-4 h-4 text-brand-red" />
             </div>
             {titles.protocols}
           </h3>
         </div>
         <div class="flex flex-wrap gap-3 min-h-[44px]">
-          {skillsData.protocols.map((protocol, index) => (
+          {skillsData.protocols.map((protocol) => (
             <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
-              <i class={`${protocol.icon} fa-fw text-brand-red`}></i>
+              <SvgIcons name={getIconName(protocol.icon)} class="w-4 h-4 text-brand-red" />
               <span>{protocol.name}</span>
             </div>
           ))}
@@ -123,15 +129,15 @@ const titles = {
         <div class="border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
           <h3 class="text-lg font-semibold flex items-center gap-2">
             <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
-              <i class="fas fa-fw fa-cogs text-brand-red" aria-hidden="true"></i>
+              <SvgIcons name="cogs" class="w-4 h-4 text-brand-red" />
             </div>
             {titles.devops}
           </h3>
         </div>
         <div class="flex flex-wrap gap-3 min-h-[44px]">
-          {skillsData.devops.map((tool, index) => (
+          {skillsData.devops.map((tool) => (
             <div class="skill-badge bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border px-3 py-2 rounded-none inline-flex items-center justify-center text-sm gap-2 cursor-default hover:border-brand-red hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-md hover:-translate-y-0.5" style="transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out, box-shadow 100ms ease-out;">
-              <i class={`${tool.icon} fa-fw text-brand-red`}></i>
+              <SvgIcons name={getIconName(tool.icon)} class="w-4 h-4 text-brand-red" />
               <span>{tool.name}</span>
             </div>
           ))}
