@@ -52,6 +52,7 @@
     "@astrojs/node": "^9.5.1",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/outfit": "^5.2.8",
+    "@netlify/plugin-csp-nonce": "^1.6.0",
     "eslint": "^8.57.1",
     "eslint-plugin-astro": "^0.31.4",
     "eslint-plugin-jsx-a11y": "^6.10.2",
