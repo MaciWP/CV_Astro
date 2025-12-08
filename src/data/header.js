@@ -9,10 +9,10 @@
 const headerData = {
   fullName: "Oriol Macias",
   jobTitle: {
-    en: "Backend Engineer | Industrial IoT & AI Integration",
-    es: "Ingeniero Backend | IoT Industrial e Integración IA",
-    fr: "Ingénieur Backend | IoT Industriel & Intégration IA",
-    de: "Backend-Ingenieur | Industrielles IoT & KI-Integration"
+    en: "Senior Backend Developer | Industrial IoT, Integrations & AI",
+    es: "Desarrollador Backend Senior | IoT Industrial, Integraciones e IA",
+    fr: "Développeur Backend Senior | IoT Industriel, Intégrations & IA",
+    de: "Senior Backend-Entwickler | Industrielles IoT, Integrationen & KI"
   },
   // Swiss market required fields
   dateOfBirth: "1994",

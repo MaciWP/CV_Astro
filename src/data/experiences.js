@@ -62,23 +62,23 @@ const experiencesData = [
         },
         achievements: {
             en: [
-                "Independently developed an SNMP monitoring tool with an autodiscovery method that reduced discovery time by 80%",
-                "Created an application to generate DDF configuration files using MIBs and SNMP walks, reducing development time by 90%",
+                "Independently developed an SNMP monitoring tool with an autodiscovery method that significantly reduced discovery time",
+                "Created an application to generate DDF configuration files using MIBs and SNMP walks, drastically reducing development time",
                 "Led the development of several core systems used by major enterprise clients"
             ],
             es: [
-                "Desarrollé de forma independiente una herramienta de monitorización SNMP con un método de autodescubrimiento que redujo el tiempo de descubrimiento en un 80%",
-                "Creé una aplicación para generar archivos de configuración DDF utilizando MIBs y SNMP walks, reduciendo el tiempo de desarrollo en un 90%",
+                "Desarrollé de forma independiente una herramienta de monitorización SNMP con un método de autodescubrimiento que redujo significativamente el tiempo de descubrimiento",
+                "Creé una aplicación para generar archivos de configuración DDF utilizando MIBs y SNMP walks, reduciendo drásticamente el tiempo de desarrollo",
                 "Lideré el desarrollo de varios sistemas centrales utilizados por importantes clientes empresariales"
             ],
             fr: [
-                "Développement indépendant d'un outil de surveillance SNMP avec une méthode d'auto-découverte qui a réduit le temps de découverte de 80%",
-                "Création d'une application pour générer des fichiers de configuration DDF en utilisant MIBs et SNMP walks, réduisant le temps de développement de 90%",
+                "Développement indépendant d'un outil de surveillance SNMP avec une méthode d'auto-découverte qui a réduit significativement le temps de découverte",
+                "Création d'une application pour générer des fichiers de configuration DDF en utilisant MIBs et SNMP walks, réduisant drastiquement le temps de développement",
                 "Direction du développement de plusieurs systèmes centraux utilisés par d'importants clients entreprises"
             ],
             de: [
-                "Eigenständige Entwicklung eines SNMP-Überwachungstools mit einer Autodiscovery-Methode, die die Erkennungszeit um 80% reduzierte",
-                "Erstellung einer Anwendung zur Generierung von DDF-Konfigurationsdateien mit MIBs und SNMP-Walks, wodurch die Entwicklungszeit um 90% reduziert wurde",
+                "Eigenständige Entwicklung eines SNMP-Überwachungstools mit einer Autodiscovery-Methode, die die Erkennungszeit erheblich reduzierte",
+                "Erstellung einer Anwendung zur Generierung von DDF-Konfigurationsdateien mit MIBs und SNMP-Walks, wodurch die Entwicklungszeit drastisch reduziert wurde",
                 "Leitung der Entwicklung mehrerer Kernsysteme für grosse Unternehmenskunden"
             ]
         },
@@ -150,10 +150,10 @@ const experiencesData = [
     {
         id: "early-career",
         title: {
-            en: "Early Career: IT Support & Development",
-            es: "Carrera Inicial: Soporte IT y Desarrollo",
-            fr: "Début de Carrière: Support IT et Développement",
-            de: "Frühe Karriere: IT-Support & Entwicklung"
+            en: "Systems Administrator & IT Support",
+            es: "Administrador de Sistemas y Soporte IT",
+            fr: "Administrateur Systèmes et Support IT",
+            de: "Systemadministrator & IT-Support"
         },
         company: "SERES, Educand SCCL, Salt City Council",
         companyUrl: null,
@@ -189,26 +189,26 @@ const experiencesData = [
         },
         achievements: {
             en: [
-                "Resolved 200+ technical support tickets at SERES with 95% first-contact resolution rate",
-                "Implemented network infrastructure upgrade at Educand SCCL reducing downtime by 60%",
+                "Resolved 200+ technical support tickets at SERES with high first-contact resolution rate",
+                "Implemented network infrastructure upgrade at Educand SCCL with measurable reduction in downtime",
                 "Delivered municipal database application still in active use at Salt City Council",
                 "Completed Higher Technical Degree professional internship with distinction"
             ],
             es: [
-                "Resolví más de 200 tickets de soporte técnico en SERES con 95% de resolución en primer contacto",
-                "Implementé actualización de infraestructura de red en Educand SCCL reduciendo tiempo de inactividad en 60%",
+                "Resolví más de 200 tickets de soporte técnico en SERES con alta tasa de resolución en primer contacto",
+                "Implementé actualización de infraestructura de red en Educand SCCL con reducción medible del tiempo de inactividad",
                 "Entregué aplicación de base de datos municipal aún en uso activo en el Ayuntamiento de Salt",
                 "Completé prácticas profesionales del Grado Superior con mención de honor"
             ],
             fr: [
-                "Résolution de plus de 200 tickets de support technique chez SERES avec 95% de résolution au premier contact",
-                "Mise en œuvre d'une mise à niveau de l'infrastructure réseau chez Educand SCCL réduisant les temps d'arrêt de 60%",
+                "Résolution de plus de 200 tickets de support technique chez SERES avec un taux élevé de résolution au premier contact",
+                "Mise en œuvre d'une mise à niveau de l'infrastructure réseau chez Educand SCCL avec réduction mesurable des temps d'arrêt",
                 "Livraison d'une application de base de données municipale toujours en utilisation active à la Mairie de Salt",
                 "Stage professionnel du Diplôme Supérieur complété avec mention"
             ],
             de: [
-                "Lösung von über 200 technischen Support-Tickets bei SERES mit 95% Erstlösungsquote",
-                "Implementierung eines Netzwerk-Infrastruktur-Upgrades bei Educand SCCL mit 60% Reduzierung der Ausfallzeiten",
+                "Lösung von über 200 technischen Support-Tickets bei SERES mit hoher Erstlösungsquote",
+                "Implementierung eines Netzwerk-Infrastruktur-Upgrades bei Educand SCCL mit messbarer Reduzierung der Ausfallzeiten",
                 "Bereitstellung einer kommunalen Datenbankanwendung, die bei der Stadtverwaltung Salt noch aktiv genutzt wird",
                 "Berufspraktikum des höheren Fachdiploms mit Auszeichnung abgeschlossen"
             ]

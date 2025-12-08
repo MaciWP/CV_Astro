@@ -127,16 +127,16 @@ const personalProjectsData = [
             de: "Karten-Vision-Tracker"
         },
         description: {
-            en: "Computer vision application for real-time card detection and score tracking using ONNX models, achieving >90% accuracy in card recognition.",
-            es: "Aplicación de visión por computadora para detección de cartas en tiempo real y seguimiento de puntuación usando modelos ONNX, logrando >90% de precisión en reconocimiento.",
-            fr: "Application de vision par ordinateur pour la détection de cartes en temps réel et le suivi des scores utilisant des modèles ONNX, atteignant >90% de précision.",
-            de: "Computer-Vision-Anwendung für Echtzeit-Kartenerkennung und Punkteverfolgung mit ONNX-Modellen, >90% Genauigkeit bei der Kartenerkennung."
+            en: "Computer vision application for real-time card detection and score tracking using ONNX models, achieving high accuracy in card recognition.",
+            es: "Aplicación de visión por computadora para detección de cartas en tiempo real y seguimiento de puntuación usando modelos ONNX, logrando alta precisión en reconocimiento.",
+            fr: "Application de vision par ordinateur pour la détection de cartes en temps réel et le suivi des scores utilisant des modèles ONNX, atteignant une haute précision.",
+            de: "Computer-Vision-Anwendung für Echtzeit-Kartenerkennung und Punkteverfolgung mit ONNX-Modellen, hohe Genauigkeit bei der Kartenerkennung."
         },
         longDescription: {
-            en: "This computer vision application automates card detection and score tracking using machine learning. It provides real-time card recognition through a trained ONNX model, capable of processing multiple cards simultaneously with over 90% accuracy. The system includes player management, score calculation, image processing pipeline, and game history tracking components.",
-            es: "Esta aplicación de visión por computadora automatiza la detección de cartas y el seguimiento de puntuación usando aprendizaje automático. Proporciona reconocimiento de cartas en tiempo real a través de un modelo ONNX entrenado, capaz de procesar múltiples cartas simultáneamente con más del 90% de precisión. El sistema incluye gestión de jugadores, cálculo de puntuación, pipeline de procesamiento de imágenes y seguimiento del historial.",
-            fr: "Cette application de vision par ordinateur automatise la détection des cartes et le suivi des scores en utilisant l'apprentissage automatique. Elle fournit une reconnaissance des cartes en temps réel grâce à un modèle ONNX entraîné, capable de traiter plusieurs cartes simultanément avec plus de 90% de précision. Le système comprend la gestion des joueurs, le calcul des scores, le pipeline de traitement d'images et le suivi de l'historique.",
-            de: "Diese Computer-Vision-Anwendung automatisiert Kartenerkennung und Punkteverfolgung mittels maschinellem Lernen. Sie bietet Echtzeit-Kartenerkennung durch ein trainiertes ONNX-Modell, das mehrere Karten gleichzeitig mit über 90% Genauigkeit verarbeiten kann. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitungs-Pipeline und Spielhistorie-Tracking."
+            en: "This computer vision application automates card detection and score tracking using machine learning. It provides real-time card recognition through a trained ONNX model, capable of processing multiple cards simultaneously with high accuracy. The system includes player management, score calculation, image processing pipeline, and game history tracking components.",
+            es: "Esta aplicación de visión por computadora automatiza la detección de cartas y el seguimiento de puntuación usando aprendizaje automático. Proporciona reconocimiento de cartas en tiempo real a través de un modelo ONNX entrenado, capaz de procesar múltiples cartas simultáneamente con alta precisión. El sistema incluye gestión de jugadores, cálculo de puntuación, pipeline de procesamiento de imágenes y seguimiento del historial.",
+            fr: "Cette application de vision par ordinateur automatise la détection des cartes et le suivi des scores en utilisant l'apprentissage automatique. Elle fournit une reconnaissance des cartes en temps réel grâce à un modèle ONNX entraîné, capable de traiter plusieurs cartes simultanément avec une haute précision. Le système comprend la gestion des joueurs, le calcul des scores, le pipeline de traitement d'images et le suivi de l'historique.",
+            de: "Diese Computer-Vision-Anwendung automatisiert Kartenerkennung und Punkteverfolgung mittels maschinellem Lernen. Sie bietet Echtzeit-Kartenerkennung durch ein trainiertes ONNX-Modell, das mehrere Karten gleichzeitig mit hoher Genauigkeit verarbeiten kann. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitungs-Pipeline und Spielhistorie-Tracking."
         },
         technologies: ["Python", "Kivy", "ONNX", "NumPy"],
         icon: "fas fa-eye",
@@ -145,34 +145,34 @@ const personalProjectsData = [
         keyFeatures: {
             en: [
                 "Real-time card detection using ONNX neural network",
-                "Computer vision achieving >90% recognition accuracy",
+                "Computer vision achieving high recognition accuracy",
                 "Cross-platform interface built with Kivy",
                 "Processes up to 10 cards simultaneously per image",
-                "80% faster than manual score tracking",
+                "Significantly faster than manual score tracking",
                 "Complete player and game history management"
             ],
             es: [
                 "Detección de cartas en tiempo real usando red neuronal ONNX",
-                "Visión por computadora con >90% de precisión en reconocimiento",
+                "Visión por computadora con alta precisión en reconocimiento",
                 "Interfaz multiplataforma construida con Kivy",
                 "Procesa hasta 10 cartas simultáneamente por imagen",
-                "80% más rápido que el seguimiento manual de puntuación",
+                "Significativamente más rápido que el seguimiento manual de puntuación",
                 "Gestión completa de jugadores e historial de juegos"
             ],
             fr: [
                 "Détection de cartes en temps réel utilisant un réseau neuronal ONNX",
-                "Vision par ordinateur atteignant >90% de précision de reconnaissance",
+                "Vision par ordinateur atteignant une haute précision de reconnaissance",
                 "Interface multiplateforme construite avec Kivy",
                 "Traite jusqu'à 10 cartes simultanément par image",
-                "80% plus rapide que le suivi manuel des scores",
+                "Significativement plus rapide que le suivi manuel des scores",
                 "Gestion complète des joueurs et de l'historique des jeux"
             ],
             de: [
                 "Echtzeit-Kartenerkennung mit ONNX-Neuronalnetz",
-                "Computer Vision mit >90% Erkennungsgenauigkeit",
+                "Computer Vision mit hoher Erkennungsgenauigkeit",
                 "Plattformübergreifende Oberfläche mit Kivy erstellt",
                 "Verarbeitet bis zu 10 Karten gleichzeitig pro Bild",
-                "80% schneller als manuelle Punkteverfolgung",
+                "Deutlich schneller als manuelle Punkteverfolgung",
                 "Vollständige Spieler- und Spielhistorie-Verwaltung"
             ]
         }
@@ -262,32 +262,32 @@ const professionalProjectsData = [
         highlight: true,
         keyFeatures: {
             en: [
-                "Bidirectional data synchronization with 99.5% success rate",
+                "Bidirectional data synchronization with high reliability",
                 "Intelligent retry mechanism with batch processing",
                 "Comprehensive error handling with detailed contextual information",
-                "Reduced data update time between systems by 95%",
-                "Improved asset inventory accuracy by 85%"
+                "Drastically reduced data update time between systems",
+                "Significantly improved asset inventory accuracy"
             ],
             es: [
-                "Sincronización de datos bidireccional con tasa de éxito del 99,5%",
+                "Sincronización de datos bidireccional con alta fiabilidad",
                 "Mecanismo inteligente de reintento con procesamiento por lotes",
                 "Manejo integral de errores con información contextual detallada",
-                "Tiempo de actualización de datos entre sistemas reducido en un 95%",
-                "Precisión del inventario de activos mejorada en un 85%"
+                "Tiempo de actualización de datos entre sistemas drásticamente reducido",
+                "Precisión del inventario de activos significativamente mejorada"
             ],
             fr: [
-                "Synchronisation bidirectionnelle des données avec un taux de réussite de 99,5%",
+                "Synchronisation bidirectionnelle des données avec haute fiabilité",
                 "Mécanisme de réessai intelligent avec traitement par lots",
                 "Gestion complète des erreurs avec informations contextuelles détaillées",
-                "Temps de mise à jour des données entre systèmes réduit de 95%",
-                "Amélioration de la précision de l'inventaire des actifs de 85%"
+                "Temps de mise à jour des données entre systèmes drastiquement réduit",
+                "Amélioration significative de la précision de l'inventaire des actifs"
             ],
             de: [
-                "Bidirektionale Datensynchronisation mit 99,5% Erfolgsrate",
+                "Bidirektionale Datensynchronisation mit hoher Zuverlässigkeit",
                 "Intelligenter Wiederholungsmechanismus mit Stapelverarbeitung",
                 "Umfassende Fehlerbehandlung mit detaillierten Kontextinformationen",
-                "Datenaktualisierungszeit zwischen Systemen um 95% reduziert",
-                "Asset-Inventargenauigkeit um 85% verbessert"
+                "Datenaktualisierungszeit zwischen Systemen drastisch reduziert",
+                "Asset-Inventargenauigkeit erheblich verbessert"
             ]
         }
     },
@@ -318,29 +318,29 @@ const professionalProjectsData = [
         keyFeatures: {
             en: [
                 "Efficient data collection from 1,000+ network devices in under 5 minutes",
-                "95% reduction in infrastructure problem detection time",
-                "Optimized database queries reducing API response time by 60%",
+                "Drastic reduction in infrastructure problem detection time",
+                "Optimized database queries with significantly improved API response time",
                 "Advanced retry mechanisms with exponential backoff",
                 "Detailed logging and error tracking system"
             ],
             es: [
                 "Recolección eficiente de datos de más de 1.000 dispositivos de red en menos de 5 minutos",
-                "Reducción del 95% en el tiempo de detección de problemas de infraestructura",
-                "Consultas de base de datos optimizadas que reducen el tiempo de respuesta de la API en un 60%",
+                "Reducción drástica en el tiempo de detección de problemas de infraestructura",
+                "Consultas de base de datos optimizadas con mejora significativa del tiempo de respuesta de la API",
                 "Mecanismos avanzados de reintento con retroceso exponencial",
                 "Sistema detallado de registro y seguimiento de errores"
             ],
             fr: [
                 "Collecte efficace de données de plus de 1 000 périphériques réseau en moins de 5 minutes",
-                "Réduction de 95% du temps de détection des problèmes d'infrastructure",
-                "Requêtes de base de données optimisées réduisant le temps de réponse de l'API de 60%",
+                "Réduction drastique du temps de détection des problèmes d'infrastructure",
+                "Requêtes de base de données optimisées avec amélioration significative du temps de réponse de l'API",
                 "Mécanismes de réessai avancés avec backoff exponentiel",
                 "Système détaillé de journalisation et de suivi des erreurs"
             ],
             de: [
                 "Effiziente Datenerfassung von über 1.000 Netzwerkgeräten in unter 5 Minuten",
-                "95% Reduzierung der Infrastruktur-Problemerkennungszeit",
-                "Optimierte Datenbankabfragen reduzieren API-Antwortzeit um 60%",
+                "Drastische Reduzierung der Infrastruktur-Problemerkennungszeit",
+                "Optimierte Datenbankabfragen mit erheblich verbesserter API-Antwortzeit",
                 "Erweiterte Wiederholungsmechanismen mit exponentiellem Backoff",
                 "Detailliertes Logging- und Fehlerverfolgungssystem"
             ]
@@ -374,32 +374,32 @@ const professionalProjectsData = [
             en: [
                 "Asynchronous ETL for VMware infrastructure data",
                 "FastAPI RESTful endpoints with automatic OpenAPI documentation",
-                "Batch processing with 70% faster data collection",
-                "99.9% data accuracy through automated capture processes",
+                "Batch processing with significantly faster data collection",
+                "High data accuracy through automated capture processes",
                 "Structured logging and error management",
                 "Integration with external systems through API"
             ],
             es: [
                 "ETL asíncrono para datos de infraestructura VMware",
                 "Endpoints RESTful de FastAPI con documentación automática OpenAPI",
-                "Procesamiento por lotes con recopilación de datos un 70% más rápida",
-                "Precisión de datos del 99,9% mediante procesos de captura automatizados",
+                "Procesamiento por lotes con recopilación de datos significativamente más rápida",
+                "Alta precisión de datos mediante procesos de captura automatizados",
                 "Registro estructurado y gestión de errores",
                 "Integración con sistemas externos a través de API"
             ],
             fr: [
                 "ETL asynchrone pour les données d'infrastructure VMware",
                 "Points de terminaison RESTful FastAPI avec documentation OpenAPI automatique",
-                "Traitement par lots avec collecte de données 70% plus rapide",
-                "Précision des données de 99,9% grâce à des processus de capture automatisés",
+                "Traitement par lots avec collecte de données significativement plus rapide",
+                "Haute précision des données grâce à des processus de capture automatisés",
                 "Journalisation structurée et gestion des erreurs",
                 "Intégration avec des systèmes externes via API"
             ],
             de: [
                 "Asynchroner ETL für VMware-Infrastrukturdaten",
                 "FastAPI RESTful-Endpunkte mit automatischer OpenAPI-Dokumentation",
-                "Stapelverarbeitung mit 70% schnellerer Datenerfassung",
-                "99,9% Datengenauigkeit durch automatisierte Erfassungsprozesse",
+                "Stapelverarbeitung mit deutlich schnellerer Datenerfassung",
+                "Hohe Datengenauigkeit durch automatisierte Erfassungsprozesse",
                 "Strukturiertes Logging und Fehlermanagement",
                 "Integration mit externen Systemen über API"
             ]
@@ -432,7 +432,7 @@ const professionalProjectsData = [
         keyFeatures: {
             en: [
                 "Multi-tenant architecture with database isolation per client",
-                "NFC-based asset tracking reducing inventory time by 85%",
+                "NFC-based asset tracking with significant inventory time reduction",
                 "Hierarchical location management (DataCenter → Room → Row → Rack)",
                 "JWT authentication with 2FA via email OTP",
                 "Comprehensive asset categorization (IT, Network, Energy, Climate)",
@@ -440,7 +440,7 @@ const professionalProjectsData = [
             ],
             es: [
                 "Arquitectura multiinquilino con aislamiento de base de datos por cliente",
-                "Seguimiento de activos basado en NFC reduciendo el tiempo de inventario en un 85%",
+                "Seguimiento de activos basado en NFC con reducción significativa del tiempo de inventario",
                 "Gestión jerárquica de ubicaciones (Centro de Datos → Sala → Fila → Rack)",
                 "Autenticación JWT con 2FA vía OTP por correo electrónico",
                 "Categorización integral de activos (TI, Red, Energía, Clima)",
@@ -448,7 +448,7 @@ const professionalProjectsData = [
             ],
             fr: [
                 "Architecture multi-locataires avec isolation de base de données par client",
-                "Suivi d'actifs basé sur NFC réduisant le temps d'inventaire de 85%",
+                "Suivi d'actifs basé sur NFC avec réduction significative du temps d'inventaire",
                 "Gestion hiérarchique des emplacements (Centre de Données → Salle → Rangée → Rack)",
                 "Authentification JWT avec 2FA via OTP par e-mail",
                 "Catégorisation complète des actifs (IT, Réseau, Énergie, Climat)",
@@ -456,7 +456,7 @@ const professionalProjectsData = [
             ],
             de: [
                 "Mandantenfähige Architektur mit Datenbank-Isolation pro Kunde",
-                "NFC-basiertes Asset-Tracking reduziert Inventarzeit um 85%",
+                "NFC-basiertes Asset-Tracking mit erheblicher Reduzierung der Inventarzeit",
                 "Hierarchische Standortverwaltung (Rechenzentrum → Raum → Reihe → Rack)",
                 "JWT-Authentifizierung mit 2FA über E-Mail-OTP",
                 "Umfassende Asset-Kategorisierung (IT, Netzwerk, Energie, Klima)",
@@ -491,31 +491,31 @@ const professionalProjectsData = [
         keyFeatures: {
             en: [
                 "Bidirectional synchronization with object mapping system",
-                "85% reduction in energy infrastructure management time",
+                "Significant reduction in energy infrastructure management time",
                 "Real-time monitoring of power status for all datacenter devices",
-                "Automated report generation reducing time from 4 hours to 2 minutes",
-                "100% improvement in data accuracy through duplication elimination"
+                "Automated report generation reducing time from hours to minutes",
+                "Major improvement in data accuracy through duplication elimination"
             ],
             es: [
                 "Sincronización bidireccional con sistema de mapeo de objetos",
-                "Reducción del 85% en el tiempo de gestión de infraestructura energética",
+                "Reducción significativa en el tiempo de gestión de infraestructura energética",
                 "Monitorización en tiempo real del estado de energía de todos los dispositivos del centro de datos",
-                "Generación automatizada de informes reduciendo el tiempo de 4 horas a 2 minutos",
-                "Mejora del 100% en la precisión de datos mediante la eliminación de duplicaciones"
+                "Generación automatizada de informes reduciendo el tiempo de horas a minutos",
+                "Mejora sustancial en la precisión de datos mediante la eliminación de duplicaciones"
             ],
             fr: [
                 "Synchronisation bidirectionnelle avec système de mappage d'objets",
-                "Réduction de 85% du temps de gestion de l'infrastructure énergétique",
+                "Réduction significative du temps de gestion de l'infrastructure énergétique",
                 "Surveillance en temps réel de l'état d'alimentation de tous les périphériques du centre de données",
-                "Génération automatisée de rapports réduisant le temps de 4 heures à 2 minutes",
-                "Amélioration de 100% de la précision des données par élimination des doublons"
+                "Génération automatisée de rapports réduisant le temps de plusieurs heures à quelques minutes",
+                "Amélioration majeure de la précision des données par élimination des doublons"
             ],
             de: [
                 "Bidirektionale Synchronisation mit Objekt-Mapping-System",
-                "85% Reduzierung der Energieinfrastruktur-Verwaltungszeit",
+                "Erhebliche Reduzierung der Energieinfrastruktur-Verwaltungszeit",
                 "Echtzeit-Überwachung des Stromstatus aller Rechenzentrumsgeräte",
-                "Automatisierte Berichtserstellung reduziert Zeit von 4 Stunden auf 2 Minuten",
-                "100% Verbesserung der Datengenauigkeit durch Duplikateliminierung"
+                "Automatisierte Berichtserstellung reduziert Zeit von Stunden auf Minuten",
+                "Wesentliche Verbesserung der Datengenauigkeit durch Duplikateliminierung"
             ]
         }
     }
