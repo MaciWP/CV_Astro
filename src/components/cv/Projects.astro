@@ -169,23 +169,12 @@ function getProjectIconName(project: any): string {
                     <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">
                         {project.description}
                     </p>
-                    <p class="long-description mb-4 text-light-text-secondary dark:text-dark-text-secondary hidden">
-                        {project.longDescription}
-                    </p>
-
-                    <!-- Key Features - hidden by default -->
-                    <div class="key-features mb-4 hidden">
-                        <h4 class="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-2 tracking-wider">
-                            {t.keyFeatures}
-                        </h4>
-                        <ul class="space-y-2 text-sm">
-                            {project.keyFeatures.map((feature: string) => (
-                                <li class="flex items-start gap-2">
-                                    <span class="text-brand-red flex-shrink-0 mt-1"><SvgIcons name="check" class="w-3 h-3" /></span>
-                                    <span>{feature}</span>
-                                </li>
-                            ))}
-                        </ul>
+                    <!-- Long description + features - lazy-loaded on "Show details" to reduce DOM -->
+                    <div class="expandable-content hidden"
+                         data-long-description={project.longDescription}
+                         data-features={JSON.stringify(project.keyFeatures)}
+                         data-features-label={t.keyFeatures}>
+                        <!-- Content injected by JS on expand -->
                     </div>
 
                     <!-- Technologies -->
@@ -381,12 +370,10 @@ function getProjectIconName(project: any): string {
                 </div>
                 <div class="p-5 flex-grow flex flex-col">
                     <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">${project.description}</p>
-                    <p class="long-description mb-4 text-light-text-secondary dark:text-dark-text-secondary hidden">${project.longDescription}</p>
-                    <div class="key-features mb-4 hidden">
-                        <h4 class="text-sm uppercase text-brand-red font-semibold mb-2 tracking-wider">${t.keyFeatures}</h4>
-                        <ul class="space-y-2 text-sm">
-                            ${project.keyFeatures.map(f => `<li class="flex items-start gap-2"><span class="text-brand-red flex-shrink-0 mt-1">${projectIconSvg.check}</span><span>${f}</span></li>`).join('')}
-                        </ul>
+                    <div class="expandable-content hidden"
+                         data-long-description="${project.longDescription.replace(/"/g, '&quot;')}"
+                         data-features='${JSON.stringify(project.keyFeatures)}'
+                         data-features-label="${t.keyFeatures}">
                     </div>
                     <div class="mt-auto">
                         <h4 class="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">${t.technologies}</h4>
@@ -466,6 +453,28 @@ function getProjectIconName(project: any): string {
             const toggleBtn = section.querySelector('#toggle-all-details');
             let showingDetails = false;
 
+            // Lazy-load expandable content on first expand
+            function injectExpandableContent(card) {
+                const expandable = card.querySelector('.expandable-content');
+                if (!expandable || expandable.dataset.loaded) return;
+
+                const longDesc = expandable.dataset.longDescription;
+                const features = JSON.parse(expandable.dataset.features || '[]');
+                const label = expandable.dataset.featuresLabel || 'Key Features';
+
+                let html = `<p class="long-description mb-4 text-light-text-secondary dark:text-dark-text-secondary">${longDesc}</p>`;
+                if (features.length > 0) {
+                    html += `<div class="key-features mb-4">
+                        <h4 class="text-sm uppercase text-brand-red font-semibold mb-2 tracking-wider">${label}</h4>
+                        <ul class="space-y-2 text-sm">
+                            ${features.map(f => `<li class="flex items-start gap-2"><span class="text-brand-red flex-shrink-0 mt-1">${projectIconSvg.check}</span><span>${f}</span></li>`).join('')}
+                        </ul>
+                    </div>`;
+                }
+                expandable.innerHTML = html;
+                expandable.dataset.loaded = 'true';
+            }
+
             toggleBtn?.addEventListener('click', () => {
                 showingDetails = !showingDetails;
                 const textSpan = toggleBtn.querySelector('.btn-text');
@@ -474,17 +483,16 @@ function getProjectIconName(project: any): string {
 
                 section.querySelectorAll('.project-card').forEach(card => {
                     const desc = card.querySelector('.description');
-                    const longDesc = card.querySelector('.long-description');
-                    const features = card.querySelector('.key-features');
+                    const expandable = card.querySelector('.expandable-content');
 
                     if (showingDetails) {
+                        // Inject content on first expand
+                        injectExpandableContent(card);
                         desc?.classList.add('hidden');
-                        longDesc?.classList.remove('hidden');
-                        features?.classList.remove('hidden');
+                        expandable?.classList.remove('hidden');
                     } else {
                         desc?.classList.remove('hidden');
-                        longDesc?.classList.add('hidden');
-                        features?.classList.add('hidden');
+                        expandable?.classList.add('hidden');
                     }
                 });
 

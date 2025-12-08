@@ -143,17 +143,14 @@ const hideDetailsText: Record<string, string> = {
                         ))}
                     </ul>
 
-                    <!-- Extra responsibilities - expandable -->
+                    <!-- Extra responsibilities - lazy-loaded on expand to reduce DOM -->
                     {job.extraResponsibilities && job.extraResponsibilities.length > 0 && (
                         <>
-                            <ul class="extra-responsibilities space-y-3 text-light-text dark:text-dark-text mb-3 hidden" data-job-id={job.id}>
-                                {job.extraResponsibilities.map((responsibility: string) => (
-                                    <li class="flex items-start gap-2">
-                                        <span class="w-1.5 h-1.5 bg-brand-red flex-shrink-0 mt-2"></span>
-                                        <span>{responsibility}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <div class="extra-responsibilities-container mb-3 hidden"
+                                 data-job-id={job.id}
+                                 data-responsibilities={JSON.stringify(job.extraResponsibilities)}>
+                                <!-- Content injected by JS on expand -->
+                            </div>
 
                             <button
                                 class="expand-btn text-xs inline-flex items-center gap-1 text-brand-red hover:text-brand-red/80 mb-5 focus:outline-none focus:underline"
@@ -251,15 +248,15 @@ const hideDetailsText: Record<string, string> = {
         transition: background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out;
     }
 
-    /* Extra responsibilities animation */
-    .extra-responsibilities {
+    /* Extra responsibilities container animation */
+    .extra-responsibilities-container {
         max-height: 0;
         overflow: hidden;
         opacity: 0;
         transition: max-height 300ms ease-out, opacity 200ms ease-out;
     }
 
-    .extra-responsibilities.expanded {
+    .extra-responsibilities-container.expanded {
         max-height: 1000px;
         opacity: 1;
     }
@@ -357,28 +354,36 @@ const hideDetailsText: Record<string, string> = {
                 });
             });
 
-            // Expand/collapse functionality
+            // Expand/collapse functionality with lazy-loading
             const expandBtns = section.querySelectorAll('.expand-btn');
             expandBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const jobId = btn.getAttribute('data-job-id');
-                    const extraList = section.querySelector(`.extra-responsibilities[data-job-id="${jobId}"]`);
+                    const container = section.querySelector(`.extra-responsibilities-container[data-job-id="${jobId}"]`);
                     const textSpan = btn.querySelector('.btn-text');
                     const showMore = btn.getAttribute('data-show-more');
                     const showLess = btn.getAttribute('data-show-less');
 
-                    if (extraList) {
-                        const isExpanded = extraList.classList.contains('expanded');
+                    if (container) {
+                        const isExpanded = container.classList.contains('expanded');
 
                         if (isExpanded) {
-                            extraList.classList.remove('expanded');
-                            extraList.classList.add('hidden');
+                            container.classList.remove('expanded');
+                            container.classList.add('hidden');
                             if (textSpan) textSpan.textContent = showMore || 'Show more';
                             btn.setAttribute('aria-expanded', 'false');
                         } else {
-                            extraList.classList.remove('hidden');
+                            // Lazy-load content on first expand
+                            if (!container.dataset.loaded) {
+                                const responsibilities = JSON.parse(container.dataset.responsibilities || '[]');
+                                container.innerHTML = `<ul class="extra-responsibilities space-y-3 text-light-text dark:text-dark-text">
+                                    ${responsibilities.map(r => `<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-brand-red flex-shrink-0 mt-2"></span><span>${r}</span></li>`).join('')}
+                                </ul>`;
+                                container.dataset.loaded = 'true';
+                            }
+                            container.classList.remove('hidden');
                             requestAnimationFrame(() => {
-                                extraList.classList.add('expanded');
+                                container.classList.add('expanded');
                             });
                             if (textSpan) textSpan.textContent = showLess || 'Show less';
                             btn.setAttribute('aria-expanded', 'true');
