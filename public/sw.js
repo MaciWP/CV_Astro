@@ -25,7 +25,6 @@ const SECONDARY_ASSETS = [
     '/fr/',
     '/404.html',
     '/styles/global.css',
-    '/styles/font-awesome-optimized.css',
 ];
 
 // Cache settings for different resource types

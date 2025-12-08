@@ -319,7 +319,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       .skill-category-animate{contain:layout style paint}
       /* Skill badge theme transition fix */
       .skill-badge{transition:background-color 200ms ease-out,border-color 200ms ease-out,transform 100ms ease-out,box-shadow 100ms ease-out}
-      .fas,.fab{min-width:1em;display:inline-block}
       footer,footer p,footer a{color:#374151!important}
       .dark footer,.dark footer p,.dark footer a{color:#e5e7eb!important}
       /* Sticky header - CRITICAL */
@@ -448,16 +447,6 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
       document.dispatchEvent(new CustomEvent('translationsLoaded'));
     </script>
 
-    <!-- Font Awesome CSS optimizado (~5KB vs 20KB) - loaded non-blocking for performance -->
-    <link
-      rel="stylesheet"
-      href="/styles/font-awesome-optimized.css?v=2"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link rel="stylesheet" href="/styles/font-awesome-optimized.css?v=2" />
-    </noscript>
   </head>
 
   <body
