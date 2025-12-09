@@ -245,6 +245,8 @@ function initNavbar() {
     const lang = navbar.dataset.lang || 'en';
     const NAVBAR_HEIGHT = 80;
     const SECTION_IDS = ['experience', 'skills', 'education', 'languages', 'projects'];
+    const AVAILABLE_LANGS = ['en', 'es', 'fr', 'de'];
+    let prefetchedLangs = new Set();
 
     // Elements
     const logoBtn = document.getElementById('navbar-logo');
@@ -396,14 +398,9 @@ function initNavbar() {
         }
     }
 
-    // Language change handler
-    function handleLanguageChange(langCode) {
-        if (langCode === lang) {
-            closeLangDropdown();
-            return;
-        }
+    // Build URL for a given language
+    function buildLangUrl(langCode) {
         let path = window.location.pathname;
-        // Handle both with and without trailing slash
         const langPrefixes = ['/es/', '/fr/', '/de/'];
         const langPaths = ['/es', '/fr', '/de'];
 
@@ -419,8 +416,35 @@ function initNavbar() {
             path = '/';
         }
         if (!path || path === '') path = '/';
-        const newUrl = langCode === 'en' ? path : `/${langCode}${path === '/' ? '' : path}`;
-        window.location.href = newUrl;
+        return langCode === 'en' ? path : `/${langCode}${path === '/' ? '' : path}`;
+    }
+
+    // Prefetch language pages for instant switching
+    function prefetchLanguages() {
+        if (prefetchedLangs.size >= AVAILABLE_LANGS.length - 1) return;
+
+        AVAILABLE_LANGS.forEach(langCode => {
+            if (langCode === lang || prefetchedLangs.has(langCode)) return;
+
+            const url = buildLangUrl(langCode);
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = url;
+            link.as = 'document';
+            document.head.appendChild(link);
+            prefetchedLangs.add(langCode);
+        });
+    }
+
+    // Language change handler
+    function handleLanguageChange(langCode) {
+        if (langCode === lang) {
+            closeLangDropdown();
+            return;
+        }
+        const newUrl = buildLangUrl(langCode);
+        // Use replace for faster navigation (no history entry)
+        window.location.replace(newUrl);
     }
 
     // Theme toggle
@@ -456,6 +480,9 @@ function initNavbar() {
     mobileMenuBtn?.addEventListener('click', toggleMobileMenu);
 
     langToggle?.addEventListener('click', toggleLangDropdown);
+    // Prefetch languages on hover/focus for instant switching
+    langToggle?.addEventListener('mouseenter', prefetchLanguages, { once: true });
+    langToggle?.addEventListener('focus', prefetchLanguages, { once: true });
 
     // Nav links
     navLinks.forEach(link => {
