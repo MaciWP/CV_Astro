@@ -83,5 +83,9 @@
   },
   "navbar": {
     "topLink": "↑ Oben"
+  },
+  "profile": {
+    "title": "Software-Entwickler",
+    "summary": "Lösungsorientierter Backend-Entwickler, spezialisiert auf die Integration industrieller Protokolle (SNMP, Modbus, BACnet) mit über 8 Jahren Erfahrung in der Entwicklung von Hochleistungsanwendungen. Anerkannt für die Transformation komplexer Anforderungen in elegante Code-Architektur und die Reduzierung der Systemantwortzeiten um bis zu 45%. Derzeit Erweiterung in KI und maschinelles Lernen für Automatisierungslösungen der nächsten Generation."
   }
 }

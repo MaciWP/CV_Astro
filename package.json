@@ -16,7 +16,7 @@
     "a11y": "npm run check:contrast",
     "a11y:audit": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
     "clean": "rimraf dist .astro public/styles/font-awesome* public/styles/fonts",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
@@ -53,17 +53,19 @@
     "@fontsource/inter": "^5.2.8",
     "@fontsource/outfit": "^5.2.8",
     "@netlify/plugin-csp-nonce": "^1.6.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-astro": "^0.31.4",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.5.0",
     "sharp": "^0.34.5",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "wcag-contrast": "^3.0.0"
   },
   "overrides": {
-    "@humanwhocodes/config-array": "@eslint/config-array",
-    "@humanwhocodes/object-schema": "@eslint/object-schema",
     "rimraf": "^5.0.5"
   }
 }

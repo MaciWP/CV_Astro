@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import contrast from 'wcag-contrast';
+import { hex, score } from 'wcag-contrast';
 
 // Get dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -44,12 +44,17 @@ function checkContrast(colorName1, colorName2) {
         return null;
     }
 
-    const ratio = contrast.ratio(color1, color2);
+    // wcag-contrast v3 API: hex(foreground, background) returns contrast ratio
+    const ratio = hex(color1, color2);
+
+    // WCAG 2.1 thresholds:
+    // AA Large text: 3:1, AA Normal text: 4.5:1
+    // AAA Large text: 4.5:1, AAA Normal text: 7:1
     const passes = {
-        'AA-large': contrast.passes.AA.large(ratio),
-        'AA-normal': contrast.passes.AA.normal(ratio),
-        'AAA-large': contrast.passes.AAA.large(ratio),
-        'AAA-normal': contrast.passes.AAA.normal(ratio)
+        'AA-large': ratio >= 3,
+        'AA-normal': ratio >= 4.5,
+        'AAA-large': ratio >= 4.5,
+        'AAA-normal': ratio >= 7
     };
 
     return {
