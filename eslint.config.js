@@ -23,7 +23,6 @@ export default [
       "*.min.js",
       "public/sw.js",
       ".archived/**",
-      "parse-lighthouse.js",
       "contrast-report.json",
       "translation-report.json",
       "nul",
