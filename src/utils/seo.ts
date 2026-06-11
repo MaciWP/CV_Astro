@@ -103,7 +103,7 @@ export function detectMarketAndOptimizeSEO(
             // Brand optimization for homepage
             if (currentUrl.pathname === "/") {
                 enhancedTitle =
-                    "Oriol Macias - Senior Backend Developer | Python · Switzerland-Ready";
+                    "Oriol Macias - Senior Backend Developer | Switzerland-Ready";
                 enhancedDescription =
                     "Senior Backend Developer: Python, Django, C#, industrial protocols (SNMP, Modbus, BACnet). 8+ years' experience. EU citizen, Swiss B-Permit eligible.";
                 enhancedKeywords =
@@ -130,19 +130,19 @@ export function detectMarketAndOptimizeSEO(
                     },
                     geneva: {
                         title:
-                            "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
+                            "Oriol Macias - Backend Developer Geneva | International Orgs",
                         description:
-                            "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
+                            "Backend Developer for Geneva's international organizations. English working proficiency; Spanish and Catalan native. SNMP/Modbus/BACnet integration expert.",
                         keywords:
-                            "backend developer geneva, multilingual developer geneva, international organizations",
+                            "backend developer geneva, python developer geneva, international organizations geneva",
                     },
                     geneve: {
                         title:
-                            "Oriol Macias - Backend Developer Geneva | Multilingual Professional",
+                            "Oriol Macias - Backend Developer Geneva | International Orgs",
                         description:
-                            "Multilingual Backend Developer (EN/ES/FR) seeking Geneva opportunities. International organizations experience.",
+                            "Backend Developer for Geneva's international organizations. English working proficiency; Spanish and Catalan native. SNMP/Modbus/BACnet integration expert.",
                         keywords:
-                            "backend developer geneva, multilingual developer geneva, international organizations",
+                            "backend developer geneva, python developer geneva, international organizations geneva",
                     },
                 };
 
@@ -169,14 +169,14 @@ export function detectMarketAndOptimizeSEO(
                 enhancedTitle =
                     "Oriol Macias - Développeur Python Suisse | Backend Senior";
                 enhancedDescription =
-                    "Développeur Python senior (Django, C#, SNMP/Modbus/BACnet), 8+ ans d'expérience. Citoyen UE, permis B immédiat – disponible à Genève, Lausanne, Zurich et Bâle.";
+                    "Développeur Python senior (Django, C#, SNMP/Modbus/BACnet), 8+ ans d'expérience. Citoyen UE, permis B immédiat – Genève, Lausanne, Zurich, Bâle.";
                 enhancedKeywords =
                     "développeur python suisse, développeur backend suisse, développeur suisse, python développeur genève, ingénieur logiciel suisse, permis b suisse";
             } else if (language === "de") {
                 enhancedTitle =
-                    "Oriol Macias - Python Entwickler Schweiz | Senior Backend Developer";
+                    "Oriol Macias - Python Entwickler Schweiz | Senior Backend";
                 enhancedDescription =
-                    "Python Entwickler mit 8+ Jahren Erfahrung: Django, C#, SNMP/Modbus/BACnet. EU-Bürger, B-Bewilligung sofort möglich – verfügbar in Zürich, Basel, Genf und Lausanne.";
+                    "Python Entwickler mit 8+ Jahren Erfahrung: Django, C#, SNMP/Modbus/BACnet. EU-Bürger, B-Bewilligung sofort – Zürich, Basel, Genf, Lausanne.";
                 enhancedKeywords =
                     "python entwickler schweiz, backend entwickler schweiz, python entwickler zürich, software ingenieur schweiz, b-bewilligung";
             }
@@ -189,16 +189,16 @@ export function detectMarketAndOptimizeSEO(
         ) {
             detectedMarket = "spain";
             enhancedTitle =
-                "Oriol Macias - Desarrollador Backend Senior | Python · España y Suiza";
+                "Oriol Macias - Desarrollador Backend Senior | España y Suiza";
             enhancedDescription =
-                "Desarrollador backend senior: Python, Django, C#, protocolos industriales (SNMP, Modbus, BACnet). 8+ años de experiencia. Disponible en Madrid, Barcelona y Suiza.";
+                "Desarrollador backend senior: Python, Django, C#, SNMP/Modbus/BACnet. 8+ años de experiencia. Disponible en Madrid, Barcelona y Suiza.";
             enhancedKeywords =
                 "desarrollador backend españa, python desarrollador madrid, ingeniero software españa, desarrollador backend suiza";
         }
         // Homepage brand optimization
         else if (currentUrl.pathname === "/") {
             enhancedTitle =
-                "Oriol Macias - Senior Backend Developer | Python · Switzerland-Ready";
+                "Oriol Macias - Senior Backend Developer | Switzerland-Ready";
             enhancedDescription =
                 "Senior Backend Developer: Python, Django, C#, industrial protocols (SNMP, Modbus, BACnet). 8+ years' experience. EU citizen, Swiss B-Permit eligible.";
             enhancedKeywords =

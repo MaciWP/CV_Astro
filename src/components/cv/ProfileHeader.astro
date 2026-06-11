@@ -63,12 +63,14 @@ const githubLabel = getTranslation("header.github", "GitHub");
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-center">
             {/* Información personal - izquierda */}
             <div class="md:col-span-8 space-y-3 sm:space-y-4 order-2 md:order-1">
-                {/* Mobile: Name + Title at top */}
-                <div class="sm:hidden">
-                    <h1 class="text-2xl font-bold mb-1 leading-tight">
+                {/* Name + Title — single render for ALL widths (responsive
+                    sizing); duplicating per-breakpoint produced 2x h1/h2 in
+                    the DOM, flagged by SEO crawlers */}
+                <div>
+                    <h1 class="text-2xl leading-tight mb-1 sm:text-4xl md:text-5xl sm:mb-2 font-bold">
                         {headerData.fullName}
                     </h1>
-                    <h2 class="text-base text-accessible-brand-red font-semibold leading-tight">
+                    <h2 class="text-base leading-tight sm:text-xl md:text-2xl text-accessible-brand-red font-semibold">
                         {jobTitle}
                     </h2>
                 </div>
@@ -136,16 +138,6 @@ const githubLabel = getTranslation("header.github", "GitHub");
                             </a>
                         </div>
                     </div>
-                </div>
-
-                {/* Desktop: Name and Title (hidden on mobile, shown on sm+) */}
-                <div class="hidden sm:block">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-2">
-                        {headerData.fullName}
-                    </h1>
-                    <h2 class="text-xl md:text-2xl text-accessible-brand-red font-semibold">
-                        {jobTitle}
-                    </h2>
                 </div>
 
                 {/* Desktop: Personal info inline with dots */}

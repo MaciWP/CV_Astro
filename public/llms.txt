@@ -37,9 +37,8 @@ Docker, GitHub Actions, AWS, CI/CD, Git
 ## Languages
 - Spanish: Native
 - Catalan: Native
-- English: Intermediate (B1)
-- French: Basic
-- German: Basic
+- English: Professional working proficiency (B2)
+- German: Learning (A1)
 
 ## Contact
 - Email: oriolomb@gmail.com
