@@ -3,7 +3,11 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
+  # Always build. The previous ignore (git diff --quiet $CACHED_COMMIT_REF
+  # $COMMIT_REF -- .) self-canceled the 2026-06-11 deploy: after a long gap
+  # without git deploys, CACHED_COMMIT_REF can equal COMMIT_REF -> empty diff
+  # -> exit 0 -> Netlify cancels. exit 1 forces the build unconditionally.
+  ignore = "exit 1"
 
 # ===== EARLY HINTS (103) FOR LCP =====
 # Tells browser to start loading resources BEFORE HTML arrives
