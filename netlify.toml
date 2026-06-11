@@ -62,6 +62,16 @@
     Content-Type = "application/javascript; charset=utf-8"
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Service worker must NEVER be long-cached: the generic *.js immutable rule
+# above let Cloudflare serve a days-old sw.js, blocking SW updates for
+# returning visitors. Explicit rule wins for the exact path.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-store"
+    Service-Worker-Allowed = "/"
+
 # Headers for CSS files
 [[headers]]
   for = "*.css"
