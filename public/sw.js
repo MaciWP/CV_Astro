@@ -6,10 +6,10 @@
 
 // Cache names for different resource types
 // Increment version to force cache refresh
-const STATIC_CACHE_NAME = 'oriol-macias-cv-static-v2';
-const IMAGE_CACHE_NAME = 'oriol-macias-cv-images-v2';
-const FONT_CACHE_NAME = 'oriol-macias-cv-fonts-v2';
-const DYNAMIC_CACHE_NAME = 'oriol-macias-cv-dynamic-v2';
+const STATIC_CACHE_NAME = 'oriol-macias-cv-static-v3';
+const IMAGE_CACHE_NAME = 'oriol-macias-cv-images-v3';
+const FONT_CACHE_NAME = 'oriol-macias-cv-fonts-v3';
+const DYNAMIC_CACHE_NAME = 'oriol-macias-cv-dynamic-v3';
 
 // Resources that will always be cached immediately (core app shell)
 // Only essential files that are guaranteed to exist
@@ -21,8 +21,9 @@ const CORE_ASSETS = [
 
 // Resources that will be cached during installation if available
 const SECONDARY_ASSETS = [
-    '/es/',
-    '/fr/',
+    '/es',
+    '/fr',
+    '/de',
     '/404.html',
     '/styles/global.css',
 ];
@@ -339,9 +340,10 @@ self.addEventListener('fetch', (event) => {
                         return cachedResponse;
                     }
 
-                    // Return placeholder image for missing images
+                    // Fallback for missing images (favicon.svg is a precached CORE_ASSET;
+                    // /images/placeholder.svg does not exist)
                     if (request.destination === 'image') {
-                        return caches.match('/images/placeholder.svg');
+                        return caches.match('/favicon.svg');
                     }
 
                     console.error(`[ServiceWorker] Image fetch failed: ${request.url}`, error);

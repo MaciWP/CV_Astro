@@ -69,7 +69,7 @@
     "downloadCoverLetter": "Télécharger Lettre"
   },
   "footer": {
-    "copyright": "© 2025 - Créé avec Astro, React, et Tailwind CSS"
+    "copyright": "© Oriol Macias. Tous droits réservés."
   },
   "navbar": {
     "topLink": "↑ Haut"

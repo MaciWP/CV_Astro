@@ -69,9 +69,13 @@
     "downloadCoverLetter": "Anschreiben herunterladen"
   },
   "footer": {
-    "copyright": "© 2025 Oriol Macias. Alle Rechte vorbehalten."
+    "copyright": "© Oriol Macias. Alle Rechte vorbehalten."
   },
   "navbar": {
     "topLink": "↑ Oben"
+  },
+  "profile": {
+    "title": "Softwareentwickler",
+    "summary": "Lösungsorientierter Backend-Entwickler, spezialisiert auf die Integration industrieller Protokolle (SNMP, Modbus, BACnet), mit über 8 Jahren Erfahrung in der Entwicklung leistungsstarker Anwendungen. Bekannt dafür, komplexe Anforderungen in elegante Code-Architektur zu überführen und Systemantwortzeiten um bis zu 45 % zu reduzieren. Derzeit Erweiterung der Kenntnisse in KI und Machine Learning für Automatisierungslösungen der nächsten Generation."
   }
 }

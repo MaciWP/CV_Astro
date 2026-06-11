@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 // Configuration
 const LOCALES_DIR = path.join(__dirname, '../public/locales');
-const SUPPORTED_LANGUAGES = ['en', 'es', 'fr'];
+const SUPPORTED_LANGUAGES = ['en', 'es', 'fr', 'de'];
 
 // Utility function to flatten object keys with dot notation
 function flattenKeys(obj, prefix = '') {
