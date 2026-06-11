@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { hex, score } from 'wcag-contrast';
+import { hex } from 'wcag-contrast';
 
 // Get dirname in ESM
 const __filename = fileURLToPath(import.meta.url);

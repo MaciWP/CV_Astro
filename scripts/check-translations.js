@@ -37,7 +37,7 @@ async function checkTranslations() {
         // Ensure locales directory exists
         try {
             await fs.access(LOCALES_DIR);
-        } catch (error) {
+        } catch {
             console.error(`❌ Error: Locales directory not found at ${LOCALES_DIR}`);
             return;
         }

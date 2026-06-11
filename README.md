@@ -1,8 +1,7 @@
 # Oriol Macias - CV Portfolio
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-netlify-id/deploy-status)](https://app.netlify.com/sites/oriolmacias/deploys)
 ![License](https://img.shields.io/github/license/MaciWP/CV_Astro)
-![Technologies](https://img.shields.io/badge/Tech-Astro%20%7C%20React%20%7C%20TailwindCSS-blue)
+![Technologies](https://img.shields.io/badge/Tech-Astro%20%7C%20TailwindCSS-blue)
 
 A professional CV/portfolio website following Swiss design standards. This project showcases my skills and experience as a software developer, built with modern web technologies.
 
@@ -14,17 +13,16 @@ A professional CV/portfolio website following Swiss design standards. This proje
 
 - 🎨 **Modern, Clean Design**: Following Swiss design principles with clean typography and structured layout
 - 🌙 **Dark/Light Theme**: Toggle between themes with smooth transitions
-- 🌍 **Multilingual Support**: Available in English, Spanish, and French
+- 🌍 **Multilingual Support**: Available in English, Spanish, French, and German
 - 📱 **Fully Responsive**: Optimized for all screen sizes and devices
 - ⚡ **Performance Optimized**: Fast loading, with 90+ scores on Lighthouse
 - 📊 **SEO Ready**: Structured data, meta tags, and sitemap for better search engine visibility
-- 📄 **CV Download**: Direct PDF export of resume
+- 📄 **Printable CV**: print-optimized layout for saving as PDF
 - 🔄 **PWA Support**: Can be installed as a Progressive Web App for offline access
 
 ## 🧰 Tech Stack
 
-- **[Astro](https://astro.build/)**: Core framework for static site generation
-- **[React](https://reactjs.org/)**: For interactive components
+- **[Astro](https://astro.build/)**: Core framework for static site generation (pure Astro + vanilla JS, no UI framework)
 - **[TailwindCSS](https://tailwindcss.com/)**: Utility-first CSS framework
 - **[Netlify](https://www.netlify.com/)**: Hosting and continuous deployment
 
@@ -80,9 +78,8 @@ npm run preview
 │   ├── images/          # Images and photos
 │   └── locales/         # Translation files
 ├── src/
-│   ├── components/      # React components
+│   ├── components/      # Astro components
 │   │   └── cv/          # CV section components
-│   ├── contexts/        # React contexts
 │   ├── data/            # Data files for CV sections
 │   ├── layouts/         # Astro layouts
 │   ├── pages/           # Astro pages

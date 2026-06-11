@@ -26,7 +26,6 @@ import {
   generateWebSiteStructuredData,
   generateResumeStructuredData,
   normalizePathname,
-  toSafeJsonLd,
 } from "../utils/seo";
 
 // Import translations for SSG inline (eliminates runtime fetch)
@@ -62,7 +61,6 @@ const {
   lang = "en",
   ogImage = "/images/oriol_macias.jpg",
   canonicalUrl,
-  alternateUrls = {},
 } = Astro.props;
 
 // Get translations for current language (SSG - no runtime fetch needed)
@@ -215,7 +213,7 @@ const isMultilingualPage =
 
     <!-- Prevent theme flash - must be early -->
     <script is:inline data-cfasync="false">
-      (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch(e){document.documentElement.className='dark';}})();
+      (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch{document.documentElement.className='dark';}})();
     </script>
 
     <!-- CSP is defined via HTTP headers in public/_headers (Netlify) -->
@@ -387,7 +385,7 @@ const isMultilingualPage =
       // Defer GA loading until user interaction or 5s after load
       // This prevents GA from affecting Lighthouse performance scores
       window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
+      function gtag() { window.dataLayer.push(arguments); }
       var gaLoaded = false;
 
       function loadGA() {
@@ -454,7 +452,7 @@ const isMultilingualPage =
       window.CURRENT_LANGUAGE=lang;
       window.TRANSLATIONS=window.TRANSLATIONS||{};
       window.TRANSLATIONS[lang]=currentTranslations;
-      window.t=function(k,f){try{var v=window.TRANSLATIONS[window.CURRENT_LANGUAGE];k.split('.').forEach(function(p){v=v&&v[p]});return v||f||k}catch(e){return f||k}};
+      window.t=function(k,f){try{var v=window.TRANSLATIONS[window.CURRENT_LANGUAGE];k.split('.').forEach(function(p){v=v&&v[p]});return v||f||k}catch{return f||k}};
       document.dispatchEvent(new CustomEvent('translationsLoaded'));
     </script>
 

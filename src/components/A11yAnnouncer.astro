@@ -58,10 +58,11 @@
         };
 
         // Support custom event announcements
-        document.addEventListener('a11y-announce', ((e: CustomEvent) => {
-            if (e.detail?.message) {
-                (window as any).announceToScreenReader(e.detail.message, e.detail.priority || 'polite');
+        document.addEventListener('a11y-announce', (e: Event) => {
+            const detail = (e as CustomEvent).detail;
+            if (detail?.message) {
+                (window as any).announceToScreenReader(detail.message, detail.priority || 'polite');
             }
-        }) as EventListener);
+        });
     })();
 </script>
