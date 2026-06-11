@@ -25,6 +25,7 @@ import {
   generatePersonStructuredData,
   generateWebSiteStructuredData,
   generateResumeStructuredData,
+  normalizePathname,
   toSafeJsonLd,
 } from "../utils/seo";
 
@@ -37,8 +38,6 @@ import deTranslations from "../../public/locales/de/translation.json";
 // Import global animations
 // Import global styles (includes animations, theme, etc.)
 import "../styles/global.css";
-
-const currentPath = Astro.url.pathname;
 
 /**
  * Layout component props interface
@@ -62,7 +61,7 @@ const {
   description = "Professional CV for Oriol Macias, a Software Developer specialized in backend development, industrial protocols integration, and data center infrastructure.",
   lang = "en",
   ogImage = "/images/oriol_macias.jpg",
-  canonicalUrl = "https://oriolmacias.dev/",
+  canonicalUrl,
   alternateUrls = {},
 } = Astro.props;
 
@@ -183,10 +182,21 @@ const jobPostingSchema = {
   ],
 };
 
-// Construct full canonical URL
-const fullCanonicalUrl = canonicalUrl.startsWith("http")
-  ? canonicalUrl
-  : new URL(Astro.url.pathname, "https://oriolmacias.dev").href;
+// Construct full canonical URL — always the clean extensionless URL of THIS page
+// (build.format:'file' makes Astro.url.pathname end in .html; never expose it)
+const cleanPath = normalizePathname(Astro.url.pathname);
+const canonicalPath = canonicalUrl
+  ? normalizePathname(new URL(canonicalUrl, "https://oriolmacias.dev").pathname)
+  : cleanPath;
+const fullCanonicalUrl =
+  canonicalPath === "/"
+    ? "https://oriolmacias.dev/"
+    : `https://oriolmacias.dev${canonicalPath}`;
+
+// Geo pages (/switzerland/*, /spain/*) are monolingual: no /es|/fr|/de variants
+// exist for them (netlify.toml 301s those away), so they must emit no hreflang
+const isMultilingualPage =
+  !/^\/(switzerland|spain)(\/|$)/.test(cleanPath) && cleanPath !== "/404";
 ---
 
 <!doctype html>
@@ -293,10 +303,11 @@ const fullCanonicalUrl = canonicalUrl.startsWith("http")
     }
 
     <!-- Language alternatives component - Pure Astro, no client JS -->
-    <LanguageAlternates
-      currentLang={lang}
-      currentPath={Astro.url.pathname}
-    />
+    {
+      isMultilingualPage && (
+        <LanguageAlternates currentLang={lang} currentPath={cleanPath} />
+      )
+    }
 
     <!-- Critical CSS - Essential for FCP and layout -->
     <style is:inline>

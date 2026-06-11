@@ -224,6 +224,94 @@
   to = "/spain"
   status = 301
 
+# ===== SITEMAP CANONICALIZATION =====
+# The legacy static /sitemap.xml was removed; @astrojs/sitemap emits
+# sitemap-index.xml + sitemap-0.xml. Keep the old URL resolving for GSC.
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+  force = true
+
+# ===== LEGACY .html URL CLEANUP =====
+# build.format:'file' emits flat .html files that Netlify also serves directly,
+# creating duplicate URLs (GSC indexed /de.html, /switzerland/zurich.html).
+# force = true is required: the files exist on disk and would shadow the rule.
+# NOTE: /404.html is intentionally NOT redirected (target of the 404 catch-all).
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es.html"
+  to = "/es"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr.html"
+  to = "/fr"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de.html"
+  to = "/de"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/spain.html"
+  to = "/spain"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/spain/madrid.html"
+  to = "/spain/madrid"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/spain/barcelona.html"
+  to = "/spain/barcelona"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/switzerland.html"
+  to = "/switzerland"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/switzerland/zurich.html"
+  to = "/switzerland/zurich"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/switzerland/geneva.html"
+  to = "/switzerland/geneva"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/switzerland/basel.html"
+  to = "/switzerland/basel"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/switzerland/lausanne.html"
+  to = "/switzerland/lausanne"
+  status = 301
+  force = true
+
 # ===== 404 HANDLING =====
 
 # Handle 404 pages

@@ -42,6 +42,29 @@ export interface PersonSchema {
 }
 
 /**
+ * Normalizes a pathname to its canonical clean form.
+ * With build.format:'file' Astro emits flat .html files and Astro.url.pathname
+ * reflects them (e.g. "/es.html"); canonical/hreflang URLs must never expose
+ * the .html artifact or trailing slashes (trailingSlash: 'never', root excepted).
+ *
+ * "/index.html" -> "/"   "/es.html" -> "/es"   "/es/" -> "/es"
+ * "/switzerland/zurich.html" -> "/switzerland/zurich"   "/" -> "/"
+ */
+export function normalizePathname(pathname: string): string {
+    let path = pathname;
+    if (path.endsWith("/index.html")) {
+        path = path.slice(0, -"index.html".length);
+    }
+    if (path.endsWith(".html")) {
+        path = path.slice(0, -".html".length);
+    }
+    if (path.length > 1 && path.endsWith("/")) {
+        path = path.slice(0, -1);
+    }
+    return path === "" ? "/" : path;
+}
+
+/**
  * Detects market and optimizes SEO accordingly
  */
 export function detectMarketAndOptimizeSEO(
