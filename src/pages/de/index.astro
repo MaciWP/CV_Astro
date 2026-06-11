@@ -46,6 +46,10 @@ const faqs = [
   {
     question: "Was ist Ihre Kündigungsfrist?",
     answer: "Ich habe eine Kündigungsfrist von 2 Wochen und kann kurz danach beginnen."
+  },
+  {
+    question: "Welche Arbeitssprachen sprechen Sie?",
+    answer: "Englisch als professionelle Arbeitssprache, Spanisch und Katalanisch als Muttersprachen sowie Französisch. Deutsch lerne ich derzeit aktiv – in internationalen Teams in der Schweiz arbeite ich auf Englisch."
   }
 ];
 ---
@@ -90,6 +94,23 @@ const faqs = [
 
         {/* Projects - Pure Astro */}
         <Projects lang="de" />
+
+        {/* Regionale Profile - interne Links zu Marktseiten */}
+        <nav
+            class="text-sm text-gray-700 dark:text-gray-300"
+            aria-label="Regionale Profile"
+        >
+            Sie stellen in einem bestimmten Markt ein?
+            <a href="/switzerland" class="text-brand-red hover:underline font-semibold">Schweiz</a>:
+            <a href="/switzerland/zurich" class="text-brand-red hover:underline">Zürich</a>,
+            <a href="/switzerland/geneva" class="text-brand-red hover:underline">Genf</a>,
+            <a href="/switzerland/basel" class="text-brand-red hover:underline">Basel</a>,
+            <a href="/switzerland/lausanne" class="text-brand-red hover:underline">Lausanne</a>
+            <span aria-hidden="true"> · </span>
+            <a href="/spain" class="text-brand-red hover:underline font-semibold">Spanien</a>:
+            <a href="/spain/madrid" class="text-brand-red hover:underline">Madrid</a>,
+            <a href="/spain/barcelona" class="text-brand-red hover:underline">Barcelona</a>
+        </nav>
 
         {/* FAQ Section with structured data */}
         <FAQSchema faqs={faqs} lang="de" />

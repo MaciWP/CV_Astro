@@ -91,6 +91,23 @@ const faqs = [
         {/* Projects - Pure Astro */}
         <Projects lang="fr" />
 
+        {/* Profils régionaux - liens internes vers les pages marché */}
+        <nav
+            class="text-sm text-gray-700 dark:text-gray-300"
+            aria-label="Profils régionaux"
+        >
+            Vous recrutez sur un marché précis ?
+            <a href="/switzerland" class="text-brand-red hover:underline font-semibold">Suisse</a> :
+            <a href="/switzerland/zurich" class="text-brand-red hover:underline">Zurich</a>,
+            <a href="/switzerland/geneva" class="text-brand-red hover:underline">Genève</a>,
+            <a href="/switzerland/basel" class="text-brand-red hover:underline">Bâle</a>,
+            <a href="/switzerland/lausanne" class="text-brand-red hover:underline">Lausanne</a>
+            <span aria-hidden="true"> · </span>
+            <a href="/spain" class="text-brand-red hover:underline font-semibold">Espagne</a> :
+            <a href="/spain/madrid" class="text-brand-red hover:underline">Madrid</a>,
+            <a href="/spain/barcelona" class="text-brand-red hover:underline">Barcelone</a>
+        </nav>
+
         {/* FAQ Section with structured data */}
         <FAQSchema faqs={faqs} lang="fr" />
 

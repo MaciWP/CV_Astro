@@ -20,8 +20,8 @@ const breadcrumbs = [
 ];
 ---
 
-<BreadcrumbSchema items={breadcrumbs} />
 <Layout title={title} description={description} lang="es">
+  <BreadcrumbSchema items={breadcrumbs} />
   <div class="max-w-4xl mx-auto">
     <section class="mb-16">
       <h1 class="text-4xl font-bold mb-4 text-brand-red">
@@ -74,5 +74,15 @@ const breadcrumbs = [
     <ProfileHeader lang="es" />
     <Experience lang="es" />
     <Skills lang="es" />
+
+    <nav
+      class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300"
+      aria-label="Perfiles relacionados"
+    >
+      <a href="/spain" class="text-brand-red hover:underline font-semibold">Desarrollador Backend en España</a>
+      <span aria-hidden="true"> · </span>
+      Otras ciudades:
+      <a href="/spain/barcelona" class="text-brand-red hover:underline">Barcelona</a>
+    </nav>
   </div>
 </Layout>
