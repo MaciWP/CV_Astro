@@ -269,6 +269,26 @@ export function generatePersonStructuredData(): PersonSchema {
  * Safely serializes data to JSON-LD string, preventing script injection and syntax errors
  * @param data The data object to serialize
  */
+/**
+ * Generates ProfilePage structured data wrapping the Person entity.
+ * The correct schema for a personal CV/profile page (Google profile-page
+ * guidance: ProfilePage with the Person inline as mainEntity). Replaces the
+ * former JobPosting markup, which Google reserves for employers publishing
+ * actual job openings (misrepresentation policy -> manual action risk).
+ */
+export function generateProfilePageStructuredData(): Record<string, any> {
+    const person: Record<string, any> = { ...generatePersonStructuredData() };
+    delete person["@context"];
+    return {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "@id": "https://oriolmacias.dev/#profilepage",
+        url: "https://oriolmacias.dev/",
+        dateModified: new Date().toISOString().split("T")[0],
+        mainEntity: person,
+    };
+}
+
 export function toSafeJsonLd(data: any): string {
     const json = JSON.stringify(data ?? {}, null, 2);
     // Escape closing </script to avoid early termination in HTML parsing

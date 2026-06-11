@@ -1,9 +1,12 @@
 /**
  * Structured Data Validation Script
  * @file scripts/validate-structured-data.js
- * @description Validates JobPosting and Person structured data for Google compliance
+ * @description Validates the JSON-LD actually emitted into dist/ (real build
+ * output, not a mock). Asserts the post-2026-06 schema set: ProfilePage
+ * wrapping a Person mainEntity + WebSite, and ZERO JobPosting nodes
+ * (JobPosting is employer-only markup per Google's content guidelines).
  * @author Oriol Macias Dev
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import fs from 'fs/promises';
@@ -13,336 +16,146 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/**
- * Required fields for JobPosting schema according to Google
- */
-const REQUIRED_JOB_POSTING_FIELDS = [
-    'title',
-    'description',
-    'datePosted',
-    'hiringOrganization',
-    'jobLocation'
+const DIST_DIR = path.join(__dirname, '../dist');
+const REPORT_FILE = path.join(__dirname, '../validation-report.json');
+
+// Representative pages: homepage, a language root, a geo city page
+const PAGES_TO_CHECK = [
+    'index.html',
+    'es.html',
+    'switzerland/zurich.html',
 ];
 
 /**
- * Recommended fields for better SEO
+ * Extract and parse every JSON-LD block from an HTML string.
+ * Handles both quoted and minified-unquoted type attributes.
  */
-const RECOMMENDED_JOB_POSTING_FIELDS = [
-    'employmentType',
-    'validThrough',
-    'baseSalary',
-    'qualifications',
-    'responsibilities'
-];
+function extractJsonLd(html, errors) {
+    const blocks = [];
+    const regex = /<script[^>]*type=["']?application\/ld\+json["']?[^>]*>([\s\S]*?)<\/script>/g;
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+        try {
+            blocks.push(JSON.parse(match[1]));
+        } catch (e) {
+            errors.push(`Unparseable JSON-LD block: ${e.message}`);
+        }
+    }
+    return blocks;
+}
+
+/** Collect every @type present in a JSON-LD node tree (nested included). */
+function collectTypes(node, types = []) {
+    if (Array.isArray(node)) {
+        node.forEach((n) => collectTypes(n, types));
+    } else if (node && typeof node === 'object') {
+        if (node['@type']) types.push(node['@type']);
+        Object.values(node).forEach((v) => collectTypes(v, types));
+    }
+    return types;
+}
 
 /**
- * Validate JobPosting structured data
- * @param {Object} jobPosting - JobPosting schema object
- * @returns {Object} Validation result
+ * Validate one page's JSON-LD blocks against the expected schema set.
  */
-function validateJobPosting(jobPosting) {
+function validatePage(page, blocks) {
     const errors = [];
     const warnings = [];
 
-    // Check required fields
-    REQUIRED_JOB_POSTING_FIELDS.forEach(field => {
-        if (!jobPosting[field]) {
-            errors.push(`Missing required field: ${field}`);
-        }
-    });
+    const allTypes = blocks.flatMap((b) => collectTypes(b));
 
-    // Check recommended fields
-    RECOMMENDED_JOB_POSTING_FIELDS.forEach(field => {
-        if (!jobPosting[field]) {
-            warnings.push(`Missing recommended field: ${field}`);
-        }
-    });
-
-    // Validate hiringOrganization structure
-    if (jobPosting.hiringOrganization) {
-        if (!jobPosting.hiringOrganization.name) {
-            errors.push('Missing hiringOrganization.name');
-        }
-        if (!jobPosting.hiringOrganization['@type']) {
-            errors.push('Missing hiringOrganization.@type');
-        }
+    // 1. JobPosting must NOT exist anywhere (candidate site, not an employer)
+    if (allTypes.includes('JobPosting')) {
+        errors.push('JobPosting markup found — employer-only schema, must not appear on a CV');
     }
 
-    // Validate jobLocation structure
-    if (jobPosting.jobLocation) {
-        if (!jobPosting.jobLocation.address) {
-            errors.push('Missing jobLocation.address');
-        } else {
-            const address = jobPosting.jobLocation.address;
-            if (!address.addressCountry) {
-                errors.push('Missing jobLocation.address.addressCountry');
-            }
-            if (!address.addressRegion) {
-                errors.push('Missing jobLocation.address.addressRegion');
-            }
-            if (!address.addressLocality) {
-                warnings.push('Missing jobLocation.address.addressLocality (recommended)');
-            }
-            if (!address.postalCode) {
-                warnings.push('Missing jobLocation.address.postalCode (recommended)');
-            }
-        }
-    }
-
-    // Validate baseSalary structure if present
-    if (jobPosting.baseSalary) {
-        if (!jobPosting.baseSalary.currency) {
-            errors.push('Missing baseSalary.currency');
-        }
-        if (!jobPosting.baseSalary.value) {
-            errors.push('Missing baseSalary.value');
-        } else {
-            const value = jobPosting.baseSalary.value;
-            if (!value.minValue && !value.maxValue && !value.value) {
-                errors.push('baseSalary.value must have minValue, maxValue, or value');
-            }
-            if (!value.unitText) {
-                warnings.push('Missing baseSalary.value.unitText (recommended)');
-            }
-        }
-    }
-
-    // Validate date formats
-    if (jobPosting.datePosted) {
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        if (!dateRegex.test(jobPosting.datePosted)) {
-            errors.push('datePosted must be in YYYY-MM-DD format');
-        }
-    }
-
-    if (jobPosting.validThrough) {
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        if (!dateRegex.test(jobPosting.validThrough)) {
-            errors.push('validThrough must be in YYYY-MM-DD format');
-        }
-    }
-
-    return {
-        isValid: errors.length === 0,
-        errors,
-        warnings,
-        score: Math.max(0, 100 - (errors.length * 20) - (warnings.length * 5))
-    };
-}
-
-/**
- * Test JobPosting schema generation
- */
-async function testJobPostingGeneration() {
-    console.log('🔍 Testing JobPosting Schema Generation...\n');
-
-    // Import the JobPosting component (simulate different scenarios)
-    const testCases = [
-        {
-            name: 'Switzerland - Zurich',
-            market: 'switzerland',
-            city: 'zurich',
-            language: 'en'
-        },
-        {
-            name: 'Switzerland - Geneva (French)',
-            market: 'switzerland',
-            city: 'geneva',
-            language: 'fr'
-        },
-        {
-            name: 'Spain - Madrid',
-            market: 'spain',
-            city: 'madrid',
-            language: 'es'
-        },
-        {
-            name: 'Spain - Barcelona (English)',
-            market: 'spain',
-            city: 'barcelona',
-            language: 'en'
-        }
-    ];
-
-    let totalScore = 0;
-    let passedTests = 0;
-
-    for (const testCase of testCases) {
-        console.log(`📋 Testing: ${testCase.name}`);
-
-        try {
-            // Simulate JobPosting generation (you would import the actual component here)
-            const mockJobPosting = generateMockJobPosting(testCase);
-
-            const validation = validateJobPosting(mockJobPosting);
-
-            console.log(`   Score: ${validation.score}/100`);
-
-            if (validation.errors.length > 0) {
-                console.log('   ❌ Errors:');
-                validation.errors.forEach(error => console.log(`      - ${error}`));
-            }
-
-            if (validation.warnings.length > 0) {
-                console.log('   ⚠️  Warnings:');
-                validation.warnings.forEach(warning => console.log(`      - ${warning}`));
-            }
-
-            if (validation.isValid) {
-                console.log('   ✅ Valid JobPosting schema');
-                passedTests++;
-            } else {
-                console.log('   ❌ Invalid JobPosting schema');
-            }
-
-            totalScore += validation.score;
-
-        } catch (error) {
-            console.log(`   ❌ Error generating schema: ${error.message}`);
-        }
-
-        console.log('');
-    }
-
-    const averageScore = totalScore / testCases.length;
-
-    console.log('📊 Summary:');
-    console.log(`   Tests passed: ${passedTests}/${testCases.length}`);
-    console.log(`   Average score: ${averageScore.toFixed(1)}/100`);
-
-    if (averageScore >= 90) {
-        console.log('   🎉 Excellent! Ready for production');
-    } else if (averageScore >= 75) {
-        console.log('   ✅ Good! Minor improvements recommended');
-    } else if (averageScore >= 60) {
-        console.log('   ⚠️  Needs improvement before production');
+    // 2. Exactly one ProfilePage wrapping a valid Person
+    const profilePages = blocks.filter((b) => b['@type'] === 'ProfilePage');
+    if (profilePages.length !== 1) {
+        errors.push(`Expected exactly 1 ProfilePage, found ${profilePages.length}`);
     } else {
-        console.log('   ❌ Critical issues need to be fixed');
-    }
-
-    return {
-        passed: passedTests === testCases.length && averageScore >= 75,
-        score: averageScore,
-        passedTests,
-        totalTests: testCases.length
-    };
-}
-
-/**
- * Generate mock JobPosting for testing
- * @param {Object} testCase - Test case parameters
- * @returns {Object} Mock JobPosting object
- */
-function generateMockJobPosting(testCase) {
-    const currentDate = new Date();
-    const validThroughDate = new Date();
-    validThroughDate.setMonth(validThroughDate.getMonth() + 6);
-
-    const baseJobPosting = {
-        "@context": "https://schema.org",
-        "@type": "JobPosting",
-        title: `Senior Backend Developer - ${testCase.city}`,
-        description: "Experienced Backend Developer with 8+ years in industrial protocol integration",
-        datePosted: currentDate.toISOString().split('T')[0],
-        validThrough: validThroughDate.toISOString().split('T')[0],
-        employmentType: "FULL_TIME",
-        hiringOrganization: {
-            "@type": "Organization",
-            name: testCase.market === 'switzerland' ? 'Swiss Technology Companies' : 'Spanish Technology Companies',
-            url: "https://oriolmacias.dev"
-        },
-        jobLocation: {
-            "@type": "Place",
-            address: {
-                "@type": "PostalAddress",
-                addressCountry: testCase.market === 'switzerland' ? 'CH' : 'ES',
-                addressRegion: testCase.market === 'switzerland' ? 'Switzerland' : 'Spain',
-                addressLocality: testCase.city.charAt(0).toUpperCase() + testCase.city.slice(1),
-                postalCode: testCase.market === 'switzerland' ? '8000-8099' : '28000-28999'
+        const person = profilePages[0].mainEntity;
+        if (!person || person['@type'] !== 'Person') {
+            errors.push('ProfilePage.mainEntity is not a Person');
+        } else {
+            ['name', 'jobTitle', 'url'].forEach((field) => {
+                if (!person[field]) errors.push(`Person missing required field: ${field}`);
+            });
+            if (!Array.isArray(person.sameAs) || person.sameAs.length < 1) {
+                errors.push('Person.sameAs must list at least one external profile');
             }
-        },
-        baseSalary: {
-            "@type": "MonetaryAmount",
-            currency: testCase.market === 'switzerland' ? 'CHF' : 'EUR',
-            value: {
-                "@type": "QuantitativeValue",
-                minValue: testCase.market === 'switzerland' ? 90000 : 45000,
-                maxValue: testCase.market === 'switzerland' ? 130000 : 65000,
-                unitText: "YEAR"
-            }
-        },
-        qualifications: [
-            "8+ years backend development experience",
-            "Python and Django expertise"
-        ],
-        responsibilities: [
-            "Design and develop backend systems",
-            "Industrial protocol integration"
-        ],
-        skills: ["Python", "Django", "C#", ".NET"]
-    };
-
-    return baseJobPosting;
-}
-
-/**
- * Generate validation report
- */
-async function generateValidationReport() {
-    const results = await testJobPostingGeneration();
-
-    const report = {
-        timestamp: new Date().toISOString(),
-        results,
-        recommendations: []
-    };
-
-    if (results.score < 90) {
-        report.recommendations.push('Add more specific job qualifications');
-        report.recommendations.push('Include job benefits information');
-        report.recommendations.push('Add more detailed job responsibilities');
+        }
     }
 
-    if (results.score < 75) {
-        report.recommendations.push('Fix all validation errors before deployment');
-        report.recommendations.push('Review Google JobPosting guidelines');
+    // 3. One WebSite node with name + url
+    const websites = blocks.filter((b) => b['@type'] === 'WebSite');
+    if (websites.length !== 1) {
+        errors.push(`Expected exactly 1 WebSite, found ${websites.length}`);
+    } else {
+        if (!websites[0].name) errors.push('WebSite missing name');
+        if (!websites[0].url) errors.push('WebSite missing url');
     }
 
-    // Save report
-    const reportPath = path.join(__dirname, '../validation-report.json');
-    await fs.writeFile(reportPath, JSON.stringify(report, null, 2));
+    // 4. Breadcrumbs are expected on geo pages
+    if (page.includes('/') && !allTypes.includes('BreadcrumbList')) {
+        warnings.push('Geo page without BreadcrumbList');
+    }
 
-    console.log(`📄 Validation report saved to: ${reportPath}`);
-
-    return results.passed;
+    return { errors, warnings, types: [...new Set(allTypes)] };
 }
 
-/**
- * Main execution
- */
 async function main() {
-    console.log('🚀 JobPosting Structured Data Validation\n');
+    console.log('🚀 Structured Data Validation (real dist/ output)\n');
 
     try {
-        const passed = await generateValidationReport();
+        await fs.access(DIST_DIR);
+    } catch {
+        console.warn('⚠️  dist/ not found — run `npm run build` first for a meaningful check.');
+        console.warn('   Skipping (exit 0) so standalone `npm run check` keeps working.');
+        return;
+    }
 
-        if (passed) {
-            console.log('\n✅ All validations passed! Ready for deployment.');
-            process.exit(0);
-        } else {
-            console.log('\n❌ Validation failed. Please fix issues before deployment.');
-            process.exit(1);
+    const report = { generatedAt: new Date().toISOString(), pages: {} };
+    let failed = false;
+
+    for (const page of PAGES_TO_CHECK) {
+        const filePath = path.join(DIST_DIR, page);
+        console.log(`📋 Checking: ${page}`);
+
+        let html;
+        try {
+            html = await fs.readFile(filePath, 'utf-8');
+        } catch {
+            console.error(`   ❌ Missing build output: ${page}`);
+            report.pages[page] = { errors: ['file missing from dist/'] };
+            failed = true;
+            continue;
         }
 
-    } catch (error) {
-        console.error('❌ Validation script failed:', error);
+        const parseErrors = [];
+        const blocks = extractJsonLd(html, parseErrors);
+        const { errors, warnings, types } = validatePage(page, blocks);
+        errors.push(...parseErrors);
+
+        report.pages[page] = { types, errors, warnings };
+
+        if (errors.length) {
+            failed = true;
+            errors.forEach((e) => console.error(`   ❌ ${e}`));
+        } else {
+            console.log(`   ✅ Valid (${types.join(', ')})`);
+        }
+        warnings.forEach((w) => console.warn(`   ⚠️  ${w}`));
+    }
+
+    await fs.writeFile(REPORT_FILE, JSON.stringify(report, null, 2));
+    console.log(`\n📄 Validation report saved to: ${REPORT_FILE}`);
+
+    if (failed) {
+        console.error('\n❌ Structured data validation FAILED');
         process.exit(1);
     }
+    console.log('\n✅ All structured data validations passed!');
 }
 
-// Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-    main();
-}
-
-export { validateJobPosting, testJobPostingGeneration };
+main();

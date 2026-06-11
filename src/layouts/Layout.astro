@@ -18,11 +18,10 @@ import Navbar from "../components/Navbar.astro";
 import SkipToContent from "../components/SkipToContent.astro";
 import A11yAnnouncer from "../components/A11yAnnouncer.astro";
 import LanguageAlternates from "../components/LanguageAlternates.astro";
-import JobPostingSchema from "../components/JobPostingSchema.astro";
 import SvgIcons from "../components/icons/SvgIcons.astro";
 import {
   detectMarketAndOptimizeSEO,
-  generatePersonStructuredData,
+  generateProfilePageStructuredData,
   generateWebSiteStructuredData,
   generateResumeStructuredData,
   normalizePathname,
@@ -81,104 +80,11 @@ const marketData = detectMarketAndOptimizeSEO(
 );
 
 // Generate structured data using centralized utility
-const personSchema = generatePersonStructuredData();
+// ProfilePage wraps the Person entity (correct markup for a candidate CV;
+// JobPosting removed 2026-06-11 — Google reserves it for employer job offers)
+const profilePageSchema = generateProfilePageStructuredData();
 const websiteSchema = generateWebSiteStructuredData();
 const resumeSchema = generateResumeStructuredData();
-
-// Generate JobPosting schema inline
-const currentDate = new Date();
-const validThroughDate = new Date();
-validThroughDate.setMonth(validThroughDate.getMonth() + 6);
-
-const jobPostingSchema = {
-  "@context": "https://schema.org",
-  "@type": "JobPosting",
-  title:
-    marketData.market === "switzerland"
-      ? `Senior Backend Developer - Switzerland`
-      : `Desarrollador Backend Senior - España`,
-  description:
-    marketData.market === "switzerland"
-      ? "Experienced Backend Developer with over 8 years in industrial protocol integration (SNMP, Modbus, BACnet) seeking opportunities in Switzerland. Expertise in Python, Django, C#, .NET, and data center infrastructure. EU work permit ready."
-      : "Desarrollador Backend experimentado con 8+ años en integración de protocolos industriales buscando oportunidades en España.",
-  datePosted: currentDate.toISOString().split("T")[0],
-  validThrough: validThroughDate.toISOString().split("T")[0],
-  employmentType: "FULL_TIME",
-  hiringOrganization: {
-    "@type": "Organization",
-    name: "Oriol Macias Dev",
-    url: "https://oriolmacias.dev",
-    logo: "https://oriolmacias.dev/images/oriol_macias.jpg",
-  },
-  jobLocationType: "TELECOMMUTE",
-  applicantLocationRequirements: {
-    "@type": "Country",
-    name: marketData.market === "switzerland" ? "Switzerland" : "Spain",
-  },
-  jobLocation: {
-    "@type": "Place",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress:
-        marketData.market === "switzerland"
-          ? "Technoparkstrasse 1"
-          : "Paseo de la Castellana 1",
-      addressCountry: marketData.market === "switzerland" ? "CH" : "ES",
-      addressLocality:
-        marketData.city !== "general"
-          ? marketData.city.charAt(0).toUpperCase() + marketData.city.slice(1)
-          : marketData.market === "switzerland"
-            ? "Zürich"
-            : "Madrid",
-      postalCode: marketData.market === "switzerland" ? "8005" : "28046",
-    },
-  },
-  baseSalary: {
-    "@type": "MonetaryAmount",
-    currency: marketData.market === "switzerland" ? "CHF" : "EUR",
-    value: {
-      "@type": "QuantitativeValue",
-      minValue: marketData.market === "switzerland" ? 90000 : 45000,
-      maxValue: marketData.market === "switzerland" ? 130000 : 65000,
-      unitText: "YEAR",
-    },
-  },
-  qualifications: marketData.market === "switzerland"
-    ? [
-        "8+ years backend development experience",
-        "Expert in Python, Django, and Django REST Framework",
-        "Industrial protocol integration (SNMP, Modbus, BACnet)",
-        "Experience with C#, .NET Framework and Core",
-        "Database management (PostgreSQL, MySQL)",
-        "EU work permit for Switzerland"
-      ]
-    : [
-        "8+ años de experiencia en desarrollo backend",
-        "Experto en Python, Django y Django REST Framework",
-        "Integración de protocolos industriales (SNMP, Modbus, BACnet)",
-        "Experiencia con C#, .NET Framework y Core",
-        "Gestión de bases de datos (PostgreSQL, MySQL)"
-      ],
-  responsibilities: marketData.market === "switzerland"
-    ? [
-        "Design and develop backend integration solutions",
-        "Industrial protocol integration for DCIM platforms",
-        "ETL microservices development with REST APIs",
-        "Database architecture and optimization",
-        "Code review and technical mentoring"
-      ]
-    : [
-        "Diseñar y desarrollar soluciones de integración backend",
-        "Integración de protocolos industriales para plataformas DCIM",
-        "Desarrollo de microservicios ETL con APIs REST",
-        "Arquitectura y optimización de bases de datos",
-        "Revisión de código y mentoría técnica"
-      ],
-  skills: [
-    "Python", "Django", "Django REST Framework", "C#", ".NET Core",
-    "PostgreSQL", "MySQL", "SNMP", "Modbus", "BACnet", "Docker", "Git"
-  ],
-};
 
 // Construct full canonical URL — always the clean extensionless URL of THIS page
 // (build.format:'file' makes Astro.url.pathname end in .html; never expose it)
@@ -422,9 +328,9 @@ const isMultilingualPage =
       setTimeout(loadGA, 5000);
     </script>
 
-    <!-- Fixed Structured Data with proper typing -->
+    <!-- ProfilePage Structured Data (Person as mainEntity) -->
     <Fragment
-      set:html={`<script type="application/ld+json">${JSON.stringify(personSchema, null, 2)}</script>`}
+      set:html={`<script type="application/ld+json">${JSON.stringify(profilePageSchema, null, 2)}</script>`}
     />
 
     <!-- WebSite Structured Data for better indexation -->
@@ -435,11 +341,6 @@ const isMultilingualPage =
     <!-- Resume Structured Data for CV semantic clarity -->
     <Fragment
       set:html={`<script type="application/ld+json">${JSON.stringify(resumeSchema, null, 2)}</script>`}
-    />
-
-    <!-- JobPosting Structured Data -->
-    <Fragment
-      set:html={`<script type="application/ld+json">${JSON.stringify(jobPostingSchema, null, 2)}</script>`}
     />
 
     <!-- Print Styles (FontAwesome removed - using inline SVG) -->
