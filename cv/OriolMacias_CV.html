@@ -1,0 +1,272 @@
+<!doctype html>
+<!--
+  CV print source — NOT deployed (lives outside public/).
+  EXPORT: open this file in Chrome -> Cmd+P -> Destination "Save as PDF"
+  -> Paper A4 -> Margins "Default" -> ENABLE "Background graphics" -> Save as
+  OriolMacias_CV.pdf -> drop the PDF into public/ to fix the live download link.
+  All content sourced from src/data/*.js + public/locales/en/translation.json.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Oriol Macias - CV</title>
+<style>
+  /* ===== Page setup (A4) ===== */
+  @page {
+    size: A4;
+    margin: 13mm 15mm;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: Helvetica, Arial, "Segoe UI", sans-serif; /* universal = ATS-safe */
+    font-size: 9.7pt;
+    line-height: 1.42;
+    color: #1a1a1a;
+    max-width: 180mm;
+    margin: 0 auto;
+  }
+  a { color: #1a1a1a; text-decoration: none; }
+
+  /* Screen-only: render as an A4 sheet so the preview matches print intent */
+  @media screen {
+    html { background: #e8e8e8; }
+    body {
+      background: #fff;
+      margin: 10mm auto;
+      padding: 13mm 15mm;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  /* ===== Header ===== */
+  header { display: flex; justify-content: space-between; gap: 8mm; align-items: flex-start; }
+  .head-left { flex: 1; }
+  h1 { font-size: 22pt; letter-spacing: -0.3pt; }
+  .job-title { font-size: 11.5pt; color: #c41e1e; font-weight: 700; margin-top: 1mm; }
+  .facts { margin-top: 2.5mm; font-size: 8.8pt; color: #333; }
+  .facts span { white-space: nowrap; }
+  .facts .sep { color: #c41e1e; padding: 0 1.2mm; }
+  .contact { margin-top: 1.6mm; font-size: 8.8pt; color: #333; }
+  .contact strong { font-weight: 700; }
+  .contact .ci { white-space: nowrap; } /* label+value wrap as one unit */
+  .photo {
+    width: 28mm; height: 28mm; object-fit: cover;
+    border: 0.4mm solid #c41e1e;
+  }
+
+  /* ===== Sections ===== */
+  section { margin-top: 4.2mm; }
+  h2 {
+    font-size: 10.5pt; text-transform: uppercase; letter-spacing: 1.1pt;
+    color: #c41e1e; border-bottom: 0.45mm solid #c41e1e;
+    padding-bottom: 0.8mm; margin-bottom: 2.2mm;
+  }
+  .summary { text-align: justify; }
+
+  /* ===== Experience ===== */
+  .job { margin-bottom: 3.2mm; break-inside: avoid; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .job-head h3 { font-size: 10.3pt; }
+  .job-head .company { font-weight: 400; color: #444; }
+  .period { font-size: 8.8pt; color: #555; font-weight: 700; white-space: nowrap; }
+  ul { list-style: none; margin-top: 1mm; }
+  li { padding-left: 3.4mm; position: relative; margin-bottom: 0.6mm; }
+  li::before { content: "•"; position: absolute; left: 0.6mm; color: #c41e1e; }
+  li.achv::before { content: "▸"; }
+  li.achv { font-weight: 400; }
+  li.achv strong { font-weight: 700; }
+  .stack { margin-top: 1mm; font-size: 8.6pt; color: #555; }
+  .stack b { color: #1a1a1a; }
+
+  /* ===== Skills ===== */
+  .skill-row {
+    display: grid;
+    grid-template-columns: 47mm 1fr; /* wrapped lines stay in the value column */
+    column-gap: 2mm;
+    margin-bottom: 1.1mm;
+  }
+
+  /* ===== Education / Languages / Projects ===== */
+  .edu { display: flex; justify-content: space-between; margin-bottom: 1.6mm; break-inside: avoid; }
+  .edu .what b { display: block; }
+  .edu .what span { font-size: 8.8pt; color: #444; }
+  .langs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2: no orphan rows, even spacing */
+    row-gap: 1.4mm;
+  }
+  .lang { white-space: nowrap; }
+  .lang b { font-weight: 700; }
+  .lang .badge {
+    display: inline-block; font-size: 7.6pt; font-weight: 700; color: #c41e1e;
+    border: 0.3mm solid #c41e1e; padding: 0 1.2mm; margin-left: 1.2mm; vertical-align: 0.3mm;
+  }
+  .proj { margin-bottom: 1.4mm; break-inside: avoid; }
+  .proj b { font-weight: 700; }
+  .proj .tech { font-size: 8.4pt; color: #555; }
+  .note { font-size: 8.4pt; color: #555; font-style: italic; margin-top: 1mm; }
+
+  footer {
+    margin-top: 4mm; padding-top: 1.6mm; border-top: 0.25mm solid #ccc;
+    font-size: 8.2pt; color: #666; text-align: center;
+  }
+
+  .page-break { break-before: page; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-left">
+    <h1>Oriol Macias</h1>
+    <div class="job-title">Senior Backend Developer | Industrial IoT, Integrations &amp; AI</div>
+    <div class="facts">
+      <span>Madrid, Spain</span><span class="sep">·</span>
+      <span>Spanish (EU Citizen)</span><span class="sep">·</span>
+      <span>Born 1994</span><span class="sep">·</span>
+      <span>Swiss B-Permit eligible</span><span class="sep">·</span>
+      <span>Notice period: 2 weeks</span><span class="sep">·</span>
+      <span>Open to relocation to Switzerland</span>
+    </div>
+    <div class="contact">
+      <span class="ci"><strong>Email:</strong> oriolomb@gmail.com</span> &nbsp;
+      <span class="ci"><strong>LinkedIn:</strong> linkedin.com/in/oriolmaciasbadosa</span> &nbsp;
+      <span class="ci"><strong>GitHub:</strong> github.com/MaciWP</span> &nbsp;
+      <span class="ci"><strong>Web:</strong> oriolmacias.dev</span>
+    </div>
+  </div>
+  <img class="photo" src="../public/images/oriol_macias-480.jpg" alt="Oriol Macias" />
+</header>
+
+<section>
+  <h2>Professional Summary</h2>
+  <p class="summary">
+    Backend developer with over 8 years of programming experience, specialized in
+    Python/Django and REST APIs. Experienced in integrating industrial protocols
+    (SNMP, Modbus, BACnet) and delivering reliable solutions for data center
+    infrastructure (DCIM). Practical experience with CI/CD and testing, currently
+    expanding knowledge in performance optimization and AI-assisted automation.
+  </p>
+</section>
+
+<section>
+  <h2>Work Experience</h2>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>Senior Backend Developer <span class="company">— Bjumper</span></h3>
+      <span class="period">2018 – Present</span>
+    </div>
+    <ul>
+      <li>Design, development and maintenance of integration solutions between industrial protocols (SNMP, Modbus, BACnet) or external applications (PowerIQ, HPE IMC, Invision, VMware) and DCIM platforms (iTRACS, ITA, DCE).</li>
+      <li>Development of scalable, agnostic microservices for data extraction, transformation and loading (ETL) using REST APIs.</li>
+      <li>Delivered 8+ operational projects using agile methodologies (Kanban, Scrum) with C#, Python, .NET (Framework &amp; Core), Django and Django REST Framework.</li>
+      <li>Database and DevOps operations with PostgreSQL, Docker, GitHub and AWS.</li>
+      <li class="achv"><strong>Independently developed an SNMP monitoring tool</strong> with an autodiscovery method that significantly reduced device discovery time.</li>
+      <li class="achv"><strong>Created a DDF configuration-file generator</strong> from MIBs and SNMP walks, drastically reducing development time.</li>
+      <li class="achv"><strong>Led the development of several core systems</strong> used by major enterprise clients, reducing system response times by up to 45%.</li>
+    </ul>
+    <div class="stack"><b>Stack:</b> Python · Django · C# · .NET · PostgreSQL · Docker · SNMP/Modbus/BACnet · AWS</div>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>Junior Developer (Android/C#) <span class="company">— Busmatick</span></h3>
+      <span class="period">2018</span>
+    </div>
+    <ul>
+      <li>Developed Android and Windows desktop applications for public transport card management, backed by a SOAP API built for both clients.</li>
+      <li>Implemented NFC operations for MIFARE Classic 1K cards, including a secure system for encrypted sensitive card operations and Bluetooth receipt printing.</li>
+    </ul>
+    <div class="stack"><b>Stack:</b> C# · Android · SOAP · NFC</div>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>Systems Administrator &amp; IT Support <span class="company">— SERES · Educand SCCL · Salt City Council</span></h3>
+      <span class="period">2014 – 2017</span>
+    </div>
+    <ul>
+      <li><b>SERES</b> (2017): technical support for an e-invoicing platform — resolved 200+ tickets (EDI/XML, Spanish e-invoicing compliance) with a high first-contact resolution rate.</li>
+      <li><b>Educand SCCL</b> (2015–2017): end-to-end IT administration for an 800+ user educational center — 500 workstations, 300 laptops, 10 physical servers and full network topology.</li>
+      <li><b>Salt City Council</b> (2014–2016): development intern — built WPF/C# applications for municipal database management, still in active use.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Technical Skills</h2>
+  <div class="skill-row"><b>Programming Languages:</b> Python, C#, .NET, Java</div>
+  <div class="skill-row"><b>Frameworks &amp; Libraries:</b> Django, Django REST Framework, FastAPI, Flask, SQLAlchemy, Alembic, Celery, Pytest, WPF</div>
+  <div class="skill-row"><b>Protocols &amp; Data Formats:</b> SNMP, Modbus, BACnet, REST API, JSON, XML, JWT, NFC</div>
+  <div class="skill-row"><b>DevOps &amp; Tools:</b> Docker, Git, GitHub, GitHub Actions, CI/CD, AWS, Nginx, Gunicorn</div>
+  <div class="skill-row"><b>Databases:</b> PostgreSQL, MySQL, Redis</div>
+</section>
+
+<section>
+  <h2>Education &amp; Certifications</h2>
+  <div class="edu">
+    <div class="what">
+      <b>Higher Technical Diploma in Multiplatform Application Development</b>
+      <span>UNIR – Universidad Internacional de La Rioja · degree completion combined with professional activity</span>
+    </div>
+    <span class="period">2025</span>
+  </div>
+  <div class="edu">
+    <div class="what">
+      <b>SP2 EcoStruxure IT Advanced Technical Certification</b>
+      <span>Schneider Electric · advanced IT infrastructure management and monitoring</span>
+    </div>
+    <span class="period">2019</span>
+  </div>
+  <div class="edu">
+    <div class="what">
+      <b>Technical Diploma in Microcomputer Systems and Networks</b>
+      <span>IES Salvador Espriu · computer hardware, networking and system administration</span>
+    </div>
+    <span class="period">2012</span>
+  </div>
+</section>
+
+<section>
+  <h2>Languages</h2>
+  <div class="langs">
+    <span class="lang"><b>Spanish</b><span class="badge">NATIVE</span></span>
+    <span class="lang"><b>Catalan</b><span class="badge">NATIVE</span></span>
+    <span class="lang"><b>English</b><span class="badge">B2</span> Professional working proficiency</span>
+    <span class="lang"><b>German</b><span class="badge">A1</span> Actively learning</span>
+  </div>
+</section>
+
+<section>
+  <h2>Selected Projects</h2>
+  <div class="proj">
+    <b>ThinkData Backend</b> (Bjumper) — advanced datacenter management platform with AI capabilities: real-time monitoring, analysis and optimization of infrastructure.
+    <span class="tech">Python · Django · PostgreSQL · Docker · REST API · AWS</span>
+  </div>
+  <div class="proj">
+    <b>iTRACS MicroService</b> (Bjumper) — bidirectional integration platform synchronizing datacenter infrastructure data between heterogeneous systems and iTRACS DCIM.
+    <span class="tech">Python · Django · REST API · PostgreSQL · Docker</span>
+  </div>
+  <div class="proj">
+    <b>HPE IMC Service</b> (Bjumper) — extraction, processing and synchronization of network infrastructure data from HPE Intelligent Management Center to external systems.
+    <span class="tech">Python · Django · PostgreSQL · Docker · REST API</span>
+  </div>
+  <div class="proj">
+    <b>SNMP Monitor</b> (open source) — network device monitoring platform with automated discovery, real-time visualization and MIB management.
+    <span class="tech">Python · Django · Celery · Redis · PostgreSQL — github.com/MaciWP/TrackData</span>
+  </div>
+  <div class="proj">
+    <b>CV Portfolio</b> (open source) — this multilingual CV/portfolio site (EN/ES/FR/DE), 100/100 Lighthouse, PWA.
+    <span class="tech">Astro · Tailwind CSS · vanilla JS — github.com/MaciWP/CV_Astro</span>
+  </div>
+  <p class="note">Enterprise project repositories are private due to confidentiality agreements.</p>
+</section>
+
+<footer>
+  References and work certificates available upon request &nbsp;·&nbsp; oriolmacias.dev
+</footer>
+
+</body>
+</html>
