@@ -83,3 +83,7 @@ CLAUDE.md.backup
 
 # Archived unused files (kept for reference, not deployed)
 .archived/
+# Check-script output artifacts (npm run check)
+contrast-report.json
+translation-report.json
+validation-report.json
