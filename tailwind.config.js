@@ -9,7 +9,12 @@ export default {
                 heading: ['Outfit', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
             },
             colors: {
-                // Brand accent color (WCAG AA compliant - 5.2:1 ratio)
+                // Brand red. Safe as a BACKGROUND (white text on it = 5.9:1, AA).
+                // As solid TEXT it is REMAPPED to accessible reds by a load-bearing
+                // override in Layout.astro (#991b1b light / #fca5a5 dark), because
+                // #c41e1e as text on the dark card (#262f45) is only 2.26:1 (fails AA).
+                // Do NOT rely on this token for text contrast without that override;
+                // non-overridden uses (borders, gradients, /opacity variants) keep this value.
                 'brand-red': '#c41e1e',
 
                 // Light theme - Clean palette with gray cards

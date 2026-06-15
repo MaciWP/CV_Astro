@@ -12,9 +12,17 @@ import { hex } from 'wcag-contrast';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Colors extracted from tailwind.config.js file
+// Colors as ACTUALLY RENDERED in the browser (not the raw Tailwind token).
+// The brand-red token is #c41e1e, but Layout.astro remaps solid red TEXT to the
+// accessible values below and red BACKGROUNDS to #d83333. This checker tests the
+// rendered reality, so it guards the contrast a user actually sees — including the
+// dark-card case that the raw token would fail.
 const colors = {
-    'brand-red': '#D83333',
+    // Red as BACKGROUND (.bg-brand-red -> :root --brand-red); paired with white text
+    'brand-red-bg': '#d83333',
+    // Red as solid TEXT (Layout override), per theme
+    'brand-red-text-light': '#991b1b',
+    'brand-red-text-dark': '#fca5a5',
 
     // Light theme
     'light-primary': '#ffffff',
@@ -65,7 +73,7 @@ function checkContrast(colorName1, colorName2) {
     };
 }
 
-// Critical combinations to verify
+// Critical combinations to verify (foreground, background) — RENDERED colors
 const combinations = [
     // Light theme - text on backgrounds
     ['light-text', 'light-primary'],
@@ -73,8 +81,10 @@ const combinations = [
     ['light-text', 'light-surface'],
     ['light-text-secondary', 'light-primary'],
     ['light-text-secondary', 'light-secondary'],
-    ['brand-red', 'light-primary'],
-    ['brand-red', 'light-secondary'],
+    // Red TEXT (rendered) on light surfaces
+    ['brand-red-text-light', 'light-primary'],
+    ['brand-red-text-light', 'light-secondary'],
+    ['brand-red-text-light', 'light-surface'],
 
     // Dark theme - text on backgrounds
     ['dark-text', 'dark-primary'],
@@ -82,12 +92,14 @@ const combinations = [
     ['dark-text', 'dark-surface'],
     ['dark-text-secondary', 'dark-primary'],
     ['dark-text-secondary', 'dark-secondary'],
-    ['brand-red', 'dark-primary'],
-    ['brand-red', 'dark-secondary'],
+    // Red TEXT (rendered) on dark surfaces — incl. the dark CARD that the raw
+    // token would fail at 2.26:1; the override makes it pass.
+    ['brand-red-text-dark', 'dark-primary'],
+    ['brand-red-text-dark', 'dark-secondary'],
+    ['brand-red-text-dark', 'dark-surface'],
 
-    // Specific component combinations
-    ['light-primary', 'brand-red'], // Light text on red
-    ['dark-primary', 'brand-red'], // Dark text on red
+    // White text on the red BACKGROUND (.bg-brand-red)
+    ['light-primary', 'brand-red-bg'],
 ];
 
 console.log('🔍 Analyzing color contrasts for WCAG compliance...\n');
