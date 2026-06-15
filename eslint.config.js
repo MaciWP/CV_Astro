@@ -64,25 +64,6 @@ export default [
     },
   },
 
-  // Test files
-  {
-    files: ["**/__tests__/**/*.{js,ts}", "**/*.test.{js,ts}"],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-        describe: "readonly",
-        test: "readonly",
-        it: "readonly",
-        expect: "readonly",
-        beforeEach: "readonly",
-        afterEach: "readonly",
-        beforeAll: "readonly",
-        afterAll: "readonly",
-        vi: "readonly",
-      },
-    },
-  },
-
   // Scripts files - more lenient
   {
     files: ["scripts/**/*.js"],

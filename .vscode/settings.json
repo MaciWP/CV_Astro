@@ -17,6 +17,5 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
-  },
-  "kiroAgent.configureMCP": "Disabled"
+  }
 }

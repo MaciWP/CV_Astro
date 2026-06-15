@@ -197,24 +197,53 @@ function getProjectIconName(project: any): string {
         ))}
     </div>
 
-    <!-- Professional Projects Grid - Visible by default, load immediately -->
-    <div id="professional-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-         data-projects={JSON.stringify(professionalProjects.map(p => ({
-            id: p.id,
-            title: p.title,
-            description: p.description,
-            longDescription: p.longDescription,
-            technologies: p.technologies,
-            keyFeatures: p.keyFeatures,
-            icon: getProjectIcon(p),
-            company: p.company,
-            highlight: p.highlight
-         })))}
-         data-translations={JSON.stringify({
-            technologies: t.technologies,
-            keyFeatures: t.keyFeatures
-         })}>
-        <!-- Content loaded on first tab click -->
+    <!-- Professional Projects Grid - server-rendered, visible by default (no JS needed) -->
+    <div id="professional-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {professionalProjects.map((project, index) => (
+            <div
+                class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-xs hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col"
+                style={`--delay: ${120 * index}ms`}
+                tabindex="0"
+                role="article"
+                aria-label={project.title}
+            >
+                <!-- Header with company badge -->
+                <div class={`bg-brand-red p-3 flex items-center justify-between gap-3 text-white ${project.highlight ? 'border-l-4 border-l-white/50' : ''}`}>
+                    <div class="flex items-center gap-2">
+                        <span class="shrink-0"><SvgIcons name={getProjectIconName(project)} class="w-5 h-5" /></span>
+                        <h3 class="font-bold text-lg">{project.title}</h3>
+                    </div>
+                    <div class="px-1.5 py-0.5 text-[10px] bg-white/90 text-red-800 rounded-none font-medium whitespace-nowrap">{project.company}</div>
+                </div>
+
+                <div class="p-5 grow flex flex-col">
+                    <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">
+                        {project.description}
+                    </p>
+                    <!-- Long description + features - lazy-injected on "Show details" -->
+                    <div class="expandable-content hidden"
+                         data-long-description={project.longDescription}
+                         data-features={JSON.stringify(project.keyFeatures)}
+                         data-features-label={t.keyFeatures}>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="mt-auto">
+                        <h4 class="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">
+                            {t.technologies}
+                        </h4>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            {project.technologies.map((tech: string) => (
+                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center gap-1.5">
+                                    <i class={`${getTechIcon(tech)} text-brand-red`}></i>
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ))}
     </div>
 
     <!-- Footer note -->
@@ -229,9 +258,9 @@ function getProjectIconName(project: any): string {
 </section>
 
 <style>
-    /* Initial state - hidden */
-    .section-header,
-    .footer-note {
+    /* Initial hidden state only with JS (progressive enhancement). */
+    :global(html.js-enabled) .section-header,
+    :global(html.js-enabled) .footer-note {
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 400ms ease-out, transform 400ms ease-out;
@@ -319,75 +348,6 @@ function getProjectIconName(project: any): string {
         check: '<svg class="w-3 h-3" viewBox="0 0 512 512" fill="currentColor"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>'
     };
 
-    // Map FA icon classes to SVG keys
-    const faToSvgKey = {
-        'fas fa-server': 'server',
-        'fas fa-exchange-alt': 'exchange-alt',
-        'fas fa-network-wired': 'network-wired',
-        'fas fa-cloud': 'cloud',
-        'fas fa-tags': 'tags',
-        'fas fa-bolt': 'bolt',
-        'fas fa-code': 'code'
-    };
-
-    function getProjectIconSvg(iconClass) {
-        const key = faToSvgKey[iconClass] || 'code';
-        return '<span class="shrink-0">' + projectIconSvg[key] + '</span>';
-    }
-
-    // Tech icon mapping for lazy-loaded projects (still FA for tech tags - less critical)
-    const techIconMap = {
-        'Python': 'fab fa-python', 'JavaScript': 'fab fa-js', 'TypeScript': 'fab fa-js',
-        'Java': 'fab fa-java', 'C#': 'fab fa-microsoft', 'HTML': 'fab fa-html5',
-        'CSS': 'fab fa-css3-alt', 'React': 'fab fa-react', 'Docker': 'fab fa-docker',
-        'AWS': 'fab fa-aws', 'Git': 'fab fa-git-alt', 'GitHub': 'fab fa-github',
-        '.NET': 'fab fa-windows', 'Django': 'fas fa-cubes', 'FastAPI': 'fas fa-bolt',
-        'Flask': 'fas fa-flask', 'PostgreSQL': 'fas fa-database', 'MySQL': 'fas fa-database',
-        'Redis': 'fas fa-server', 'REST API': 'fas fa-exchange-alt', 'Celery': 'fas fa-tasks',
-        'SQLAlchemy': 'fas fa-database', 'Alembic': 'fas fa-code-branch', 'NFC': 'fas fa-wifi',
-        'SNMP': 'fas fa-exchange-alt', 'XML': 'fas fa-file-code', 'default': 'fas fa-code'
-    };
-
-    function getTechIconLazy(tech) {
-        return techIconMap[tech] || techIconMap.default;
-    }
-
-    function renderProfessionalProjects(container) {
-        if (container.dataset.loaded) return;
-
-        const projects = JSON.parse(container.dataset.projects || '[]');
-        const t = JSON.parse(container.dataset.translations || '{}');
-
-        container.innerHTML = projects.map((project, index) => `
-            <div class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-xs hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col"
-                 style="--delay: ${120 * index}ms" tabindex="0" role="article" aria-label="${project.title}">
-                <div class="bg-brand-red p-3 flex items-center justify-between gap-3 text-white ${project.highlight ? 'border-l-4 border-l-white/50' : ''}">
-                    <div class="flex items-center gap-2">
-                        ${getProjectIconSvg(project.icon)}
-                        <h3 class="font-bold text-lg">${project.title}</h3>
-                    </div>
-                    <div class="px-1.5 py-0.5 text-[10px] bg-white/90 text-red-800 rounded-none font-medium whitespace-nowrap">${project.company}</div>
-                </div>
-                <div class="p-5 grow flex flex-col">
-                    <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">${project.description}</p>
-                    <div class="expandable-content hidden"
-                         data-long-description="${project.longDescription.replace(/"/g, '&quot;')}"
-                         data-features='${JSON.stringify(project.keyFeatures)}'
-                         data-features-label="${t.keyFeatures}">
-                    </div>
-                    <div class="mt-auto">
-                        <h4 class="text-xs uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-2">${t.technologies}</h4>
-                        <div class="flex flex-wrap gap-2 mt-2">
-                            ${project.technologies.map(tech => `<span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center gap-1.5"><i class="${getTechIconLazy(tech)} text-brand-red"></i>${tech}</span>`).join('')}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-
-        container.dataset.loaded = 'true';
-    }
-
     function initProjectsSection() {
         const sections = document.querySelectorAll('.projects-section:not(.initialized)');
 
@@ -413,9 +373,6 @@ function getProjectIconName(project: any): string {
             const personalNote = section.querySelector('#personal-note');
             const professionalNote = section.querySelector('#professional-note');
 
-            // Load professional projects immediately (since they're shown by default now)
-            if (professionalGrid) renderProfessionalProjects(professionalGrid);
-
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const tab = btn.getAttribute('data-tab');
@@ -437,8 +394,6 @@ function getProjectIconName(project: any): string {
                             personalNote?.classList.remove('hidden');
                             professionalNote?.classList.add('hidden');
                         } else {
-                            // Lazy load professional projects on first click
-                            if (professionalGrid) renderProfessionalProjects(professionalGrid);
                             personalGrid?.classList.add('hidden');
                             professionalGrid?.classList.remove('hidden');
                             personalNote?.classList.add('hidden');

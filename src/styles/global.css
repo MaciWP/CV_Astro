@@ -108,7 +108,7 @@
 
     /* Improved focus states for accessibility */
     :focus-visible {
-        outline: 2px solid #D83333 !important;
+        outline: 2px solid #d83333 !important;
         outline-offset: 2px !important;
     }
 
@@ -420,18 +420,6 @@
     }
 }
 
-@keyframes enhanced-appear {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-
-    100% {
-        opacity: 1;
-    }
-}
-
 .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
 }
@@ -545,11 +533,11 @@
 
     /* Ensure brand colors for printing */
     .text-brand-red {
-        color: #D83333 !important;
+        color: #d83333 !important;
     }
 
     .bg-brand-red {
-        background-color: #D83333 !important;
+        background-color: #d83333 !important;
     }
 
     /* Page configuration for PDF */

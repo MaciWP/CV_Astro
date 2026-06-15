@@ -202,9 +202,11 @@ const hideDetailsText: Record<string, string> = {
 </section>
 
 <style>
-    /* Initial state - hidden */
-    .section-header,
-    .experience-item {
+    /* Initial hidden state applies ONLY when JS is available (progressive
+       enhancement): without JS the IntersectionObserver never fires, so the
+       content must default to visible. */
+    :global(html.js-enabled) .section-header,
+    :global(html.js-enabled) .experience-item {
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 200ms ease-out, transform 200ms ease-out;

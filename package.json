@@ -8,33 +8,32 @@
     "dev": "node scripts/dev.js && npm run generate-images",
     "build": "node scripts/build.js && npm run generate-images",
     "preview": "astro preview",
-    "analyze": "astro build --analyze",
     "check": "npm run check:contrast && npm run check:translations && npm run check:structured-data",
     "check:contrast": "node scripts/check-contrast.js",
     "check:translations": "node scripts/check-translations.js",
     "check:structured-data": "node scripts/validate-structured-data.js",
     "a11y": "npm run check:contrast",
-    "a11y:audit": "lighthouse http://localhost:3000 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
-    "clean": "rimraf dist .astro public/styles/font-awesome* public/styles/fonts",
+    "a11y:audit": "lighthouse http://localhost:4321 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
+    "clean": "rimraf dist .astro",
     "lint": "eslint ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
     "@astrojs/sitemap": "^3.7.3",
     "@playform/compress": "^0.2.3",
-    "astro": "^6.4.7",
-    "rimraf": "^6.1.3",
-    "typescript": "^6.0.3"
+    "astro": "^6.4.7"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@tailwindcss/vite": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^8.61.0",
     "@typescript-eslint/parser": "^8.61.0",
     "eslint": "^9.39.4",
     "eslint-plugin-astro": "^1.7.0",
     "globals": "^17.6.0",
+    "rimraf": "^6.1.3",
     "sharp": "^0.35.1",
     "tailwindcss": "^4.3.1",
+    "typescript": "^6.0.3",
     "wcag-contrast": "^3.0.0"
   }
 }

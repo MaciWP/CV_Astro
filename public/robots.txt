@@ -36,6 +36,22 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+# Current AI answer-engine / assistant crawlers (citations + retrieval)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 # LLMs.txt for AI-friendly content
 # https://llmstxt.org/
 # File: https://oriolmacias.dev/llms.txt

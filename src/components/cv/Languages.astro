@@ -69,9 +69,10 @@ const title = titleByLang[lang] || titleByLang.en;
 </section>
 
 <style>
-    /* Initial state - hidden */
-    .section-header,
-    .language-card {
+    /* Initial hidden state only with JS (progressive enhancement): without JS the
+       cards default to visible. */
+    :global(html.js-enabled) .section-header,
+    :global(html.js-enabled) .language-card {
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out;
@@ -96,11 +97,15 @@ const title = titleByLang[lang] || titleByLang.en;
         transform: translateY(0);
     }
 
-    /* Progress bar animation */
+    /* Progress bar: full target width by default (no-JS); JS animates 0 → target. */
     .progress-bar {
-        width: 0%;
+        width: var(--target-width, 0%);
         transition: width 500ms ease-out;
         transition-delay: var(--bar-delay, 0ms);
+    }
+
+    :global(html.js-enabled) .progress-bar {
+        width: 0%;
     }
 
     .languages-section.visible .progress-bar {

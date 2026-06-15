@@ -1,7 +1,7 @@
 /**
- * Astro Configuration - 
+ * Astro static config — pure-static output, i18n (en/es/fr/de), sitemap,
+ * @playform/compress, and Tailwind 4 via the @tailwindcss/vite plugin.
  * @file astro.config.mjs
- * @description Configuración arreglada manteniendo tu setup + SEO Suiza/España
  */
 
 import { defineConfig } from 'astro/config';
@@ -12,23 +12,6 @@ import tailwindcss from '@tailwindcss/vite';
 // Netlify adapter removed - pure static site doesn't need it
 // Tailwind 4: @astrojs/tailwind dropped (no Astro 6 support) -> @tailwindcss/vite plugin
 // astro-compress deprecated -> @playform/compress (maintained successor)
-
-// Check required environment variables
-if (process.env.NODE_ENV === 'development') {
-  const requiredVars = ['SITE_URL'];
-  const missingVars = requiredVars.filter(varName => !process.env[varName]);
-
-  if (missingVars.length > 0) {
-    console.warn('⚠️  Missing environment variables:', missingVars.join(', '));
-    console.warn('   Create .env file with required variables');
-  }
-
-  if (process.env.SWISS_SEO_ENABLED === 'true') {
-    console.log('✅ Swiss SEO optimization enabled');
-  } else {
-    console.log('ℹ️  Swiss SEO optimization disabled');
-  }
-}
 
 export default defineConfig({
   // Site configuration (required for SEO)
@@ -84,11 +67,6 @@ export default defineConfig({
       assetsInlineLimit: 4096,
       sourcemap: true,
       cssCodeSplit: true,
-    },
-    define: {
-      __SWISS_SEO_ENABLED__: process.env.SWISS_SEO_ENABLED === 'true',
-      __SPANISH_SEO_ENABLED__: true,
-      __SITE_URL__: JSON.stringify(process.env.SITE_URL || 'https://oriolmacias.dev')
     },
   },
 

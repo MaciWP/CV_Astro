@@ -1,17 +1,8 @@
 ---
 /**
- * FIXED - Layout.astro with TypeScript error resolution
+ * Base layout: <head> (SEO meta, Open Graph, JSON-LD), header, footer, and the
+ * deferred GA + service-worker bootstrap. Wraps every page via <slot />.
  * @file src/layouts/Layout.astro
- * @description Enterprise-grade layout with proper TypeScript definitions
- * @author Oriol Macias Dev
- * @version 2.0.0
- *
- * FIXES APPLIED:
- * ✅ TypeScript 'seeks' property errors resolved
- * ✅ Proper structured data typing with conditional properties
- * ✅ Enhanced error handling and fallbacks
- * ✅ Swiss/German enterprise coding standards compliance
- * ✅ Performance optimizations for Core Web Vitals
  */
 
 import Navbar from "../components/Navbar.astro";
@@ -26,14 +17,7 @@ import {
   normalizePathname,
 } from "../utils/seo";
 
-// Import translations for SSG inline (eliminates runtime fetch)
-import enTranslations from "../../public/locales/en/translation.json";
-import esTranslations from "../../public/locales/es/translation.json";
-import frTranslations from "../../public/locales/fr/translation.json";
-import deTranslations from "../../public/locales/de/translation.json";
-
-// Import global animations
-// Import global styles (includes animations, theme, etc.)
+// Global styles (animations, theme, Tailwind layers)
 import "../styles/global.css";
 
 /**
@@ -46,11 +30,6 @@ export interface Props {
   lang?: string;
   ogImage?: string;
   canonicalUrl?: string;
-  alternateUrls?: {
-    en?: string;
-    es?: string;
-    fr?: string;
-  };
 }
 
 const {
@@ -61,14 +40,14 @@ const {
   canonicalUrl,
 } = Astro.props;
 
-// Get translations for current language (SSG - no runtime fetch needed)
-const translationsMap: Record<string, any> = {
-  en: enTranslations,
-  es: esTranslations,
-  fr: frTranslations,
-  de: deTranslations,
+// Open Graph locale per language (BCP-47 → OG locale format)
+const OG_LOCALES: Record<string, string> = {
+  en: "en_US",
+  es: "es_ES",
+  fr: "fr_FR",
+  de: "de_DE",
 };
-const currentTranslations = translationsMap[lang] || enTranslations;
+const ogLocale = OG_LOCALES[lang] || "en_US";
 
 // Execute market detection using centralized utility
 const marketData = detectMarketAndOptimizeSEO(
@@ -161,10 +140,7 @@ const isMultilingualPage =
     <!-- Enhanced SEO Meta tags -->
     <title>{marketData.title}</title>
     <meta name="description" content={marketData.description} />
-    <meta name="keywords" content={marketData.keywords} />
     <meta name="author" content="Oriol Macias" />
-    <meta name="designer" content="Oriol Macias" />
-    <meta name="owner" content="Oriol Macias" />
     <link rel="canonical" href={fullCanonicalUrl} />
 
     <!-- Geo-targeting based on market detection -->
@@ -223,14 +199,13 @@ const isMultilingualPage =
       h1,h2,h3,h4,h5,h6{font-family:Outfit,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
       /* Map unused font weights to available ones (500→400, 700→600) */
       .font-medium{font-weight:400}.font-bold,strong,b{font-weight:600}
-      /* LOAD-BEARING for accessibility: remaps solid red TEXT to accessible reds
-         (#991b1b light / #fca5a5 dark). The Tailwind brand-red token (#c41e1e) is
-         only 2.26:1 as text on dark cards — removing this override breaks contrast
-         site-wide. Guarded by scripts/check-contrast.js. */
-      :root{--brand-red:#d83333;--accessible-brand-red:#991b1b}
+      /* LOAD-BEARING a11y override: solid red TEXT remapped to accessible reds
+         (#991b1b light / #fca5a5 dark). Bright brand-red as text fails AA on the dark
+         card — removing this breaks contrast site-wide. Guarded by check-contrast.js.
+         (Backgrounds/borders use the brand-red token #d83333 directly.) */
+      :root{--accessible-brand-red:#991b1b;--accessible-brand-red-dark:#fca5a5}
       .text-brand-red,.text-accessible-brand-red{color:var(--accessible-brand-red)!important}
-      .bg-brand-red{background-color:var(--brand-red)}
-      .dark .text-brand-red,.dark .text-accessible-brand-red{color:#fca5a5!important}
+      .dark .text-brand-red,.dark .text-accessible-brand-red{color:var(--accessible-brand-red-dark)!important}
       /* CLS Prevention - contain prevents layout recalculation */
       #skills{min-height:600px;contain:layout style paint}
       .skill-category-animate{contain:layout style paint}
@@ -276,10 +251,15 @@ const isMultilingualPage =
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Oriol Macias - Backend Developer" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content={lang} />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content="Oriol Macias Dev" />
-    {lang === "es" && <meta property="og:locale:alternate" content="es_ES" />}
-    {lang === "fr" && <meta property="og:locale:alternate" content="fr_FR" />}
+    {
+      Object.entries(OG_LOCALES)
+        .filter(([l]) => l !== lang)
+        .map(([, loc]) => (
+          <meta property="og:locale:alternate" content={loc} />
+        ))
+    }
 
     <!-- Twitter Card optimization -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -344,15 +324,6 @@ const isMultilingualPage =
     <style is:inline>
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
     </style>
-
-    <!-- i18n Setup - translations inlined at build time (SSG) -->
-    <script is:inline define:vars={{ lang, currentTranslations }}>
-      window.CURRENT_LANGUAGE=lang;
-      window.TRANSLATIONS=window.TRANSLATIONS||{};
-      window.TRANSLATIONS[lang]=currentTranslations;
-      window.t=function(k,f){try{var v=window.TRANSLATIONS[window.CURRENT_LANGUAGE];k.split('.').forEach(function(p){v=v&&v[p]});return v||f||k}catch{return f||k}};
-      document.dispatchEvent(new CustomEvent('translationsLoaded'));
-    </script>
 
   </head>
 
