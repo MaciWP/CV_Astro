@@ -31,7 +31,7 @@ const colors = {
     'light-surface-alt': '#f7f8fa',
     'light-border': '#e5e7eb',
     'light-text': '#1f2937',
-    'light-text-secondary': '#6b7280',
+    'light-text-secondary': '#5f6772',
     'light-card-bg': '#f3f4f6',
 
     // Dark theme

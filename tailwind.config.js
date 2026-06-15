@@ -24,7 +24,7 @@ export default {
                 'light-surface-alt': '#f7f8fa',   // Alternative surface soft gray
                 'light-border': '#e5e7eb',        // Light gray border
                 'light-text': '#1f2937',          // Main text near-black
-                'light-text-secondary': '#6b7280', // Secondary text medium gray
+                'light-text-secondary': '#5f6772', // Secondary text medium gray (AA: 5.2:1 on #f3f4f6)
                 'light-card-bg': '#f3f4f6',       // Card background, similar to dates
 
                 // Dark theme - Optimized for CV
