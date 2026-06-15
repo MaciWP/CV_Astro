@@ -1,7 +1,4 @@
 import js from "@eslint/js";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
 import astro from "eslint-plugin-astro";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
@@ -29,14 +26,9 @@ export default [
     ],
   },
 
-  // JavaScript/JSX files
+  // JavaScript files (pure vanilla JS — no React/JSX in this project)
   {
-    files: ["**/*.{js,jsx,mjs}"],
-    plugins: {
-      react,
-      "react-hooks": reactHooks,
-      "jsx-a11y": jsxA11y,
-    },
+    files: ["**/*.{js,mjs}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
@@ -45,35 +37,17 @@ export default [
         ...globals.node,
         ...globals.es2021,
       },
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
     },
     rules: {
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      ...jsxA11y.configs.recommended.rules,
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
       "no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
   },
 
   // TypeScript files
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.ts"],
     plugins: {
       "@typescript-eslint": tseslint,
-      react,
-      "react-hooks": reactHooks,
-      "jsx-a11y": jsxA11y,
     },
     languageOptions: {
       parser: tsParser,
@@ -83,20 +57,8 @@ export default [
         ...globals.browser,
         ...globals.node,
       },
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
     },
     rules: {
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
@@ -104,7 +66,7 @@ export default [
 
   // Test files
   {
-    files: ["**/__tests__/**/*.{js,jsx,ts,tsx}", "**/*.test.{js,jsx,ts,tsx}"],
+    files: ["**/__tests__/**/*.{js,ts}", "**/*.test.{js,ts}"],
     languageOptions: {
       globals: {
         ...globals.jest,
