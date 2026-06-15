@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-    darkMode: 'class',
+    // Tailwind 4 (via @config): darkMode is declared in global.css as
+    // `@custom-variant dark`; `safelist` (auto-detected now) and `future`
+    // (hoverOnlyWhenSupported is the v4 default) removed as inert.
     theme: {
         extend: {
             fontFamily: {
@@ -95,15 +97,5 @@ export default {
         },
     },
     plugins: [],
-    safelist: [
-        // Only safelist truly dynamic classes
-        {
-            pattern: /^(bg|text|border)-(red|green|blue)-(500|600|700)$/,
-            variants: ['hover', 'focus', 'dark'],
-        },
-    ],
-    future: {
-        hoverOnlyWhenSupported: true, // Prevents hover on touch devices
-    },
 };
 

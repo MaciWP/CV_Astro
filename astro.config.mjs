@@ -5,11 +5,13 @@
  */
 
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
-import compress from 'astro-compress';
+import compress from '@playform/compress';
+import tailwindcss from '@tailwindcss/vite';
 // React removed - all components are now pure Astro + vanilla JS
 // Netlify adapter removed - pure static site doesn't need it
+// Tailwind 4: @astrojs/tailwind dropped (no Astro 6 support) -> @tailwindcss/vite plugin
+// astro-compress deprecated -> @playform/compress (maintained successor)
 
 // Check required environment variables
 if (process.env.NODE_ENV === 'development') {
@@ -46,12 +48,8 @@ export default defineConfig({
     },
   },
 
-  // Integrations
+  // Integrations (Tailwind is now a Vite plugin, see vite.plugins below)
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-      config: { path: './tailwind.config.js' },
-    }),
     sitemap({
       i18n: {
         defaultLocale: 'en',
@@ -60,9 +58,11 @@ export default defineConfig({
         },
       },
     }),
+    // @playform/compress: HTML options nest under 'html-minifier-terser'
+    // (differs from astro-compress, which took the options flat). Compress last.
     compress({
       CSS: true,
-      HTML: { removeAttributeQuotes: false },
+      HTML: { 'html-minifier-terser': { removeAttributeQuotes: false } },
       Image: false, // Sharp handles images
       JavaScript: true,
       SVG: true,
@@ -75,6 +75,7 @@ export default defineConfig({
   },
 
   vite: {
+    plugins: [tailwindcss()],
     server: {
       fs: { strict: true },
       middlewareMode: false,

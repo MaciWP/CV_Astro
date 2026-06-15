@@ -108,7 +108,7 @@ function getProjectIconName(project: any): string {
         <!-- Toggle all details button -->
         <button
             id="toggle-all-details"
-            class="ml-auto text-brand-red hover:text-brand-red/80 text-sm inline-flex items-center gap-2 focus:outline-none min-h-[48px] px-3 py-2"
+            class="ml-auto text-brand-red hover:text-brand-red/80 text-sm inline-flex items-center gap-2 focus:outline-hidden min-h-[48px] px-3 py-2"
             data-show-all={t.showAllDetails}
             data-show-less={t.showLessDetails}
         >
@@ -139,7 +139,7 @@ function getProjectIconName(project: any): string {
     <div id="personal-projects" class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
         {personalProjects.map((project, index) => (
             <div
-                class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col cursor-pointer"
+                class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-xs hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col cursor-pointer"
                 style={`--delay: ${120 * index}ms`}
                 data-github-url={project.githubUrl}
                 tabindex="0"
@@ -149,7 +149,7 @@ function getProjectIconName(project: any): string {
                 <!-- Header -->
                 <div class={`bg-brand-red p-3 flex items-center justify-between gap-3 text-white ${project.highlight ? 'border-l-4 border-l-white/50' : ''}`}>
                     <div class="flex items-center gap-2">
-                        <span class="flex-shrink-0"><SvgIcons name={getProjectIconName(project)} class="w-5 h-5" /></span>
+                        <span class="shrink-0"><SvgIcons name={getProjectIconName(project)} class="w-5 h-5" /></span>
                         <h3 class="font-bold text-lg">{project.title}</h3>
                     </div>
                     {project.githubUrl && (
@@ -165,7 +165,7 @@ function getProjectIconName(project: any): string {
                     )}
                 </div>
 
-                <div class="p-5 flex-grow flex flex-col">
+                <div class="p-5 grow flex flex-col">
                     <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">
                         {project.description}
                     </p>
@@ -332,7 +332,7 @@ function getProjectIconName(project: any): string {
 
     function getProjectIconSvg(iconClass) {
         const key = faToSvgKey[iconClass] || 'code';
-        return '<span class="flex-shrink-0">' + projectIconSvg[key] + '</span>';
+        return '<span class="shrink-0">' + projectIconSvg[key] + '</span>';
     }
 
     // Tech icon mapping for lazy-loaded projects (still FA for tech tags - less critical)
@@ -359,7 +359,7 @@ function getProjectIconName(project: any): string {
         const t = JSON.parse(container.dataset.translations || '{}');
 
         container.innerHTML = projects.map((project, index) => `
-            <div class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-sm hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col"
+            <div class="project-card group bg-light-surface dark:bg-dark-surface rounded-none overflow-hidden border border-light-border dark:border-dark-border shadow-xs hover:shadow-lg hover:border-brand-red/50 hover:-translate-y-1 h-full flex flex-col"
                  style="--delay: ${120 * index}ms" tabindex="0" role="article" aria-label="${project.title}">
                 <div class="bg-brand-red p-3 flex items-center justify-between gap-3 text-white ${project.highlight ? 'border-l-4 border-l-white/50' : ''}">
                     <div class="flex items-center gap-2">
@@ -368,7 +368,7 @@ function getProjectIconName(project: any): string {
                     </div>
                     <div class="px-1.5 py-0.5 text-[10px] bg-white/90 text-red-800 rounded-none font-medium whitespace-nowrap">${project.company}</div>
                 </div>
-                <div class="p-5 flex-grow flex flex-col">
+                <div class="p-5 grow flex flex-col">
                     <p class="description mb-4 text-light-text-secondary dark:text-dark-text-secondary">${project.description}</p>
                     <div class="expandable-content hidden"
                          data-long-description="${project.longDescription.replace(/"/g, '&quot;')}"
@@ -467,7 +467,7 @@ function getProjectIconName(project: any): string {
                     html += `<div class="key-features mb-4">
                         <h4 class="text-sm uppercase text-brand-red font-semibold mb-2 tracking-wider">${label}</h4>
                         <ul class="space-y-2 text-sm">
-                            ${features.map(f => `<li class="flex items-start gap-2"><span class="text-brand-red flex-shrink-0 mt-1">${projectIconSvg.check}</span><span>${f}</span></li>`).join('')}
+                            ${features.map(f => `<li class="flex items-start gap-2"><span class="text-brand-red shrink-0 mt-1">${projectIconSvg.check}</span><span>${f}</span></li>`).join('')}
                         </ul>
                     </div>`;
                 }

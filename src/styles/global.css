@@ -10,10 +10,26 @@
  * - theme-transitions.css (reduced version)
  */
 
-/* Base Tailwind directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind 4: single import replaces the v3 @tailwind directives. */
+@import "tailwindcss";
+/* Keep the existing JS config (custom tokens, fonts, keyframes, shadows) via
+   @config — lowest-risk path, no CSS-first rewrite. Path relative to this file. */
+@config "../../tailwind.config.js";
+/* darkMode:'class' is ignored under @config in v4 → declare the dark variant here.
+   Matches the `.dark` class toggled on <html> by the theme switcher. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* v4 changed the default border color to currentColor; restore v3's gray-200
+   default across all bare `border` usages in one rule (~322 sites). */
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
 
 /* ===== GLOBAL VARIABLES ===== */
 :root {
@@ -183,7 +199,7 @@
 
     /* Buttons */
     .btn {
-        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
+        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-hidden focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
     }
 
     .btn-primary {
@@ -196,7 +212,7 @@
 
     /* Cards */
     .card {
-        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-sm hover:shadow-md transition-shadow duration-300;
+        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-xs hover:shadow-md transition-shadow duration-300;
     }
 
     /* Section header with icon */
