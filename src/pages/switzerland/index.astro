@@ -1,8 +1,9 @@
 ---
 /**
- * Página principal Switzerland
- * @file src/pages/switzerland/index.astro
- * @description Landing page para todo el mercado suizo
+ * Switzerland hub — consolidated landing page for the whole Swiss market.
+ * The per-city pages (zurich/basel/geneva/lausanne) were merged into the
+ * anchored sections below on 2026-06-15 and 301-redirected here (doorway
+ * consolidation; redirects live in netlify.toml).
  */
 import Layout from "../../layouts/Layout.astro";
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
@@ -10,7 +11,7 @@ import Experience from "../../components/cv/Experience.astro";
 import Skills from "../../components/cv/Skills.astro";
 
 const title = "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
-const description = "Senior Backend Developer seeking opportunities across Switzerland. 8+ years Python, Django, industrial protocols. EU work permit ready for immediate hire.";
+const description = "Senior Backend Developer seeking opportunities across Switzerland — Zurich, Basel, Geneva, Lausanne. 8+ years Python, Django, industrial protocols. EU work permit ready.";
 ---
 
 <Layout title={title} description={description}>
@@ -23,7 +24,7 @@ const description = "Senior Backend Developer seeking opportunities across Switz
       <p class="text-xl mb-6 text-gray-700 dark:text-gray-300">
         Senior Software Developer with EU work permit ready for Swiss companies
       </p>
-      <div class="flex justify-center gap-4 mb-8">
+      <div class="flex justify-center gap-4 mb-8 flex-wrap">
         <span class="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded">
           ✅ Work Permit Ready
         </span>
@@ -36,14 +37,13 @@ const description = "Senior Backend Developer seeking opportunities across Switz
       </div>
     </section>
 
-    <!-- Swiss Cities Focus -->
+    <!-- Swiss Cities Focus — in-page anchors to the detail sections below -->
     <section class="mb-16">
       <h2 class="text-2xl font-bold mb-8 text-center">Target Swiss Markets</h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Zurich -->
-        <a href="/switzerland/zurich" class="block p-6 border rounded-lg hover:shadow-lg transition-shadow">
+        <a href="#zurich" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
           <h3 class="text-xl font-semibold mb-2 text-brand-red">Zurich</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Fintech & Banking Hub</p>
+          <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-2">Fintech &amp; Banking Hub</p>
           <ul class="text-sm">
             <li>• ETH Zurich collaboration</li>
             <li>• Google Switzerland</li>
@@ -51,21 +51,19 @@ const description = "Senior Backend Developer seeking opportunities across Switz
           </ul>
         </a>
 
-        <!-- Basel -->
-        <a href="/switzerland/basel" class="block p-6 border rounded-lg hover:shadow-lg transition-shadow">
+        <a href="#basel" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
           <h3 class="text-xl font-semibold mb-2 text-brand-red">Basel</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Pharmaceutical & Manufacturing</p>
+          <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-2">Pharmaceutical &amp; Manufacturing</p>
           <ul class="text-sm">
-            <li>• Roche & Novartis</li>
+            <li>• Roche &amp; Novartis</li>
             <li>• Industrial automation</li>
             <li>• Protocol expertise</li>
           </ul>
         </a>
 
-        <!-- Geneva -->
-        <a href="/switzerland/geneva" class="block p-6 border rounded-lg hover:shadow-lg transition-shadow">
+        <a href="#geneva" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
           <h3 class="text-xl font-semibold mb-2 text-brand-red">Geneva</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">International Organizations</p>
+          <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-2">International Organizations</p>
           <ul class="text-sm">
             <li>• CERN collaboration</li>
             <li>• UN tech systems</li>
@@ -73,16 +71,111 @@ const description = "Senior Backend Developer seeking opportunities across Switz
           </ul>
         </a>
 
-        <!-- Lausanne -->
-        <a href="/switzerland/lausanne" class="block p-6 border rounded-lg hover:shadow-lg transition-shadow">
+        <a href="#lausanne" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
           <h3 class="text-xl font-semibold mb-2 text-brand-red">Lausanne</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">EPFL Tech Ecosystem</p>
+          <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-2">EPFL Tech Ecosystem</p>
           <ul class="text-sm">
             <li>• Research collaboration</li>
             <li>• Startup ecosystem</li>
             <li>• Academic partnerships</li>
           </ul>
         </a>
+      </div>
+    </section>
+
+    <!-- Per-city detail (merged from the former city pages) -->
+    <section id="zurich" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 text-brand-red">Zurich — Fintech &amp; Banking</h2>
+      <p class="mb-4 text-gray-700 dark:text-gray-300">
+        Ready to contribute to Zurich's dynamic fintech and technology ecosystem,
+        with 8+ years of Python and Django experience well suited to banking and
+        financial-technology backends.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Fintech Expertise</h3>
+          <p class="text-sm">Backend systems for banking and financial technology; secure, scalable REST APIs.</p>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Work Authorization</h3>
+          <p class="text-sm">EU work permit (B) ready, immediate availability.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="basel" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 text-brand-red">Basel — Pharmaceutical &amp; Industrial Automation</h2>
+      <p class="mb-4 text-gray-700 dark:text-gray-300">
+        Industrial software engineer for Basel's pharmaceutical and manufacturing
+        sector (Roche, Novartis), specialized in integrating industrial protocols
+        with data-center and building-automation platforms.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Pharmaceutical Automation</h3>
+          <ul class="text-sm space-y-1">
+            <li>• SNMP protocol integration</li>
+            <li>• Modbus industrial systems</li>
+            <li>• BACnet building automation</li>
+          </ul>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Manufacturing Systems</h3>
+          <ul class="text-sm space-y-1">
+            <li>• Production line integration</li>
+            <li>• Real-time monitoring</li>
+            <li>• Data acquisition systems</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="geneva" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 text-brand-red">Geneva — International Organizations</h2>
+      <p class="mb-4 text-gray-700 dark:text-gray-300">
+        Backend developer for Geneva's international technology landscape, with
+        enterprise integration experience and a multilingual working profile.
+      </p>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg text-center">
+          <h3 class="font-semibold mb-1">Working Languages</h3>
+          <p class="text-sm">English (professional), Spanish &amp; Catalan (native)</p>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg text-center">
+          <h3 class="font-semibold mb-1">Research-Ready</h3>
+          <p class="text-sm">Data-intensive backend systems</p>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg text-center">
+          <h3 class="font-semibold mb-1">International Orgs</h3>
+          <p class="text-sm">Enterprise integration experience</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lausanne" class="mb-16 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 text-brand-red">Lausanne — EPFL Tech Ecosystem</h2>
+      <p class="mb-4 text-gray-700 dark:text-gray-300">
+        Ready to contribute to Lausanne's EPFL research and startup ecosystem
+        (EPFL Innovation Park, Logitech, Kudelski, Nestlé) with Python/Django
+        backends, REST APIs and research-ready data processing.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Research &amp; Startups</h3>
+          <ul class="text-sm space-y-1">
+            <li>• EPFL research collaboration</li>
+            <li>• Startup &amp; innovation projects</li>
+            <li>• Knowledge transfer &amp; documentation</li>
+          </ul>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Backend Development</h3>
+          <ul class="text-sm space-y-1">
+            <li>• Python and Django expertise</li>
+            <li>• REST API &amp; microservices</li>
+            <li>• PostgreSQL optimization</li>
+          </ul>
+        </div>
       </div>
     </section>
 

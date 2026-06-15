@@ -23,7 +23,7 @@ const REPORT_FILE = path.join(__dirname, '../validation-report.json');
 const PAGES_TO_CHECK = [
     'index.html',
     'es.html',
-    'switzerland/zurich.html',
+    'switzerland.html',
 ];
 
 /**

@@ -1,8 +1,9 @@
 ---
 /**
- * Pagina principal Espana
- * @file src/pages/spain/index.astro
- * @description Landing page para el mercado espanol
+ * Spain hub — consolidated landing page for the Spanish market.
+ * The per-city pages (madrid/barcelona) were merged into the anchored
+ * sections below on 2026-06-15 and 301-redirected here (doorway
+ * consolidation; redirects live in netlify.toml).
  */
 import Layout from "../../layouts/Layout.astro";
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
@@ -11,11 +12,11 @@ import Skills from "../../components/cv/Skills.astro";
 import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
 
 const title = "Oriol Macias - Desarrollador Backend Espana | Senior Python";
-const description = "Desarrollador Backend Senior con 8+ anos de experiencia en Python, Django y protocolos industriales. Disponible para oportunidades en Espana.";
+const description = "Desarrollador Backend Senior con 8+ anos de experiencia en Python, Django y protocolos industriales. Disponible en Madrid, Barcelona y toda Espana.";
 
 const breadcrumbs = [
   { name: "Home", url: "https://oriolmacias.dev/" },
-  { name: "Espana", url: "https://oriolmacias.dev/spain/" }
+  { name: "Espana", url: "https://oriolmacias.dev/spain" }
 ];
 ---
 
@@ -43,14 +44,13 @@ const breadcrumbs = [
       </div>
     </section>
 
-    <!-- Spanish Cities Focus -->
+    <!-- Spanish Cities Focus — anclas internas a las secciones de detalle -->
     <section class="mb-16">
       <h2 class="text-2xl font-bold mb-8 text-center">Mercados Objetivo</h2>
       <div class="grid md:grid-cols-2 gap-6">
-        <!-- Madrid -->
-        <a href="/spain/madrid" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
+        <a href="#madrid" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
           <h3 class="text-xl font-semibold mb-2 text-brand-red">Madrid</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Hub Tecnologico de Espana</p>
+          <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-2">Hub Tecnologico de Espana</p>
           <ul class="text-sm space-y-1">
             <li>• Centro financiero y tecnologico</li>
             <li>• Grandes empresas y startups</li>
@@ -58,10 +58,9 @@ const breadcrumbs = [
           </ul>
         </a>
 
-        <!-- Barcelona -->
-        <a href="/spain/barcelona" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
+        <a href="#barcelona" class="block p-6 border border-light-border dark:border-dark-border rounded-lg hover:shadow-lg hover:border-brand-red/50 transition-all">
           <h3 class="text-xl font-semibold mb-2 text-brand-red">Barcelona</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Silicon Valley del Mediterraneo</p>
+          <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-2">Silicon Valley del Mediterraneo</p>
           <ul class="text-sm space-y-1">
             <li>• Hub de startups europeo</li>
             <li>• Mobile World Congress</li>
@@ -86,6 +85,51 @@ const breadcrumbs = [
         <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
           <h3 class="font-semibold text-brand-red mb-2">Protocolos Industriales</h3>
           <p class="text-sm">Especialista en SNMP, Modbus, BACnet para integración con plataformas DCIM.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detalle por ciudad (fusionado de las antiguas páginas) -->
+    <section id="madrid" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 text-brand-red">Madrid — Hub Financiero y Tecnológico</h2>
+      <p class="mb-4 text-gray-700 dark:text-gray-300">
+        Listo para contribuir al ecosistema tecnológico de la capital, con
+        experiencia en backend para sector financiero y proyectos enterprise a gran escala.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Sector Financiero y Enterprise</h3>
+          <p class="text-sm">Desarrollo backend para banca y grandes empresas; clientes enterprise y proyectos a gran escala.</p>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Integración Industrial</h3>
+          <p class="text-sm">Protocolos SNMP, Modbus y BACnet. Disponibilidad inmediata: presencial, híbrido o remoto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="barcelona" class="mb-16 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 text-brand-red">Barcelona — Ecosistema Startup &amp; Tech</h2>
+      <p class="mb-4 text-gray-700 dark:text-gray-300">
+        Catalán nativo, ideal para startups y empresas tech del ecosistema
+        barcelonés, con metodologías ágiles y conocimiento del mercado local.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Multilingüe &amp; Local</h3>
+          <ul class="text-sm space-y-1">
+            <li>• Catalán y castellano: nativo</li>
+            <li>• Inglés: competencia profesional</li>
+            <li>• Conocimiento del mercado local</li>
+          </ul>
+        </div>
+        <div class="p-5 bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg">
+          <h3 class="font-semibold text-brand-red mb-1">Experiencia Enterprise</h3>
+          <ul class="text-sm space-y-1">
+            <li>• Bjumper: 6+ años</li>
+            <li>• Clientes internacionales, proyectos DCIM</li>
+            <li>• Integraciones industriales</li>
+          </ul>
         </div>
       </div>
     </section>

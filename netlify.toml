@@ -285,44 +285,73 @@
   force = true
 
 [[redirects]]
-  from = "/spain/madrid.html"
-  to = "/spain/madrid"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/spain/barcelona.html"
-  to = "/spain/barcelona"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/switzerland.html"
   to = "/switzerland"
   status = 301
   force = true
 
+# ===== GEO CITY CONSOLIDATION (2026-06-15) =====
+# The per-city pages were merged into the /switzerland and /spain hubs as
+# anchored sections (doorway consolidation). Both the clean URLs (now gone)
+# and their legacy .html twins 301 to the corresponding hub anchor.
+
+[[redirects]]
+  from = "/switzerland/zurich"
+  to = "/switzerland#zurich"
+  status = 301
 [[redirects]]
   from = "/switzerland/zurich.html"
-  to = "/switzerland/zurich"
+  to = "/switzerland#zurich"
   status = 301
   force = true
 
+[[redirects]]
+  from = "/switzerland/geneva"
+  to = "/switzerland#geneva"
+  status = 301
 [[redirects]]
   from = "/switzerland/geneva.html"
-  to = "/switzerland/geneva"
+  to = "/switzerland#geneva"
   status = 301
   force = true
 
+[[redirects]]
+  from = "/switzerland/basel"
+  to = "/switzerland#basel"
+  status = 301
 [[redirects]]
   from = "/switzerland/basel.html"
-  to = "/switzerland/basel"
+  to = "/switzerland#basel"
   status = 301
   force = true
 
 [[redirects]]
+  from = "/switzerland/lausanne"
+  to = "/switzerland#lausanne"
+  status = 301
+[[redirects]]
   from = "/switzerland/lausanne.html"
-  to = "/switzerland/lausanne"
+  to = "/switzerland#lausanne"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/spain/madrid"
+  to = "/spain#madrid"
+  status = 301
+[[redirects]]
+  from = "/spain/madrid.html"
+  to = "/spain#madrid"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/spain/barcelona"
+  to = "/spain#barcelona"
+  status = 301
+[[redirects]]
+  from = "/spain/barcelona.html"
+  to = "/spain#barcelona"
   status = 301
   force = true
 
