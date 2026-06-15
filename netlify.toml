@@ -1,7 +1,7 @@
 # netlify.toml - Complete configuration for performance optimization and MIME issues
 
 [build]
-  command = "npm run build"
+  command = "pnpm run build"
   publish = "dist"
   # Always build. The previous ignore (git diff --quiet $CACHED_COMMIT_REF
   # $COMMIT_REF -- .) self-canceled the 2026-06-11 deploy: after a long gap

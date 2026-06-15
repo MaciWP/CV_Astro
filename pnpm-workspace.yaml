@@ -1,0 +1,9 @@
+# pnpm 11 blocks ALL dependency build scripts by default (supply-chain hardening) and
+# enforces a minimumReleaseAge cooldown on new package versions. esbuild (Vite/Astro
+# bundler) and sharp (image generation) are trusted native deps we depend on; their
+# build scripts fetch the platform binary, so we vet and allow exactly these two.
+allowBuilds:
+  esbuild: true
+  sharp: true
+minimumReleaseAgeExclude:
+  - astro@6.4.7

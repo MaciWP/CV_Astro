@@ -31,7 +31,7 @@ A professional CV/portfolio website following Swiss design standards. This proje
 ### Prerequisites
 
 - Node.js 22 or higher
-- npm 9.5 or higher
+- pnpm 11 (managed via Corepack, bundled with Node 22)
 
 ### Setup
 
@@ -41,33 +41,32 @@ git clone https://github.com/MaciWP/CV_Astro.git
 cd CV_Astro
 
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm run dev
 ```
 
 ### Build
 
 ```bash
 # Build for production
-npm run build
+pnpm run build
 
 # Preview production build
-npm run preview
+pnpm run preview
 ```
 
 ### Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run generate-images` - Generate responsive profile images
-- `npm run check` - Run all validation checks (contrast, translations, structured data)
-- `npm run a11y:audit` - Run Lighthouse accessibility audit
-- `npm run analyze` - Analyze bundle size
-- `npm run lint` - Run ESLint
-- `npm run clean` - Clean build artifacts
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm run preview` - Preview production build
+- `pnpm run generate-images` - Generate responsive profile images
+- `pnpm run check` - Run all validation checks (contrast, translations, structured data)
+- `pnpm run a11y:audit` - Run Lighthouse accessibility audit
+- `pnpm run lint` - Run ESLint
+- `pnpm run clean` - Clean build artifacts
 
 ## 📂 Project Structure
 
