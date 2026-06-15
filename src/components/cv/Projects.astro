@@ -213,7 +213,13 @@ function getProjectIconName(project: any): string {
                         <span class="shrink-0"><SvgIcons name={getProjectIconName(project)} class="w-5 h-5" /></span>
                         <h3 class="font-bold text-lg">{project.title}</h3>
                     </div>
-                    <div class="px-1.5 py-0.5 text-[10px] bg-white/90 text-red-800 rounded-none font-medium whitespace-nowrap">{project.company}</div>
+                    <!-- Literal hex, NOT Tailwind's text-red-800: that utility compiles
+                         to oklch() under Tailwind 4, which pre-2023 browsers (Chrome <111,
+                         Safari <15.4, FF <113) can't render. The color then drops and the
+                         text inherits the parent's white -> white-on-light (illegible, fails
+                         WCAG). #991b1b (red-800 equiv, ~6.5:1 on the light badge) renders
+                         everywhere and is theme-independent since the badge bg is always light. -->
+                    <div class="px-1.5 py-0.5 text-[10px] bg-white/90 rounded-none font-medium whitespace-nowrap" style="color:#991b1b">{project.company}</div>
                 </div>
 
                 <div class="p-5 grow flex flex-col">
