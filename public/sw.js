@@ -6,10 +6,15 @@
 
 // Cache names for different resource types
 // Increment version to force cache refresh
-const STATIC_CACHE_NAME = 'oriol-macias-cv-static-v3';
-const IMAGE_CACHE_NAME = 'oriol-macias-cv-images-v3';
-const FONT_CACHE_NAME = 'oriol-macias-cv-fonts-v3';
-const DYNAMIC_CACHE_NAME = 'oriol-macias-cv-dynamic-v3';
+const STATIC_CACHE_NAME = 'oriol-macias-cv-static-v4';
+const IMAGE_CACHE_NAME = 'oriol-macias-cv-images-v4';
+const FONT_CACHE_NAME = 'oriol-macias-cv-fonts-v4';
+const DYNAMIC_CACHE_NAME = 'oriol-macias-cv-dynamic-v4';
+
+// Lifecycle logging is opt-in only — keeps the production console clean.
+// console.error calls are kept as-is (real failure diagnostics).
+const DEBUG = false;
+const log = (...args) => { if (DEBUG) log(...args); };
 
 // Resources that will always be cached immediately (core app shell)
 // Only essential files that are guaranteed to exist
@@ -199,7 +204,7 @@ async function cleanExpiredCache() {
 
 // SW Install Event - Cache core assets
 self.addEventListener('install', (event) => {
-    console.log('[ServiceWorker] Installing...');
+    log('[ServiceWorker] Installing...');
 
     // Skip waiting to activate immediately
     self.skipWaiting();
@@ -209,14 +214,14 @@ self.addEventListener('install', (event) => {
             // Cache core assets
             const staticCache = await caches.open(STATIC_CACHE_NAME);
             await staticCache.addAll(CORE_ASSETS);
-            console.log('[ServiceWorker] Core assets cached');
+            log('[ServiceWorker] Core assets cached');
 
             // Try to cache secondary assets, but don't fail if some are missing
             try {
                 await staticCache.addAll(SECONDARY_ASSETS);
-                console.log('[ServiceWorker] Secondary assets cached');
+                log('[ServiceWorker] Secondary assets cached');
             } catch (error) {
-                console.log('[ServiceWorker] Some secondary assets could not be cached:', error);
+                log('[ServiceWorker] Some secondary assets could not be cached:', error);
             }
         })()
     );
@@ -224,7 +229,7 @@ self.addEventListener('install', (event) => {
 
 // SW Activate Event - Clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('[ServiceWorker] Activating...');
+    log('[ServiceWorker] Activating...');
 
     // Claim clients immediately
     event.waitUntil(self.clients.claim());
@@ -248,7 +253,7 @@ self.addEventListener('activate', (event) => {
             const deletionPromises = cacheNames
                 .filter(cacheName => !validCacheNames.includes(cacheName))
                 .map(cacheName => {
-                    console.log(`[ServiceWorker] Deleting old cache: ${cacheName}`);
+                    log(`[ServiceWorker] Deleting old cache: ${cacheName}`);
                     return caches.delete(cacheName);
                 });
 

@@ -276,6 +276,15 @@ export function generatePersonStructuredData(): PersonSchema {
  * former JobPosting markup, which Google reserves for employers publishing
  * actual job openings (misrepresentation policy -> manual action risk).
  */
+/**
+ * Last material content revision, as a full ISO 8601 datetime.
+ * Stable on purpose: build-time `new Date()` churned dateModified on every
+ * deploy (no real change) and emitted a date-only value that Google's
+ * ProfilePage validator rejected ("fecha y hora no válida"). Bump this by hand
+ * when the CV content changes meaningfully.
+ */
+export const CONTENT_REVISED = "2026-06-15T00:00:00Z";
+
 export function generateProfilePageStructuredData(): Record<string, any> {
     const person: Record<string, any> = { ...generatePersonStructuredData() };
     delete person["@context"];
@@ -284,7 +293,7 @@ export function generateProfilePageStructuredData(): Record<string, any> {
         "@type": "ProfilePage",
         "@id": "https://oriolmacias.dev/#profilepage",
         url: "https://oriolmacias.dev/",
-        dateModified: new Date().toISOString().split("T")[0],
+        dateModified: CONTENT_REVISED,
         mainEntity: person,
     };
 }
@@ -307,47 +316,6 @@ export interface WebSiteSchema {
     description: string;
     publisher: { "@id": string };
     inLanguage: string[];
-}
-
-/**
- * Resume Schema interface
- */
-export interface ResumeSchema {
-    "@context": string;
-    "@type": "Resume";
-    "@id": string;
-    name: string;
-    description: string;
-    url: string;
-    dateCreated: string;
-    dateModified: string;
-    author: { "@id": string };
-    about: { "@id": string };
-    inLanguage: string[];
-}
-
-/**
- * Generates Schema.org Resume structured data
- * Improves semantic clarity for search engines
- */
-export function generateResumeStructuredData(): ResumeSchema {
-    return {
-        "@context": "https://schema.org",
-        "@type": "Resume",
-        "@id": "https://oriolmacias.dev/#resume",
-        name: "Oriol Macias - Backend Developer Resume",
-        description: "Professional resume for Oriol Macias, Backend Developer with 8+ years experience in Python, Django, and industrial protocol integration",
-        url: "https://oriolmacias.dev/",
-        dateCreated: "2024-01-01",
-        dateModified: new Date().toISOString().split('T')[0],
-        author: {
-            "@id": "https://oriolmacias.dev/#oriol-macias-dev"
-        },
-        about: {
-            "@id": "https://oriolmacias.dev/#oriol-macias-dev"
-        },
-        inLanguage: ["en", "es", "fr", "de"]
-    };
 }
 
 /**

@@ -23,7 +23,6 @@ import {
   detectMarketAndOptimizeSEO,
   generateProfilePageStructuredData,
   generateWebSiteStructuredData,
-  generateResumeStructuredData,
   normalizePathname,
 } from "../utils/seo";
 
@@ -84,7 +83,6 @@ const marketData = detectMarketAndOptimizeSEO(
 // JobPosting removed 2026-06-11 — Google reserves it for employer job offers)
 const profilePageSchema = generateProfilePageStructuredData();
 const websiteSchema = generateWebSiteStructuredData();
-const resumeSchema = generateResumeStructuredData();
 
 // Construct full canonical URL — always the clean extensionless URL of THIS page
 // (build.format:'file' makes Astro.url.pathname end in .html; never expose it)
@@ -336,11 +334,6 @@ const isMultilingualPage =
     <!-- WebSite Structured Data for better indexation -->
     <Fragment
       set:html={`<script type="application/ld+json">${JSON.stringify(websiteSchema, null, 2)}</script>`}
-    />
-
-    <!-- Resume Structured Data for CV semantic clarity -->
-    <Fragment
-      set:html={`<script type="application/ld+json">${JSON.stringify(resumeSchema, null, 2)}</script>`}
     />
 
     <!-- Print Styles (FontAwesome removed - using inline SVG) -->
