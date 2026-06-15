@@ -81,7 +81,12 @@ export function detectMarketAndOptimizeSEO(
         "oriol macias, software developer, backend developer, cv, portfolio";
 
     try {
-        const pathSegments = currentUrl.pathname.split("/").filter(Boolean);
+        // Normalize first: with build.format:'file' Astro.url.pathname for the home is
+        // "/index.html" (not "/"), so the raw `=== "/"` checks below never fired and the
+        // home served the un-optimized default title/description. normalizePathname collapses
+        // "/index.html" -> "/" and strips ".html"/trailing slashes (so geo pages match too).
+        const path = normalizePathname(currentUrl.pathname);
+        const pathSegments = path.split("/").filter(Boolean);
 
         // Swiss cities detection with enhanced targeting
         const swissCities = [
@@ -101,7 +106,7 @@ export function detectMarketAndOptimizeSEO(
             detectedCity = detectedSwissCity || "general";
 
             // Brand optimization for homepage
-            if (currentUrl.pathname === "/") {
+            if (path === "/") {
                 enhancedTitle =
                     "Oriol Macias - Senior Backend Developer | Switzerland-Ready";
                 enhancedDescription =
@@ -196,7 +201,7 @@ export function detectMarketAndOptimizeSEO(
                 "desarrollador backend españa, python desarrollador madrid, ingeniero software españa, desarrollador backend suiza";
         }
         // Homepage brand optimization
-        else if (currentUrl.pathname === "/") {
+        else if (path === "/") {
             enhancedTitle =
                 "Oriol Macias - Senior Backend Developer | Switzerland-Ready";
             enhancedDescription =
