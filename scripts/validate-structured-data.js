@@ -110,8 +110,8 @@ async function main() {
     try {
         await fs.access(DIST_DIR);
     } catch {
-        console.warn('⚠️  dist/ not found — run `npm run build` first for a meaningful check.');
-        console.warn('   Skipping (exit 0) so standalone `npm run check` keeps working.');
+        console.warn('⚠️  dist/ not found — run `pnpm run build` first for a meaningful check.');
+        console.warn('   Skipping (exit 0) so standalone `pnpm run check` keeps working.');
         return;
     }
 
