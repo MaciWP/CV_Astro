@@ -228,10 +228,10 @@ export function generatePersonStructuredData(): PersonSchema {
         "@id": "https://oriolmacias.dev/#oriol-macias-dev",
         name: "Oriol Macias",
         alternateName: ["Oriol Dev", "Macias Dev", "Oriol Macias Dev"],
-        description: "Software Developer known professionally as Oriol Macias Dev",
+        description: "Senior Backend Developer known professionally as Oriol Macias Dev",
         url: "https://oriolmacias.dev",
         mainEntityOfPage: "https://oriolmacias.dev",
-        jobTitle: "Software Developer",
+        jobTitle: "Senior Backend Developer",
         sameAs: [
             "https://linkedin.com/in/oriolmaciasbadosa",
             "https://github.com/MaciWP",
@@ -265,10 +265,6 @@ export function generatePersonStructuredData(): PersonSchema {
     };
 }
 
-/**
- * Safely serializes data to JSON-LD string, preventing script injection and syntax errors
- * @param data The data object to serialize
- */
 /**
  * Generates ProfilePage structured data wrapping the Person entity.
  * The correct schema for a personal CV/profile page (Google profile-page

@@ -6,7 +6,6 @@
     "src/layouts/**/*.{ts,tsx,js,jsx,astro}",
     "src/components/**/*.{ts,tsx,js,jsx,astro}",
     "src/utils/**/*.{ts,tsx,js,jsx,astro}",
-    "src/contexts/**/*.{ts,tsx,js,jsx,astro}",
     "src/styles/**/*.{ts,tsx,js,jsx,astro}",
     "src/assets/**/*.{ts,tsx,js,jsx,astro}",
     "src/env.d.ts"
@@ -18,8 +17,6 @@
     "**/*.test.ts"
   ],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }

@@ -1,12 +1,7 @@
-# Files: root oriolmaci
+# .gitignore — oriolmacias.dev
 
-# Dependencias
+# Dependencies
 node_modules/
-/.pnp
-.pnp.js
-
-# Testing
-/coverage
 
 # Build
 dist/
@@ -74,7 +69,6 @@ report_output.txt
 
 # Misc
 *.tsbuildinfo
-next-env.d.ts
 
 # Claude Code Configuration
 .claude/
