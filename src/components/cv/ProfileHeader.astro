@@ -8,9 +8,16 @@ import SvgIcons from "../icons/SvgIcons.astro";
 
 interface Props {
     lang?: string;
+    asH1?: boolean;
 }
 
-const { lang = "en" } = Astro.props;
+const { lang = "en", asH1 = true } = Astro.props;
+
+// Heading levels: this component is the page H1 on the home/language pages, but the geo
+// pages (/spain, /switzerland) own the page H1 (their geo hero) and embed this CV — so
+// there it renders as H2/H3 (asH1={false}) to keep a single H1 per page.
+const NameTag = asH1 ? "h1" : "h2";
+const TitleTag = asH1 ? "h2" : "h3";
 
 // Helper to get translations safely
 const getTranslation = (key: string, fallback: string) => {
@@ -67,12 +74,12 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     sizing); duplicating per-breakpoint produced 2x h1/h2 in
                     the DOM, flagged by SEO crawlers */}
                 <div>
-                    <h1 class="text-2xl leading-tight mb-1 sm:text-4xl md:text-5xl sm:mb-2 font-bold">
+                    <NameTag class="text-2xl leading-tight mb-1 sm:text-4xl md:text-5xl sm:mb-2 font-bold">
                         {headerData.fullName}
-                    </h1>
-                    <h2 class="text-base leading-tight sm:text-xl md:text-2xl text-accessible-brand-red font-semibold">
+                    </NameTag>
+                    <TitleTag class="text-base leading-tight sm:text-xl md:text-2xl text-accessible-brand-red font-semibold">
                         {jobTitle}
-                    </h2>
+                    </TitleTag>
                 </div>
 
                 {/* Mobile: Personal info + Photo side by side */}
