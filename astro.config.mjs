@@ -8,6 +8,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import compress from '@playform/compress';
 import tailwindcss from '@tailwindcss/vite';
+import { CONTENT_REVISED } from './src/utils/seo';
 // React removed - all components are now pure Astro + vanilla JS
 // Netlify adapter removed - pure static site doesn't need it
 // Tailwind 4: @astrojs/tailwind dropped (no Astro 6 support) -> @tailwindcss/vite plugin
@@ -34,6 +35,10 @@ export default defineConfig({
   // Integrations (Tailwind is now a Vite plugin, see vite.plugins below)
   integrations: [
     sitemap({
+      // lastmod: Google uses it only if verifiably accurate. CONTENT_REVISED is bumped by
+      // hand on real content changes (same source as ProfilePage dateModified), so it
+      // qualifies. changefreq/priority omitted on purpose — Google (and Astro docs) ignore them.
+      lastmod: new Date(CONTENT_REVISED),
       i18n: {
         defaultLocale: 'en',
         locales: {
@@ -59,12 +64,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    server: {
-      fs: { strict: true },
-      middlewareMode: false,
-    },
     build: {
-      assetsInlineLimit: 4096,
+      // (assetsInlineLimit 4096, server.fs.strict, server.middlewareMode removed —
+      //  all were Vite defaults, so explicit copies added no behavior.)
       sourcemap: true,
       cssCodeSplit: true,
     },
