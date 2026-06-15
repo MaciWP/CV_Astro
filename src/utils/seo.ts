@@ -186,12 +186,20 @@ export function detectMarketAndOptimizeSEO(
                     "python entwickler schweiz, backend entwickler schweiz, python entwickler zürich, software ingenieur schweiz, b-bewilligung";
             }
         }
-        // Spanish market detection
-        else if (
-            pathSegments.includes("espana") ||
-            pathSegments.includes("spain") ||
-            language === "es"
-        ) {
+        // Spain geo page — Spain-market specific. Checked BEFORE the language==="es" branch
+        // because /spain renders with lang="es"; otherwise /es and /spain served identical
+        // title + description (duplicate-content flag in crawlers).
+        else if (pathSegments.includes("espana") || pathSegments.includes("spain")) {
+            detectedMarket = "spain";
+            enhancedTitle =
+                "Oriol Macias - Desarrollador Backend en España | Madrid y Barcelona";
+            enhancedDescription =
+                "Desarrollador backend senior en España: Python, Django, C#, protocolos industriales (SNMP/Modbus/BACnet). 8+ años. Disponible en Madrid y Barcelona.";
+            enhancedKeywords =
+                "desarrollador backend madrid, desarrollador backend barcelona, python desarrollador españa, ingeniero software madrid";
+        }
+        // Spanish language home (general / Switzerland-oriented)
+        else if (language === "es") {
             detectedMarket = "spain";
             enhancedTitle =
                 "Oriol Macias - Desarrollador Backend Senior | España y Suiza";
