@@ -24,7 +24,7 @@ export default {
                 'light-secondary': '#f3f4f6',     // Secondary background light gray
                 'light-surface': '#ffffff',       // Card surface white
                 'light-surface-alt': '#f7f8fa',   // Alternative surface soft gray
-                'light-border': '#e5e7eb',        // Light gray border
+                'light-border': '#d1d5db',        // Light gray border (gray-300, ~1.5:1 on white — was #e5e7eb/gray-200, too faint)
                 'light-text': '#1f2937',          // Main text near-black
                 'light-text-secondary': '#5f6772', // Secondary text medium gray (AA: 5.2:1 on #f3f4f6)
                 'light-card-bg': '#f3f4f6',       // Card background, similar to dates
