@@ -5,8 +5,6 @@
  * output, not a mock). Asserts the post-2026-06 schema set: ProfilePage
  * wrapping a Person mainEntity + WebSite, and ZERO JobPosting nodes
  * (JobPosting is employer-only markup per Google's content guidelines).
- * @author Oriol Macias Dev
- * @version 2.0.0
  */
 
 import fs from 'fs/promises';
