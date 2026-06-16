@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 // Import CV components - All pure Astro now (no React)
 import ProfileHeader from "../../components/cv/ProfileHeader.astro";
@@ -18,11 +17,6 @@ const pageDescription =
     "CV y portfolio profesional de Oriol Macias, Desarrollador Backend con más de 8 años de experiencia en integración de protocolos industriales (SNMP, Modbus, BACnet) e infraestructura de centros de datos.";
 const ogImage = "/images/oriol_macias.jpg";
 const canonicalUrl = "https://oriolmacias.dev/es";
-
-// Enlaces a versiones en otros idiomas
-const enUrl = getRelativeLocaleUrl("en", "");
-const frUrl = getRelativeLocaleUrl("fr", "");
-const deUrl = getRelativeLocaleUrl("de", "");
 
 // FAQs for rich snippets
 const faqs = [
@@ -55,11 +49,6 @@ const faqs = [
     lang="es"
     ogImage={ogImage}
     canonicalUrl={canonicalUrl}
-    alternateUrls={{
-        en: enUrl,
-        fr: frUrl,
-        de: deUrl,
-    }}
 >
     <div
         id="cv-person"

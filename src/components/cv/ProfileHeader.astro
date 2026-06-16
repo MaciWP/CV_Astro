@@ -195,9 +195,7 @@ const githubLabel = getTranslation("header.github", "GitHub");
                                     ? emailLabel
                                     : contact.type === "linkedin"
                                       ? linkedinLabel
-                                      : contact.type === "github"
-                                        ? githubLabel
-                                        : contact.label;
+                                      : githubLabel;
 
                             return (
                                 <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300 group hover:translate-x-1 transition-all duration-200">

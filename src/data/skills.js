@@ -3,12 +3,9 @@
  * File: src/data/skills.js
  */
 
-// Import the unified icon system
-import { techIcons, getTechIcon } from './icons';
-
 // Section titles with multilingual support
 // Reorganized for Swiss market and ATS optimization
-export const sectionTitles = {
+const sectionTitles = {
     skills: {
         en: "Technical Skills",
         es: "Habilidades Técnicas",
@@ -120,43 +117,4 @@ export const getSectionTitle = (section, lang = 'en') => {
     return sectionTitles[section]?.en || section;
 };
 
-/**
- * Get skills data in the current UI language
- * @returns {Object} Skills data with section titles in the current UI language
- */
-export const getCurrentLanguageSkills = () => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-
-    // Return the structure with translated section titles
-    // Swiss market categories: languages, libraries, protocols, devops, databases (5 total)
-    return {
-        title: getSectionTitle('skills', currentLang),
-        languages: {
-            title: getSectionTitle('languages', currentLang),
-            items: skillsData.languages
-        },
-        libraries: {
-            title: getSectionTitle('libraries', currentLang),
-            items: skillsData.libraries
-        },
-        protocols: {
-            title: getSectionTitle('protocols', currentLang),
-            items: skillsData.protocols
-        },
-        devops: {
-            title: getSectionTitle('devops', currentLang),
-            items: skillsData.devops
-        },
-        databases: {
-            title: getSectionTitle('databases', currentLang),
-            items: skillsData.databases
-        }
-    };
-};
-
-// Re-export both getTechIcon and techIcons for compatibility with existing code
-export { getTechIcon, techIcons };
-
-// For compatibility with existing code
 export default skillsData;

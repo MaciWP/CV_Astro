@@ -116,12 +116,8 @@ const isMultilingualPage =
     <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
     <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px)" />
 
-    <!-- FontAwesome fonts REMOVED - All icons now use inline SVG (SvgIcons.astro) -->
-
     <!-- JS Enabled Class -->
     <script is:inline data-cfasync="false">document.documentElement.classList.add("js-enabled");</script>
-
-    <!-- Font Awesome CDN REMOVED - Using only local optimized version for performance -->
 
     <!-- Favicons and manifest - FIXED for Google Search compatibility -->
     <!-- Primary favicon - SVG for modern browsers -->
@@ -326,7 +322,7 @@ const isMultilingualPage =
       set:html={`<script type="application/ld+json">${JSON.stringify(websiteSchema, null, 2)}</script>`}
     />
 
-    <!-- Print Styles (FontAwesome removed - using inline SVG) -->
+    <!-- Print Styles -->
     <style is:inline>
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}
     </style>
