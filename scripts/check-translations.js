@@ -12,7 +12,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration
-const LOCALES_DIR = path.join(__dirname, '../public/locales');
+// The live translations rendered by the site live in src/data/locales
+// (imported by ProfileHeader.astro); public/locales was an unused, drifted
+// copy that nothing fetched at runtime — removed in the same change.
+const LOCALES_DIR = path.join(__dirname, '../src/data/locales');
 const SUPPORTED_LANGUAGES = ['en', 'es', 'fr', 'de'];
 
 // Utility function to flatten object keys with dot notation
