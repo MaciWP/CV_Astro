@@ -3,6 +3,8 @@
  * File: src/data/languages.js
  */
 
+import { normalizeLang } from './_lang';
+
 // Base languages data with translations
 const languagesData = [
     {
@@ -77,8 +79,7 @@ const languagesData = [
  * @returns {Array} Languages with texts in the specified language
  */
 export const getLanguages = (lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return languagesData.map(l => ({

@@ -20,30 +20,22 @@ const translationsByLang: Record<string, Record<string, string>> = {
     en: {
         title: 'Work Experience',
         responsibilities: 'Responsibilities',
-        keyAchievements: 'Key Achievements',
-        showMore: 'Show more',
-        showLess: 'Show less'
+        keyAchievements: 'Key Achievements'
     },
     es: {
         title: 'Experiencia Laboral',
         responsibilities: 'Responsabilidades',
-        keyAchievements: 'Logros Clave',
-        showMore: 'Ver más',
-        showLess: 'Ver menos'
+        keyAchievements: 'Logros Clave'
     },
     fr: {
         title: 'Expérience Professionnelle',
         responsibilities: 'Responsabilités',
-        keyAchievements: 'Réalisations Clés',
-        showMore: 'Voir plus',
-        showLess: 'Voir moins'
+        keyAchievements: 'Réalisations Clés'
     },
     de: {
         title: 'Berufserfahrung',
         responsibilities: 'Verantwortlichkeiten',
-        keyAchievements: 'Wichtige Erfolge',
-        showMore: 'Mehr anzeigen',
-        showLess: 'Weniger anzeigen'
+        keyAchievements: 'Wichtige Erfolge'
     }
 };
 
@@ -143,30 +135,6 @@ const hideDetailsText: Record<string, string> = {
                         ))}
                     </ul>
 
-                    <!-- Extra responsibilities - lazy-loaded on expand to reduce DOM -->
-                    {job.extraResponsibilities && job.extraResponsibilities.length > 0 && (
-                        <>
-                            <div class="extra-responsibilities-container mb-3 hidden"
-                                 data-job-id={job.id}
-                                 data-responsibilities={JSON.stringify(job.extraResponsibilities)}>
-                                <!-- Content injected by JS on expand -->
-                            </div>
-
-                            <button
-                                class="expand-btn text-xs inline-flex items-center gap-1 text-brand-red hover:text-brand-red/80 mb-5 focus:outline-hidden focus:underline"
-                                data-job-id={job.id}
-                                data-show-more={t.showMore}
-                                data-show-less={t.showLess}
-                                aria-expanded="false"
-                            >
-                                <span class="expand-icon transition-transform duration-200">
-                                    <SvgIcons name="chevron-down" class="w-3 h-3" />
-                                </span>
-                                <span class="btn-text">{t.showMore}</span>
-                            </button>
-                        </>
-                    )}
-
                     <!-- Achievements -->
                     <h4 class="text-sm uppercase text-brand-red dark:text-brand-red font-semibold mb-3 tracking-wider">
                         {t.keyAchievements}
@@ -250,19 +218,6 @@ const hideDetailsText: Record<string, string> = {
         transition: background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 150ms ease-out;
     }
 
-    /* Extra responsibilities container animation */
-    .extra-responsibilities-container {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: max-height 300ms ease-out, opacity 200ms ease-out;
-    }
-
-    .extra-responsibilities-container.expanded {
-        max-height: 1000px;
-        opacity: 1;
-    }
-
     /* Collapsible job card animation */
     .collapsible-content {
         max-height: 0;
@@ -288,15 +243,6 @@ const hideDetailsText: Record<string, string> = {
 
     .collapsible-toggle[aria-expanded="true"] .toggle-icon {
         transform: rotate(90deg);
-    }
-
-    .expand-btn .expand-icon {
-        display: inline-block;
-        transition: transform 200ms ease-out;
-    }
-
-    .expand-btn[aria-expanded="true"] .expand-icon {
-        transform: rotate(180deg);
     }
 
     /* Reduce bottom padding when collapsed */
@@ -351,44 +297,6 @@ const hideDetailsText: Record<string, string> = {
                             jobItem?.classList.add('expanded');
                             btn.setAttribute('aria-expanded', 'true');
                             btn.setAttribute('aria-label', btn.getAttribute('data-hide-text') || 'Hide details');
-                        }
-                    }
-                });
-            });
-
-            // Expand/collapse functionality with lazy-loading
-            const expandBtns = section.querySelectorAll('.expand-btn');
-            expandBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const jobId = btn.getAttribute('data-job-id');
-                    const container = section.querySelector(`.extra-responsibilities-container[data-job-id="${jobId}"]`);
-                    const textSpan = btn.querySelector('.btn-text');
-                    const showMore = btn.getAttribute('data-show-more');
-                    const showLess = btn.getAttribute('data-show-less');
-
-                    if (container) {
-                        const isExpanded = container.classList.contains('expanded');
-
-                        if (isExpanded) {
-                            container.classList.remove('expanded');
-                            container.classList.add('hidden');
-                            if (textSpan) textSpan.textContent = showMore || 'Show more';
-                            btn.setAttribute('aria-expanded', 'false');
-                        } else {
-                            // Lazy-load content on first expand
-                            if (!container.dataset.loaded) {
-                                const responsibilities = JSON.parse(container.dataset.responsibilities || '[]');
-                                container.innerHTML = `<ul class="extra-responsibilities space-y-3 text-light-text dark:text-dark-text">
-                                    ${responsibilities.map(r => `<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 bg-brand-red shrink-0 mt-2"></span><span>${r}</span></li>`).join('')}
-                                </ul>`;
-                                container.dataset.loaded = 'true';
-                            }
-                            container.classList.remove('hidden');
-                            requestAnimationFrame(() => {
-                                container.classList.add('expanded');
-                            });
-                            if (textSpan) textSpan.textContent = showLess || 'Show less';
-                            btn.setAttribute('aria-expanded', 'true');
                         }
                     }
                 });

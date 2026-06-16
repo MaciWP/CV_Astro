@@ -1,7 +1,7 @@
 {
-  "name": "Oriol Macias - Software Developer CV",
+  "name": "Oriol Macias - Senior Backend Developer CV",
   "short_name": "Oriol Macias CV",
-  "description": "Professional CV & Portfolio with Swiss design for Oriol Macias, Software Developer specialized in backend development and industrial protocols.",
+  "description": "Professional CV & Portfolio with Swiss design for Oriol Macias, Senior Backend Developer specialized in industrial protocols (SNMP, MODBUS, BACnet) and Python/Django.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -89,17 +89,6 @@
   "scope": "/",
   "related_applications": [],
   "prefer_related_applications": false,
-  "iarc_rating_id": "",
-  "share_target": {
-    "action": "/share",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  },
   "author": {
     "name": "Oriol Macias",
     "website": "https://oriolmacias.dev",

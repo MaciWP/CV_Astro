@@ -6,6 +6,8 @@
  * the original terms for company names, technologies, and dates.
  */
 
+import { normalizeLang } from './_lang';
+
 // Base experiences data structure with translations
 const experiencesData = [
     {
@@ -205,8 +207,7 @@ const experiencesData = [
  * @returns {Array} Experiences with texts in the specified language
  */
 export const getExperiences = (lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return experiencesData.map(exp => ({

@@ -53,7 +53,7 @@ Docker, GitHub Actions, AWS, CI/CD, Git
 
 ## Key Links
 - [Homepage](https://oriolmacias.dev/) - Main CV in English
-- [Spanish Version](https://oriolmacias.dev/es/) - CV en Espanol
-- [French Version](https://oriolmacias.dev/fr/) - CV en Francais
+- [Spanish Version](https://oriolmacias.dev/es/) - CV en Español
+- [French Version](https://oriolmacias.dev/fr/) - CV en Français
 - [German Version](https://oriolmacias.dev/de/) - Lebenslauf auf Deutsch
 - [Switzerland Opportunities](https://oriolmacias.dev/switzerland/) - Swiss market focus

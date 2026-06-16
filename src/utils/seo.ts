@@ -278,9 +278,18 @@ export function generatePersonStructuredData(): PersonSchema {
  */
 export const CONTENT_REVISED = "2026-06-15T00:00:00Z";
 
-export function generateProfilePageStructuredData(): Record<string, any> {
-    const person: Record<string, any> = { ...generatePersonStructuredData() };
-    delete person["@context"];
+interface ProfilePageSchema {
+    "@context": string;
+    "@type": "ProfilePage";
+    "@id": string;
+    url: string;
+    dateModified: string;
+    mainEntity: Omit<PersonSchema, "@context">;
+}
+
+export function generateProfilePageStructuredData(): ProfilePageSchema {
+    // Only the top-level node carries @context; strip it from the nested Person.
+    const { "@context": _context, ...person } = generatePersonStructuredData();
     return {
         "@context": "https://schema.org",
         "@type": "ProfilePage",

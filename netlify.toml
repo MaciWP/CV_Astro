@@ -9,30 +9,12 @@
   # -> exit 0 -> Netlify cancels. exit 1 forces the build unconditionally.
   ignore = "exit 1"
 
-# ===== EARLY HINTS (103) FOR LCP =====
-# Tells browser to start loading resources BEFORE HTML arrives
-# Reduces "Resource load delay" significantly
-# NOTE: FontAwesome fonts removed - using inline SVG icons
-
-[[headers]]
-  for = "/"
-  [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
-
-[[headers]]
-  for = "/es"
-  [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
-
-[[headers]]
-  for = "/fr"
-  [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
-
-[[headers]]
-  for = "/de"
-  [headers.values]
-    Link = "</images/oriol_macias-320.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high"
+# ===== LCP IMAGE PRELOAD =====
+# The hero image is preloaded by a DPR-aware <link rel="preload" imagesrcset>
+# in the HTML <head> (320w/480w + imagesizes). A fixed `Link: rel=preload` header
+# was removed (2026-06-17): it forced the 320 webp regardless of DPR, so on
+# higher-DPR devices — where the browser picks 480 from imagesrcset — it
+# double-downloaded the hero. The HTML preload selects the right size on its own.
 
 # ===== MIME HEADERS CONFIGURATION =====
 

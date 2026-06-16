@@ -3,7 +3,7 @@
  * Projects component - Pure Astro with vanilla JS for tabs and expand/collapse
  * @file src/components/cv/Projects.astro
  */
-import { getPersonalProjects, getProfessionalProjects, getTechIcon } from '../../data/projects';
+import { getPersonalProjects, getProfessionalProjects } from '../../data/projects';
 import SvgIcons from '../icons/SvgIcons.astro';
 
 interface Props {
@@ -71,12 +71,12 @@ const translationsByLang: Record<string, Record<string, string>> = {
 const t = translationsByLang[lang] || translationsByLang.en;
 
 // Helper to get FA icon class (for JS data attribute)
-function getProjectIcon(project: any): string {
+function getProjectIcon(project: { icon?: string }): string {
     return project.icon || "fas fa-code";
 }
 
 // Helper to get icon name (normalized for SvgIcons component)
-function getProjectIconName(project: any): string {
+function getProjectIconName(project: { icon?: string }): string {
     const iconMap: Record<string, string> = {
         "fas fa-server": "server",
         "fas fa-exchange-alt": "exchange-alt",
@@ -181,8 +181,7 @@ function getProjectIconName(project: any): string {
                         </h4>
                         <div class="flex flex-wrap gap-2 mt-2">
                             {project.technologies.map((tech: string) => (
-                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center gap-1.5">
-                                    <i class={`${getTechIcon(tech)} text-brand-red`}></i>
+                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center">
                                     {tech}
                                 </span>
                             ))}
@@ -237,8 +236,7 @@ function getProjectIconName(project: any): string {
                         </h4>
                         <div class="flex flex-wrap gap-2 mt-2">
                             {project.technologies.map((tech: string) => (
-                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center gap-1.5">
-                                    <i class={`${getTechIcon(tech)} text-brand-red`}></i>
+                                <span class="tech-tag px-2 py-1 text-xs border border-light-border dark:border-dark-border rounded-none bg-light-secondary dark:bg-dark-secondary hover:border-brand-red transition-colors duration-150 flex items-center">
                                     {tech}
                                 </span>
                             ))}

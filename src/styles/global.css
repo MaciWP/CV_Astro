@@ -161,14 +161,6 @@
         transition: background-color 100ms ease-out, color 100ms ease-out, border-color 100ms ease-out;
     }
 
-    .theme-transition-text {
-        transition: color 100ms ease-out;
-    }
-
-    .theme-transition-bg {
-        transition: background-color 100ms ease-out;
-    }
-
     /* Global transition for elements with theme colors */
     html.light, html.dark {
         transition: background-color 100ms ease-out;
@@ -195,24 +187,6 @@
     [class*="dark:text-"].lcp-critical {
         transition: none !important;
         animation: none !important;
-    }
-
-    /* Buttons */
-    .btn {
-        @apply inline-flex items-center justify-center px-4 py-2 rounded-none transition-colors duration-150 focus:outline-hidden focus:ring-2 focus:ring-brand-red focus:ring-offset-2;
-    }
-
-    .btn-primary {
-        @apply bg-brand-red text-white hover:bg-red-700;
-    }
-
-    .btn-secondary {
-        @apply border border-brand-red text-brand-red hover:bg-brand-red hover:text-white;
-    }
-
-    /* Cards */
-    .card {
-        @apply bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-xs hover:shadow-md transition-shadow duration-300;
     }
 
     /* Section header with icon */
@@ -294,16 +268,6 @@
 }
 
 /* ===== PROJECT CARD ANIMATIONS ===== */
-/* Subtle hover animations for project cards */
-#projects .group:hover .bg-brand-red i {
-    animation: iconBounce 0.4s ease-out;
-}
-
-@keyframes iconBounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-}
-
 /* Shimmer effect on project card header on hover */
 #projects .group .bg-brand-red {
     position: relative;
@@ -335,7 +299,6 @@
         opacity: 1;
     }
 
-    #projects .group:hover .bg-brand-red i,
     #projects .group:hover .bg-brand-red::after {
         animation: none;
     }
@@ -420,10 +383,6 @@
     }
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
-}
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -434,10 +393,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.animate-fadeInUp {
-    animation: fadeInUp var(--duration-standard) var(--ease-bounce) forwards;
 }
 
 @keyframes fadeInLeft {
@@ -452,10 +407,6 @@
     }
 }
 
-.animate-fadeInLeft {
-    animation: fadeInLeft var(--duration-standard) var(--ease-standard) forwards;
-}
-
 @keyframes scaleIn {
     from {
         opacity: 0;
@@ -466,39 +417,6 @@
         opacity: 1;
         transform: scale(1);
     }
-}
-
-.animate-scaleIn {
-    animation: scaleIn var(--duration-standard) var(--ease-bounce) forwards;
-}
-
-/* Staggered animation system */
-.stagger-container>* {
-    opacity: 0;
-}
-
-.stagger-visible.stagger-container>*:nth-child(1) {
-    animation-delay: 30ms;
-}
-
-.stagger-visible.stagger-container>*:nth-child(2) {
-    animation-delay: 60ms;
-}
-
-.stagger-visible.stagger-container>*:nth-child(3) {
-    animation-delay: 90ms;
-}
-
-.stagger-visible.stagger-container>*:nth-child(4) {
-    animation-delay: 120ms;
-}
-
-.stagger-visible.stagger-container>*:nth-child(5) {
-    animation-delay: 150ms;
-}
-
-.stagger-visible.stagger-container>*:nth-child(6) {
-    animation-delay: 180ms;
 }
 
 /* ===== PRINT STYLES ===== */
@@ -577,10 +495,4 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
-}
-
-/* Proper touch targets for accessibility */
-.touch-target {
-    min-height: 44px;
-    min-width: 44px;
 }

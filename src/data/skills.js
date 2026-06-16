@@ -3,6 +3,8 @@
  * File: src/data/skills.js
  */
 
+import { normalizeLang } from './_lang';
+
 // Section titles with multilingual support
 // Reorganized for Swiss market and ATS optimization
 const sectionTitles = {
@@ -106,8 +108,7 @@ const skillsData = {
  * @returns {string} Section title in the specified language
  */
 export const getSectionTitle = (section, lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     if (sectionTitles[section] && sectionTitles[section][language]) {
         return sectionTitles[section][language];

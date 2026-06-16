@@ -4,7 +4,7 @@
  */
 
 // Import helper function from new unified icons system
-import { getTechIcon } from './icons';
+import { normalizeLang } from './_lang';
 
 // Personal projects with GitHub links and multilingual descriptions
 const personalProjectsData = [
@@ -527,8 +527,7 @@ const professionalProjectsData = [
  * @returns {Array} Projects with texts in the specified language
  */
 export function getPersonalProjects(lang = 'en') {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return personalProjectsData.map(project => ({
@@ -546,8 +545,7 @@ export function getPersonalProjects(lang = 'en') {
  * @returns {Array} Projects with texts in the specified language
  */
 export function getProfessionalProjects(lang = 'en') {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return professionalProjectsData.map(project => ({
@@ -558,7 +556,4 @@ export function getProfessionalProjects(lang = 'en') {
         keyFeatures: project.keyFeatures[language] || project.keyFeatures.en
     }));
 }
-
-// Re-export getTechIcon (consumed by Projects.astro)
-export { getTechIcon };
 

@@ -34,7 +34,7 @@
         const announcer = document.getElementById('a11y-announcer');
         let clearTimeout: ReturnType<typeof setTimeout> | null = null;
 
-        (window as any).announceToScreenReader = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
+        window.announceToScreenReader = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
             if (!announcer) return;
 
             // Clear previous timeout
@@ -61,7 +61,7 @@
         document.addEventListener('a11y-announce', (e: Event) => {
             const detail = (e as CustomEvent).detail;
             if (detail?.message) {
-                (window as any).announceToScreenReader(detail.message, detail.priority || 'polite');
+                window.announceToScreenReader(detail.message, detail.priority || 'polite');
             }
         });
     })();

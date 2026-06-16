@@ -20,22 +20,23 @@ const NameTag = asH1 ? "h1" : "h2";
 const TitleTag = asH1 ? "h2" : "h3";
 
 // Helper to get translations safely
-const getTranslation = (key: string, fallback: string) => {
-    let translations: any = enTranslations;
-    if (lang === "es") translations = esTranslations;
-    if (lang === "fr") translations = frTranslations;
-    if (lang === "de") translations = deTranslations;
+const getTranslation = (key: string, fallback: string): string => {
+    const byLang: Record<string, Record<string, unknown>> = {
+        en: enTranslations,
+        es: esTranslations,
+        fr: frTranslations,
+        de: deTranslations,
+    };
 
-    const keys = key.split(".");
-    let value = translations;
-    for (const k of keys) {
+    let value: unknown = byLang[lang] ?? enTranslations;
+    for (const k of key.split(".")) {
         if (value && typeof value === "object" && k in value) {
-            value = value[k];
+            value = (value as Record<string, unknown>)[k];
         } else {
             return fallback;
         }
     }
-    return value || fallback;
+    return (value as string) || fallback;
 };
 
 // Get localized data
@@ -68,7 +69,7 @@ const githubLabel = getTranslation("header.github", "GitHub");
 <div id="about" class="pt-2 sm:pt-4 pb-0 sm:pb-4">
     <section>
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-center">
-            {/* Información personal - izquierda */}
+            {/* Personal info - left column */}
             <div class="md:col-span-8 space-y-3 sm:space-y-4 order-2 md:order-1">
                 {/* Name + Title — single render for ALL widths (responsive
                     sizing); duplicating per-breakpoint produced 2x h1/h2 in
@@ -266,7 +267,7 @@ const githubLabel = getTranslation("header.github", "GitHub");
                             />
                         </picture>
                     </div>
-                    {/* Botón dentro del mismo card */}
+                    {/* Button inside the same card */}
                     <a
                         href="/OriolMacias_CoverLetter.pdf"
                         download="OriolMacias_CoverLetter.pdf"
