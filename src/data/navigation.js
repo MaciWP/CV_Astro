@@ -5,7 +5,7 @@
 
 // Base navigation items with translations
 // Note: "About" removed from nav to save header space - logo click scrolls to top
-export const navItems = [
+const navItems = [
     {
         id: 'experience',
         name: {
@@ -59,7 +59,7 @@ export const navItems = [
 ];
 
 // UI translations
-export const uiTranslations = {
+const uiTranslations = {
     downloadCV: {
         en: 'Download CV',
         es: 'Descargar CV',
@@ -120,31 +120,3 @@ export const getUITranslation = (key, lang = 'en') => {
     // Fallback to English or key itself
     return uiTranslations[key]?.en || key;
 };
-
-/**
- * Get navigation items for the current UI language
- * @returns {Array} Navigation items with names in the current UI language
- */
-export const getCurrentLanguageNavItems = () => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getNavItems(currentLang);
-};
-
-/**
- * Get UI translation for the current UI language
- * @param {string} key - UI element key
- * @returns {string} Translation in the current UI language
- */
-export const getCurrentUITranslation = (key) => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getUITranslation(key, currentLang);
-};
-
-// For compatibility with existing code - English nav items
-export default navItems.map(item => ({
-    id: item.id,
-    name: item.name.en,
-    href: item.href
-}));

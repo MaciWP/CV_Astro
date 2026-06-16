@@ -105,65 +105,49 @@ export function detectMarketAndOptimizeSEO(
             detectedMarket = "switzerland";
             detectedCity = detectedSwissCity || "general";
 
-            // Brand optimization for homepage
-            if (path === "/") {
-                enhancedTitle =
-                    "Oriol Macias - Senior Backend Developer | Switzerland-Ready";
-                enhancedDescription =
-                    "Senior Backend Developer: Python, Django, C#, industrial protocols (SNMP, Modbus, BACnet). 8+ years' experience. EU citizen, Swiss B-Permit eligible.";
-                enhancedKeywords =
-                    "oriol macias dev, oriol dev, macias dev, oriolmacias.dev, oriol software developer, backend developer switzerland, python developer switzerland, oriol macias portfolio";
-            }
-            // Swiss city-specific optimization
-            else {
-                const cityOptimizations: Record<string, { title: string; description: string; keywords: string }> = {
-                    zurich: {
-                        title:
-                            "Oriol Macias - Senior Backend Developer Zurich | Python Expert",
-                        description:
-                            "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise. Work permit ready for Swiss companies.",
-                        keywords:
-                            "backend developer zurich, python developer zurich, software engineer zurich, work permit switzerland",
-                    },
-                    basel: {
-                        title:
-                            "Oriol Macias - Software Engineer Basel | Industrial Automation",
-                        description:
-                            "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, Modbus, BACnet) expert.",
-                        keywords:
-                            "software engineer basel, industrial automation basel, pharmaceutical developer basel",
-                    },
-                    geneva: {
-                        title:
-                            "Oriol Macias - Backend Developer Geneva | International Orgs",
-                        description:
-                            "Backend Developer for Geneva's international organizations. English working proficiency; Spanish and Catalan native. SNMP/Modbus/BACnet integration expert.",
-                        keywords:
-                            "backend developer geneva, python developer geneva, international organizations geneva",
-                    },
-                    geneve: {
-                        title:
-                            "Oriol Macias - Backend Developer Geneva | International Orgs",
-                        description:
-                            "Backend Developer for Geneva's international organizations. English working proficiency; Spanish and Catalan native. SNMP/Modbus/BACnet integration expert.",
-                        keywords:
-                            "backend developer geneva, python developer geneva, international organizations geneva",
-                    },
-                };
+            // Swiss city-specific optimization. The homepage "/" cannot reach this
+            // branch (it has no path segments), so it is handled further below.
+            const cityOptimizations: Record<string, { title: string; description: string; keywords: string }> = {
+                zurich: {
+                    title:
+                        "Oriol Macias - Senior Backend Developer Zurich | Python Expert",
+                    description:
+                        "Senior Backend Developer seeking opportunities in Zurich. 8+ years Python, Django expertise. Work permit ready for Swiss companies.",
+                    keywords:
+                        "backend developer zurich, python developer zurich, software engineer zurich, work permit switzerland",
+                },
+                basel: {
+                    title:
+                        "Oriol Macias - Software Engineer Basel | Industrial Automation",
+                    description:
+                        "Software Engineer specializing in Basel pharmaceutical sector. Industrial protocols (SNMP, Modbus, BACnet) expert.",
+                    keywords:
+                        "software engineer basel, industrial automation basel, pharmaceutical developer basel",
+                },
+                geneva: {
+                    title:
+                        "Oriol Macias - Backend Developer Geneva | International Orgs",
+                    description:
+                        "Backend Developer for Geneva's international organizations. English working proficiency; Spanish and Catalan native. SNMP/Modbus/BACnet integration expert.",
+                    keywords:
+                        "backend developer geneva, python developer geneva, international organizations geneva",
+                },
+            };
 
-                const cityConfig = cityOptimizations[detectedCity];
-                if (cityConfig) {
-                    enhancedTitle = cityConfig.title;
-                    enhancedDescription = cityConfig.description;
-                    enhancedKeywords = cityConfig.keywords;
-                } else {
-                    enhancedTitle =
-                        "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
-                    enhancedDescription =
-                        "Senior Backend Developer seeking opportunities across Switzerland. 8+ years experience, EU work permit ready.";
-                    enhancedKeywords =
-                        "backend developer switzerland, python developer switzerland, work permit ready";
-                }
+            // "geneve" (French spelling) shares Geneva's optimization
+            const cityKey = detectedCity === "geneve" ? "geneva" : detectedCity;
+            const cityConfig = cityOptimizations[cityKey];
+            if (cityConfig) {
+                enhancedTitle = cityConfig.title;
+                enhancedDescription = cityConfig.description;
+                enhancedKeywords = cityConfig.keywords;
+            } else {
+                enhancedTitle =
+                    "Oriol Macias - Backend Developer Switzerland | Work Permit Ready";
+                enhancedDescription =
+                    "Senior Backend Developer seeking opportunities across Switzerland. 8+ years experience, EU work permit ready.";
+                enhancedKeywords =
+                    "backend developer switzerland, python developer switzerland, work permit ready";
             }
         }
         // Swiss languages detection (French, German) - Target Swiss market
@@ -305,12 +289,6 @@ export function generateProfilePageStructuredData(): Record<string, any> {
         dateModified: CONTENT_REVISED,
         mainEntity: person,
     };
-}
-
-export function toSafeJsonLd(data: any): string {
-    const json = JSON.stringify(data ?? {}, null, 2);
-    // Escape closing </script to avoid early termination in HTML parsing
-    return json.replace(/<\/script/gi, '<\\/script');
 }
 
 /**

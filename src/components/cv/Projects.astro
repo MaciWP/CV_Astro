@@ -72,9 +72,6 @@ const t = translationsByLang[lang] || translationsByLang.en;
 
 // Helper to get FA icon class (for JS data attribute)
 function getProjectIcon(project: any): string {
-    if (project.id === "vmware-service" && !project.icon) {
-        return "fas fa-cloud"; // VMware uses cloud icon
-    }
     return project.icon || "fas fa-code";
 }
 

@@ -138,9 +138,6 @@ const secondaryEducationData = [
     }
 ];
 
-// Combined for backwards compatibility
-const educationData = [...primaryEducationData, ...secondaryEducationData];
-
 // Helper to transform education data to language-specific format
 const transformEducation = (data, language) => data.map(edu => ({
     id: edu.id,
@@ -150,16 +147,6 @@ const transformEducation = (data, language) => data.map(edu => ({
     badge: edu.badge ? (edu.badge[language] || edu.badge.en) : null,
     details: edu.details[language] || edu.details.en
 }));
-
-/**
- * Get all education items in the specified language
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Education items with texts in the specified language
- */
-export const getEducation = (lang = 'en') => {
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
-    return transformEducation(educationData, language);
-};
 
 /**
  * Get primary education items (always visible)
@@ -180,16 +167,3 @@ export const getSecondaryEducation = (lang = 'en') => {
     const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
     return transformEducation(secondaryEducationData, language);
 };
-
-/**
- * Get education items for the current UI language
- * @returns {Array} Education items with texts in the current UI language
- */
-export const getCurrentLanguageEducation = () => {
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getEducation(currentLang);
-};
-
-// Fallback: export default Education items in English for compatibility
-const educationItems = getEducation('en');
-export default educationItems;

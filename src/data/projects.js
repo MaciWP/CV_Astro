@@ -559,35 +559,6 @@ export function getProfessionalProjects(lang = 'en') {
     }));
 }
 
-/**
- * Get personal projects for the current UI language
- * @returns {Array} Projects with texts in the current UI language
- */
-export function getCurrentLanguagePersonalProjects() {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getPersonalProjects(currentLang);
-}
-
-/**
- * Get professional projects for the current UI language
- * @returns {Array} Projects with texts in the current UI language
- */
-export function getCurrentLanguageProfessionalProjects() {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getProfessionalProjects(currentLang);
-}
-
-// Re-export getTechIcon for compatibility
+// Re-export getTechIcon (consumed by Projects.astro)
 export { getTechIcon };
-
-// For compatibility with existing code - now after defining the functions
-export const personalProjects = getPersonalProjects('en');
-export const professionalProjects = getProfessionalProjects('en');
-
-export default {
-    personalProjects,
-    professionalProjects
-};
 

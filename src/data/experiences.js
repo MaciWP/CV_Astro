@@ -54,12 +54,6 @@ const experiencesData = [
                 "Arbeit mit PostgreSQL, Docker, GitHub, AWS für Datenbank- und DevOps-Operationen"
             ]
         },
-        extraResponsibilities: {
-            en: [],
-            es: [],
-            fr: [],
-            de: []
-        },
         achievements: {
             en: [
                 "Independently developed an SNMP monitoring tool with an autodiscovery method that significantly reduced discovery time",
@@ -116,12 +110,6 @@ const experiencesData = [
                 "Aufbau einer SOAP-API zur Verwaltung des Backends für beide Anwendungen",
                 "Implementierung von NFC-Technologie für MIFARE Classic 1K-Kartenoperationen"
             ]
-        },
-        extraResponsibilities: {
-            en: [],
-            es: [],
-            fr: [],
-            de: []
         },
         achievements: {
             en: [
@@ -181,12 +169,6 @@ const experiencesData = [
                 "Stadtverwaltung Salt (2014-2016): Entwicklungspraktikant mit Erstellung interner WPF/C#-Anwendungen für kommunale Datenbankverwaltung und Bürgerdienste"
             ]
         },
-        extraResponsibilities: {
-            en: [],
-            es: [],
-            fr: [],
-            de: []
-        },
         achievements: {
             en: [
                 "Resolved 200+ technical support tickets at SERES with high first-contact resolution rate",
@@ -234,21 +216,8 @@ export const getExperiences = (lang = 'en') => {
         // Handle period - can be string or object
         period: typeof exp.period === 'object' ? (exp.period[language] || exp.period.en) : exp.period,
         keyResponsibilities: exp.keyResponsibilities[language] || exp.keyResponsibilities.en,
-        extraResponsibilities: exp.extraResponsibilities[language] || exp.extraResponsibilities.en,
         achievements: exp.achievements[language] || exp.achievements.en,
         techStack: exp.techStack || [],
         collapsible: exp.collapsible || false
     }));
 };
-
-/**
- * Get experiences data for the current UI language
- * @returns {Array} Experiences with texts in the current UI language
- */
-export const getCurrentLanguageExperiences = () => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getExperiences(currentLang);
-};
-
-export default getCurrentLanguageExperiences;

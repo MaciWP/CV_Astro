@@ -6,7 +6,6 @@
 // Base languages data with translations
 const languagesData = [
     {
-        id: "spanish",
         language: {
             en: "Spanish",
             es: "Español",
@@ -23,7 +22,6 @@ const languagesData = [
         percent: 100
     },
     {
-        id: "catalan",
         language: {
             en: "Catalan",
             es: "Catalán",
@@ -40,7 +38,6 @@ const languagesData = [
         percent: 100
     },
     {
-        id: "english",
         language: {
             en: "English",
             es: "Inglés",
@@ -57,7 +54,6 @@ const languagesData = [
         percent: 75
     },
     {
-        id: "german",
         language: {
             en: "German",
             es: "Alemán",
@@ -92,17 +88,3 @@ export const getLanguages = (lang = 'en') => {
         percent: l.percent
     }));
 };
-
-/**
- * Get languages data for the current UI language
- * @returns {Array} Languages with texts in the current UI language
- */
-export const getCurrentLanguageLanguages = () => {
-    // Get current language from window object if available
-    const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-    return getLanguages(currentLang);
-};
-
-// For compatibility with existing code
-const languages = getLanguages('en');
-export default languages;

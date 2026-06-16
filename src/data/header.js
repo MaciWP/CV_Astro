@@ -22,23 +22,11 @@ const headerData = {
     fr: "Espagnole (Citoyen UE)",
     de: "Spanisch (EU-Bürger)"
   },
-  nationalityShort: {
-    en: "Spanish (EU)",
-    es: "Española (UE)",
-    fr: "Espagnole (UE)",
-    de: "Spanisch (EU)"
-  },
   workPermit: {
     en: "B-Permit Eligible",
     es: "Elegible para Permiso B",
     fr: "Éligible Permis B",
     de: "B-Bewilligung berechtigt"
-  },
-  workPermitShort: {
-    en: "B-Permit",
-    es: "Permiso B",
-    fr: "Permis B",
-    de: "B-Bewilligung"
   },
   location: {
     en: "Madrid, Spain",
@@ -46,35 +34,17 @@ const headerData = {
     fr: "Madrid, Espagne",
     de: "Madrid, Spanien"
   },
-  locationShort: {
-    en: "Madrid",
-    es: "Madrid",
-    fr: "Madrid",
-    de: "Madrid"
-  },
   relocation: {
     en: "Open to relocation to Switzerland",
     es: "Abierto a reubicación en Suiza",
     fr: "Ouvert à la relocalisation en Suisse",
     de: "Offen für Umzug in die Schweiz"
   },
-  relocationShort: {
-    en: "Open to CH",
-    es: "Abierto a CH",
-    fr: "Ouvert à CH",
-    de: "Offen für CH"
-  },
   noticePeriod: {
     en: "2 weeks notice",
     es: "Preaviso de 2 semanas",
     fr: "Préavis de 2 semaines",
     de: "2 Wochen Kündigungsfrist"
-  },
-  noticePeriodShort: {
-    en: "2 weeks",
-    es: "2 semanas",
-    fr: "2 semaines",
-    de: "2 Wochen"
   },
   summary: {
     en: "Backend developer with over 8 years of programming experience, specialized in Python/Django and REST APIs. Experienced in integrating industrial protocols (SNMP, Modbus, BACnet) and delivering reliable solutions. Practical experience with CI/CD and testing, currently expanding knowledge in performance optimization and AI-assisted automation.",
@@ -125,48 +95,9 @@ const headerData = {
       icon: "fab fa-github",
     },
   ],
-  photoUrl: "/images/oriol_macias-960.avif",
 };
 
-/**
- * Get header data in the specified language
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Object} Header data with texts in the specified language
- */
-export const getHeader = (lang = 'en') => {
-  // Default to English if language not supported
-  const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
-
-  return {
-    fullName: headerData.fullName,
-    jobTitle: headerData.jobTitle[language] || headerData.jobTitle.en,
-    // Swiss market fields
-    dateOfBirth: headerData.dateOfBirth,
-    nationality: headerData.nationality[language] || headerData.nationality.en,
-    workPermit: headerData.workPermit[language] || headerData.workPermit.en,
-    location: headerData.location[language] || headerData.location.en,
-    relocation: headerData.relocation[language] || headerData.relocation.en,
-    noticePeriod: headerData.noticePeriod[language] || headerData.noticePeriod.en,
-    summary: headerData.summary[language] || headerData.summary.en,
-    photoAlt: headerData.photoAlt[language] || headerData.photoAlt.en,
-    photoUrl: headerData.photoUrl,
-    contactInfo: headerData.contactInfo.map(contact => ({
-      ...contact,
-      label: contact.label[language] || contact.label.en
-    }))
-  };
-};
-
-/**
- * Get header data for the current UI language
- * @returns {Object} Header data with texts in the current UI language
- */
-export const getCurrentLanguageHeader = () => {
-  const currentLang = (typeof window !== 'undefined' && window.CURRENT_LANGUAGE) || 'en';
-  return getHeader(currentLang);
-};
-
-// For compatibility with existing code - export English version as default
+// English-flattened version used as the default import (fallback strings)
 const defaultHeader = {
   fullName: headerData.fullName,
   jobTitle: headerData.jobTitle.en,
@@ -179,7 +110,6 @@ const defaultHeader = {
   noticePeriod: headerData.noticePeriod.en,
   summary: headerData.summary.en,
   photoAlt: headerData.photoAlt.en,
-  photoUrl: headerData.photoUrl,
   contactInfo: headerData.contactInfo.map(contact => ({
     ...contact,
     label: contact.label.en
