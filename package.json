@@ -37,7 +37,8 @@
     "a11y": "pnpm run check:contrast",
     "a11y:audit": "lighthouse http://localhost:4321 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
     "clean": "rimraf dist .astro",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -57,6 +58,7 @@
     "sharp": "^0.35.1",
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3",
+    "vitest": "^4.1.9",
     "wcag-contrast": "^3.0.0"
   }
 }

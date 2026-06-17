@@ -6,6 +6,7 @@
 
 [![Live site](https://img.shields.io/badge/live-oriolmacias.dev-D83333?style=for-the-badge)](https://oriolmacias.dev)
 
+[![CI](https://github.com/MaciWP/CV_Astro/actions/workflows/ci.yml/badge.svg)](https://github.com/MaciWP/CV_Astro/actions/workflows/ci.yml)
 ![Lighthouse 100 ×5](https://img.shields.io/badge/Lighthouse-100%20×%205-success?logo=lighthouse&logoColor=white)
 ![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=white)
@@ -73,6 +74,7 @@ pnpm run preview    # serve the production build locally
 | `pnpm run preview` | Preview the production build |
 | `pnpm run check` | Run all domain gates: contrast + translations + structured data |
 | `pnpm run lint` | ESLint (zero errors / zero warnings) |
+| `pnpm test` | Run the Vitest unit suite (`src/utils/seo.ts` logic) |
 | `pnpm run a11y:audit` | Lighthouse accessibility audit |
 | `pnpm run clean` | Remove `dist/` and `.astro/` |
 
@@ -95,14 +97,16 @@ scripts/             # build · dev · check-contrast · check-translations
 
 ## ✅ Quality & verification
 
-There is no unit-test suite by design; correctness is enforced by the build itself
-plus three domain checks:
+Correctness is enforced on every push by **GitHub Actions CI** (lint → build →
+domain checks → unit tests) and by the Netlify production build:
 
+- `pnpm test` — Vitest unit suite for the SEO logic (market detection, path
+  normalization, JSON-LD generators)
 - `pnpm run check:contrast` — WCAG AA contrast on the real rendered colours
 - `pnpm run check:translations` — every key present and consistent across all 4 languages
 - `pnpm run check:structured-data` — validates the JSON-LD emitted into `dist/`
 
-`astro check` (types), `eslint` and `pnpm run check` are all green on every change.
+`astro check` (types), `eslint`, `pnpm test` and `pnpm run check` are all green on every change.
 
 ## 📄 License
 

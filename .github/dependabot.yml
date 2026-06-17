@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # npm/pnpm dependencies — grouped into a single weekly PR to cut noise.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "build(deps)"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+
+  # Keep the GitHub Actions in the CI workflow up to date too.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci(deps)"
