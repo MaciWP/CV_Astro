@@ -51,53 +51,53 @@ const sectionTitles = {
 const skillsData = {
     // Programming Languages (backend focused - removed JavaScript)
     languages: [
-        { id: "python", name: "Python", icon: "fab fa-python" },
-        { id: "csharp", name: "C#", icon: "fab fa-microsoft" },
-        { id: "dotnet", name: ".NET", icon: "fab fa-windows" },
-        { id: "java", name: "Java", icon: "fab fa-java" },
+        { id: "python", name: "Python", icon: "python" },
+        { id: "csharp", name: "C#", icon: "microsoft" },
+        { id: "dotnet", name: ".NET", icon: "windows" },
+        { id: "java", name: "Java", icon: "java" },
     ],
 
     // Libraries and Frameworks (backend focused)
     libraries: [
-        { id: "django", name: "Django", icon: "fas fa-cubes" },
-        { id: "fastapi", name: "FastAPI", icon: "fas fa-bolt" },
-        { id: "flask", name: "Flask", icon: "fas fa-flask" },
-        { id: "sqlalchemy", name: "SQLAlchemy", icon: "fas fa-database" },
-        { id: "alembic", name: "Alembic", icon: "fas fa-code-branch" },
-        { id: "celery", name: "Celery", icon: "fas fa-tasks" },
-        { id: "wpf", name: "WPF", icon: "fas fa-desktop" },
-        { id: "pytest", name: "Pytest", icon: "fas fa-vial" },
+        { id: "django", name: "Django", icon: "cubes" },
+        { id: "fastapi", name: "FastAPI", icon: "bolt" },
+        { id: "flask", name: "Flask", icon: "flask" },
+        { id: "sqlalchemy", name: "SQLAlchemy", icon: "database" },
+        { id: "alembic", name: "Alembic", icon: "code-branch" },
+        { id: "celery", name: "Celery", icon: "tasks" },
+        { id: "wpf", name: "WPF", icon: "desktop" },
+        { id: "pytest", name: "Pytest", icon: "vial" },
     ],
 
     // Protocols & Data Formats (industrial protocols + API formats + data formats)
     protocols: [
-        { id: "snmp", name: "SNMP", icon: "fas fa-exchange-alt" },
-        { id: "modbus", name: "Modbus", icon: "fas fa-plug" },
-        { id: "bacnet", name: "BACnet", icon: "fas fa-building" },
-        { id: "rest-api", name: "REST API", icon: "fas fa-exchange-alt" },
-        { id: "json", name: "JSON", icon: "fas fa-file-code" },
-        { id: "xml", name: "XML", icon: "fas fa-file-code" },
-        { id: "jwt", name: "JWT", icon: "fas fa-key" },
-        { id: "nfc", name: "NFC", icon: "fas fa-wifi" },
+        { id: "snmp", name: "SNMP", icon: "exchange-alt" },
+        { id: "modbus", name: "Modbus", icon: "plug" },
+        { id: "bacnet", name: "BACnet", icon: "building" },
+        { id: "rest-api", name: "REST API", icon: "exchange-alt" },
+        { id: "json", name: "JSON", icon: "file-code" },
+        { id: "xml", name: "XML", icon: "file-code" },
+        { id: "jwt", name: "JWT", icon: "key" },
+        { id: "nfc", name: "NFC", icon: "wifi" },
     ],
 
     // DevOps & Tools (Git, CI/CD, containers, cloud - ATS keywords)
     devops: [
-        { id: "docker", name: "Docker", icon: "fab fa-docker" },
-        { id: "git", name: "Git", icon: "fab fa-git-alt" },
-        { id: "github", name: "GitHub", icon: "fab fa-github" },
-        { id: "github-actions", name: "GitHub Actions", icon: "fab fa-github" },
-        { id: "cicd", name: "CI/CD", icon: "fas fa-sync-alt" },
-        { id: "aws", name: "AWS", icon: "fab fa-aws" },
-        { id: "nginx", name: "Nginx", icon: "fas fa-server" },
-        { id: "gunicorn", name: "Gunicorn", icon: "fas fa-server" },
+        { id: "docker", name: "Docker", icon: "docker" },
+        { id: "git", name: "Git", icon: "git-alt" },
+        { id: "github", name: "GitHub", icon: "github" },
+        { id: "github-actions", name: "GitHub Actions", icon: "github" },
+        { id: "cicd", name: "CI/CD", icon: "sync-alt" },
+        { id: "aws", name: "AWS", icon: "aws" },
+        { id: "nginx", name: "Nginx", icon: "server" },
+        { id: "gunicorn", name: "Gunicorn", icon: "server" },
     ],
 
     // Databases
     databases: [
-        { id: "postgresql", name: "PostgreSQL", icon: "fas fa-database" },
-        { id: "mysql", name: "MySQL", icon: "fas fa-database" },
-        { id: "redis", name: "Redis", icon: "fas fa-server" },
+        { id: "postgresql", name: "PostgreSQL", icon: "database" },
+        { id: "mysql", name: "MySQL", icon: "database" },
+        { id: "redis", name: "Redis", icon: "server" },
     ],
 };
 

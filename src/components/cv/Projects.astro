@@ -70,27 +70,9 @@ const translationsByLang: Record<string, Record<string, string>> = {
 
 const t = translationsByLang[lang] || translationsByLang.en;
 
-// Helper to get FA icon class (for JS data attribute)
-function getProjectIcon(project: { icon?: string }): string {
-    return project.icon || "fas fa-code";
-}
-
-// Helper to get icon name (normalized for SvgIcons component)
+// Helper to get the project's icon key (falls back to a generic code icon).
 function getProjectIconName(project: { icon?: string }): string {
-    const iconMap: Record<string, string> = {
-        "fas fa-server": "server",
-        "fas fa-exchange-alt": "exchange-alt",
-        "fas fa-network-wired": "network-wired",
-        "fas fa-cloud": "cloud",
-        "fas fa-tags": "tags",
-        "fas fa-bolt": "bolt",
-        "fas fa-id-card": "id-card",
-        "fas fa-eye": "eye",
-        "fas fa-code": "code"
-    };
-
-    const faIcon = getProjectIcon(project);
-    return iconMap[faIcon] || "code";
+    return project.icon || "code";
 }
 ---
 
