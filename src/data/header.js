@@ -68,7 +68,7 @@ const headerData = {
         de: "E-Mail"
       },
       value: "oriolomb@gmail.com",
-      icon: "fas fa-envelope",
+      icon: "envelope",
     },
     {
       type: "linkedin",
@@ -80,7 +80,7 @@ const headerData = {
       },
       value: "oriolmaciasbadosa",
       url: "https://linkedin.com/in/oriolmaciasbadosa",
-      icon: "fab fa-linkedin",
+      icon: "linkedin",
     },
     {
       type: "github",
@@ -92,7 +92,7 @@ const headerData = {
       },
       value: "MaciWP",
       url: "https://github.com/MaciWP",
-      icon: "fab fa-github",
+      icon: "github",
     },
   ],
 };

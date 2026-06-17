@@ -22,7 +22,6 @@ export default [
       ".archived/**",
       "contrast-report.json",
       "translation-report.json",
-      "nul",
     ],
   },
 

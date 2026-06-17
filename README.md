@@ -1,143 +1,118 @@
-# Oriol Macias - CV Portfolio
+<div align="center">
 
-![License](https://img.shields.io/github/license/MaciWP/CV_Astro)
-![Technologies](https://img.shields.io/badge/Tech-Astro%20%7C%20TailwindCSS-blue)
+# Oriol Macias — CV & Portfolio
 
-A professional CV/portfolio website following Swiss design standards. This project showcases my skills and experience as a software developer, built with modern web technologies.
+**Senior Backend Developer** · Python · Django · C# · Industrial IoT (SNMP · Modbus · BACnet)
 
-## 🌐 [View Live Site](https://oriolmacias.dev)
+[![Live site](https://img.shields.io/badge/live-oriolmacias.dev-D83333?style=for-the-badge)](https://oriolmacias.dev)
 
-![Oriol Macias CV Portfolio](public/screenshots/desktop.jpg)
+[![CI](https://github.com/MaciWP/CV_Astro/actions/workflows/ci.yml/badge.svg)](https://github.com/MaciWP/CV_Astro/actions/workflows/ci.yml)
+![Lighthouse 100 ×5](https://img.shields.io/badge/Lighthouse-100%20×%205-success?logo=lighthouse&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-11-F69220?logo=pnpm&logoColor=white)
+![Netlify](https://img.shields.io/badge/deploy-Netlify-00C7B7?logo=netlify&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🚀 Features
+</div>
 
-- 🎨 **Modern, Clean Design**: Following Swiss design principles with clean typography and structured layout
-- 🌙 **Dark/Light Theme**: Toggle between themes with smooth transitions
-- 🌍 **Multilingual Support**: Available in English, Spanish, French, and German
-- 📱 **Fully Responsive**: Optimized for all screen sizes and devices
-- ⚡ **Performance Optimized**: Fast loading, with 90+ scores on Lighthouse
-- 📊 **SEO Ready**: Structured data, meta tags, and sitemap for better search engine visibility
-- 📄 **Printable CV**: print-optimized layout for saving as PDF
-- 🔄 **PWA Support**: Can be installed as a Progressive Web App for offline access
+A personal CV/portfolio built as a **statically generated, zero-runtime-framework** site:
+pure [Astro](https://astro.build) + vanilla JS (no React shipped), 4-language i18n, and a
+perfect Lighthouse profile — engineered so the codebase itself stands as a work sample.
 
-## 🧰 Tech Stack
+<!--
+Add a real screenshot at docs/preview.png and uncomment:
+<p align="center"><img src="docs/preview.png" alt="oriolmacias.dev — light and dark themes" width="860"></p>
+-->
 
-- **[Astro](https://astro.build/)**: Core framework for static site generation (pure Astro + vanilla JS, no UI framework)
-- **[TailwindCSS](https://tailwindcss.com/)**: Utility-first CSS framework
-- **[Netlify](https://www.netlify.com/)**: Hosting and continuous deployment
+## ✨ Highlights
 
-## 🛠️ Development
+- **Lighthouse 100 / 100 / 100 / 100 / 100** — Performance, Accessibility, Best Practices, SEO and PWA (mobile, throttled).
+- **No UI framework at runtime** — pure Astro + a few hand-written vanilla-JS islands; the React/etc. devDeps were removed, so almost no client JS ships.
+- **4-language i18n** (en · es · fr · de) resolved at build time — no client-side translation loader.
+- **Inline SVG icon set** (no FontAwesome) — keeps the critical rendering path lean and CLS at 0.
+- **Quality gates that actually run on every build:** WCAG colour-contrast, translation-key consistency, and JSON-LD structured-data validation against the real `dist/` output.
+- **Progressive enhancement** — full content renders without JS; animations and interactivity are layered on top.
+- **SEO**: ProfilePage + Person + WebSite JSON-LD, `hreflang` alternates, auto-sitemap, and market-aware metadata.
+- **Security & supply chain**: CSP via HTTP headers; pnpm with an explicit build-script allowlist (esbuild/sharp vetted).
+- **Installable PWA** with an offline-capable service worker, plus a print-optimised layout (one-click PDF export).
 
-### Prerequisites
+## 🧰 Tech stack
 
-- Node.js 22 or higher
-- pnpm 11 (managed via Corepack, bundled with Node 22)
+| Area | Choice |
+|---|---|
+| Framework | **Astro 6** (`output: 'static'`) |
+| Styling | **Tailwind CSS 4** (via the Vite plugin) |
+| Language | **TypeScript** + vanilla JS islands |
+| Images | **sharp** — responsive AVIF/WebP/JPG profile set |
+| Package manager | **pnpm 11** (Corepack) |
+| Hosting / CI | **Netlify** (the production build is the gate) |
 
-### Setup
+## 🚀 Getting started
+
+> Requires **Node 22+** and **pnpm 11** (bundled via Corepack).
 
 ```bash
-# Clone the repository
 git clone https://github.com/MaciWP/CV_Astro.git
 cd CV_Astro
-
-# Install dependencies
 pnpm install
-
-# Start development server
-pnpm run dev
+pnpm run dev        # http://localhost:4321
 ```
-
-### Build
 
 ```bash
-# Build for production
-pnpm run build
-
-# Preview production build
-pnpm run preview
+pnpm run build      # production build → dist/
+pnpm run preview    # serve the production build locally
 ```
 
-### Scripts
+## 📜 Scripts
 
-- `pnpm run dev` - Start development server
-- `pnpm run build` - Build for production
-- `pnpm run preview` - Preview production build
-- `pnpm run generate-images` - Generate responsive profile images
-- `pnpm run check` - Run all validation checks (contrast, translations, structured data)
-- `pnpm run a11y:audit` - Run Lighthouse accessibility audit
-- `pnpm run lint` - Run ESLint
-- `pnpm run clean` - Clean build artifacts
+| Script | What it does |
+|---|---|
+| `pnpm run dev` | Start the dev server |
+| `pnpm run build` | Build for production (`astro build` + responsive images) |
+| `pnpm run preview` | Preview the production build |
+| `pnpm run check` | Run all domain gates: contrast + translations + structured data |
+| `pnpm run lint` | ESLint (zero errors / zero warnings) |
+| `pnpm test` | Run the Vitest unit suite (`src/utils/seo.ts` logic) |
+| `pnpm run a11y:audit` | Lighthouse accessibility audit |
+| `pnpm run clean` | Remove `dist/` and `.astro/` |
 
-## 📂 Project Structure
+## 📂 Project structure
 
 ```
-/
-├── public/              # Public assets
-│   ├── icons/           # Favicons and app icons
-│   ├── images/          # Images and photos
-│   └── locales/         # Translation files
-├── src/
-│   ├── components/      # Astro components
-│   │   └── cv/          # CV section components
-│   ├── data/            # Data files for CV sections
-│   ├── layouts/         # Astro layouts
-│   ├── pages/           # Astro pages
-│   ├── styles/          # Global styles
-│   └── utils/           # Utility functions
-├── scripts/             # Build and optimization scripts
-├── astro.config.mjs     # Astro configuration
-└── tailwind.config.js   # Tailwind CSS configuration
+src/
+├── components/
+│   ├── cv/          # CV sections: ProfileHeader, Experience, Skills, …
+│   └── icons/       # SvgIcons.astro — the inline SVG set
+├── data/
+│   └── locales/     # en/es/fr/de translation JSON (the live i18n tree)
+├── layouts/         # Layout.astro (head, CSP, structured data, footer)
+├── pages/           # /  ·  /es /fr /de  ·  /spain  ·  /switzerland  ·  404
+├── styles/          # global.css
+└── utils/           # seo.ts — market detection + JSON-LD generators
+scripts/             # build · dev · check-contrast · check-translations
+                     # · validate-structured-data · generate-profile-images
 ```
 
-## 📚 Key Components
+## ✅ Quality & verification
 
-- **Responsive Design**: Adapts to all device sizes
-- **Theme Switching**: Smooth transition between light and dark modes
-- **CV Sections**:
-  - Summary
-  - Experience
-  - Skills
-  - Education
-  - Languages
-  - Projects
-- **SEO Optimization**: Rich metadata and structured data
-- **Performance**: Optimized asset loading strategies
+Correctness is enforced on every push by **GitHub Actions CI** (lint → build →
+domain checks → unit tests) and by the Netlify production build:
 
-## 🔍 SEO Features
+- `pnpm test` — Vitest unit suite for the SEO logic (market detection, path
+  normalization, JSON-LD generators)
+- `pnpm run check:contrast` — WCAG AA contrast on the real rendered colours
+- `pnpm run check:translations` — every key present and consistent across all 4 languages
+- `pnpm run check:structured-data` — validates the JSON-LD emitted into `dist/`
 
-- Complete meta tags
-- Structured data (JSON-LD)
-- Sitemap generation
-- Optimized for keywords such as:
-  - oriol
-  - oriol macias
-  - oriol dev
-  - macias dev
-  - oriol macias dev
-  - developer
-  - software developer
-
-## 📋 Future Improvements
-
-- Add blog section
-- Enhance multilingual support
-- Add more interactive elements
-- Improve accessibility features
+`astro check` (types), `eslint`, `pnpm test` and `pnpm run check` are all green on every change.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE).
 
-## 📧 Contact
+## 📫 Contact
 
-Oriol Macias - [oriolomb@gmail.com](mailto:oriolomb@gmail.com)
-
-Portfolio: [oriolmacias.dev](https://oriolmacias.dev)
-
-LinkedIn: [linkedin.com/in/oriolmaciasbadosa](https://linkedin.com/in/oriolmaciasbadosa)
-
-GitHub: [github.com/MaciWP](https://github.com/MaciWP)
-
----
-
-❤️ Thanks for checking out my project!
+**Oriol Macias** · [oriolmacias.dev](https://oriolmacias.dev) · [oriolomb@gmail.com](mailto:oriolomb@gmail.com)
+· [LinkedIn](https://linkedin.com/in/oriolmaciasbadosa) · [GitHub](https://github.com/MaciWP)

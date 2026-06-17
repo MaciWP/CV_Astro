@@ -13,10 +13,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Colors as ACTUALLY RENDERED in the browser (not the raw Tailwind token).
-// The brand-red token is #c41e1e, but Layout.astro remaps solid red TEXT to the
-// accessible values below and red BACKGROUNDS to #d83333. This checker tests the
-// rendered reality, so it guards the contrast a user actually sees — including the
-// dark-card case that the raw token would fail.
+// The brand-red token (#d83333) is used directly for backgrounds and borders;
+// Layout.astro remaps solid red TEXT to the accessible values below (#991b1b
+// light / #fca5a5 dark) because the bright token fails AA as text on the dark
+// card. This checker tests that rendered reality, so it guards the contrast a
+// user actually sees.
 const colors = {
     // Red as BACKGROUND (.bg-brand-red -> :root --brand-red); paired with white text
     'brand-red-bg': '#d83333',
@@ -29,7 +30,7 @@ const colors = {
     'light-secondary': '#f3f4f6',
     'light-surface': '#ffffff',
     'light-surface-alt': '#f7f8fa',
-    'light-border': '#e5e7eb',
+    'light-border': '#d1d5db',
     'light-text': '#1f2937',
     'light-text-secondary': '#5f6772',
     'light-card-bg': '#f3f4f6',

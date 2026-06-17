@@ -17,12 +17,17 @@ const __dirname = path.dirname(__filename);
 const DIST_DIR = path.join(__dirname, '../dist');
 const REPORT_FILE = path.join(__dirname, '../validation-report.json');
 
-// Representative pages: homepage, a language root, a geo city page
+// Representative pages: homepage, a language root, and both geo hubs
+// (spain.html is the only page that emits a BreadcrumbList).
 const PAGES_TO_CHECK = [
     'index.html',
     'es.html',
     'switzerland.html',
+    'spain.html',
 ];
+
+// Pages expected to emit a BreadcrumbList (only the Spain hub uses BreadcrumbSchema).
+const BREADCRUMB_PAGES = ['spain.html'];
 
 /**
  * Extract and parse every JSON-LD block from an HTML string.
@@ -94,9 +99,9 @@ function validatePage(page, blocks) {
         if (!websites[0].url) errors.push('WebSite missing url');
     }
 
-    // 4. Breadcrumbs are expected on geo pages
-    if (page.includes('/') && !allTypes.includes('BreadcrumbList')) {
-        warnings.push('Geo page without BreadcrumbList');
+    // 4. Pages that use BreadcrumbSchema must emit a BreadcrumbList
+    if (BREADCRUMB_PAGES.includes(page) && !allTypes.includes('BreadcrumbList')) {
+        warnings.push('Expected page to emit a BreadcrumbList, but none found');
     }
 
     return { errors, warnings, types: [...new Set(allTypes)] };

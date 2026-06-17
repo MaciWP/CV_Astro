@@ -3,6 +3,8 @@
  * File: src/data/education.js
  */
 
+import { normalizeLang } from './_lang';
+
 // Base education data structure with translations
 // Cleaned for Swiss market: only most relevant entries (3 max)
 // Primary education items (always visible)
@@ -154,7 +156,7 @@ const transformEducation = (data, language) => data.map(edu => ({
  * @returns {Array} Primary education items
  */
 export const getPrimaryEducation = (lang = 'en') => {
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
     return transformEducation(primaryEducationData, language);
 };
 
@@ -164,6 +166,6 @@ export const getPrimaryEducation = (lang = 'en') => {
  * @returns {Array} Secondary education items
  */
 export const getSecondaryEducation = (lang = 'en') => {
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
     return transformEducation(secondaryEducationData, language);
 };

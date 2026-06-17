@@ -47,8 +47,6 @@ lerna-debug.log*
 # Generated files
 .cache/
 .netlify/
-public/styles/font-awesome.min.css
-# Note: public/styles/fonts/ now tracked - required for production
 
 # Temporary files
 .temp
@@ -77,7 +75,7 @@ CLAUDE.md.backup
 
 # Archived unused files (kept for reference, not deployed)
 .archived/
-# Check-script output artifacts (npm run check)
+# Check-script output artifacts (pnpm run check)
 contrast-report.json
 translation-report.json
 validation-report.json

@@ -4,7 +4,7 @@
  */
 
 // Import helper function from new unified icons system
-import { getTechIcon } from './icons';
+import { normalizeLang } from './_lang';
 
 // Personal projects with GitHub links and multilingual descriptions
 const personalProjectsData = [
@@ -29,7 +29,7 @@ const personalProjectsData = [
             de: "Dieses Projekt ist eine responsive Webanwendung für die optimale Präsentation beruflicher Qualifikationen. Es bietet Theme-Wechsel zwischen Hell- und Dunkelmodus, mehrsprachige Unterstützung, responsives Design für alle Geräte und die Möglichkeit, den Lebenslauf mit einem Klick als PDF zu exportieren. Das Design folgt internationalen Stilprinzipien mit scharfen Ecken, starker Typografie und strategischem Einsatz von Akzentfarben."
         },
         technologies: ["Astro", "React", "Tailwind CSS", "i18n", "PWA"],
-        icon: "fas fa-id-card",
+        icon: "id-card",
         githubUrl: "https://github.com/MaciWP/CV_Astro",
         highlight: true,
         keyFeatures: {
@@ -84,7 +84,7 @@ const personalProjectsData = [
             de: "SNMP Monitor ist eine spezialisierte Webplattform zur Verwaltung und Überwachung von Netzwerkgeräten mit dem SNMP-Protokoll. Das System automatisiert Erkennung, Überwachung und Echtzeit-Visualisierung, reduziert die Problemerkennungszeit erheblich und verbessert die Incident-Response-Fähigkeit. Die Anwendung basiert auf Django mit asynchroner Verarbeitung für intensive Aufgaben."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Celery", "Redis", "SNMP"],
-        icon: "fas fa-network-wired",
+        icon: "network-wired",
         githubUrl: "https://github.com/MaciWP/TrackData",
         highlight: true,
         keyFeatures: {
@@ -139,7 +139,7 @@ const personalProjectsData = [
             de: "Diese Computer-Vision-Anwendung automatisiert Kartenerkennung und Punkteverfolgung mittels maschinellem Lernen. Sie bietet Echtzeit-Kartenerkennung durch ein trainiertes ONNX-Modell, das mehrere Karten gleichzeitig mit hoher Genauigkeit verarbeiten kann. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitungs-Pipeline und Spielhistorie-Tracking."
         },
         technologies: ["Python", "Kivy", "ONNX", "NumPy"],
-        icon: "fas fa-eye",
+        icon: "eye",
         githubUrl: "https://github.com/MaciWP/SnapScore",
         highlight: true,
         keyFeatures: {
@@ -203,7 +203,7 @@ const professionalProjectsData = [
             de: "ThinkData ist eine umfassende Rechenzentrum-Management-Plattform, die eine einheitliche Erfahrung für die Infrastrukturverwaltung bietet. Das System umfasst erweiterte Funktionen wie natürlichsprachliche Abfragen durch KI-Technologien, Mandantenfähigkeit und Echtzeit-Metrikanalyse. Die Plattform unterstützt komplexe Rechenzentrumshierarchien und integriert verschiedene Datenquellen für umfassende Überwachung und Verwaltung."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Docker", "REST API", "AWS"],
-        icon: "fas fa-server",
+        icon: "server",
         highlight: true,
         keyFeatures: {
             en: [
@@ -258,7 +258,7 @@ const professionalProjectsData = [
             de: "Diese Integrationsplattform bietet nahtlose Synchronisation zwischen verschiedenen Rechenzentrum-Managementsystemen (HPE IMC, VMware, TakeData, ThinkData) und der iTRACS DCIM-Plattform. Das System automatisiert Asset-Dokumentation, optimiert Infrastrukturüberwachung und zentralisiert kritische Betriebsdaten in Echtzeit, wodurch die Rechenzentrumsverwaltungseffizienz erheblich verbessert wird."
         },
         technologies: ["Python", "Django", "REST API", "PostgreSQL", "Docker"],
-        icon: "fas fa-exchange-alt",
+        icon: "exchange-alt",
         highlight: true,
         keyFeatures: {
             en: [
@@ -313,7 +313,7 @@ const professionalProjectsData = [
             de: "Dieser Integrationsservice automatisiert die Erfassung und Verarbeitung von Netzwerk-Performance-Metriken aus HPE IMC, erleichtert zentralisierte Überwachung und optimiert das IT-Infrastrukturmanagement. Das System implementiert einen umfassenden ETL-Prozess mit robuster Fehlerbehandlung und Wiederholungsmechanismen zur Gewährleistung von Datenzuverlässigkeit und -konsistenz."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Docker", "REST API"],
-        icon: "fas fa-network-wired",
+        icon: "network-wired",
         highlight: true,
         keyFeatures: {
             en: [
@@ -368,7 +368,7 @@ const professionalProjectsData = [
             de: "Dieses Projekt bietet eine Abstraktionsschicht zur Überwachung virtualisierter Ressourcen und zur Erleichterung der Integration mit anderen Unternehmenssystemen. Der Service implementiert asynchrone ETL-Prozesse zur Extraktion von Daten aus VMware, deren Transformation gemäss Domänenmodell und Laden in die Datenbank. Er umfasst einen Synchronisationsservice mit externen Systemen und verfügt über robuste Fehlerbehandlung und Logging."
         },
         technologies: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
-        icon: "fas fa-cloud",
+        icon: "cloud",
         highlight: true,
         keyFeatures: {
             en: [
@@ -427,7 +427,7 @@ const professionalProjectsData = [
             de: "Dieses System bietet vollständiges Lebenszyklusmanagement für IT-Infrastruktur-Assets mit NFC-Tracking-Funktionen. Es verfügt über eine mandantenfähige Architektur mit separaten Datenbanken pro Kunde, hierarchische Standortverwaltung und umfassende Asset-Kategorisierung. Das System unterstützt Audit-Workflows, Wartungsverfolgung und Integration mit externen Systemen über Webhooks."
         },
         technologies: ["Python", "Django", "PostgreSQL", "REST API", "NFC", "AWS"],
-        icon: "fas fa-tags",
+        icon: "tags",
         highlight: true,
         keyFeatures: {
             en: [
@@ -486,7 +486,7 @@ const professionalProjectsData = [
             de: "Diese Integrationslösung ermöglicht bidirektionale Synchronisation von Geräten, Konfigurationen und Zuständen zwischen DCO/ITA- und PowerIQ-Systemen. Das Projekt schuf ein einheitliches System für Überwachung, Steuerung und effizientes Management der Rechenzentrumsinfrastruktur mit besonderem Fokus auf Energiemanagement."
         },
         technologies: ["C#", ".NET", "REST API", "PostgreSQL", "XML"],
-        icon: "fas fa-bolt",
+        icon: "bolt",
         highlight: true,
         keyFeatures: {
             en: [
@@ -527,8 +527,7 @@ const professionalProjectsData = [
  * @returns {Array} Projects with texts in the specified language
  */
 export function getPersonalProjects(lang = 'en') {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return personalProjectsData.map(project => ({
@@ -546,8 +545,7 @@ export function getPersonalProjects(lang = 'en') {
  * @returns {Array} Projects with texts in the specified language
  */
 export function getProfessionalProjects(lang = 'en') {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return professionalProjectsData.map(project => ({
@@ -558,7 +556,4 @@ export function getProfessionalProjects(lang = 'en') {
         keyFeatures: project.keyFeatures[language] || project.keyFeatures.en
     }));
 }
-
-// Re-export getTechIcon (consumed by Projects.astro)
-export { getTechIcon };
 

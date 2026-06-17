@@ -3,6 +3,8 @@
  * File: src/data/navigation.js
  */
 
+import { normalizeLang } from './_lang';
+
 // Base navigation items with translations
 // Note: "About" removed from nav to save header space - logo click scrolls to top
 const navItems = [
@@ -92,8 +94,7 @@ const uiTranslations = {
  * @returns {Array} Navigation items with names in the specified language
  */
 export const getNavItems = (lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return navItems.map(item => ({
@@ -110,8 +111,7 @@ export const getNavItems = (lang = 'en') => {
  * @returns {string} Translation in the specified language
  */
 export const getUITranslation = (key, lang = 'en') => {
-    // Default to English if language not supported
-    const language = ['en', 'es', 'fr', 'de'].includes(lang) ? lang : 'en';
+    const language = normalizeLang(lang);
 
     if (uiTranslations[key] && uiTranslations[key][language]) {
         return uiTranslations[key][language];

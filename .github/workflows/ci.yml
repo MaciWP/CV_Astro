@@ -1,0 +1,44 @@
+name: CI
+
+# The Netlify production build is the deploy gate; this workflow is the
+# pre-merge quality gate (lint + build + domain checks + unit tests).
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        # Version is read from package.json "packageManager" (pnpm@11.7.0).
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Build (astro + responsive images via sharp)
+        run: pnpm run build
+
+      - name: Domain checks (contrast + translations + structured data)
+        run: pnpm run check
+
+      - name: Unit tests
+        run: pnpm test
