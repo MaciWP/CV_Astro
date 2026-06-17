@@ -70,19 +70,20 @@ const title = titles[lang] || titles.en;
 </section>
 
 <style>
-    /* Initial hidden state applies ONLY when JS is available (progressive
-       enhancement): without JS the content defaults to visible. */
+    /* Scroll-reveal: slide only, never opacity-fade. axe-core / older Lighthouse
+       report a false-positive contrast failure when they sample text mid-fade
+       (axe-core #1866/#2171), so we animate transform only — the text is always
+       full opacity. Applies only with JS; without JS the content sits in place. */
     :global(html.js-enabled) .section-header,
     :global(html.js-enabled) .faq-item {
-        opacity: 0;
         transform: translateY(20px);
-        transition: opacity 200ms ease-out, transform 200ms ease-out, box-shadow 150ms ease-out;
+        transition: transform 200ms ease-out, box-shadow 150ms ease-out;
         transition-delay: var(--delay, 0ms);
     }
 
     /* Theme transitions - use CSS variable for sync with global theme */
     .faq-item {
-        transition: opacity 200ms ease-out, transform 200ms ease-out, box-shadow 150ms ease-out,
+        transition: transform 200ms ease-out, box-shadow 150ms ease-out,
                     background-color var(--theme-transition-duration, 100ms) ease-out,
                     border-color var(--theme-transition-duration, 100ms) ease-out,
                     color var(--theme-transition-duration, 100ms) ease-out;
@@ -91,7 +92,6 @@ const title = titles[lang] || titles.en;
     /* Visible state */
     .faq-section.visible .section-header,
     .faq-section.visible .faq-item {
-        opacity: 1;
         transform: translateY(0);
     }
 </style>

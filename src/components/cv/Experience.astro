@@ -170,21 +170,19 @@ const hideDetailsText: Record<string, string> = {
 </section>
 
 <style>
-    /* Initial hidden state applies ONLY when JS is available (progressive
-       enhancement): without JS the IntersectionObserver never fires, so the
-       content must default to visible. */
+    /* Scroll-reveal: slide only, never opacity-fade (axe-core false-positive
+       #1866/#2171 — text sampled mid-fade reads as low contrast). Transform only,
+       text always full opacity. Applies only with JS; without JS, content is in place. */
     :global(html.js-enabled) .section-header,
     :global(html.js-enabled) .experience-item {
-        opacity: 0;
         transform: translateY(20px);
-        transition: opacity 200ms ease-out, transform 200ms ease-out;
+        transition: transform 200ms ease-out;
         transition-delay: var(--delay, 0ms);
     }
 
     /* Visible state */
     .experience-section.visible .section-header,
     .experience-section.visible .experience-item {
-        opacity: 1;
         transform: translateY(0);
     }
 
