@@ -358,18 +358,29 @@
     animation: fadeIn var(--duration-standard) var(--ease-standard) forwards;
 }
 
-/* Fallback: Make elements visible after a short delay if JS fails */
+/* Fallback: reveal animated content even if it's never scrolled into view (the
+   IntersectionObserver only fires on scroll). Without this, below-the-fold
+   content stays opacity:0 for non-scrolling agents — invisible to crawlers and
+   flagged by contrast audits that evaluate the faded text. The per-component
+   scroll reveals (FAQ/experience/languages) get the same safety net the global
+   .animate-on-scroll system already has, so scrolling behaviour is unchanged. */
 @supports (animation-timeline: auto) {
     .animate-on-scroll:not(.is-visible),
     .animate-scale:not(.is-visible),
     .animate-fade-left:not(.is-visible),
-    .animate-width:not(.is-visible) {
+    .animate-width:not(.is-visible),
+    .experience-section:not(.visible) .section-header,
+    .experience-section:not(.visible) .experience-item,
+    .languages-section:not(.visible) .section-header,
+    .languages-section:not(.visible) .language-card,
+    .faq-section:not(.visible) .section-header,
+    .faq-section:not(.visible) .faq-item {
         animation: emergencyShow 0.1s 2s forwards;
     }
 }
 
 @keyframes emergencyShow {
-    to { opacity: 1; }
+    to { opacity: 1; transform: none; }
 }
 
 /* ===== KEYFRAME ANIMATIONS ===== */
