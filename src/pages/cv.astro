@@ -1,0 +1,170 @@
+---
+/**
+ * /cv — standalone, ATS-optimized CV view (English), rendered from the same data
+ * as the website. Self-contained (inline CSS + base64 photo + system fonts) so it
+ * prints to a faithful PDF from a file:// URL via headless Chrome — see
+ * scripts/generate-cv-pdf.js (`pnpm run cv:pdf`). Single source of truth = src/data/*.
+ * noindex + excluded from the sitemap (astro.config.mjs filter): print source, not a page.
+ * @file src/pages/cv.astro
+ */
+import { readFileSync } from 'node:fs';
+import { getExperiences } from '../data/experiences';
+import skillsData, { getSectionTitle } from '../data/skills';
+import { getPrimaryEducation } from '../data/education';
+import { getLanguages } from '../data/languages';
+import headerData from '../data/header';
+import { getPersonalProjects, getProfessionalProjects } from '../data/projects';
+import enTranslations from '../data/locales/en/translation.json';
+
+const lang = 'en';
+const header = (enTranslations as { header?: { jobTitle?: string; summary?: string } }).header ?? {};
+const jobTitle = header.jobTitle ?? headerData.jobTitle;
+const summary = header.summary ?? headerData.summary;
+
+const experiences = getExperiences(lang);
+const education = getPrimaryEducation(lang);
+const languages = getLanguages(lang);
+const personal = getPersonalProjects(lang).filter((p) => p.id !== 'swiss-cv');
+const professional = getProfessionalProjects(lang);
+const skillCats = ['languages', 'libraries', 'protocols', 'devops', 'databases'] as const;
+
+// Photo as base64 so the page is fully self-contained for file:// printing.
+let photoDataUri = '';
+try {
+  const buf = readFileSync(new URL('../../public/images/oriol_macias-320.webp', import.meta.url));
+  photoDataUri = `data:image/webp;base64,${buf.toString('base64')}`;
+} catch {
+  // photo is optional — leave the data URI empty if the asset is missing
+}
+
+// Keep it to ~2 pages: cap bullets per role (early-career is the collapsed one).
+const respCap = (job: { collapsible?: boolean }) => (job.collapsible ? 3 : 4);
+const achCap = (job: { collapsible?: boolean }) => (job.collapsible ? 0 : 2);
+
+const proTitles = professional.map((p) => p.title).join(', ');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Oriol Macias — CV</title>
+    <style>
+      @page { size: A4; margin: 1.4cm; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #111827;
+        font-size: 10.5pt;
+        line-height: 1.42;
+        background: #fff;
+      }
+      a { color: #111827; text-decoration: none; }
+      .accent { color: #991b1b; }
+      header.cv-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+      h1 { font-size: 21pt; margin: 0; letter-spacing: -0.01em; }
+      .role { color: #991b1b; font-weight: 600; font-size: 11.5pt; margin: 3px 0 6px; }
+      .meta { font-size: 9pt; color: #374151; }
+      .meta .sep { color: #9ca3af; padding: 0 4px; }
+      .photo { width: 92px; height: 92px; object-fit: cover; border: 1px solid #d1d5db; flex: none; }
+      h2 {
+        font-size: 10.5pt; text-transform: uppercase; letter-spacing: 0.05em;
+        color: #991b1b; border-bottom: 1.5px solid #991b1b;
+        padding-bottom: 2px; margin: 13px 0 6px;
+      }
+      .summary { margin: 8px 0 2px; }
+      .job { margin-bottom: 8px; page-break-inside: avoid; }
+      .job-head { display: flex; justify-content: space-between; gap: 1rem; }
+      .job-title { font-weight: 600; }
+      .job-co { color: #374151; }
+      .job-period { color: #6b7280; font-size: 9pt; white-space: nowrap; }
+      ul { margin: 3px 0 0; padding-left: 1.05rem; }
+      li { margin: 1px 0; }
+      .ach-label { font-weight: 600; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: #6b7280; margin-top: 3px; }
+      .skills-row { margin: 2px 0; }
+      .skills-row b { color: #374151; }
+      .proj { margin: 2px 0; }
+      .proj b { font-weight: 600; }
+      .muted { color: #6b7280; }
+      /* Single column throughout — safest for ATS parsing (no interleaving). */
+      .two { display: block; }
+      footer.cv-foot { margin-top: 10px; font-size: 8.5pt; color: #6b7280; }
+    </style>
+  </head>
+  <body>
+    <header class="cv-head">
+      <div>
+        <h1>{headerData.fullName}</h1>
+        <div class="role">{jobTitle}</div>
+        <div class="meta">
+          <a href={`mailto:${headerData.contactInfo.find((c) => c.type === 'email')?.value}`}>{headerData.contactInfo.find((c) => c.type === 'email')?.value}</a>
+          <span class="sep">·</span>linkedin.com/in/oriolmaciasbadosa
+          <span class="sep">·</span>github.com/MaciWP
+          <span class="sep">·</span>oriolmacias.dev
+        </div>
+        <div class="meta" style="margin-top:3px;">
+          {headerData.location}<span class="sep">·</span>{headerData.nationality}<span class="sep">·</span>{headerData.workPermit}<span class="sep">·</span>Born {headerData.dateOfBirth}<span class="sep">·</span>{headerData.noticePeriod}<span class="sep">·</span>{headerData.relocation}
+        </div>
+      </div>
+      {photoDataUri && <img class="photo" src={photoDataUri} alt="Oriol Macias" />}
+    </header>
+
+    <p class="summary">{summary}</p>
+
+    <h2>Experience</h2>
+    {experiences.map((job) => (
+      <div class="job">
+        <div class="job-head">
+          <div>
+            <span class="job-title">{job.title}</span>
+            <span class="job-co"> — {job.company}</span>
+          </div>
+          <div class="job-period">{job.period}</div>
+        </div>
+        <ul>
+          {job.keyResponsibilities.slice(0, respCap(job)).map((r: string) => <li>{r}</li>)}
+        </ul>
+        {achCap(job) > 0 && job.achievements?.length > 0 && (
+          <>
+            <div class="ach-label">Key achievements</div>
+            <ul>
+              {job.achievements.slice(0, achCap(job)).map((a: string) => <li>{a}</li>)}
+            </ul>
+          </>
+        )}
+      </div>
+    ))}
+
+    <h2>Skills</h2>
+    {skillCats.map((cat) => (
+      <div class="skills-row"><b>{getSectionTitle(cat, lang)}:</b> {skillsData[cat].map((s) => s.name).join(', ')}</div>
+    ))}
+    <div class="skills-row"><b>AI:</b> Claude Code (daily), LLM integration</div>
+
+    <h2>Selected Projects</h2>
+    {personal.map((p) => (
+      <div class="proj"><b>{p.title}</b> — {p.description} <span class="muted">[{p.technologies.join(', ')}]</span></div>
+    ))}
+    <div class="proj"><b>Bjumper (proprietary):</b> {proTitles} — DCIM &amp; integration platforms (Python/C#, Django, REST, PostgreSQL, Docker, AWS)</div>
+
+    <div class="two">
+      <div>
+        <h2>Education</h2>
+        {education.map((e) => (
+          <div class="proj"><b>{e.title}</b><br /><span class="muted">{e.institution} · {e.period}</span></div>
+        ))}
+      </div>
+      <div>
+        <h2>Languages</h2>
+        {languages.map((l) => (
+          <div class="proj">{l.language} — <span class="muted">{l.level}</span></div>
+        ))}
+      </div>
+    </div>
+
+    <footer class="cv-foot">References available upon request · Generated from oriolmacias.dev</footer>
+  </body>
+</html>

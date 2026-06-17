@@ -74,13 +74,6 @@
     });
   }
 
-  // Event delegation for print button (avoids inline onclick)
-  document.addEventListener('click', function(e) {
-    if (e.target.matches('[data-print], [data-print] *')) {
-      window.print();
-    }
-  });
-
   // Single initialization - no repeated calls
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAnimations);

@@ -83,7 +83,7 @@
   },
   "profile": {
     "title": "Desarrollador de Software",
-    "summary": "Desarrollador Backend orientado a soluciones, especializado en integración de protocolos industriales (SNMP, Modbus, BACnet) con más de 8 años desarrollando aplicaciones de alto rendimiento. Reconocido por transformar requisitos complejos en arquitectura de código elegante y reducir tiempos de respuesta del sistema hasta un 45%. Actualmente ampliando conocimientos en IA y machine learning para impulsar soluciones de automatización de próxima generación."
+    "summary": "Desarrollador backend con más de 8 años especializado en Python/Django y APIs REST, integrando protocolos industriales (SNMP, Modbus, BACnet) en infraestructura de centros de datos. Actualmente trabajo con IA cada día: como herramienta y integrando LLMs en productos reales."
   },
   "navbar": {
     "topLink": "↑ Inicio"

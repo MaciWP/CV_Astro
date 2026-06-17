@@ -228,7 +228,9 @@ const hideDetailsText: Record<string, string> = {
     }
 
     .collapsible-content.expanded {
-        max-height: 2000px;
+        /* Holgado a propósito: el único card colapsable (early-career) no se
+           acerca a este alto ni en móvil estrecho; evita recortes si crece. */
+        max-height: 6000px;
         opacity: 1;
         padding: 1.5rem;
         border: 1px solid;
