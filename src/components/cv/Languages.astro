@@ -69,13 +69,13 @@ const title = titleByLang[lang] || titleByLang.en;
 </section>
 
 <style>
-    /* Initial hidden state only with JS (progressive enhancement): without JS the
-       cards default to visible. */
+    /* Scroll-reveal: slide only, never opacity-fade (axe-core false-positive
+       #1866/#2171 — text sampled mid-fade reads as low contrast). Transform only,
+       text always full opacity. Applies only with JS; without JS, cards are in place. */
     :global(html.js-enabled) .section-header,
     :global(html.js-enabled) .language-card {
-        opacity: 0;
         transform: translateY(20px);
-        transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out;
+        transition: transform 400ms ease-out, box-shadow 150ms ease-out;
     }
 
     .language-card {
@@ -84,7 +84,7 @@ const title = titleByLang[lang] || titleByLang.en;
 
     /* Theme transitions handled by global.css - ensure they work */
     .language-card {
-        transition: opacity 400ms ease-out, transform 400ms ease-out, box-shadow 150ms ease-out,
+        transition: transform 400ms ease-out, box-shadow 150ms ease-out,
                     background-color var(--theme-transition-duration, 100ms) ease-out,
                     border-color var(--theme-transition-duration, 100ms) ease-out,
                     color var(--theme-transition-duration, 100ms) ease-out;
@@ -93,7 +93,6 @@ const title = titleByLang[lang] || titleByLang.en;
     /* Visible state */
     .languages-section.visible .section-header,
     .languages-section.visible .language-card {
-        opacity: 1;
         transform: translateY(0);
     }
 
