@@ -1,0 +1,52 @@
+---
+/**
+ * About.astro — short career narrative + current focus (AI), Swiss-first framing.
+ * Sober tone (no superlatives). 4-lang inline like ExpertiseSummary.astro.
+ * @file src/components/cv/About.astro
+ */
+import SvgIcons from '../icons/SvgIcons.astro';
+
+interface Props {
+    lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const copy: Record<string, { title: string; arc: string; now: string }> = {
+    en: {
+        title: "About",
+        arc: "From systems administration to backend engineering. For the past several years I've built integration software connecting external systems and DCIM platforms across data-center infrastructure.",
+        now: "Right now I work with AI every day: Claude Code as a daily tool, integrating LLMs into real products, and building my own tooling such as Poneglyph. Continuously learning, and open to relocating to Switzerland."
+    },
+    es: {
+        title: "Sobre mí",
+        arc: "De la administración de sistemas a la ingeniería backend. Los últimos años los he dedicado a construir software de integración que conecta sistemas externos y plataformas DCIM en infraestructura de centros de datos.",
+        now: "Ahora mismo trabajo con IA cada día: Claude Code como herramienta diaria, integrando LLMs en productos reales y desarrollando herramientas propias como Poneglyph. En aprendizaje continuo y abierto a trasladarme a Suiza."
+    },
+    fr: {
+        title: "À propos",
+        arc: "De l'administration systèmes à l'ingénierie backend. Ces dernières années, j'ai développé des logiciels d'intégration reliant des systèmes externes et des plateformes DCIM au sein de l'infrastructure de centres de données.",
+        now: "Aujourd'hui, je travaille avec l'IA au quotidien : Claude Code comme outil de tous les jours, intégration de LLM dans des produits réels et développement de mes propres outils comme Poneglyph. En apprentissage continu et ouvert à une installation en Suisse."
+    },
+    de: {
+        title: "Über mich",
+        arc: "Von der Systemadministration zur Backend-Entwicklung. In den letzten Jahren habe ich Integrationssoftware entwickelt, die externe Systeme und DCIM-Plattformen in der Rechenzentrumsinfrastruktur verbindet.",
+        now: "Derzeit arbeite ich täglich mit KI: Claude Code als tägliches Werkzeug, Integration von LLMs in echte Produkte und Entwicklung eigener Tools wie Poneglyph. Kontinuierlich am Lernen und offen für einen Umzug in die Schweiz."
+    }
+};
+
+const t = copy[lang] || copy.en;
+---
+
+<section id="about-me" class="mb-12">
+    <div class="flex items-center mb-6 section-header">
+        <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
+            <SvgIcons name="id-card" class="w-4 h-4" />
+        </div>
+        <h2 class="text-2xl font-bold ml-3">{t.title}</h2>
+    </div>
+    <div class="space-y-4 text-light-text-secondary dark:text-dark-text-secondary leading-relaxed max-w-3xl">
+        <p>{t.arc}</p>
+        <p>{t.now}</p>
+    </div>
+</section>

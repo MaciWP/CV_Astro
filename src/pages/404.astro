@@ -2,47 +2,86 @@
 import Layout from '../layouts/Layout.astro';
 import SvgIcons from '../components/icons/SvgIcons.astro';
 
+// Default (server-rendered) copy is English; the inline script below localizes
+// the text + links client-side from the attempted URL prefix (/es|/fr|/de),
+// since this single static page is served for every unknown path.
 const pageTitle = "Page Not Found | Oriol Macias";
 const pageDescription = "The page you're looking for could not be found on Oriol Macias's CV Portfolio.";
 ---
 
-<Layout 
-  title={pageTitle} 
+<Layout
+  title={pageTitle}
   description={pageDescription}
   lang="en"
-  canonicalUrl="https://oriolmacias.dev/404"
+  noindex={true}
 >
   <div class="flex flex-col items-center justify-center py-16 px-4 text-center min-h-[60vh]">
     <div class="w-20 h-20 flex items-center justify-center bg-brand-red text-white rounded-none mb-8 animate-pulse">
       <span class="text-4xl font-bold">404</span>
     </div>
 
-    <h1 class="text-4xl font-bold mb-4">Page Not Found</h1>
+    <h1 id="nf-title" class="text-4xl font-bold mb-4">Page Not Found</h1>
 
-    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+    <p id="nf-desc" class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
       The page you're looking for doesn't exist or has been moved.
     </p>
 
     <div class="space-y-4">
       <a
+        id="nf-home"
         href="/"
         class="inline-flex items-center px-6 py-3 bg-brand-red text-white rounded-none hover:bg-red-700 transition-colors"
       >
         <SvgIcons name="home" class="w-4 h-4 mr-2" />
-        Return to Homepage
+        <span id="nf-home-text">Return to Homepage</span>
       </a>
 
       <div class="pt-4">
-        <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        <p id="nf-sections-intro" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
           You might want to check out these sections:
         </p>
         <div class="flex flex-wrap gap-4 justify-center mt-4">
-          <a href="/#experience" class="text-brand-red hover:underline">Experience</a>
-          <a href="/#skills" class="text-brand-red hover:underline">Skills</a>
-          <a href="/#projects" class="text-brand-red hover:underline">Projects</a>
-          <a href="/#education" class="text-brand-red hover:underline">Education</a>
+          <a id="nf-exp" href="/#experience" class="text-brand-red hover:underline">Experience</a>
+          <a id="nf-skills" href="/#skills" class="text-brand-red hover:underline">Skills</a>
+          <a id="nf-proj" href="/#projects" class="text-brand-red hover:underline">Projects</a>
+          <a id="nf-edu" href="/#education" class="text-brand-red hover:underline">Education</a>
         </div>
       </div>
     </div>
   </div>
+
+  <script is:inline>
+    // Localize the 404 from the attempted URL prefix (the page is static and
+    // served for any unknown path, so we read location.pathname at runtime).
+    (function () {
+      var seg = location.pathname.split('/')[1];
+      var lang = (seg === 'es' || seg === 'fr' || seg === 'de') ? seg : 'en';
+      if (lang === 'en') return;
+
+      var T = {
+        es: { title: 'Página no encontrada', desc: 'La página que buscas no existe o se ha movido.', home: 'Volver al inicio', intro: 'Quizá te interesen estas secciones:', exp: 'Experiencia', skills: 'Habilidades', proj: 'Proyectos', edu: 'Educación' },
+        fr: { title: 'Page introuvable', desc: "La page que vous cherchez n'existe pas ou a été déplacée.", home: "Retour à l'accueil", intro: 'Ces sections pourraient vous intéresser :', exp: 'Expérience', skills: 'Compétences', proj: 'Projets', edu: 'Formation' },
+        de: { title: 'Seite nicht gefunden', desc: 'Die gesuchte Seite existiert nicht oder wurde verschoben.', home: 'Zur Startseite', intro: 'Vielleicht interessieren dich diese Abschnitte:', exp: 'Erfahrung', skills: 'Fähigkeiten', proj: 'Projekte', edu: 'Ausbildung' }
+      };
+      var t = T[lang];
+      var base = '/' + lang;
+
+      document.documentElement.lang = lang;
+      document.title = t.title + ' | Oriol Macias';
+      var set = function (id, text) { var el = document.getElementById(id); if (el) el.textContent = text; };
+      var href = function (id, url) { var el = document.getElementById(id); if (el) el.setAttribute('href', url); };
+
+      set('nf-title', t.title);
+      set('nf-desc', t.desc);
+      set('nf-home-text', t.home);
+      set('nf-sections-intro', t.intro);
+      set('nf-exp', t.exp); set('nf-skills', t.skills); set('nf-proj', t.proj); set('nf-edu', t.edu);
+
+      href('nf-home', base);
+      href('nf-exp', base + '#experience');
+      href('nf-skills', base + '#skills');
+      href('nf-proj', base + '#projects');
+      href('nf-edu', base + '#education');
+    })();
+  </script>
 </Layout>

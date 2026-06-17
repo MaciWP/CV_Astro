@@ -28,7 +28,7 @@ const personalProjectsData = [
             fr: "Ce projet est une application web responsive conçue pour une présentation optimale des références professionnelles. Il comprend un changement de thème entre les modes clair et sombre, un support multilingue, un design responsive pour tous les appareils et la possibilité d'exporter le CV au format PDF en un seul clic. Le design suit les principes du style international avec des coins nets, une typographie forte et une utilisation stratégique des couleurs d'accentuation.",
             de: "Dieses Projekt ist eine responsive Webanwendung für die optimale Präsentation beruflicher Qualifikationen. Es bietet Theme-Wechsel zwischen Hell- und Dunkelmodus, mehrsprachige Unterstützung, responsives Design für alle Geräte und die Möglichkeit, den Lebenslauf mit einem Klick als PDF zu exportieren. Das Design folgt internationalen Stilprinzipien mit scharfen Ecken, starker Typografie und strategischem Einsatz von Akzentfarben."
         },
-        technologies: ["Astro", "React", "Tailwind CSS", "i18n", "PWA"],
+        technologies: ["Astro", "Tailwind CSS", "TypeScript", "i18n", "PWA"],
         icon: "id-card",
         githubUrl: "https://github.com/MaciWP/CV_Astro",
         highlight: true,
@@ -64,6 +64,57 @@ const personalProjectsData = [
         }
     },
     {
+        id: "poneglyph",
+        title: {
+            en: "Poneglyph",
+            es: "Poneglyph",
+            fr: "Poneglyph",
+            de: "Poneglyph"
+        },
+        description: {
+            en: "Personal orchestration layer for AI coding agents (Claude Code): skills, hooks, rules and multi-agent workflows that turn an LLM into a disciplined engineering co-worker.",
+            es: "Capa personal de orquestación para agentes de IA de código (Claude Code): skills, hooks, reglas y flujos multiagente que convierten un LLM en un colega de ingeniería disciplinado.",
+            fr: "Couche personnelle d'orchestration pour agents d'IA de code (Claude Code) : skills, hooks, règles et workflows multi-agents qui transforment un LLM en collègue d'ingénierie rigoureux.",
+            de: "Persönliche Orchestrierungsschicht für KI-Coding-Agenten (Claude Code): Skills, Hooks, Regeln und Multi-Agent-Workflows, die ein LLM in einen disziplinierten Engineering-Kollegen verwandeln."
+        },
+        longDescription: {
+            en: "Poneglyph is a configuration and orchestration system layered on top of Claude Code. It encodes engineering practices as reusable skills, enforces quality gates through hooks, and coordinates multiple specialized agents through deterministic workflows — so an AI assistant produces real, verifiable engineering output instead of plausible-looking code.",
+            es: "Poneglyph es un sistema de configuración y orquestación sobre Claude Code. Codifica prácticas de ingeniería como skills reutilizables, aplica controles de calidad mediante hooks y coordina varios agentes especializados a través de flujos deterministas, para que un asistente de IA produzca trabajo de ingeniería real y verificable, no código que solo parece correcto.",
+            fr: "Poneglyph est un système de configuration et d'orchestration construit au-dessus de Claude Code. Il encode des pratiques d'ingénierie sous forme de skills réutilisables, applique des contrôles qualité via des hooks et coordonne plusieurs agents spécialisés grâce à des workflows déterministes, afin qu'un assistant d'IA produise un travail d'ingénierie réel et vérifiable, pas du code qui semble seulement correct.",
+            de: "Poneglyph ist ein Konfigurations- und Orchestrierungssystem auf Basis von Claude Code. Es kodiert Engineering-Praktiken als wiederverwendbare Skills, erzwingt Qualitätskontrollen über Hooks und koordiniert mehrere spezialisierte Agenten über deterministische Workflows – damit ein KI-Assistent echte, überprüfbare Engineering-Ergebnisse liefert statt nur plausibel aussehenden Code."
+        },
+        technologies: ["TypeScript", "Bun", "Claude Code", "LLM", "AI Agents"],
+        icon: "cogs",
+        githubUrl: "https://github.com/MaciWP/claude-code-poneglyph",
+        highlight: true,
+        keyFeatures: {
+            en: [
+                "Reusable engineering skills for an AI coding agent",
+                "Quality gates enforced through hooks",
+                "Deterministic multi-agent workflows",
+                "Daily-driver tooling, used on real projects (including this site)"
+            ],
+            es: [
+                "Skills de ingeniería reutilizables para un agente de IA de código",
+                "Controles de calidad aplicados mediante hooks",
+                "Flujos multiagente deterministas",
+                "Herramienta de uso diario, aplicada en proyectos reales (incluida esta web)"
+            ],
+            fr: [
+                "Skills d'ingénierie réutilisables pour un agent d'IA de code",
+                "Contrôles qualité appliqués via des hooks",
+                "Workflows multi-agents déterministes",
+                "Outil du quotidien, utilisé sur des projets réels (dont ce site)"
+            ],
+            de: [
+                "Wiederverwendbare Engineering-Skills für einen KI-Coding-Agenten",
+                "Qualitätskontrollen über Hooks erzwungen",
+                "Deterministische Multi-Agent-Workflows",
+                "Täglich genutztes Werkzeug, eingesetzt in echten Projekten (auch diese Website)"
+            ]
+        }
+    },
+    {
         id: "snmp-monitor",
         title: {
             en: "SNMP Monitor",
@@ -78,10 +129,10 @@ const personalProjectsData = [
             de: "Umfassende Plattform zur Überwachung von Netzwerkgeräten über das SNMP-Protokoll mit automatischer Erkennung, Echtzeit-Visualisierung und MIB-Verwaltung zur Infrastrukturüberwachung."
         },
         longDescription: {
-            en: "SNMP Monitor is a specialized web platform for managing and monitoring network devices using the SNMP Protocol. The system automates the discovery, monitoring, and real-time visualization, significantly reducing problem detection time and improving incident response capability. The application is based on Django with asynchronous processing for intensive tasks.",
-            es: "SNMP Monitor es una plataforma web especializada para la gestión y monitorización de dispositivos de red utilizando el Protocolo SNMP. El sistema automatiza el descubrimiento, monitorización y visualización en tiempo real, reduciendo significativamente el tiempo de detección de problemas y mejorando la capacidad de respuesta a incidentes. La aplicación está basada en Django con procesamiento asíncrono para tareas intensivas.",
-            fr: "SNMP Monitor est une plateforme web spécialisée pour la gestion et la surveillance des périphériques réseau utilisant le protocole SNMP. Le système automatise la découverte, la surveillance et la visualisation en temps réel, réduisant considérablement le temps de détection des problèmes et améliorant la capacité de réponse aux incidents. L'application est basée sur Django avec un traitement asynchrone pour les tâches intensives.",
-            de: "SNMP Monitor ist eine spezialisierte Webplattform zur Verwaltung und Überwachung von Netzwerkgeräten mit dem SNMP-Protokoll. Das System automatisiert Erkennung, Überwachung und Echtzeit-Visualisierung, reduziert die Problemerkennungszeit erheblich und verbessert die Incident-Response-Fähigkeit. Die Anwendung basiert auf Django mit asynchroner Verarbeitung für intensive Aufgaben."
+            en: "SNMP Monitor is a specialized web platform for managing and monitoring network devices using the SNMP Protocol. The system automates the discovery, monitoring, and real-time visualization, reducing problem detection time and improving incident response capability. The application is based on Django with asynchronous processing for intensive tasks.",
+            es: "SNMP Monitor es una plataforma web especializada para la gestión y monitorización de dispositivos de red utilizando el Protocolo SNMP. El sistema automatiza el descubrimiento, monitorización y visualización en tiempo real, reduciendo el tiempo de detección de problemas y mejorando la capacidad de respuesta a incidentes. La aplicación está basada en Django con procesamiento asíncrono para tareas intensivas.",
+            fr: "SNMP Monitor est une plateforme web spécialisée pour la gestion et la surveillance des périphériques réseau utilisant le protocole SNMP. Le système automatise la découverte, la surveillance et la visualisation en temps réel, réduisant le temps de détection des problèmes et améliorant la capacité de réponse aux incidents. L'application est basée sur Django avec un traitement asynchrone pour les tâches intensives.",
+            de: "SNMP Monitor ist eine spezialisierte Webplattform zur Verwaltung und Überwachung von Netzwerkgeräten mit dem SNMP-Protokoll. Das System automatisiert Erkennung, Überwachung und Echtzeit-Visualisierung, reduziert die Problemerkennungszeit und verbessert die Incident-Response-Fähigkeit. Die Anwendung basiert auf Django mit asynchroner Verarbeitung für intensive Aufgaben."
         },
         technologies: ["Python", "Django", "PostgreSQL", "Celery", "Redis", "SNMP"],
         icon: "network-wired",
@@ -122,21 +173,21 @@ const personalProjectsData = [
         id: "card-vision-tracker",
         title: {
             en: "Card Vision Tracker",
-            es: "Rastreador de Cartas con Visión",
-            fr: "Suivi de Cartes par Vision",
-            de: "Karten-Vision-Tracker"
+            es: "Card Vision Tracker",
+            fr: "Card Vision Tracker",
+            de: "Card Vision Tracker"
         },
         description: {
-            en: "Computer vision application for real-time card detection and score tracking using ONNX models, achieving high accuracy in card recognition.",
-            es: "Aplicación de visión por computadora para detección de cartas en tiempo real y seguimiento de puntuación usando modelos ONNX, logrando alta precisión en reconocimiento.",
-            fr: "Application de vision par ordinateur pour la détection de cartes en temps réel et le suivi des scores utilisant des modèles ONNX, atteignant une haute précision.",
-            de: "Computer-Vision-Anwendung für Echtzeit-Kartenerkennung und Punkteverfolgung mit ONNX-Modellen, hohe Genauigkeit bei der Kartenerkennung."
+            en: "Computer vision application for real-time card detection and score tracking using ONNX models.",
+            es: "Aplicación de visión por computadora para la detección de cartas en tiempo real y el seguimiento de puntuación usando modelos ONNX.",
+            fr: "Application de vision par ordinateur pour la détection de cartes en temps réel et le suivi des scores, utilisant des modèles ONNX.",
+            de: "Computer-Vision-Anwendung für Echtzeit-Kartenerkennung und Punkteverfolgung mit ONNX-Modellen."
         },
         longDescription: {
-            en: "This computer vision application automates card detection and score tracking using machine learning. It provides real-time card recognition through a trained ONNX model, capable of processing multiple cards simultaneously with high accuracy. The system includes player management, score calculation, image processing pipeline, and game history tracking components.",
-            es: "Esta aplicación de visión por computadora automatiza la detección de cartas y el seguimiento de puntuación usando aprendizaje automático. Proporciona reconocimiento de cartas en tiempo real a través de un modelo ONNX entrenado, capaz de procesar múltiples cartas simultáneamente con alta precisión. El sistema incluye gestión de jugadores, cálculo de puntuación, pipeline de procesamiento de imágenes y seguimiento del historial.",
-            fr: "Cette application de vision par ordinateur automatise la détection des cartes et le suivi des scores en utilisant l'apprentissage automatique. Elle fournit une reconnaissance des cartes en temps réel grâce à un modèle ONNX entraîné, capable de traiter plusieurs cartes simultanément avec une haute précision. Le système comprend la gestion des joueurs, le calcul des scores, le pipeline de traitement d'images et le suivi de l'historique.",
-            de: "Diese Computer-Vision-Anwendung automatisiert Kartenerkennung und Punkteverfolgung mittels maschinellem Lernen. Sie bietet Echtzeit-Kartenerkennung durch ein trainiertes ONNX-Modell, das mehrere Karten gleichzeitig mit hoher Genauigkeit verarbeiten kann. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitungs-Pipeline und Spielhistorie-Tracking."
+            en: "This computer vision application automates card detection and score tracking using machine learning. It provides real-time card recognition through a trained ONNX model, capable of processing multiple cards simultaneously. The system includes player management, score calculation, image processing pipeline, and game history tracking components.",
+            es: "Esta aplicación de visión por computadora automatiza la detección de cartas y el seguimiento de puntuación usando aprendizaje automático. Proporciona reconocimiento de cartas en tiempo real a través de un modelo ONNX entrenado, capaz de procesar múltiples cartas simultáneamente. El sistema incluye gestión de jugadores, cálculo de puntuación, pipeline de procesamiento de imágenes y seguimiento del historial.",
+            fr: "Cette application de vision par ordinateur automatise la détection des cartes et le suivi des scores en utilisant l'apprentissage automatique. Elle fournit une reconnaissance des cartes en temps réel grâce à un modèle ONNX entraîné, capable de traiter plusieurs cartes simultanément. Le système comprend la gestion des joueurs, le calcul des scores, le pipeline de traitement d'images et le suivi de l'historique.",
+            de: "Diese Computer-Vision-Anwendung automatisiert Kartenerkennung und Punkteverfolgung mittels maschinellem Lernen. Sie bietet Echtzeit-Kartenerkennung durch ein trainiertes ONNX-Modell, das mehrere Karten gleichzeitig verarbeiten kann. Das System umfasst Spielerverwaltung, Punkteberechnung, Bildverarbeitungs-Pipeline und Spielhistorie-Tracking."
         },
         technologies: ["Python", "Kivy", "ONNX", "NumPy"],
         icon: "eye",
@@ -145,34 +196,34 @@ const personalProjectsData = [
         keyFeatures: {
             en: [
                 "Real-time card detection using ONNX neural network",
-                "Computer vision achieving high recognition accuracy",
+                "Computer vision for card recognition",
                 "Cross-platform interface built with Kivy",
                 "Processes up to 10 cards simultaneously per image",
-                "Significantly faster than manual score tracking",
+                "Faster than manual score tracking",
                 "Complete player and game history management"
             ],
             es: [
                 "Detección de cartas en tiempo real usando red neuronal ONNX",
-                "Visión por computadora con alta precisión en reconocimiento",
+                "Visión por computadora para el reconocimiento de cartas",
                 "Interfaz multiplataforma construida con Kivy",
                 "Procesa hasta 10 cartas simultáneamente por imagen",
-                "Significativamente más rápido que el seguimiento manual de puntuación",
+                "Más rápido que el seguimiento manual de puntuación",
                 "Gestión completa de jugadores e historial de juegos"
             ],
             fr: [
                 "Détection de cartes en temps réel utilisant un réseau neuronal ONNX",
-                "Vision par ordinateur atteignant une haute précision de reconnaissance",
+                "Vision par ordinateur pour la reconnaissance de cartes",
                 "Interface multiplateforme construite avec Kivy",
                 "Traite jusqu'à 10 cartes simultanément par image",
-                "Significativement plus rapide que le suivi manuel des scores",
+                "Plus rapide que le suivi manuel des scores",
                 "Gestion complète des joueurs et de l'historique des jeux"
             ],
             de: [
                 "Echtzeit-Kartenerkennung mit ONNX-Neuronalnetz",
-                "Computer Vision mit hoher Erkennungsgenauigkeit",
+                "Computer Vision für die Kartenerkennung",
                 "Plattformübergreifende Oberfläche mit Kivy erstellt",
                 "Verarbeitet bis zu 10 Karten gleichzeitig pro Bild",
-                "Deutlich schneller als manuelle Punkteverfolgung",
+                "Schneller als manuelle Punkteverfolgung",
                 "Vollständige Spieler- und Spielhistorie-Verwaltung"
             ]
         }
@@ -252,42 +303,42 @@ const professionalProjectsData = [
             de: "Bidirektionale Integrationsplattform zur Synchronisierung von Rechenzentrumsinfrastrukturdaten zwischen mehreren heterogenen Systemen und der iTRACS DCIM-Plattform."
         },
         longDescription: {
-            en: "This integration platform provides seamless synchronization between various datacenter management systems (HPE IMC, VMware, TakeData, ThinkData) and the iTRACS DCIM platform. The system automates asset documentation, optimizes infrastructure monitoring, and centralizes critical operational data in real-time, significantly improving datacenter management efficiency.",
-            es: "Esta plataforma de integración proporciona sincronización perfecta entre varios sistemas de gestión de centros de datos (HPE IMC, VMware, TakeData, ThinkData) y la plataforma iTRACS DCIM. El sistema automatiza la documentación de activos, optimiza la monitorización de infraestructura y centraliza datos operativos críticos en tiempo real, mejorando significativamente la eficiencia en la gestión de centros de datos.",
-            fr: "Cette plateforme d'intégration fournit une synchronisation transparente entre divers systèmes de gestion de centre de données (HPE IMC, VMware, TakeData, ThinkData) et la plateforme iTRACS DCIM. Le système automatise la documentation des actifs, optimise la surveillance de l'infrastructure et centralise les données opérationnelles critiques en temps réel, améliorant considérablement l'efficacité de la gestion des centres de données.",
-            de: "Diese Integrationsplattform bietet nahtlose Synchronisation zwischen verschiedenen Rechenzentrum-Managementsystemen (HPE IMC, VMware, TakeData, ThinkData) und der iTRACS DCIM-Plattform. Das System automatisiert Asset-Dokumentation, optimiert Infrastrukturüberwachung und zentralisiert kritische Betriebsdaten in Echtzeit, wodurch die Rechenzentrumsverwaltungseffizienz erheblich verbessert wird."
+            en: "This integration platform provides seamless synchronization between various datacenter management systems (HPE IMC, VMware, TakeData, ThinkData) and the iTRACS DCIM platform. The system automates asset documentation, optimizes infrastructure monitoring, and centralizes critical operational data in real-time.",
+            es: "Esta plataforma de integración proporciona sincronización perfecta entre varios sistemas de gestión de centros de datos (HPE IMC, VMware, TakeData, ThinkData) y la plataforma iTRACS DCIM. El sistema automatiza la documentación de activos, optimiza la monitorización de infraestructura y centraliza datos operativos críticos en tiempo real.",
+            fr: "Cette plateforme d'intégration fournit une synchronisation transparente entre divers systèmes de gestion de centre de données (HPE IMC, VMware, TakeData, ThinkData) et la plateforme iTRACS DCIM. Le système automatise la documentation des actifs, optimise la surveillance de l'infrastructure et centralise les données opérationnelles critiques en temps réel.",
+            de: "Diese Integrationsplattform bietet nahtlose Synchronisation zwischen verschiedenen Rechenzentrum-Managementsystemen (HPE IMC, VMware, TakeData, ThinkData) und der iTRACS DCIM-Plattform. Das System automatisiert Asset-Dokumentation, optimiert Infrastrukturüberwachung und zentralisiert kritische Betriebsdaten in Echtzeit."
         },
         technologies: ["Python", "Django", "REST API", "PostgreSQL", "Docker"],
         icon: "exchange-alt",
         highlight: true,
         keyFeatures: {
             en: [
-                "Bidirectional data synchronization with high reliability",
-                "Intelligent retry mechanism with batch processing",
-                "Comprehensive error handling with detailed contextual information",
-                "Drastically reduced data update time between systems",
-                "Significantly improved asset inventory accuracy"
+                "Bidirectional data synchronization",
+                "Retry mechanism with batch processing",
+                "Error handling with detailed contextual information",
+                "Reduced data update time between systems",
+                "More accurate asset inventory"
             ],
             es: [
-                "Sincronización de datos bidireccional con alta fiabilidad",
-                "Mecanismo inteligente de reintento con procesamiento por lotes",
-                "Manejo integral de errores con información contextual detallada",
-                "Tiempo de actualización de datos entre sistemas drásticamente reducido",
-                "Precisión del inventario de activos significativamente mejorada"
+                "Sincronización de datos bidireccional",
+                "Mecanismo de reintento con procesamiento por lotes",
+                "Manejo de errores con información contextual detallada",
+                "Tiempo de actualización de datos entre sistemas reducido",
+                "Inventario de activos más preciso"
             ],
             fr: [
-                "Synchronisation bidirectionnelle des données avec haute fiabilité",
-                "Mécanisme de réessai intelligent avec traitement par lots",
-                "Gestion complète des erreurs avec informations contextuelles détaillées",
-                "Temps de mise à jour des données entre systèmes drastiquement réduit",
-                "Amélioration significative de la précision de l'inventaire des actifs"
+                "Synchronisation bidirectionnelle des données",
+                "Mécanisme de réessai avec traitement par lots",
+                "Gestion des erreurs avec informations contextuelles détaillées",
+                "Temps de mise à jour des données entre systèmes réduit",
+                "Inventaire des actifs plus précis"
             ],
             de: [
-                "Bidirektionale Datensynchronisation mit hoher Zuverlässigkeit",
-                "Intelligenter Wiederholungsmechanismus mit Stapelverarbeitung",
-                "Umfassende Fehlerbehandlung mit detaillierten Kontextinformationen",
-                "Datenaktualisierungszeit zwischen Systemen drastisch reduziert",
-                "Asset-Inventargenauigkeit erheblich verbessert"
+                "Bidirektionale Datensynchronisation",
+                "Wiederholungsmechanismus mit Stapelverarbeitung",
+                "Fehlerbehandlung mit detaillierten Kontextinformationen",
+                "Reduzierte Datenaktualisierungszeit zwischen Systemen",
+                "Genaueres Asset-Inventar"
             ]
         }
     },
@@ -317,31 +368,31 @@ const professionalProjectsData = [
         highlight: true,
         keyFeatures: {
             en: [
-                "Efficient data collection from 1,000+ network devices in under 5 minutes",
-                "Drastic reduction in infrastructure problem detection time",
-                "Optimized database queries with significantly improved API response time",
-                "Advanced retry mechanisms with exponential backoff",
+                "Batch data collection from network devices",
+                "Faster detection of infrastructure problems",
+                "Optimized database queries for API response time",
+                "Retry mechanisms with exponential backoff",
                 "Detailed logging and error tracking system"
             ],
             es: [
-                "Recolección eficiente de datos de más de 1.000 dispositivos de red en menos de 5 minutos",
-                "Reducción drástica en el tiempo de detección de problemas de infraestructura",
-                "Consultas de base de datos optimizadas con mejora significativa del tiempo de respuesta de la API",
-                "Mecanismos avanzados de reintento con retroceso exponencial",
+                "Recolección de datos por lotes desde dispositivos de red",
+                "Detección más rápida de problemas de infraestructura",
+                "Consultas de base de datos optimizadas para el tiempo de respuesta de la API",
+                "Mecanismos de reintento con retroceso exponencial",
                 "Sistema detallado de registro y seguimiento de errores"
             ],
             fr: [
-                "Collecte efficace de données de plus de 1 000 périphériques réseau en moins de 5 minutes",
-                "Réduction drastique du temps de détection des problèmes d'infrastructure",
-                "Requêtes de base de données optimisées avec amélioration significative du temps de réponse de l'API",
-                "Mécanismes de réessai avancés avec backoff exponentiel",
+                "Collecte de données par lots depuis les périphériques réseau",
+                "Détection plus rapide des problèmes d'infrastructure",
+                "Requêtes de base de données optimisées pour le temps de réponse de l'API",
+                "Mécanismes de réessai avec backoff exponentiel",
                 "Système détaillé de journalisation et de suivi des erreurs"
             ],
             de: [
-                "Effiziente Datenerfassung von über 1.000 Netzwerkgeräten in unter 5 Minuten",
-                "Drastische Reduzierung der Infrastruktur-Problemerkennungszeit",
-                "Optimierte Datenbankabfragen mit erheblich verbesserter API-Antwortzeit",
-                "Erweiterte Wiederholungsmechanismen mit exponentiellem Backoff",
+                "Stapelweise Datenerfassung von Netzwerkgeräten",
+                "Schnellere Erkennung von Infrastrukturproblemen",
+                "Optimierte Datenbankabfragen für die API-Antwortzeit",
+                "Wiederholungsmechanismen mit exponentiellem Backoff",
                 "Detailliertes Logging- und Fehlerverfolgungssystem"
             ]
         }
@@ -374,32 +425,32 @@ const professionalProjectsData = [
             en: [
                 "Asynchronous ETL for VMware infrastructure data",
                 "FastAPI RESTful endpoints with automatic OpenAPI documentation",
-                "Batch processing with significantly faster data collection",
-                "High data accuracy through automated capture processes",
+                "Batch processing for data collection",
+                "Automated capture processes",
                 "Structured logging and error management",
                 "Integration with external systems through API"
             ],
             es: [
                 "ETL asíncrono para datos de infraestructura VMware",
                 "Endpoints RESTful de FastAPI con documentación automática OpenAPI",
-                "Procesamiento por lotes con recopilación de datos significativamente más rápida",
-                "Alta precisión de datos mediante procesos de captura automatizados",
+                "Procesamiento por lotes para la recopilación de datos",
+                "Procesos de captura automatizados",
                 "Registro estructurado y gestión de errores",
                 "Integración con sistemas externos a través de API"
             ],
             fr: [
                 "ETL asynchrone pour les données d'infrastructure VMware",
                 "Points de terminaison RESTful FastAPI avec documentation OpenAPI automatique",
-                "Traitement par lots avec collecte de données significativement plus rapide",
-                "Haute précision des données grâce à des processus de capture automatisés",
+                "Traitement par lots pour la collecte de données",
+                "Processus de capture automatisés",
                 "Journalisation structurée et gestion des erreurs",
                 "Intégration avec des systèmes externes via API"
             ],
             de: [
                 "Asynchroner ETL für VMware-Infrastrukturdaten",
                 "FastAPI RESTful-Endpunkte mit automatischer OpenAPI-Dokumentation",
-                "Stapelverarbeitung mit deutlich schnellerer Datenerfassung",
-                "Hohe Datengenauigkeit durch automatisierte Erfassungsprozesse",
+                "Stapelverarbeitung für die Datenerfassung",
+                "Automatisierte Erfassungsprozesse",
                 "Strukturiertes Logging und Fehlermanagement",
                 "Integration mit externen Systemen über API"
             ]
@@ -432,34 +483,34 @@ const professionalProjectsData = [
         keyFeatures: {
             en: [
                 "Multi-tenant architecture with database isolation per client",
-                "NFC-based asset tracking with significant inventory time reduction",
+                "NFC-based asset tracking",
                 "Hierarchical location management (DataCenter → Room → Row → Rack)",
                 "JWT authentication with 2FA via email OTP",
-                "Comprehensive asset categorization (IT, Network, Energy, Climate)",
+                "Asset categorization (IT, Network, Energy, Climate)",
                 "S3 integration for image and file storage"
             ],
             es: [
                 "Arquitectura multiinquilino con aislamiento de base de datos por cliente",
-                "Seguimiento de activos basado en NFC con reducción significativa del tiempo de inventario",
+                "Seguimiento de activos basado en NFC",
                 "Gestión jerárquica de ubicaciones (Centro de Datos → Sala → Fila → Rack)",
                 "Autenticación JWT con 2FA vía OTP por correo electrónico",
-                "Categorización integral de activos (TI, Red, Energía, Clima)",
+                "Categorización de activos (TI, Red, Energía, Clima)",
                 "Integración con S3 para almacenamiento de imágenes y archivos"
             ],
             fr: [
                 "Architecture multi-locataires avec isolation de base de données par client",
-                "Suivi d'actifs basé sur NFC avec réduction significative du temps d'inventaire",
+                "Suivi d'actifs basé sur NFC",
                 "Gestion hiérarchique des emplacements (Centre de Données → Salle → Rangée → Rack)",
                 "Authentification JWT avec 2FA via OTP par e-mail",
-                "Catégorisation complète des actifs (IT, Réseau, Énergie, Climat)",
+                "Catégorisation des actifs (IT, Réseau, Énergie, Climat)",
                 "Intégration S3 pour le stockage d'images et de fichiers"
             ],
             de: [
                 "Mandantenfähige Architektur mit Datenbank-Isolation pro Kunde",
-                "NFC-basiertes Asset-Tracking mit erheblicher Reduzierung der Inventarzeit",
+                "NFC-basiertes Asset-Tracking",
                 "Hierarchische Standortverwaltung (Rechenzentrum → Raum → Reihe → Rack)",
                 "JWT-Authentifizierung mit 2FA über E-Mail-OTP",
-                "Umfassende Asset-Kategorisierung (IT, Netzwerk, Energie, Klima)",
+                "Asset-Kategorisierung (IT, Netzwerk, Energie, Klima)",
                 "S3-Integration für Bild- und Dateispeicherung"
             ]
         }
@@ -491,31 +542,31 @@ const professionalProjectsData = [
         keyFeatures: {
             en: [
                 "Bidirectional synchronization with object mapping system",
-                "Significant reduction in energy infrastructure management time",
-                "Real-time monitoring of power status for all datacenter devices",
-                "Automated report generation reducing time from hours to minutes",
-                "Major improvement in data accuracy through duplication elimination"
+                "Reduced energy infrastructure management time",
+                "Real-time monitoring of power status for datacenter devices",
+                "Automated report generation",
+                "Improved data accuracy by eliminating duplication"
             ],
             es: [
                 "Sincronización bidireccional con sistema de mapeo de objetos",
-                "Reducción significativa en el tiempo de gestión de infraestructura energética",
-                "Monitorización en tiempo real del estado de energía de todos los dispositivos del centro de datos",
-                "Generación automatizada de informes reduciendo el tiempo de horas a minutos",
-                "Mejora sustancial en la precisión de datos mediante la eliminación de duplicaciones"
+                "Tiempo de gestión de infraestructura energética reducido",
+                "Monitorización en tiempo real del estado de energía de los dispositivos del centro de datos",
+                "Generación automatizada de informes",
+                "Precisión de datos mejorada mediante la eliminación de duplicaciones"
             ],
             fr: [
                 "Synchronisation bidirectionnelle avec système de mappage d'objets",
-                "Réduction significative du temps de gestion de l'infrastructure énergétique",
-                "Surveillance en temps réel de l'état d'alimentation de tous les périphériques du centre de données",
-                "Génération automatisée de rapports réduisant le temps de plusieurs heures à quelques minutes",
-                "Amélioration majeure de la précision des données par élimination des doublons"
+                "Temps de gestion de l'infrastructure énergétique réduit",
+                "Surveillance en temps réel de l'état d'alimentation des périphériques du centre de données",
+                "Génération automatisée de rapports",
+                "Précision des données améliorée par élimination des doublons"
             ],
             de: [
                 "Bidirektionale Synchronisation mit Objekt-Mapping-System",
-                "Erhebliche Reduzierung der Energieinfrastruktur-Verwaltungszeit",
-                "Echtzeit-Überwachung des Stromstatus aller Rechenzentrumsgeräte",
-                "Automatisierte Berichtserstellung reduziert Zeit von Stunden auf Minuten",
-                "Wesentliche Verbesserung der Datengenauigkeit durch Duplikateliminierung"
+                "Reduzierte Energieinfrastruktur-Verwaltungszeit",
+                "Echtzeit-Überwachung des Stromstatus der Rechenzentrumsgeräte",
+                "Automatisierte Berichtserstellung",
+                "Verbesserte Datengenauigkeit durch Duplikateliminierung"
             ]
         }
     }

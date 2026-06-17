@@ -9,6 +9,7 @@ import Languages from "../components/cv/Languages.astro";
 import Education from "../components/cv/Education.astro";
 import Projects from "../components/cv/Projects.astro";
 import ExpertiseSummary from "../components/cv/ExpertiseSummary.astro";
+import About from "../components/cv/About.astro";
 import FAQSchema from "../components/FAQSchema.astro";
 
 // Enhanced metadata for SEO
@@ -64,6 +65,9 @@ const faqs = [
     {/* Expertise Summary - Key competencies */}
     <ExpertiseSummary lang="en" />
 
+    {/* About - career narrative + current AI focus */}
+    <About lang="en" />
+
     {/* Experience - Pure Astro */}
     <Experience lang="en" />
 
@@ -105,8 +109,8 @@ const faqs = [
       <div itemprop="jobTitle">Senior Backend Developer</div>
       <div itemprop="description">
         Solutions-driven Backend Developer specializing in industrial protocol
-        integration (SNMP, Modbus, BACnet) with over 8 years of delivering
-        high-performance applications.
+        integration (SNMP, Modbus, BACnet) with over 8 years building
+        backend applications.
       </div>
       <div itemprop="email">oriolomb@gmail.com</div>
       <a itemprop="url" href="https://oriolmacias.dev"

@@ -29,6 +29,7 @@
     "generate-images": "node scripts/generate-profile-images.js",
     "dev": "node scripts/dev.js && pnpm run generate-images",
     "build": "node scripts/build.js && pnpm run generate-images",
+    "cv:pdf": "node scripts/generate-cv-pdf.js",
     "preview": "astro preview",
     "check": "pnpm run check:contrast && pnpm run check:translations && pnpm run check:structured-data",
     "check:contrast": "node scripts/check-contrast.js",
