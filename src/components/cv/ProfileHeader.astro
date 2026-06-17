@@ -41,6 +41,12 @@ const getTranslation = (key: string, fallback: string): string => {
 
 // Get localized data
 const jobTitle = getTranslation("header.jobTitle", headerData.jobTitle);
+// Split the tagline ("Role | Specialty") so the role rides in the H1 (keyword-
+// bearing, ≥20 chars) and the specialty stays in the red subtitle. All four
+// locales use the " | " separator; if it is ever absent, role = whole string
+// and specialty = "" (the subtitle simply renders nothing).
+const [jobRole, ...jobRest] = jobTitle.split(" | ");
+const jobSpecialty = jobRest.join(" | ");
 const summary = getTranslation("header.summary", headerData.summary);
 const photoAlt = getTranslation("header.photoAlt", headerData.photoAlt);
 const downloadCoverLetter = getTranslation("buttons.downloadCoverLetter", "Download Cover Letter");
@@ -75,12 +81,17 @@ const githubLabel = getTranslation("header.github", "GitHub");
                     sizing); duplicating per-breakpoint produced 2x h1/h2 in
                     the DOM, flagged by SEO crawlers */}
                 <div>
-                    <NameTag class="text-2xl leading-tight mb-1 sm:text-4xl md:text-5xl sm:mb-2 font-bold">
+                    <NameTag class="text-2xl leading-tight sm:text-4xl md:text-5xl font-bold">
                         {headerData.fullName}
+                        <span class="block mt-1 sm:mt-2 text-base leading-tight sm:text-xl md:text-2xl font-semibold">
+                            {jobRole}
+                        </span>
                     </NameTag>
-                    <TitleTag class="text-base leading-tight sm:text-xl md:text-2xl text-accessible-brand-red font-semibold">
-                        {jobTitle}
-                    </TitleTag>
+                    {jobSpecialty && (
+                        <TitleTag class="mt-1 sm:mt-2 text-base leading-tight sm:text-xl md:text-2xl text-accessible-brand-red font-semibold">
+                            {jobSpecialty}
+                        </TitleTag>
+                    )}
                 </div>
 
                 {/* Mobile: Personal info + Photo side by side */}
