@@ -1,0 +1,83 @@
+---
+/**
+ * Blog index — lists posts (title, date, description, tags), newest first.
+ * Drafts are hidden in production builds (visible in `pnpm run dev`).
+ * @file src/pages/blog/index.astro
+ */
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmt = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+
+const SITE = 'https://oriolmacias.dev';
+const pageTitle = 'Blog — Oriol Macias';
+const pageDescription =
+  'English-only notes on backend development, industrial protocol integration (SNMP/Modbus/BACnet), data center infrastructure, and developer tooling — by Oriol Macias.';
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  lang="en"
+  canonicalUrl={`${SITE}/blog`}
+>
+  <section class="mx-auto max-w-3xl">
+    <header class="mb-10">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Blog</h1>
+      <p class="text-light-text-secondary dark:text-dark-text-secondary">
+        Notes on backend engineering, industrial protocols, and developer
+        tooling. Written in English.
+      </p>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <p class="text-light-text-secondary dark:text-dark-text-secondary">
+          No posts yet — check back soon.
+        </p>
+      ) : (
+        <ul class="space-y-8">
+          {posts.map((post) => (
+            <li>
+              <article class="group">
+                <a href={`/blog/${post.id}`} class="block no-underline">
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <h2 class="text-xl font-bold tracking-tight transition-colors duration-150 group-hover:text-brand-red">
+                      {post.data.title}
+                    </h2>
+                    <time
+                      datetime={post.data.pubDate.toISOString()}
+                      class="shrink-0 text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                    >
+                      {fmt.format(post.data.pubDate)}
+                    </time>
+                  </div>
+                  <p class="mt-1 text-light-text-secondary dark:text-dark-text-secondary">
+                    {post.data.description}
+                  </p>
+                </a>
+                {post.data.tags.length > 0 && (
+                  <ul class="mt-2 flex flex-wrap gap-2" aria-label="Tags">
+                    {post.data.tags.map((tag) => (
+                      <li class="px-2 py-1 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Layout>

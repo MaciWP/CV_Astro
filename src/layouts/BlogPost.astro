@@ -1,0 +1,200 @@
+---
+/**
+ * Blog post layout — wraps Layout.astro with reading-optimized typography,
+ * the BlogPosting JSON-LD (injected into <head> via Layout's `head` slot),
+ * a "← Back to blog" link, and the lazy, theme-aware Giscus comments.
+ * @file src/layouts/BlogPost.astro
+ */
+import Layout from './Layout.astro';
+import Giscus from '../components/Giscus.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  /** Collection entry id — becomes the /blog/<slug> URL segment. */
+  slug: string;
+}
+
+const { title, description, pubDate, updatedDate, tags = [], slug } = Astro.props;
+
+const SITE = 'https://oriolmacias.dev';
+const canonical = `${SITE}/blog/${slug}`;
+
+// Deterministic at build time (formats the fixed frontmatter date, not "now").
+const fmt = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+const displayDate = fmt.format(pubDate);
+const displayUpdated = updatedDate ? fmt.format(updatedDate) : null;
+
+// BlogPosting structured data (author "Oriol Macias", per the SEO brief).
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Person', name: 'Oriol Macias', url: SITE },
+  publisher: { '@type': 'Person', name: 'Oriol Macias', url: SITE },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  image: `${SITE}/images/oriol_macias-1280.jpg`,
+  url: canonical,
+  inLanguage: 'en',
+};
+---
+
+<Layout
+  title={`${title} — Oriol Macias`}
+  description={description}
+  lang="en"
+  canonicalUrl={canonical}
+>
+  <Fragment
+    slot="head"
+    set:html={`<script type="application/ld+json">${JSON.stringify(blogPostingSchema)}</script>`}
+  />
+
+  <article class="blog-post mx-auto">
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-1 text-sm font-medium text-accessible-brand-red hover:underline mb-8"
+    >
+      <span aria-hidden="true">←</span> Back to blog
+    </a>
+
+    <header class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{title}</h1>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        <time datetime={pubDate.toISOString()}>{displayDate}</time>
+        {displayUpdated && <span>· Updated {displayUpdated}</span>}
+        {
+          tags.length > 0 && (
+            <ul class="flex flex-wrap gap-2" aria-label="Tags">
+              {tags.map((tag) => (
+                <li class="px-2 py-1 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="post-prose">
+      <slot />
+    </div>
+
+    <Giscus />
+  </article>
+</Layout>
+
+<style>
+  /* Reading column: ~65ch, comfortable line-height, site fonts, dark/light. */
+  .blog-post {
+    max-width: 65ch;
+  }
+
+  .post-prose {
+    line-height: 1.65;
+    color: #1f2937; /* light-text */
+    font-size: 1.0625rem;
+  }
+  :global(.dark) .post-prose {
+    color: #f9fafb; /* dark-text */
+  }
+
+  /* Headings — Outfit via the global h1–h6 rule; spacing tuned for prose. */
+  .post-prose :global(h2) {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 2.5rem 0 0.75rem;
+    line-height: 1.25;
+  }
+  .post-prose :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.5rem;
+    line-height: 1.3;
+  }
+  .post-prose :global(p) {
+    margin: 0 0 1.25rem;
+  }
+  .post-prose :global(ul),
+  .post-prose :global(ol) {
+    margin: 0 0 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .post-prose :global(ul) {
+    list-style: disc;
+  }
+  .post-prose :global(ol) {
+    list-style: decimal;
+  }
+  .post-prose :global(li) {
+    margin-bottom: 0.4rem;
+  }
+  .post-prose :global(li::marker) {
+    color: #d83333; /* brand-red bullets */
+  }
+  .post-prose :global(a) {
+    color: #991b1b; /* accessible red, light */
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  :global(.dark) .post-prose :global(a) {
+    color: #fca5a5; /* accessible red, dark */
+  }
+  /* Inline code */
+  .post-prose :global(:not(pre) > code) {
+    background: #f3f4f6;
+    padding: 0.15em 0.4em;
+    font-size: 0.9em;
+    border-radius: 0; /* sharp corners */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  :global(.dark) .post-prose :global(:not(pre) > code) {
+    background: #1e2433;
+  }
+  /* Shiki code blocks (.astro-code carries an inline background from the theme) */
+  .post-prose :global(pre) {
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.5rem;
+    overflow-x: auto;
+    border: 1px solid #374151;
+    border-radius: 0; /* sharp corners */
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .post-prose :global(blockquote) {
+    border-left: 3px solid #d83333;
+    padding-left: 1rem;
+    margin: 0 0 1.25rem;
+    color: #5f6772;
+    font-style: italic;
+  }
+  :global(.dark) .post-prose :global(blockquote) {
+    color: #9ca3af;
+  }
+  .post-prose :global(hr) {
+    border: 0;
+    border-top: 1px solid #d1d5db;
+    margin: 2.5rem 0;
+  }
+  :global(.dark) .post-prose :global(hr) {
+    border-top-color: #374151;
+  }
+  .post-prose :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  .post-prose :global(strong) {
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,140 @@
+---
+/**
+ * Giscus comments — GitHub Discussions, no backend, free.
+ * @file src/components/Giscus.astro
+ *
+ * Lazy: the giscus client.js is injected only when the container scrolls into
+ * view (it sits at the page bottom, below the fold), so it never touches
+ * LCP/TBT. Theme-aware: a MutationObserver watches the `<html>` class (the
+ * navbar's theme toggle mutates it but emits no event) and posts `setConfig`
+ * to the giscus iframe so comments restyle with the site's dark/light toggle.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * OWNER SETUP (one-time, not code — required before comments appear)
+ *   1. Make the GitHub repo PUBLIC and enable the "Discussions" feature.
+ *   2. Install the giscus app: https://github.com/apps/giscus (grant it the repo).
+ *   3. Go to https://giscus.app, enter the repo, pick a Discussions category
+ *      (e.g. "Announcements"), and copy the generated `data-repo-id` and
+ *      `data-category-id`.
+ *   4. Paste those two values into GISCUS_CONFIG below (replacing the TODO_*
+ *      placeholders) and set `category` to the category name you chose.
+ *
+ * Until repoId AND categoryId are filled in, this component renders NOTHING
+ * visible (just an HTML comment) — no broken widget on a live page.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+
+// Single source of truth for the giscus configuration.
+const GISCUS_CONFIG = {
+  repo: 'MaciWP/CV_Astro',      // TODO owner: confirm this is the PUBLIC repo with Discussions on
+  repoId: 'TODO_REPO_ID',       // TODO owner: paste data-repo-id from giscus.app
+  category: 'Announcements',    // TODO owner: the Discussions category name chosen on giscus.app
+  categoryId: 'TODO_CATEGORY_ID', // TODO owner: paste data-category-id from giscus.app
+};
+
+const configured =
+  !GISCUS_CONFIG.repoId.startsWith('TODO') &&
+  !GISCUS_CONFIG.categoryId.startsWith('TODO');
+---
+
+{
+  configured ? (
+    <section class="giscus-wrap" aria-label="Comments">
+      <div
+        class="giscus"
+        data-giscus
+        data-repo={GISCUS_CONFIG.repo}
+        data-repo-id={GISCUS_CONFIG.repoId}
+        data-category={GISCUS_CONFIG.category}
+        data-category-id={GISCUS_CONFIG.categoryId}
+      />
+    </section>
+  ) : (
+    <Fragment set:html="<!-- Giscus comments: fill repoId + categoryId in src/components/Giscus.astro to enable (see file header). -->" />
+  )
+}
+
+<style>
+  .giscus-wrap {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--giscus-sep, #d1d5db);
+  }
+  :global(.dark) .giscus-wrap {
+    --giscus-sep: #374151;
+  }
+</style>
+
+<script>
+  // Lazy-init giscus: inject the client only when the container nears the
+  // viewport. No-op when the container is absent (i.e. not configured yet).
+  function initGiscus() {
+    const container = document.querySelector<HTMLElement>('[data-giscus]');
+    if (!container || container.dataset.giscusInit === '1') return;
+    container.dataset.giscusInit = '1';
+
+    const currentTheme = () =>
+      document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+
+    const sendTheme = (theme: string) => {
+      const frame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+      frame?.contentWindow?.postMessage(
+        { giscus: { setConfig: { theme } } },
+        'https://giscus.app',
+      );
+    };
+
+    let loaded = false;
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+
+      const s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', container.dataset.repo || '');
+      s.setAttribute('data-repo-id', container.dataset.repoId || '');
+      s.setAttribute('data-category', container.dataset.category || '');
+      s.setAttribute('data-category-id', container.dataset.categoryId || '');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'bottom');
+      s.setAttribute('data-theme', currentTheme());
+      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-loading', 'lazy');
+      s.crossOrigin = 'anonymous';
+      s.async = true;
+      container.appendChild(s);
+
+      // Keep giscus in sync with the site theme toggle (class mutation only).
+      new MutationObserver(() => sendTheme(currentTheme())).observe(
+        document.documentElement,
+        { attributes: true, attributeFilter: ['class'] },
+      );
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            load();
+          }
+        },
+        { rootMargin: '200px' },
+      );
+      io.observe(container);
+    } else if (document.readyState === 'complete') {
+      load();
+    } else {
+      window.addEventListener('load', load, { once: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGiscus);
+  } else {
+    initGiscus();
+  }
+</script>
