@@ -1,36 +1,36 @@
 ---
 /**
- * Blog post page — renders a Markdown post through the BlogPost layout.
- * Drafts are excluded from production builds (so they never reach the
- * sitemap); they remain available in `pnpm run dev`.
+ * Blog post page (English, default locale) — /blog/<slug>.
+ * Renders en/ posts; drafts excluded from production builds.
  * @file src/pages/blog/[...slug].astro
  */
 import { getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { localizedPosts, slugFromId, localesForSlug } from '../../utils/blog';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts
-    .filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
-    .map((post) => ({
-      params: { slug: post.id },
-      props: { post },
-    }));
+  const all = await getCollection('blog');
+  return localizedPosts(all, 'en').map((post) => {
+    const slug = slugFromId(post.id);
+    return { params: { slug }, props: { post, translations: localesForSlug(all, slug) } };
+  });
 }
 
-const { post } = Astro.props;
+const { post, translations } = Astro.props;
 const { Content } = await render(post);
 ---
 
 <BlogPost
+  lang="en"
   title={post.data.title}
   description={post.data.description}
   pubDate={post.data.pubDate}
   updatedDate={post.data.updatedDate}
   tags={post.data.tags}
-  slug={post.id}
+  slug={slugFromId(post.id)}
   heroImage={post.data.heroImage}
   heroImageAlt={post.data.heroImageAlt}
+  translations={translations}
 >
   <Content />
 </BlogPost>

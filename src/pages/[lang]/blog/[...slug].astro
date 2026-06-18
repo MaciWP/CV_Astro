@@ -1,0 +1,44 @@
+---
+/**
+ * Blog post page for non-default locales — /es|/fr|/de/blog/<slug>.
+ * Per the Astro i18n recipe: posts live in blog/<lang>/, so the entry id is
+ * "<lang>/<slug>"; split it to derive params.
+ * @file src/pages/[lang]/blog/[...slug].astro
+ */
+import { getCollection, render } from 'astro:content';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import { localeOf, slugFromId, localesForSlug } from '../../../utils/blog';
+
+export async function getStaticPaths() {
+  const all = await getCollection('blog');
+  const visible = all.filter((p) => (import.meta.env.PROD ? !p.data.draft : true));
+  return visible
+    .filter((p) => localeOf(p.id) !== 'en')
+    .map((post) => {
+      const slug = slugFromId(post.id);
+      return {
+        params: { lang: localeOf(post.id), slug },
+        props: { post, translations: localesForSlug(all, slug) },
+      };
+    });
+}
+
+const { post, translations } = Astro.props;
+const lang = localeOf(post.id);
+const { Content } = await render(post);
+---
+
+<BlogPost
+  lang={lang}
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  tags={post.data.tags}
+  slug={slugFromId(post.id)}
+  heroImage={post.data.heroImage}
+  heroImageAlt={post.data.heroImageAlt}
+  translations={translations}
+>
+  <Content />
+</BlogPost>

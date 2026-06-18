@@ -1,0 +1,92 @@
+---
+/**
+ * Blog index list — shared by the en route (/blog) and the [lang] routes
+ * (/es|/fr|/de/blog). Renders the header + post cards with localized chrome.
+ * @file src/components/BlogList.astro
+ */
+import { slugFromId, blogUrl, type BlogEntry } from '../utils/blog';
+
+interface Props {
+  lang: string;
+  posts: BlogEntry[];
+}
+const { lang, posts } = Astro.props;
+
+const STRINGS: Record<string, { subtitle: string; empty: string; tags: string }> = {
+  en: {
+    subtitle: 'Notes on backend engineering, industrial protocols, and developer tooling.',
+    empty: 'No posts yet — check back soon.',
+    tags: 'Tags',
+  },
+  es: {
+    subtitle: 'Notas sobre ingeniería backend, protocolos industriales y herramientas de desarrollo.',
+    empty: 'Aún no hay entradas — vuelve pronto.',
+    tags: 'Etiquetas',
+  },
+  fr: {
+    subtitle: "Notes sur l'ingénierie backend, les protocoles industriels et l'outillage de développement.",
+    empty: "Pas encore d'articles — revenez bientôt.",
+    tags: 'Tags',
+  },
+  de: {
+    subtitle: 'Notizen zu Backend-Engineering, Industrieprotokollen und Entwickler-Tooling.',
+    empty: 'Noch keine Beiträge — schau bald wieder vorbei.',
+    tags: 'Tags',
+  },
+};
+const DATE_LOCALE: Record<string, string> = { en: 'en-GB', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
+const t = STRINGS[lang] ?? STRINGS.en;
+const fmt = new Intl.DateTimeFormat(DATE_LOCALE[lang] ?? 'en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+---
+
+<section class="mx-auto max-w-3xl">
+  <header class="mb-10">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Blog</h1>
+    <p class="text-light-text-secondary dark:text-dark-text-secondary">{t.subtitle}</p>
+  </header>
+
+  {
+    posts.length === 0 ? (
+      <p class="text-light-text-secondary dark:text-dark-text-secondary">{t.empty}</p>
+    ) : (
+      <ul class="space-y-8">
+        {posts.map((post) => (
+          <li>
+            <article class="group">
+              <a href={blogUrl(lang, slugFromId(post.id))} class="block no-underline">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h2 class="text-xl font-bold tracking-tight transition-colors duration-150 group-hover:text-brand-red">
+                    {post.data.title}
+                  </h2>
+                  <time
+                    datetime={post.data.pubDate.toISOString()}
+                    class="shrink-0 text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                  >
+                    {fmt.format(post.data.pubDate)}
+                  </time>
+                </div>
+                <p class="mt-1 text-light-text-secondary dark:text-dark-text-secondary">
+                  {post.data.description}
+                </p>
+              </a>
+              {post.data.tags.length > 0 && (
+                <ul class="mt-2 flex flex-wrap gap-2" aria-label={t.tags}>
+                  {post.data.tags.map((tag) => (
+                    <li class="px-2 py-1 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
