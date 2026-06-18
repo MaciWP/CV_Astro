@@ -1,39 +1,67 @@
 ---
 /**
  * Blog post layout — wraps Layout.astro with reading-optimized typography,
- * the BlogPosting JSON-LD (injected into <head> via Layout's `head` slot),
- * a "← Back to blog" link, and the lazy, theme-aware Giscus comments.
+ * BlogPosting JSON-LD + per-post hreflang (injected into <head> via Layout's
+ * `head` slot), a localized "Back to blog" link, and lazy theme-aware Giscus.
+ * Multilingual: `lang` localizes the chrome; `translations` lists the locales
+ * that actually have this post (drives correct, 404-free hreflang).
  * @file src/layouts/BlogPost.astro
  */
 import Layout from './Layout.astro';
 import Giscus from '../components/Giscus.astro';
+import { blogUrl } from '../utils/blog';
 
 export interface Props {
+  lang: string;
   title: string;
   description: string;
   pubDate: Date;
   updatedDate?: Date;
   tags?: string[];
-  /** Collection entry id — becomes the /blog/<slug> URL segment. */
+  /** Slug WITHOUT locale prefix — the /blog/<slug> segment. */
   slug: string;
   heroImage?: string;
   heroImageAlt?: string;
+  /** Locales (en/es/fr/de) that have a published version of this slug. */
+  translations?: string[];
 }
 
-const { title, description, pubDate, updatedDate, tags = [], slug, heroImage, heroImageAlt } =
-  Astro.props;
+const {
+  lang,
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  tags = [],
+  slug,
+  heroImage,
+  heroImageAlt,
+  translations = [lang],
+} = Astro.props;
 
 const SITE = 'https://oriolmacias.dev';
-const canonical = `${SITE}/blog/${slug}`;
+const canonical = `${SITE}${blogUrl(lang, slug)}`;
+
+// Localized UI chrome.
+const STRINGS: Record<string, { back: string; updated: string; tags: string }> = {
+  en: { back: 'Back to blog', updated: 'Updated', tags: 'Tags' },
+  es: { back: 'Volver al blog', updated: 'Actualizado', tags: 'Etiquetas' },
+  fr: { back: 'Retour au blog', updated: 'Mis à jour', tags: 'Tags' },
+  de: { back: 'Zurück zum Blog', updated: 'Aktualisiert', tags: 'Tags' },
+};
+const DATE_LOCALE: Record<string, string> = { en: 'en-GB', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+const t = STRINGS[lang] ?? STRINGS.en;
 
 // Deterministic at build time (formats the fixed frontmatter date, not "now").
-const fmt = new Intl.DateTimeFormat('en-GB', {
+const fmt = new Intl.DateTimeFormat(DATE_LOCALE[lang] ?? 'en-GB', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
 });
 const displayDate = fmt.format(pubDate);
 const displayUpdated = updatedDate ? fmt.format(updatedDate) : null;
+
+const backHref = lang === 'en' ? '/blog' : `/${lang}/blog`;
 
 // BlogPosting structured data (author "Oriol Macias", per the SEO brief).
 const blogPostingSchema = {
@@ -48,35 +76,51 @@ const blogPostingSchema = {
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
   image: `${SITE}/images/oriol_macias-1280.jpg`,
   url: canonical,
-  inLanguage: 'en',
+  inLanguage: lang,
 };
+
+// Per-post hreflang: only locales that actually have this post (no 404s).
+// x-default points to en when available, else the first existing locale.
+const emitHreflang = translations.length > 1;
+const xDefaultLang = translations.includes('en') ? 'en' : translations[0];
 ---
 
 <Layout
   title={`${title} — Oriol Macias`}
   description={description}
-  lang="en"
+  lang={lang}
   canonicalUrl={canonical}
   ogType="article"
 >
-  <Fragment
-    slot="head"
-    set:html={`<script type="application/ld+json">${JSON.stringify(blogPostingSchema)}</script>`}
-  />
+  <Fragment slot="head">
+    <Fragment
+      set:html={`<script type="application/ld+json">${JSON.stringify(blogPostingSchema)}</script>`}
+    />
+    {
+      emitHreflang && (
+        <Fragment>
+          {translations.map((loc) => (
+            <link rel="alternate" hreflang={loc} href={`${SITE}${blogUrl(loc, slug)}`} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={`${SITE}${blogUrl(xDefaultLang, slug)}`} />
+        </Fragment>
+      )
+    }
+  </Fragment>
 
   <article class="blog-post mx-auto">
     <a
-      href="/blog"
+      href={backHref}
       class="inline-flex items-center gap-1 text-sm font-medium text-accessible-brand-red hover:underline mb-8"
     >
-      <span aria-hidden="true">←</span> Back to blog
+      <span aria-hidden="true">←</span> {t.back}
     </a>
 
     {
       heroImage && (
         <img
           src={heroImage}
-          alt={heroImageAlt ?? ""}
+          alt={heroImageAlt ?? ''}
           width="1200"
           height="400"
           loading="eager"
@@ -89,10 +133,10 @@ const blogPostingSchema = {
       <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{title}</h1>
       <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-light-text-secondary dark:text-dark-text-secondary">
         <time datetime={pubDate.toISOString()}>{displayDate}</time>
-        {displayUpdated && <span>· Updated {displayUpdated}</span>}
+        {displayUpdated && <span>· {t.updated} {displayUpdated}</span>}
         {
           tags.length > 0 && (
-            <ul class="flex flex-wrap gap-2" aria-label="Tags">
+            <ul class="flex flex-wrap gap-2" aria-label={t.tags}>
               {tags.map((tag) => (
                 <li class="px-2 py-1 text-xs font-medium bg-brand-red/10 text-brand-red dark:bg-brand-red/20 dark:text-red-300 border border-brand-red/20 rounded-none">
                   {tag}

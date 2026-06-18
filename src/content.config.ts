@@ -10,9 +10,10 @@
  *
  * ─────────────────────────────────────────────────────────────────────────
  * HOW TO ADD A POST
- *   1. Create src/content/blog/<kebab-slug>.md (Markdown only — `.mdx` is NOT
- *      enabled and adding @astrojs/mdx is out of policy). The filename (minus
- *      .md) becomes the URL slug: /blog/<kebab-slug>.
+ *   1. Create src/content/blog/<lang>/<kebab-slug>.md (Markdown only — `.mdx`
+ *      is NOT enabled and adding @astrojs/mdx is out of policy). <lang> is one
+ *      of en/es/fr/de; the entry id is "<lang>/<kebab-slug>" and the URL is
+ *      /blog/<kebab-slug> for en or /<lang>/blog/<kebab-slug> otherwise.
  *   2. Add the frontmatter block (see the schema below). `draft: true` keeps a
  *      post out of production builds (and the sitemap); it stays visible in
  *      `pnpm run dev`. Flip to `draft: false` to publish.
@@ -22,11 +23,12 @@
  *   5. Run `pnpm run build` — the new page and its sitemap entry are automatic.
  *
  * LANGUAGE POLICY
- *   Blog posts are ENGLISH-ONLY by design. The 4-language CV i18n
- *   (src/data/locales/*, the near-duplicate index pages) is deliberately NOT
- *   extended to the blog: per-post translation into en/es/fr/de is
- *   unsustainable and the technical audience reads English. Do not wire blog
- *   content into `check:translations`.
+ *   Blog posts are multilingual: one Markdown file per locale under
+ *   src/content/blog/<lang>/ (en/es/fr/de). Routes derive lang + slug from the
+ *   entry id ("<lang>/<slug>"). A post MAY be en-only — just place it only in
+ *   blog/en/; it then shows only in /blog and emits hreflang for en alone (no
+ *   404s). This is SEPARATE from the CV i18n (src/data/locales); the blog is
+ *   NOT wired into `check:translations`.
  * ─────────────────────────────────────────────────────────────────────────
  */
 
