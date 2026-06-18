@@ -21,8 +21,10 @@ const translatedNavItems = getNavItems(lang);
 
 // Blog is a REAL page link (not an in-page scroll anchor). It deliberately
 // omits the `nav-link`/`data-section` hooks so the navbar JS leaves it as
-// normal navigation. Highlight it when the current page is within /blog.
-const isBlogSection = Astro.url.pathname.startsWith('/blog');
+// normal navigation. The href is locale-aware so it keeps the visitor's
+// language (/blog for en, /<lang>/blog otherwise); highlight it on any blog path.
+const blogHref = lang === 'en' ? '/blog' : `/${lang}/blog`;
+const isBlogSection = Astro.url.pathname.includes('/blog');
 const uiTexts = {
     downloadCV: getUITranslation('downloadCV', lang),
     openMenu: getUITranslation('openMenu', lang),
@@ -85,7 +87,7 @@ const languageOptions = [
             {translatedNavItems.map((item) => (
                 <li class="shrink-0">
                     <a
-                        href={item.href}
+                        href={`${homeHref}${item.href}`}
                         class="nav-link relative px-2 py-2 text-sm font-medium transition-colors duration-100 block text-center whitespace-nowrap text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                         data-section={item.id}
                     >
@@ -97,7 +99,7 @@ const languageOptions = [
             <!-- Blog: real page navigation (no nav-link/data-section hooks) -->
             <li class="shrink-0">
                 <a
-                    href="/blog"
+                    href={blogHref}
                     class:list={[
                         'relative px-2 py-2 text-sm font-medium transition-colors duration-100 block text-center whitespace-nowrap',
                         isBlogSection
@@ -206,7 +208,7 @@ const languageOptions = [
         <div class="flex flex-col space-y-3">
             {translatedNavItems.map((item) => (
                 <a
-                    href={item.href}
+                    href={`${homeHref}${item.href}`}
                     class="mobile-nav-link text-sm font-medium py-2 px-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                     role="menuitem"
                     data-section={item.id}
@@ -385,18 +387,21 @@ function initNavbar() {
         }
     }
 
-    // Navigation click handler
+    // Navigation click handler. Only intercepts when the target section exists
+    // ON THIS PAGE (the home). On sub-pages (/blog, /switzerland, ...) the
+    // section isn't present, so we DON'T preventDefault and let the anchor's
+    // href (e.g. "/#experience" or "/es#experience") navigate to the localized
+    // home and jump to the section.
     function handleNavClick(e, targetId) {
-        e.preventDefault();
         const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-            updateActiveLink(targetId);
-            const position = targetElement.getBoundingClientRect().top + window.pageYOffset - NAVBAR_HEIGHT;
-            window.scrollTo({ top: position, behavior: 'smooth' });
-            history.pushState(null, '', `#${targetId}`);
-            if (window.announceToScreenReader) {
-                window.announceToScreenReader(`Navigated to ${targetId} section`);
-            }
+        if (!targetElement) return;
+        e.preventDefault();
+        updateActiveLink(targetId);
+        const position = targetElement.getBoundingClientRect().top + window.pageYOffset - NAVBAR_HEIGHT;
+        window.scrollTo({ top: position, behavior: 'smooth' });
+        history.pushState(null, '', `#${targetId}`);
+        if (window.announceToScreenReader) {
+            window.announceToScreenReader(`Navigated to ${targetId} section`);
         }
     }
 
