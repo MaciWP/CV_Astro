@@ -4,6 +4,8 @@ description: "I wanted 5–10 agents working in parallel, dividing the work and 
 pubDate: 2026-06-18
 tags: ["claude-code", "ai-agents", "orchestration", "developer-tools", "retrospective"]
 draft: false
+heroImage: "/images/blog/orchestration.svg"
+heroImageAlt: "Abstract diagram: a lead node fanning out into parallel agents that converge into a single result"
 ---
 
 <!--

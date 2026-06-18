@@ -76,8 +76,8 @@ const title = titles[lang] || titles.en;
        full opacity. Applies only with JS; without JS the content sits in place. */
     :global(html.js-enabled) .section-header,
     :global(html.js-enabled) .faq-item {
-        transform: translateY(20px);
-        transition: transform 200ms ease-out, box-shadow 150ms ease-out;
+        transform: translateY(28px) scale(0.97);
+        transition: transform 260ms ease-out, box-shadow 150ms ease-out;
         transition-delay: var(--delay, 0ms);
     }
 
@@ -92,7 +92,7 @@ const title = titles[lang] || titles.en;
     /* Visible state */
     .faq-section.visible .section-header,
     .faq-section.visible .faq-item {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 </style>
 
