@@ -38,7 +38,7 @@ const configured =
 ---
 
 {
-  configured ? (
+  configured && (
     <section class="giscus-wrap" aria-label="Comments">
       <div
         class="giscus"
@@ -49,8 +49,6 @@ const configured =
         data-category-id={GISCUS_CONFIG.categoryId}
       />
     </section>
-  ) : (
-    <Fragment set:html="<!-- Giscus comments: fill repoId + categoryId in src/components/Giscus.astro to enable (see file header). -->" />
   )
 }
 

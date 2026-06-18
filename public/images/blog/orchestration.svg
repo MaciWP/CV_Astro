@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-label="Abstract diagram: one lead node fanning out into parallel agents that converge into a single result">
+  <!-- Connections (center to center; nodes drawn on top cover the endpoints) -->
+  <g fill="none" stroke="#d83333" stroke-width="2">
+    <path d="M160 200 L430 110" opacity="0.4"/>
+    <path d="M160 200 L430 200" opacity="0.4"/>
+    <path d="M160 200 L430 290" opacity="0.4"/>
+    <path d="M430 110 L720 150" opacity="0.3"/>
+    <path d="M430 200 L720 150" opacity="0.3"/>
+    <path d="M430 200 L720 250" opacity="0.3"/>
+    <path d="M430 290 L720 250" opacity="0.3"/>
+    <path d="M720 150 L1040 200" opacity="0.28"/>
+    <path d="M720 250 L1040 200" opacity="0.28"/>
+    <!-- dashed "communication" hop between the parallel branches -->
+    <path d="M720 150 L720 250" opacity="0.25" stroke-dasharray="4 7"/>
+  </g>
+  <!-- Nodes: lead (solid) → agents (lighter by layer) → converged result -->
+  <g fill="#d83333">
+    <circle cx="160" cy="200" r="30"/>
+    <circle cx="430" cy="110" r="19" opacity="0.85"/>
+    <circle cx="430" cy="200" r="19" opacity="0.85"/>
+    <circle cx="430" cy="290" r="19" opacity="0.85"/>
+    <circle cx="720" cy="150" r="15" opacity="0.62"/>
+    <circle cx="720" cy="250" r="15" opacity="0.62"/>
+    <circle cx="1040" cy="200" r="26" opacity="0.9"/>
+  </g>
+  <!-- Outlined accent nodes for depth -->
+  <g fill="none" stroke="#d83333" stroke-width="2" opacity="0.5">
+    <circle cx="300" cy="330" r="6"/>
+    <circle cx="580" cy="70" r="8"/>
+    <circle cx="900" cy="330" r="9"/>
+    <circle cx="1010" cy="92" r="5"/>
+  </g>
+</svg>

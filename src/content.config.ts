@@ -17,7 +17,9 @@
  *      post out of production builds (and the sitemap); it stays visible in
  *      `pnpm run dev`. Flip to `draft: false` to publish.
  *   3. Code fences are highlighted by Astro's built-in Shiki (no dependency).
- *   4. Run `pnpm run build` — the new page and its sitemap entry are automatic.
+ *   4. Images: inline Markdown images MUST carry alt text — `![meaningful alt](/path)`.
+ *      For a header image set `heroImage` (a path under public/) + `heroImageAlt`.
+ *   5. Run `pnpm run build` — the new page and its sitemap entry are automatic.
  *
  * LANGUAGE POLICY
  *   Blog posts are ENGLISH-ONLY by design. The 4-language CV i18n
@@ -41,6 +43,10 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    // Optional header image. Path under public/ (e.g. /images/blog/foo.svg).
+    // heroImageAlt is REQUIRED-in-spirit when heroImage is set (accessibility).
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
   }),
 });
 

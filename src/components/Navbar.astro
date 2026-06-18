@@ -439,6 +439,15 @@ function initNavbar() {
     // Build URL for a given language
     function buildLangUrl(langCode) {
         let path = window.location.pathname;
+
+        // Monolingual pages have no localized variant: the blog is English-only
+        // (no /es/blog), and the geo hubs 301 their locale-prefixed URLs back to
+        // English. Prefixing the path there 404s (/es/blog) or 301-loops
+        // (/es/switzerland), so switch to that language's HOME instead.
+        if (/^\/(blog|switzerland|spain)(\/|$|\.html)/.test(path)) {
+            return langCode === 'en' ? '/' : `/${langCode}`;
+        }
+
         const langPrefixes = ['/es/', '/fr/', '/de/'];
         const langPaths = ['/es', '/fr', '/de'];
 

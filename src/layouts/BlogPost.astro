@@ -16,9 +16,12 @@ export interface Props {
   tags?: string[];
   /** Collection entry id — becomes the /blog/<slug> URL segment. */
   slug: string;
+  heroImage?: string;
+  heroImageAlt?: string;
 }
 
-const { title, description, pubDate, updatedDate, tags = [], slug } = Astro.props;
+const { title, description, pubDate, updatedDate, tags = [], slug, heroImage, heroImageAlt } =
+  Astro.props;
 
 const SITE = 'https://oriolmacias.dev';
 const canonical = `${SITE}/blog/${slug}`;
@@ -54,6 +57,7 @@ const blogPostingSchema = {
   description={description}
   lang="en"
   canonicalUrl={canonical}
+  ogType="article"
 >
   <Fragment
     slot="head"
@@ -67,6 +71,19 @@ const blogPostingSchema = {
     >
       <span aria-hidden="true">←</span> Back to blog
     </a>
+
+    {
+      heroImage && (
+        <img
+          src={heroImage}
+          alt={heroImageAlt ?? ""}
+          width="1200"
+          height="400"
+          loading="eager"
+          class="w-full h-auto mb-8 rounded-none border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface"
+        />
+      )
+    }
 
     <header class="mb-8">
       <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3">{title}</h1>
