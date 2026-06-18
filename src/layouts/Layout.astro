@@ -290,6 +290,9 @@ const isMultilingualPage =
       set:html={`<script type="application/ld+json">${JSON.stringify(websiteSchema, null, 2)}</script>`}
     />
 
+    <!-- Page-specific <head> extras (e.g. BlogPosting JSON-LD from BlogPost layout) -->
+    <slot name="head" />
+
     <!-- Print Styles -->
     <style is:inline>
       @media print{nav,footer,.no-print{display:none!important}body{background:#fff!important;color:#000!important}}

@@ -13,8 +13,16 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 
+// Logo links to the current language's home (root), preserving the locale.
+const homeHref = lang === 'en' ? '/' : `/${lang}`;
+
 // Get translated nav items and UI texts at build time
 const translatedNavItems = getNavItems(lang);
+
+// Blog is a REAL page link (not an in-page scroll anchor). It deliberately
+// omits the `nav-link`/`data-section` hooks so the navbar JS leaves it as
+// normal navigation. Highlight it when the current page is within /blog.
+const isBlogSection = Astro.url.pathname.startsWith('/blog');
 const uiTexts = {
     downloadCV: getUITranslation('downloadCV', lang),
     openMenu: getUITranslation('openMenu', lang),
@@ -39,15 +47,15 @@ const languageOptions = [
     <div class="container mx-auto px-4 flex justify-between items-center max-w-5xl">
         <!-- Logo section -->
         <div class="flex items-center gap-4">
-            <button
+            <a
                 id="navbar-logo"
-                class="flex items-center gap-2 cursor-pointer bg-transparent border-none p-0"
-                type="button"
-                aria-label="Oriol Macias — back to top"
+                href={homeHref}
+                class="flex items-center gap-2 cursor-pointer no-underline"
+                aria-label="Oriol Macias — home"
             >
                 <span class="w-12 h-12 flex items-center justify-center bg-brand-red text-white text-lg font-bold" aria-hidden="true">OM</span>
                 <span class="font-medium tracking-tight whitespace-nowrap">Oriol Macias</span>
-            </button>
+            </a>
 
             <!-- Social links (desktop) -->
             <div class="hidden md:flex items-center gap-3">
@@ -86,6 +94,24 @@ const languageOptions = [
                     </a>
                 </li>
             ))}
+            <!-- Blog: real page navigation (no nav-link/data-section hooks) -->
+            <li class="shrink-0">
+                <a
+                    href="/blog"
+                    class:list={[
+                        'relative px-2 py-2 text-sm font-medium transition-colors duration-100 block text-center whitespace-nowrap',
+                        isBlogSection
+                            ? 'text-brand-red'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200',
+                    ]}
+                    aria-current={isBlogSection ? 'page' : undefined}
+                >
+                    Blog
+                    {isBlogSection && (
+                        <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-red" aria-hidden="true"></span>
+                    )}
+                </a>
+            </li>
         </ul>
 
         <!-- Controls -->
@@ -188,6 +214,20 @@ const languageOptions = [
                     {item.name}
                 </a>
             ))}
+            <!-- Blog: real page navigation (no mobile-nav-link/data-section hooks) -->
+            <a
+                href="/blog"
+                class:list={[
+                    'text-sm font-medium py-2 px-3',
+                    isBlogSection
+                        ? 'text-brand-red'
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200',
+                ]}
+                aria-current={isBlogSection ? 'page' : undefined}
+                role="menuitem"
+            >
+                Blog
+            </a>
 
             <!-- Social links (mobile) -->
             <div class="flex items-center gap-4 py-2 px-3 border-t border-light-border dark:border-gray-700 mt-2">
@@ -458,14 +498,21 @@ function initNavbar() {
         }
     }
 
-    // Logo click - scroll to top
-    function handleLogoClick() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        updateActiveLink('experience');
-        history.pushState(null, '', window.location.pathname);
-        if (window.announceToScreenReader) {
-            window.announceToScreenReader('Returned to the top of the page');
+    // Logo click: the <a> navigates to the current language's home (root). If we're
+    // already on that home page, just smooth-scroll to top (no reload).
+    const homeHref = lang === 'en' ? '/' : '/' + lang;
+    function handleLogoClick(e) {
+        const path = window.location.pathname.replace(/\/$/, '') || '/';
+        if (path === homeHref) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateActiveLink('experience');
+            history.pushState(null, '', window.location.pathname);
+            if (window.announceToScreenReader) {
+                window.announceToScreenReader('Returned to the top of the page');
+            }
         }
+        // Otherwise let the <a href> navigate to the language home normally.
     }
 
     // Event listeners

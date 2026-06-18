@@ -50,9 +50,15 @@
 # - astro-compress changes script content after hash calculation
 # - Hundreds of inline style="" attributes from animations
 # - External scripts (Cloudflare Web Analytics) need allowlist
+#
+# giscus (blog comments) additions: script-src + connect-src + frame-src allow
+# https://giscus.app (client.js + the comments iframe); img-src allows
+# https://*.githubusercontent.com (GitHub avatars rendered by giscus). These
+# only take effect on the blog post pages that actually embed giscus; no other
+# page loads it. frame-src keeps 'self' so same-origin frames are unaffected.
 # ===========================================================
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; manifest-src 'self'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://giscus.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com https://giscus.app; frame-src 'self' https://giscus.app; manifest-src 'self'
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), accelerometer=(), gyroscope=(), magnetometer=()

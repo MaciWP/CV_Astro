@@ -1,0 +1,34 @@
+---
+/**
+ * Blog post page — renders a Markdown post through the BlogPost layout.
+ * Drafts are excluded from production builds (so they never reach the
+ * sitemap); they remain available in `pnpm run dev`.
+ * @file src/pages/blog/[...slug].astro
+ */
+import { getCollection, render } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((post) => (import.meta.env.PROD ? !post.data.draft : true))
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  tags={post.data.tags}
+  slug={post.id}
+>
+  <Content />
+</BlogPost>
