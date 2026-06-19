@@ -1,0 +1,24 @@
+---
+/**
+ * Blog index (English, default locale). Lists en/ posts; drafts hidden in prod.
+ * @file src/pages/blog/index.astro
+ */
+import Layout from '../../layouts/Layout.astro';
+import BlogList from '../../components/BlogList.astro';
+import LanguageAlternates from '../../components/LanguageAlternates.astro';
+import { getCollection } from 'astro:content';
+import { localizedPosts } from '../../utils/blog';
+
+const posts = localizedPosts(await getCollection('blog'), 'en');
+const SITE = 'https://oriolmacias.dev';
+---
+
+<Layout
+  title="Blog — Oriol Macias"
+  description="Multilingual notes (en/es/fr/de) on backend development, industrial protocol integration (SNMP/Modbus/BACnet), data center infrastructure, and developer tooling — by Oriol Macias."
+  lang="en"
+  canonicalUrl={`${SITE}/blog`}
+>
+  <LanguageAlternates slot="head" currentLang="en" currentPath="/blog" />
+  <BlogList lang="en" posts={posts} />
+</Layout>

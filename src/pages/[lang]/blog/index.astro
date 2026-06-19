@@ -1,0 +1,43 @@
+---
+/**
+ * Blog index for non-default locales — generates /es/blog, /fr/blog, /de/blog.
+ * @file src/pages/[lang]/blog/index.astro
+ */
+import Layout from '../../../layouts/Layout.astro';
+import BlogList from '../../../components/BlogList.astro';
+import LanguageAlternates from '../../../components/LanguageAlternates.astro';
+import { getCollection } from 'astro:content';
+import { localizedPosts } from '../../../utils/blog';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'fr' } }, { params: { lang: 'de' } }];
+}
+
+const { lang = 'es' } = Astro.params;
+const posts = localizedPosts(await getCollection('blog'), lang);
+const SITE = 'https://oriolmacias.dev';
+
+const META: Record<string, { title: string; description: string }> = {
+  es: {
+    title: 'Blog — Oriol Macias',
+    description:
+      'Notas (en/es/fr/de) sobre desarrollo backend, integración de protocolos industriales (SNMP/Modbus/BACnet), infraestructura de centros de datos y herramientas de desarrollo — por Oriol Macias.',
+  },
+  fr: {
+    title: 'Blog — Oriol Macias',
+    description:
+      "Notes (en/es/fr/de) sur le développement backend, l'intégration de protocoles industriels (SNMP/Modbus/BACnet), l'infrastructure de centres de données et l'outillage de développement — par Oriol Macias.",
+  },
+  de: {
+    title: 'Blog — Oriol Macias',
+    description:
+      'Notizen (en/es/fr/de) zu Backend-Entwicklung, Integration von Industrieprotokollen (SNMP/Modbus/BACnet), Rechenzentrumsinfrastruktur und Entwickler-Tooling — von Oriol Macias.',
+  },
+};
+const m = META[lang] ?? META.es;
+---
+
+<Layout title={m.title} description={m.description} lang={lang} canonicalUrl={`${SITE}/${lang}/blog`}>
+  <LanguageAlternates slot="head" currentLang={lang} currentPath={`/${lang}/blog`} />
+  <BlogList lang={lang} posts={posts} />
+</Layout>
