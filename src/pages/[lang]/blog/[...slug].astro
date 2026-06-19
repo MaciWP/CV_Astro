@@ -7,20 +7,18 @@
  */
 import { getCollection, render } from 'astro:content';
 import BlogPost from '../../../layouts/BlogPost.astro';
-import { localeOf, slugFromId, localesForSlug } from '../../../utils/blog';
+import { localeOf, slugFromId, localesForSlug, localizedPosts, BLOG_LOCALES } from '../../../utils/blog';
 
 export async function getStaticPaths() {
   const all = await getCollection('blog');
-  const visible = all.filter((p) => (import.meta.env.PROD ? !p.data.draft : true));
-  return visible
-    .filter((p) => localeOf(p.id) !== 'en')
-    .map((post) => {
+  // Non-default locales only; en is served by src/pages/blog/[...slug].astro.
+  // localizedPosts() reuses the shared draft-visibility rule (no inline duplicate).
+  return BLOG_LOCALES.filter((l) => l !== 'en').flatMap((lang) =>
+    localizedPosts(all, lang).map((post) => {
       const slug = slugFromId(post.id);
-      return {
-        params: { lang: localeOf(post.id), slug },
-        props: { post, translations: localesForSlug(all, slug) },
-      };
-    });
+      return { params: { lang, slug }, props: { post, translations: localesForSlug(all, slug) } };
+    }),
+  );
 }
 
 const { post, translations } = Astro.props;

@@ -46,9 +46,12 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     // Optional header image. Path under public/ (e.g. /images/blog/foo.svg).
-    // heroImageAlt is REQUIRED-in-spirit when heroImage is set (accessibility).
     heroImage: z.string().optional(),
     heroImageAlt: z.string().optional(),
+  }).refine((data) => !data.heroImage || !!data.heroImageAlt, {
+    // Enforce alt text on content-bearing hero images at build time (WCAG 1.1.1).
+    message: 'heroImageAlt is required when heroImage is set',
+    path: ['heroImageAlt'],
   }),
 });
 

@@ -6,7 +6,7 @@
   "header": {
     "fullName": "Oriol Macias",
     "jobTitle": "Backend Senior | IoT Industrial, Integraciones & IA",
-    "summary": "Desarrollador orientado a soluciones, especializado en integración de protocolos industriales (SNMP, Modbus, BACnet) con más de 8 años de experiencia. Aprovechando modelos de IA para automatización y optimización de arquitectura backend.",
+    "summary": "Desarrollador backend con más de 8 años especializado en Python/Django y APIs REST, integrando protocolos industriales (SNMP, Modbus, BACnet) en infraestructura de centros de datos. Actualmente trabajo con IA cada día: como herramienta y integrando LLMs en productos reales.",
     "photoAlt": "Oriol Macias - Ingeniero Backend",
     "email": "Correo",
     "linkedin": "LinkedIn",
@@ -80,10 +80,6 @@
   },
   "footer": {
     "copyright": "© 2025 Oriol Macias. Todos los derechos reservados."
-  },
-  "profile": {
-    "title": "Desarrollador de Software",
-    "summary": "Desarrollador backend con más de 8 años especializado en Python/Django y APIs REST, integrando protocolos industriales (SNMP, Modbus, BACnet) en infraestructura de centros de datos. Actualmente trabajo con IA cada día: como herramienta y integrando LLMs en productos reales."
   },
   "navbar": {
     "topLink": "↑ Inicio"

@@ -36,7 +36,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       // /cv is the print source for the PDF (noindex) — keep it out of the sitemap.
-      filter: (page) => !page.includes('/cv'),
+      // Exact-path match: a substring test (includes('/cv')) would also drop
+      // unrelated URLs such as a future /cv-guide page or a /blog/cv-* post slug.
+      filter: (page) => new URL(page).pathname.replace(/\/$/, '') !== '/cv',
       // lastmod: Google uses it only if verifiably accurate. CONTENT_REVISED is bumped by
       // hand on real content changes (same source as ProfilePage dateModified), so it
       // qualifies. changefreq/priority omitted on purpose — Google (and Astro docs) ignore them.

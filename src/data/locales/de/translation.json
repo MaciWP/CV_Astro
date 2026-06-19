@@ -6,7 +6,7 @@
   "header": {
     "fullName": "Oriol Macias",
     "jobTitle": "Senior Backend | Industrie-IoT, Integrationen & KI",
-    "summary": "Lösungsorientierter Entwickler spezialisiert auf die Integration industrieller Protokolle (SNMP, Modbus, BACnet) mit über 8 Jahren Erfahrung. Nutzung von KI-Modellen für Automatisierung und Optimierung der Backend-Architektur.",
+    "summary": "Backend-Entwickler mit über 8 Jahren Erfahrung, spezialisiert auf Python/Django und REST-APIs sowie die Integration industrieller Protokolle (SNMP, Modbus, BACnet) in die Rechenzentrumsinfrastruktur. Derzeit arbeite ich täglich mit KI – als Werkzeug und durch die Integration von LLMs in echte Produkte.",
     "photoAlt": "Oriol Macias - Backend-Ingenieur",
     "email": "E-Mail",
     "linkedin": "LinkedIn",
@@ -83,9 +83,5 @@
   },
   "navbar": {
     "topLink": "↑ Oben"
-  },
-  "profile": {
-    "title": "Software-Entwickler",
-    "summary": "Backend-Entwickler mit über 8 Jahren, spezialisiert auf Python/Django und REST-APIs, mit Integration industrieller Protokolle (SNMP, Modbus, BACnet) in Rechenzentrumsinfrastruktur. Derzeit arbeite ich täglich mit KI – als Werkzeug und durch die Integration von LLMs in echte Produkte."
   }
 }
