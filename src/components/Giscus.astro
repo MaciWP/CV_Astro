@@ -24,6 +24,12 @@
  * ─────────────────────────────────────────────────────────────────────────
  */
 
+interface Props {
+  /** Post locale — drives the giscus comment-UI language (en/es/fr/de). */
+  lang?: string;
+}
+const { lang = 'en' } = Astro.props;
+
 // Single source of truth for the giscus configuration.
 const GISCUS_CONFIG = {
   repo: 'MaciWP/CV_Astro',      // TODO owner: confirm this is the PUBLIC repo with Discussions on
@@ -47,6 +53,7 @@ const configured =
         data-repo-id={GISCUS_CONFIG.repoId}
         data-category={GISCUS_CONFIG.category}
         data-category-id={GISCUS_CONFIG.categoryId}
+        data-lang={lang}
       />
     </section>
   )
@@ -99,7 +106,7 @@ const configured =
       s.setAttribute('data-emit-metadata', '0');
       s.setAttribute('data-input-position', 'bottom');
       s.setAttribute('data-theme', currentTheme());
-      s.setAttribute('data-lang', 'en');
+      s.setAttribute('data-lang', container.dataset.lang || 'en');
       s.setAttribute('data-loading', 'lazy');
       s.crossOrigin = 'anonymous';
       s.async = true;

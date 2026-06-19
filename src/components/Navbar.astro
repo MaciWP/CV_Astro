@@ -216,9 +216,10 @@ const languageOptions = [
                     {item.name}
                 </a>
             ))}
-            <!-- Blog: real page navigation (no mobile-nav-link/data-section hooks) -->
+            <!-- Blog: real page navigation (no mobile-nav-link/data-section hooks).
+                 Locale-aware href so es/fr/de users stay in their language. -->
             <a
-                href="/blog"
+                href={blogHref}
                 class:list={[
                     'text-sm font-medium py-2 px-3',
                     isBlogSection

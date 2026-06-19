@@ -1,59 +1,68 @@
-# Oriol Macias - Backend Developer
+# Oriol Macias — Backend Developer
 
-> Professional CV and portfolio for Oriol Macias, a Backend Developer with 8+ years of experience specializing in industrial protocol integration (SNMP, MODBUS, BACnet), Python/Django development, and data center infrastructure. Available for opportunities in Switzerland and Spain. EU work permit ready.
+> Backend developer with 8+ years of experience, specialized in Python/Django and REST APIs, with industrial protocol integration (SNMP, Modbus, BACnet) and DCIM platform work across data-center infrastructure. Currently integrating LLMs into real products and building his own AI engineering tooling. Based in Madrid (Spain); EU citizen, eligible for a Swiss B-permit; open to relocating to Switzerland.
 
-## About Me
-Solutions-driven Backend Developer with proven expertise in transforming complex requirements into elegant code architecture. Known for reducing system response times by up to 45% and developing high-performance applications for enterprise clients.
+## About
+From systems administration to backend engineering. For the past several years I have built integration software connecting heterogeneous external systems and DCIM platforms across data-center infrastructure. I work with AI every day: Claude Code as a daily tool, integrating LLMs into real products, and building my own engineering tooling (Poneglyph). Continuously learning, and open to relocating to Switzerland.
 
-## Professional Experience
-- **Senior Backend Developer** at Bjumper (2018-Present)
-  - Industrial protocol integration (SNMP, MODBUS, BACnet)
-  - DCIM platform development (iTRACS, ITA, DCE)
-  - ETL microservices with REST APIs
-
-- Previous roles at Busmatick, SERES, Educand SCCL
+## Experience
+- **Senior Backend Developer** — Bjumper (2018–Present)
+  - Industrial protocol integration: SNMP, Modbus, BACnet
+  - Bidirectional integrations between heterogeneous systems and DCIM platforms (e.g. iTRACS)
+  - ETL microservices and REST APIs (Django REST Framework, FastAPI)
+  - PostgreSQL data modeling; Celery/Redis for asynchronous processing; Docker deployment
+- **Junior Developer (Android / C#)** — Busmatick (2018)
+- **Systems Administrator & IT Support** — SERES, Educand SCCL, Salt City Council (2014–2017)
 
 ## Technical Skills
-### Languages
-Python, C#, JavaScript, TypeScript, SQL, HTML/CSS
+### Programming Languages
+Python, C#, .NET, Java
 
 ### Frameworks & Libraries
-Django, Django REST Framework, .NET Core, FastAPI, Flask, React, Astro
+Django, Django REST Framework, FastAPI, Flask, SQLAlchemy, Alembic, Celery, Pytest, WPF
 
-### Protocols & Integration
-SNMP, MODBUS, BACnet, RS-232/485, NFC, REST API, SOAP
+### Protocols & Data Formats
+SNMP, Modbus, BACnet, REST API, JSON, XML, JWT, NFC
 
 ### Databases
-PostgreSQL, MySQL, SQL Server, Redis
+PostgreSQL, MySQL, Redis
 
 ### DevOps & Tools
-Docker, GitHub Actions, AWS, CI/CD, Git
+Docker, Git, GitHub Actions, CI/CD, AWS, Nginx, Gunicorn
 
-## Education
-- UNIR - FP Superior in Multiplatform Application Development (2024-2025)
-- IES Montilivi - Technical Degree in Multiplatform Application Development (2015)
-- Schneider Electric - SP2 EcoStruxure IT Advanced Technical Certification (2019)
+### AI / LLM
+Claude Code (daily driver), LLM integration into production products, agentic tooling (Poneglyph — TypeScript/Bun)
+
+## Selected Projects
+- **Poneglyph** — Personal orchestration layer for AI coding agents (Claude Code): skills, hooks, rules, and multi-agent workflows that turn an LLM into a disciplined engineering co-worker. TypeScript/Bun. https://github.com/MaciWP/claude-code-poneglyph
+- **SNMP Monitor** — Web platform for SNMP device discovery, monitoring, and real-time visualization. Django, PostgreSQL, Celery, Redis.
+- **Card Vision Tracker** — Computer-vision app for real-time card detection and score tracking using ONNX models. Python, Kivy, ONNX.
+- **Professional work at Bjumper** — DCIM and integration platforms (iTRACS, ThinkData, HPE IMC, VMware, PowerIQ, NFC asset management). Repositories are private under confidentiality agreements.
+
+## Education & Certifications
+- Higher Technical Diploma in Multiplatform Application Development — UNIR (2025)
+- SP2 EcoStruxure IT Advanced Technical Certification — Schneider Electric (2019)
+- Technical Diploma in Microcomputer Systems and Networks — IES Salvador Espriu (2012)
 
 ## Languages
 - Spanish: Native
 - Catalan: Native
 - English: Professional working proficiency (B2)
-- German: Learning (A1)
+- German: Beginner (A1), actively learning
 
-## Contact
+## Availability
+- Work authorization: EU citizen; eligible for a Swiss B-permit
+- Location: Madrid, Spain — open to relocating to Switzerland (Zurich, Basel, Geneva, Lausanne) or roles in Spain
+- Notice period: 2 weeks
+- Employment: Full-time, remote-friendly
+
+## Links
+- Homepage (English): https://oriolmacias.dev/
+- CV en Español: https://oriolmacias.dev/es/
+- CV en Français: https://oriolmacias.dev/fr/
+- Lebenslauf auf Deutsch: https://oriolmacias.dev/de/
+- Blog: https://oriolmacias.dev/blog
+- Switzerland focus: https://oriolmacias.dev/switzerland/
 - Email: oriolomb@gmail.com
 - LinkedIn: https://linkedin.com/in/oriolmaciasbadosa
 - GitHub: https://github.com/MaciWP
-- Website: https://oriolmacias.dev
-
-## Availability
-- Work Authorization: EU work permit ready for Switzerland
-- Location: Open to Zurich, Basel, Geneva, Lausanne (Switzerland) or Spain
-- Employment Type: Full-time, Remote-friendly
-
-## Key Links
-- [Homepage](https://oriolmacias.dev/) - Main CV in English
-- [Spanish Version](https://oriolmacias.dev/es/) - CV en Español
-- [French Version](https://oriolmacias.dev/fr/) - CV en Français
-- [German Version](https://oriolmacias.dev/de/) - Lebenslauf auf Deutsch
-- [Switzerland Opportunities](https://oriolmacias.dev/switzerland/) - Swiss market focus
