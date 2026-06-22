@@ -346,26 +346,39 @@ function initNavbar() {
         });
     }
 
-    // IntersectionObserver for active section detection (no reflow)
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionId = entry.target.id;
-                if (sectionId && sectionId !== activeSection) {
-                    updateActiveLink(sectionId);
-                }
-            }
-        });
-    }, {
-        rootMargin: `-${NAVBAR_HEIGHT + 50}px 0px -50% 0px`,
-        threshold: 0
-    });
+    // Scroll-spy: deterministic position scan. The previous IntersectionObserver
+    // had two flaws — when 2+ sections shared the detection band the callback's
+    // "last isIntersecting entry wins" picked the wrong one, and it only updated
+    // on enter (never clearing when above the first section). Here we pick the
+    // single section whose top has crossed the reference line just under the
+    // sticky navbar. Sections are in DOM order, so we stop at the first one still
+    // below the line. Costs 5 getBoundingClientRect reads, only inside the
+    // already-throttled rAF scroll handler.
+    const ACTIVE_LINE = NAVBAR_HEIGHT + 50;
+    const sectionEls = SECTION_IDS
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+    let spyLocked = false; // suppressed during programmatic smooth-scroll
+    let spyUnlockTimer = 0;
 
-    // Observe all sections
-    SECTION_IDS.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) sectionObserver.observe(element);
-    });
+    function computeActiveSection() {
+        if (spyLocked || !sectionEls.length) return;
+        // At the very bottom the last section can sit above the line while a
+        // shorter one tucks under it — pin the last section so it stays marked.
+        const atBottom = window.innerHeight + window.scrollY
+            >= document.documentElement.scrollHeight - 2;
+        if (atBottom) {
+            const lastId = sectionEls[sectionEls.length - 1].id;
+            if (lastId !== activeSection) updateActiveLink(lastId);
+            return;
+        }
+        let current = ''; // '' = above the first section (hero) → nothing marked
+        for (const el of sectionEls) {
+            if (el.getBoundingClientRect().top <= ACTIVE_LINE) current = el.id;
+            else break;
+        }
+        if (current !== activeSection) updateActiveLink(current);
+    }
 
     // Scroll effect for navbar - optimized single class toggle
     let wasScrolled = false;
@@ -376,12 +389,13 @@ function initNavbar() {
         navbar.classList.toggle('navbar-scrolled', isScrolled);
     }
 
-    // Throttled scroll handler (only for navbar effect now)
+    // Throttled scroll handler: navbar effect + active-section spy in one rAF
     let ticking = false;
     function handleScroll() {
         if (!ticking) {
             requestAnimationFrame(() => {
                 updateNavbarScroll();
+                computeActiveSection();
                 ticking = false;
             });
             ticking = true;
@@ -399,6 +413,11 @@ function initNavbar() {
         e.preventDefault();
         updateActiveLink(targetId);
         const position = targetElement.getBoundingClientRect().top + window.pageYOffset - NAVBAR_HEIGHT;
+        // Hold the highlight on the clicked item until the smooth scroll settles,
+        // so the spy doesn't flicker through the sections it passes on the way.
+        spyLocked = true;
+        clearTimeout(spyUnlockTimer);
+        spyUnlockTimer = setTimeout(() => { spyLocked = false; computeActiveSection(); }, 650);
         window.scrollTo({ top: position, behavior: 'smooth' });
         history.pushState(null, '', `#${targetId}`);
         if (window.announceToScreenReader) {
@@ -521,7 +540,11 @@ function initNavbar() {
         if (path === homeHref) {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            updateActiveLink('experience');
+            // Top of page = hero/about, above the first nav section → mark nothing.
+            updateActiveLink('');
+            spyLocked = true;
+            clearTimeout(spyUnlockTimer);
+            spyUnlockTimer = setTimeout(() => { spyLocked = false; computeActiveSection(); }, 650);
             history.pushState(null, '', window.location.pathname);
             if (window.announceToScreenReader) {
                 window.announceToScreenReader('Returned to the top of the page');
@@ -591,6 +614,7 @@ function initNavbar() {
 
     // Initialize
     updateThemeIcons();
-    // IntersectionObserver auto-detects on page load
+    computeActiveSection(); // mark the right section on first paint
+    window.addEventListener('resize', computeActiveSection, { passive: true });
 } // end initNavbar
 </script>
