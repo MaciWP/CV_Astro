@@ -56,7 +56,7 @@ const personalProjectsData = [
             ],
             de: [
                 "Responsives Design für alle Geräte optimiert",
-                "Theme-Wechsel mit fliessenden Übergängen",
+                "Theme-Wechsel mit fließenden Übergängen",
                 "PDF-Export-Funktionalität",
                 "Mehrsprachige Unterstützung (EN, ES, FR, DE)",
                 "Progressive Web App Funktionen"
@@ -165,7 +165,7 @@ const personalProjectsData = [
                 "Echtzeit-Überwachung mit 5-Sekunden-Updates",
                 "MIB-Verwaltung für erweiterte Überwachungsinformationen",
                 "Anpassbare Visualisierung mit verschiedenen Zeitbereichen",
-                "Skalierbares Hintergrund-Task-System zur Verwaltung grosser Gerätezahlen"
+                "Skalierbares Hintergrund-Task-System zur Verwaltung großer Gerätezahlen"
             ]
         }
     },
@@ -410,13 +410,13 @@ const professionalProjectsData = [
             en: "Backend service for collecting, storing and exposing VMware infrastructure data, including hypervisors and virtual machines, through RESTful APIs.",
             es: "Servicio backend para recopilar, almacenar y exponer datos de infraestructura VMware, incluyendo hipervisores y máquinas virtuales, a través de APIs RESTful.",
             fr: "Service backend pour collecter, stocker et exposer les données d'infrastructure VMware, y compris les hyperviseurs et les machines virtuelles, via des API RESTful.",
-            de: "Backend-Service zur Erfassung, Speicherung und Bereitstellung von VMware-Infrastrukturdaten, einschliesslich Hypervisoren und virtuellen Maschinen, über RESTful-APIs."
+            de: "Backend-Service zur Erfassung, Speicherung und Bereitstellung von VMware-Infrastrukturdaten, einschließlich Hypervisoren und virtuellen Maschinen, über RESTful-APIs."
         },
         longDescription: {
             en: "This project provides an abstraction layer for monitoring virtualized resources and facilitating integration with other enterprise systems. The service implements asynchronous ETL processes to extract data from VMware, transform it according to the domain model, and load it into the database. It includes a synchronization service with external systems and features robust error handling and logging.",
             es: "Este proyecto proporciona una capa de abstracción para monitorizar recursos virtualizados y facilitar la integración con otros sistemas empresariales. El servicio implementa procesos ETL asíncronos para extraer datos de VMware, transformarlos según el modelo de dominio y cargarlos en la base de datos. Incluye un servicio de sincronización con sistemas externos y cuenta con un sólido manejo de errores y registro.",
             fr: "Ce projet fournit une couche d'abstraction pour surveiller les ressources virtualisées et faciliter l'intégration avec d'autres systèmes d'entreprise. Le service implémente des processus ETL asynchrones pour extraire les données de VMware, les transformer selon le modèle de domaine et les charger dans la base de données. Il comprend un service de synchronisation avec des systèmes externes et dispose d'une gestion robuste des erreurs et de journalisation.",
-            de: "Dieses Projekt bietet eine Abstraktionsschicht zur Überwachung virtualisierter Ressourcen und zur Erleichterung der Integration mit anderen Unternehmenssystemen. Der Service implementiert asynchrone ETL-Prozesse zur Extraktion von Daten aus VMware, deren Transformation gemäss Domänenmodell und Laden in die Datenbank. Er umfasst einen Synchronisationsservice mit externen Systemen und verfügt über robuste Fehlerbehandlung und Logging."
+            de: "Dieses Projekt bietet eine Abstraktionsschicht zur Überwachung virtualisierter Ressourcen und zur Erleichterung der Integration mit anderen Unternehmenssystemen. Der Service implementiert asynchrone ETL-Prozesse zur Extraktion von Daten aus VMware, deren Transformation gemäß Domänenmodell und Laden in die Datenbank. Er umfasst einen Synchronisationsservice mit externen Systemen und verfügt über robuste Fehlerbehandlung und Logging."
         },
         technologies: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
         icon: "cloud",

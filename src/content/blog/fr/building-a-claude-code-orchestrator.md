@@ -30,7 +30,7 @@ La réalité, avec mes propres mots de l'époque :
 Concrètement, quatre choses se sont cassées :
 
 - **Ça se sérialisait sur un seul agent.** Là où j'attendais une répartition parallèle, le système continuait à lancer *un* agent et à l'attendre. Aucune concurrence, aucun gain de vitesse — juste une couche de plus entre le travail et moi.
-- **Le coût en tokens se multipliait.** Chaque délégation renvoie le contexte à l'agent puis résume le résultat. Une seule exécution déléguée d'une skill a coûté ~112k tokens et plus de huit minutes pour *zéro* parallélisme, en grande partie à relire des fichiers que la session principale avait déjà. Une autre fois, un panel de revue lancé tard a brûlé ~278k tokens et n'a rien renvoyé, car les agents ont atteint la limite de session avant de produire un verdict.
+- **Le coût en tokens se multipliait.** Chaque délégation renvoie le contexte à l'agent puis résume le résultat. Une seule exécution déléguée d'une skill a coûté ~112k tokens et plus de huit minutes pour *zéro* parallélisme, en grande partie à relire des fichiers que la session principale avait déjà. Une autre fois, un panel de révision lancé tard a consommé ~278k tokens et n'a rien renvoyé, car les agents ont atteint la limite de session avant de produire un verdict.
 - **Les agents ne pouvaient pas communiquer.** La seule chose dont dépendait mon idée d'« équipe » — la coordination — n'était pas vraiment là.
 - **Les skills ne s'activaient pas.** Les agents ignoraient la skill censée régir une étape. L'ironie a culminé quand j'ai réalisé que la skill d'orchestration *censée tout piloter* ne se chargeait souvent jamais — le comportement n'avait lieu que parce que je l'avais aussi écrit dans la configuration toujours chargée.
 
