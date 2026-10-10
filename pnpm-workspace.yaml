@@ -12,6 +12,6 @@ allowBuilds:
 # deepmerge/deepmergeCustom to merge option objects; v8's breaking change (deep Map
 # merging) was verified byte-identical on dist. Drop an entry once compress ships it.
 overrides:
-  sharp: 0.35.5
+  sharp: ^0.35.5
   svgo: ^4.1.0
   deepmerge-ts: ^8.0.2
