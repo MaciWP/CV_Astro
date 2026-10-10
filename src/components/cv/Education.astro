@@ -141,7 +141,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
       section.classList.add('initialized');
 
       const toggleBtn = section.querySelector('.education-toggle');
-      const secondaryContent = section.querySelector('.secondary-education');
+      const secondaryContent = section.querySelector<HTMLElement>('.secondary-education');
 
       if (toggleBtn && secondaryContent) {
         toggleBtn.addEventListener('click', () => {
