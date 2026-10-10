@@ -47,7 +47,7 @@ Add a real screenshot at docs/preview.png and uncomment:
 | Language | **TypeScript** + vanilla JS islands |
 | Images | **sharp** — responsive AVIF/WebP/JPG profile set |
 | Package manager | **pnpm 11** (Corepack) |
-| Hosting / CI | **Netlify** (the production build is the gate) |
+| Hosting / CI | **Netlify** (deploy gate) + **GitHub Actions** CI (pre-merge gate) |
 
 ## 🚀 Getting started
 
@@ -74,6 +74,7 @@ pnpm run preview    # serve the production build locally
 | `pnpm run preview` | Preview the production build |
 | `pnpm run check` | Run all domain gates: contrast + translations + structured data |
 | `pnpm run lint` | ESLint (zero errors / zero warnings) |
+| `pnpm run check:types` | Type-check `.astro` and `.ts` files (`astro check`) |
 | `pnpm test` | Run the Vitest unit suite (`src/utils/seo.ts` logic) |
 | `pnpm run a11y:audit` | Lighthouse accessibility audit |
 | `pnpm run clean` | Remove `dist/` and `.astro/` |
@@ -97,8 +98,8 @@ scripts/             # build · dev · check-contrast · check-translations
 
 ## ✅ Quality & verification
 
-Correctness is enforced on every push by **GitHub Actions CI** (lint → build →
-domain checks → unit tests) and by the Netlify production build:
+Correctness is enforced on every push by **GitHub Actions CI** (lint → type check →
+build → domain checks → unit tests) and by the Netlify production build:
 
 - `pnpm test` — Vitest unit suite for the SEO logic (market detection, path
   normalization, JSON-LD generators)
