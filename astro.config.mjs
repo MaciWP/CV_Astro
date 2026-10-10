@@ -22,6 +22,11 @@ export default defineConfig({
   // This eliminates server overhead and improves performance
   output: 'static',
 
+  // Astro 7 changed the default to 'jsx', which drops whitespace between inline
+  // elements ("Experience <span" -> "Experience<span") and can glue words together.
+  // Keep the Astro 6 behaviour; @playform/compress minifies the HTML afterwards anyway.
+  compressHTML: true,
+
 
   // i18n configuration
   i18n: {
