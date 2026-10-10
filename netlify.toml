@@ -358,7 +358,7 @@
 # ===== BUILD ENVIRONMENT =====
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
 
 # NOTE: Netlify Asset Optimization was deprecated Oct 2023
 # Astro handles bundling/minification at build time via Vite
