@@ -5,3 +5,13 @@
 allowBuilds:
   esbuild: true
   sharp: true
+
+# @playform/compress pins exact transitive versions with known advisories (sharp 0.35.3,
+# svgo 4.0.2, deepmerge-ts 7.1.5 via itself and @playform/pipe). Bumping compress
+# cannot fix them, so force patched versions. It only uses
+# deepmerge/deepmergeCustom to merge option objects; v8's breaking change (deep Map
+# merging) was verified byte-identical on dist. Drop an entry once compress ships it.
+overrides:
+  sharp: 0.35.5
+  svgo: ^4.1.0
+  deepmerge-ts: ^8.0.2
