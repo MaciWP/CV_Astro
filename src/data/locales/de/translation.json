@@ -19,8 +19,10 @@
     "locationShort": "Madrid",
     "relocation": "Offen für Umzug in die Schweiz",
     "relocationShort": "Offen für CH",
-    "noticePeriod": "2 Wochen Kündigungsfrist",
-    "noticePeriodShort": "2 Wochen"
+    "noticePeriod": "Sofort verfügbar",
+    "noticePeriodShort": "Sofort",
+    "bornIn": "Geboren",
+    "coverLetterShort": "Anschreiben"
   },
   "sections": {
     "about": "Über mich",

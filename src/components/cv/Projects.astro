@@ -90,6 +90,7 @@ function getProjectIconName(project: { icon?: string }): string {
             class="ml-auto text-brand-red hover:text-brand-red/80 text-sm inline-flex items-center gap-2 focus:outline-hidden min-h-[48px] px-3 py-2"
             data-show-all={t.showAllDetails}
             data-show-less={t.showLessDetails}
+            aria-expanded="false"
         >
             <span class="toggle-icon transition-transform duration-200">
                 <SvgIcons name="chevron-down" class="w-3 h-3" />
@@ -101,12 +102,18 @@ function getProjectIconName(project: { icon?: string }): string {
     <!-- Tabs - Professional first -->
     <div class="flex border-b border-light-border dark:border-dark-border mb-6">
         <button
+            type="button"
+            aria-pressed="true"
+            aria-controls="professional-projects"
             class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-brand-red dark:text-red-400 border-b-2 border-brand-red dark:border-red-400"
             data-tab="professional"
         >
             {t.professionalWork}
         </button>
         <button
+            type="button"
+            aria-pressed="false"
+            aria-controls="personal-projects"
             class="tab-btn min-h-[48px] py-3 px-5 font-medium text-base transition-colors duration-150 text-light-text-secondary dark:text-dark-text-secondary hover:text-brand-red/70 dark:hover:text-red-400/70"
             data-tab="personal"
         >
@@ -347,6 +354,7 @@ function getProjectIconName(project: { icon?: string }): string {
                     const tab = btn.getAttribute('data-tab');
 
                     tabBtns.forEach(b => {
+                        b.setAttribute('aria-pressed', String(b === btn));
                         b.classList.remove('active', 'text-brand-red', 'dark:text-red-400', 'border-b-2', 'border-brand-red', 'dark:border-red-400');
                         b.classList.add('text-light-text-secondary', 'dark:text-dark-text-secondary');
                     });
@@ -401,6 +409,7 @@ function getProjectIconName(project: { icon?: string }): string {
 
             toggleBtn?.addEventListener('click', () => {
                 showingDetails = !showingDetails;
+                toggleBtn.setAttribute('aria-expanded', String(showingDetails));
                 const textSpan = toggleBtn.querySelector('.btn-text');
                 const showAll = toggleBtn.getAttribute('data-show-all');
                 const showLess = toggleBtn.getAttribute('data-show-less');

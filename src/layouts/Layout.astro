@@ -228,8 +228,6 @@ const isMultilingualPage =
       .skill-badge{transition:background-color 200ms ease-out,border-color 200ms ease-out,transform 100ms ease-out,box-shadow 100ms ease-out}
       footer,footer p,footer a:not(.cv-download-btn){color:#374151!important}
       .dark footer,.dark footer p,.dark footer a:not(.cv-download-btn){color:#e5e7eb!important}
-      /* Sticky header - CRITICAL */
-      header[role="banner"]{position:-webkit-sticky!important;position:sticky!important;top:0!important;z-index:50!important}
       /* CLS prevention */
       .skill-pill{height:32px;margin-bottom:8px}
       nav .hidden.md\:block{min-height:40px}
@@ -317,14 +315,13 @@ const isMultilingualPage =
       <A11yAnnouncer />
 
       <!-- Header - Pure Astro + vanilla JS -->
-      <header role="banner" class="sticky top-0 z-50">
+      <header class="sticky top-0 z-50">
         <Navbar lang={lang} />
       </header>
 
       <!-- Main content - Pure SSG -->
       <main
         id="cv-content"
-        role="main"
         class="container mx-auto px-4 py-8 max-w-5xl"
       >
         <slot />
@@ -332,7 +329,6 @@ const isMultilingualPage =
 
       <!-- Footer -->
       <footer
-            role="contentinfo"
             class="py-6 border-t border-light-border dark:border-dark-border bg-light-primary dark:bg-dark-primary transition-colors duration-100"
           >
             <div class="container mx-auto px-4 max-w-5xl">

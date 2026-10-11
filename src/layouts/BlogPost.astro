@@ -43,11 +43,11 @@ const SITE = 'https://oriolmacias.dev';
 const canonical = `${SITE}${blogUrl(lang, slug)}`;
 
 // Localized UI chrome.
-const STRINGS: Record<string, { back: string; updated: string; tags: string }> = {
-  en: { back: 'Back to blog', updated: 'Updated', tags: 'Tags' },
-  es: { back: 'Volver al blog', updated: 'Actualizado', tags: 'Etiquetas' },
-  fr: { back: 'Retour au blog', updated: 'Mis à jour', tags: 'Tags' },
-  de: { back: 'Zurück zum Blog', updated: 'Aktualisiert', tags: 'Tags' },
+const STRINGS: Record<string, { back: string; updated: string; tags: string; comments: string }> = {
+  en: { back: 'Back to blog', updated: 'Updated', tags: 'Tags', comments: 'Comments' },
+  es: { back: 'Volver al blog', updated: 'Actualizado', tags: 'Etiquetas', comments: 'Comentarios' },
+  fr: { back: 'Retour au blog', updated: 'Mis à jour', tags: 'Tags', comments: 'Commentaires' },
+  de: { back: 'Zurück zum Blog', updated: 'Aktualisiert', tags: 'Tags', comments: 'Kommentare' },
 };
 const DATE_LOCALE: Record<string, string> = { en: 'en-GB', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
 const t = STRINGS[lang] ?? STRINGS.en;
@@ -152,7 +152,7 @@ const xDefaultLang = translations.includes('en') ? 'en' : translations[0];
       <slot />
     </div>
 
-    <Giscus lang={lang} />
+    <Giscus lang={lang} label={t.comments} />
   </article>
 </Layout>
 

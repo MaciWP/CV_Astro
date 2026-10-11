@@ -93,6 +93,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
         data-show-text={showMoreText[lang]}
         data-hide-text={showLessText[lang]}
         aria-expanded="false"
+        aria-controls="secondary-education"
       >
         <span class="toggle-icon transition-transform duration-200">
           <SvgIcons name="chevron-down" class="w-3 h-3" />
@@ -102,7 +103,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
     )}
 
     <!-- Secondary Education (collapsible) -->
-    <div class="secondary-education space-y-6 hidden" style="max-height: 0; overflow: hidden; opacity: 0; transition: max-height 300ms ease-out, opacity 200ms ease-out;">
+    <div id="secondary-education" class="secondary-education space-y-6 hidden" style="max-height: 0; overflow: hidden; opacity: 0; transition: max-height 300ms ease-out, opacity 200ms ease-out;">
       {secondaryEducation.map((item) => (
         <div
           class="group bg-light-surface dark:bg-dark-surface p-5

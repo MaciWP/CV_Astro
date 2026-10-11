@@ -119,19 +119,6 @@
         opacity: 1 !important;
     }
 
-    /* Sticky fix for navbar */
-    nav[role="navigation"] {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 50 !important;
-    }
-
-    @supports (position: -webkit-sticky) {
-        nav[role="navigation"] {
-            position: -webkit-sticky !important;
-        }
-    }
-
     /* Navbar scroll state - single class toggle for performance */
     #main-navbar {
         transition: background-color 100ms ease-out, box-shadow 100ms ease-out, backdrop-filter 100ms ease-out;

@@ -86,6 +86,7 @@ const hideDetailsText: Record<string, string> = {
                                 data-show-text={showDetailsText[lang]}
                                 data-hide-text={hideDetailsText[lang]}
                                 aria-expanded="false"
+                                aria-controls={`job-details-${job.id}`}
                                 aria-label={showDetailsText[lang]}
                             >
                                 <span class="toggle-icon transition-transform duration-200">
@@ -121,7 +122,7 @@ const hideDetailsText: Record<string, string> = {
                 </div>
 
                 <!-- Job description card -->
-                <div class={`bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md job-card ${job.collapsible ? 'collapsible-content hidden' : ''}`} data-job-content={job.id}>
+                <div class={`bg-light-surface dark:bg-dark-surface p-6 rounded-none border border-light-border dark:border-dark-border group hover:border-brand-red/30 dark:hover:border-brand-red/30 hover:shadow-md job-card ${job.collapsible ? 'collapsible-content hidden' : ''}`} data-job-content={job.id} id={job.collapsible ? `job-details-${job.id}` : undefined}>
                     <!-- Responsibilities -->
                     <h4 class="text-sm uppercase text-light-text-secondary dark:text-dark-text-secondary font-semibold mb-3 tracking-wider">
                         {t.responsibilities}
@@ -285,7 +286,10 @@ const hideDetailsText: Record<string, string> = {
                     if (content) {
                         if (isExpanded) {
                             content.classList.remove('expanded');
-                            content.classList.add('hidden');
+                            // Hide only after the 300ms max-height transition, or it never plays.
+                            setTimeout(() => {
+                                if (!content.classList.contains('expanded')) content.classList.add('hidden');
+                            }, 300);
                             jobItem?.classList.remove('expanded');
                             btn.setAttribute('aria-expanded', 'false');
                             btn.setAttribute('aria-label', btn.getAttribute('data-show-text') || 'Show details');

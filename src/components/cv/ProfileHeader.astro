@@ -50,6 +50,8 @@ const jobSpecialty = jobRest.join(" | ");
 const summary = getTranslation("header.summary", headerData.summary);
 const photoAlt = getTranslation("header.photoAlt", headerData.photoAlt);
 const downloadCoverLetter = getTranslation("buttons.downloadCoverLetter", "Download Cover Letter");
+const coverLetterShort = getTranslation("header.coverLetterShort", "Cover Letter");
+const bornIn = getTranslation("header.bornIn", "Born");
 
 // Swiss market fields - full versions for desktop
 const dateOfBirth = headerData.dateOfBirth;
@@ -64,7 +66,7 @@ const nationalityShort = getTranslation("header.nationalityShort", "Spanish (EU)
 const workPermitShort = getTranslation("header.workPermitShort", "B-Permit");
 const locationShort = getTranslation("header.locationShort", "Madrid");
 const relocationShort = getTranslation("header.relocationShort", "Open to CH");
-const noticePeriodShort = getTranslation("header.noticePeriodShort", "2 weeks");
+const noticePeriodShort = getTranslation("header.noticePeriodShort", "Immediate");
 
 // Labels for contact info
 const emailLabel = getTranslation("header.email", "Email");
@@ -153,7 +155,7 @@ const githubLabel = getTranslation("header.github", "GitHub");
                                 aria-label={downloadCoverLetter}
                             >
                                 <SvgIcons name="file-alt" class="w-3 h-3 mr-1" />
-                                <span>Cover Letter</span>
+                                <span>{coverLetterShort}</span>
                             </a>
                         </div>
                     </div>
@@ -179,7 +181,7 @@ const githubLabel = getTranslation("header.github", "GitHub");
                         <span class="text-gray-400 dark:text-gray-600">•</span>
                         <span class="flex items-center gap-1.5">
                             <SvgIcons name="calendar-alt" class="w-3 h-3 text-brand-red" />
-                            Born {dateOfBirth}
+                            {bornIn} {dateOfBirth}
                         </span>
                         <span class="text-gray-400 dark:text-gray-600">•</span>
                         <span class="flex items-center gap-1.5">
@@ -228,7 +230,6 @@ const githubLabel = getTranslation("header.github", "GitHub");
                                                 : undefined
                                         }
                                         class="flex items-center gap-2 hover:text-brand-red dark:hover:text-brand-red transition-colors"
-                                        aria-label={label}
                                     >
                                         <div class="w-10 h-10 flex items-center justify-center text-white bg-brand-red/90 shadow-xs rounded-none group-hover:bg-brand-red transition-all duration-200">
                                             <SvgIcons name={contact.icon} class="w-5 h-5" />

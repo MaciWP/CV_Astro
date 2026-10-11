@@ -85,6 +85,42 @@ const uiTranslations = {
         es: 'Cerrar menú',
         fr: 'Fermer le menu',
         de: 'Menü schließen'
+    },
+    mainNav: {
+        en: 'Main navigation',
+        es: 'Navegación principal',
+        fr: 'Navigation principale',
+        de: 'Hauptnavigation'
+    },
+    githubProfile: {
+        en: 'GitHub profile',
+        es: 'Perfil de GitHub',
+        fr: 'Profil GitHub',
+        de: 'GitHub-Profil'
+    },
+    linkedinProfile: {
+        en: 'LinkedIn profile',
+        es: 'Perfil de LinkedIn',
+        fr: 'Profil LinkedIn',
+        de: 'LinkedIn-Profil'
+    },
+    darkMode: {
+        en: 'Dark mode',
+        es: 'Modo oscuro',
+        fr: 'Mode sombre',
+        de: 'Dunkelmodus'
+    },
+    language: {
+        en: 'Language',
+        es: 'Idioma',
+        fr: 'Langue',
+        de: 'Sprache'
+    },
+    returnedToTop: {
+        en: 'Returned to the top of the page',
+        es: 'Has vuelto al principio de la página',
+        fr: 'Retour en haut de la page',
+        de: 'Zurück zum Seitenanfang'
     }
 };
 
