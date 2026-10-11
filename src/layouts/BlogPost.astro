@@ -9,8 +9,10 @@
  */
 import Layout from './Layout.astro';
 import Giscus from '../components/Giscus.astro';
+import JsonLd from '../components/JsonLd.astro';
 import { blogUrl } from '../utils/blog';
 import { messages, normalizeLang, DATE_LOCALE } from '../i18n';
+import { SITE_URL } from '../data/profile';
 
 export interface Props {
   lang: string;
@@ -40,8 +42,7 @@ const {
   translations = [lang],
 } = Astro.props;
 
-const SITE = 'https://oriolmacias.dev';
-const canonical = `${SITE}${blogUrl(lang, slug)}`;
+const canonical = `${SITE_URL}${blogUrl(lang, slug)}`;
 
 const t = messages(lang).blog;
 
@@ -64,10 +65,10 @@ const blogPostingSchema = {
   description,
   datePublished: pubDate.toISOString(),
   dateModified: (updatedDate ?? pubDate).toISOString(),
-  author: { '@type': 'Person', name: 'Oriol Macias', url: SITE },
-  publisher: { '@type': 'Person', name: 'Oriol Macias', url: SITE },
+  author: { '@type': 'Person', name: 'Oriol Macias', url: SITE_URL },
+  publisher: { '@type': 'Person', name: 'Oriol Macias', url: SITE_URL },
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
-  image: `${SITE}/images/oriol_macias-1280.jpg`,
+  image: `${SITE_URL}/images/oriol_macias-1280.jpg`,
   url: canonical,
   inLanguage: lang,
 };
@@ -86,16 +87,14 @@ const xDefaultLang = translations.includes('en') ? 'en' : translations[0];
   ogType="article"
 >
   <Fragment slot="head">
-    <Fragment
-      set:html={`<script type="application/ld+json">${JSON.stringify(blogPostingSchema)}</script>`}
-    />
+    <JsonLd data={blogPostingSchema} />
     {
       emitHreflang && (
         <Fragment>
           {translations.map((loc) => (
-            <link rel="alternate" hreflang={loc} href={`${SITE}${blogUrl(loc, slug)}`} />
+            <link rel="alternate" hreflang={loc} href={`${SITE_URL}${blogUrl(loc, slug)}`} />
           ))}
-          <link rel="alternate" hreflang="x-default" href={`${SITE}${blogUrl(xDefaultLang, slug)}`} />
+          <link rel="alternate" hreflang="x-default" href={`${SITE_URL}${blogUrl(xDefaultLang, slug)}`} />
         </Fragment>
       )
     }

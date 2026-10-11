@@ -10,6 +10,7 @@
  */
 import SvgIcons from './icons/SvgIcons.astro';
 import { messages } from '../i18n';
+import JsonLd from './JsonLd.astro';
 
 interface FAQ {
   question: string;
@@ -124,4 +125,4 @@ const title = messages(lang).faq.title;
     document.addEventListener('astro:page-load', initFAQSection);
 </script>
 
-<Fragment set:html={`<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`} />
+<JsonLd data={faqSchema} />

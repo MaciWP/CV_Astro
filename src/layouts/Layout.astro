@@ -10,6 +10,7 @@ import SkipToContent from "../components/SkipToContent.astro";
 import A11yAnnouncer from "../components/A11yAnnouncer.astro";
 import LanguageAlternates from "../components/LanguageAlternates.astro";
 import SvgIcons from "../components/icons/SvgIcons.astro";
+import JsonLd from "../components/JsonLd.astro";
 import {
   detectMarketAndOptimizeSEO,
   generateProfilePageStructuredData,
@@ -17,6 +18,7 @@ import {
   normalizePathname,
 } from "../utils/seo";
 import { messages } from "../i18n";
+import { SITE_URL } from "../data/profile";
 
 // Global styles (animations, theme, Tailwind layers)
 import "../styles/global.css";
@@ -76,18 +78,18 @@ const websiteSchema = generateWebSiteStructuredData();
 // (build.format:'file' makes Astro.url.pathname end in .html; never expose it)
 const cleanPath = normalizePathname(Astro.url.pathname);
 const canonicalPath = canonicalUrl
-  ? normalizePathname(new URL(canonicalUrl, "https://oriolmacias.dev").pathname)
+  ? normalizePathname(new URL(canonicalUrl, SITE_URL).pathname)
   : cleanPath;
 const fullCanonicalUrl =
   canonicalPath === "/"
-    ? "https://oriolmacias.dev/"
-    : `https://oriolmacias.dev${canonicalPath}`;
+    ? `${SITE_URL}/`
+    : `${SITE_URL}${canonicalPath}`;
 
 // og:image / twitter:image must be ABSOLUTE URLs — the Open Graph and Twitter Card specs
 // require it; relative URLs break link previews (LinkedIn, WhatsApp, Slack, X).
 const ogImageUrl = ogImage.startsWith("http")
   ? ogImage
-  : `https://oriolmacias.dev${ogImage}`;
+  : `${SITE_URL}${ogImage}`;
 
 // Geo pages (/switzerland/*, /spain/*) are monolingual: no /es|/fr|/de variants
 // exist for them (netlify.toml 301s those away), so they must emit no hreflang
@@ -291,14 +293,10 @@ const isMultilingualPage =
          without either cost. -->
 
     <!-- ProfilePage Structured Data (Person as mainEntity) -->
-    <Fragment
-      set:html={`<script type="application/ld+json">${JSON.stringify(profilePageSchema, null, 2)}</script>`}
-    />
+    <JsonLd data={profilePageSchema} pretty />
 
     <!-- WebSite Structured Data for better indexation -->
-    <Fragment
-      set:html={`<script type="application/ld+json">${JSON.stringify(websiteSchema, null, 2)}</script>`}
-    />
+    <JsonLd data={websiteSchema} pretty />
 
     <!-- Page-specific <head> extras (e.g. BlogPosting JSON-LD from BlogPost layout) -->
     <slot name="head" />

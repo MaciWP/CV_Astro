@@ -9,9 +9,9 @@ import LanguageAlternates from '../../components/LanguageAlternates.astro';
 import { getCollection } from 'astro:content';
 import { localizedPosts } from '../../utils/blog';
 import { messages } from '../../i18n';
+import { SITE_URL } from '../../data/profile';
 
 const posts = localizedPosts(await getCollection('blog'), 'en');
-const SITE = 'https://oriolmacias.dev';
 const m = messages('en').blog.meta;
 ---
 
@@ -19,7 +19,7 @@ const m = messages('en').blog.meta;
   title={m.title}
   description={m.description}
   lang="en"
-  canonicalUrl={`${SITE}/blog`}
+  canonicalUrl={`${SITE_URL}/blog`}
 >
   <LanguageAlternates slot="head" currentLang="en" currentPath="/blog" />
   <BlogList lang="en" posts={posts} />

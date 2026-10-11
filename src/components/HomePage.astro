@@ -16,6 +16,7 @@ import ExpertiseSummary from "./cv/ExpertiseSummary.astro";
 import About from "./cv/About.astro";
 import FAQSchema from "./FAQSchema.astro";
 import { homeCopy, type HomeLang } from "../data/home";
+import { SITE_URL, profile } from "../data/profile";
 
 interface Props {
     lang: HomeLang;
@@ -75,10 +76,10 @@ const spanishCities = ["madrid", "barcelona"];
             <div itemprop="name">Oriol Macias</div>
             <div itemprop="jobTitle">{copy.jobTitle}</div>
             <div itemprop="description">{copy.description}</div>
-            <div itemprop="email">oriolomb@gmail.com</div>
-            <a itemprop="url" href="https://oriolmacias.dev">https://oriolmacias.dev</a>
-            <a itemprop="sameAs" href="https://github.com/MaciWP">GitHub</a>
-            <a itemprop="sameAs" href="https://linkedin.com/in/oriolmaciasbadosa">LinkedIn</a>
+            <div itemprop="email">{profile.email}</div>
+            <a itemprop="url" href={SITE_URL}>{SITE_URL}</a>
+            <a itemprop="sameAs" href={profile.github}>GitHub</a>
+            <a itemprop="sameAs" href={profile.linkedin}>LinkedIn</a>
         </div>
     </div>
 </Layout>

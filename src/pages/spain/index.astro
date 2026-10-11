@@ -10,13 +10,14 @@ import ProfileHeader from "../../components/cv/ProfileHeader.astro";
 import Experience from "../../components/cv/Experience.astro";
 import Skills from "../../components/cv/Skills.astro";
 import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
+import { SITE_URL } from "../../data/profile";
 
 const title = "Oriol Macias - Desarrollador Backend España | Senior Python";
 const description = "Desarrollador Backend Senior con 8+ años de experiencia en Python, Django y protocolos industriales. Disponible en Madrid, Barcelona y toda España.";
 
 const breadcrumbs = [
-  { name: "Home", url: "https://oriolmacias.dev/" },
-  { name: "España", url: "https://oriolmacias.dev/spain" }
+  { name: "Home", url: `${SITE_URL}/` },
+  { name: "España", url: `${SITE_URL}/spain` }
 ];
 ---
 

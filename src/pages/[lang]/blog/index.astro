@@ -9,6 +9,7 @@ import LanguageAlternates from '../../../components/LanguageAlternates.astro';
 import { getCollection } from 'astro:content';
 import { localizedPosts } from '../../../utils/blog';
 import { messages } from '../../../i18n';
+import { SITE_URL } from '../../../data/profile';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'es' } }, { params: { lang: 'fr' } }, { params: { lang: 'de' } }];
@@ -16,12 +17,11 @@ export function getStaticPaths() {
 
 const { lang = 'es' } = Astro.params;
 const posts = localizedPosts(await getCollection('blog'), lang);
-const SITE = 'https://oriolmacias.dev';
 
 const m = messages(lang).blog.meta;
 ---
 
-<Layout title={m.title} description={m.description} lang={lang} canonicalUrl={`${SITE}/${lang}/blog`}>
+<Layout title={m.title} description={m.description} lang={lang} canonicalUrl={`${SITE_URL}/${lang}/blog`}>
   <LanguageAlternates slot="head" currentLang={lang} currentPath={`/${lang}/blog`} />
   <BlogList lang={lang} posts={posts} />
 </Layout>
