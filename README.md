@@ -42,7 +42,7 @@ Add a real screenshot at docs/preview.png and uncomment:
 
 | Area | Choice |
 |---|---|
-| Framework | **Astro 6** (`output: 'static'`) |
+| Framework | **Astro 7** (`output: 'static'`) |
 | Styling | **Tailwind CSS 4** (via the Vite plugin) |
 | Language | **TypeScript** + vanilla JS islands |
 | Images | **sharp** — responsive AVIF/WebP/JPG profile set |
@@ -51,7 +51,7 @@ Add a real screenshot at docs/preview.png and uncomment:
 
 ## 🚀 Getting started
 
-> Requires **Node 22+** and **pnpm 11** (bundled via Corepack).
+> Requires **Node 24+** and **pnpm 11** (bundled via Corepack).
 
 ```bash
 git clone https://github.com/MaciWP/CV_Astro.git

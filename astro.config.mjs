@@ -22,6 +22,11 @@ export default defineConfig({
   // This eliminates server overhead and improves performance
   output: 'static',
 
+  // Astro 7 changed the default to 'jsx', which drops whitespace between inline
+  // elements ("Experience <span" -> "Experience<span") and can glue words together.
+  // Keep the Astro 6 behaviour; @playform/compress minifies the HTML afterwards anyway.
+  compressHTML: true,
+
 
   // i18n configuration
   i18n: {
@@ -74,6 +79,11 @@ export default defineConfig({
       // sourcemap left at Vite's default (false): every script ships inline, so the
       // emitted .map files were orphans served from production.
       cssCodeSplit: true,
+      // Vite 8 raised its default target to Chrome 111, so Lightning CSS folds Tailwind
+      // opacity variants of theme colors (bg-brand-red/10...) into oklab(). Chrome < 111,
+      // including Netlify's Lighthouse 9.6.8 (Chromium 107), drops them (a11y 98). Keep
+      // Vite 7's CSS targets so they compile to #rrggbbaa. JS keeps the default target.
+      cssTarget: ['chrome107', 'edge107', 'firefox104', 'safari16'],
     },
   },
 
