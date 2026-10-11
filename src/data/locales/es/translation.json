@@ -19,8 +19,10 @@
     "locationShort": "Madrid",
     "relocation": "Abierto a reubicación en Suiza",
     "relocationShort": "Abierto a CH",
-    "noticePeriod": "Preaviso de 2 semanas",
-    "noticePeriodShort": "2 semanas"
+    "noticePeriod": "Disponibilidad inmediata",
+    "noticePeriodShort": "Inmediata",
+    "bornIn": "Nacido en",
+    "coverLetterShort": "Carta"
   },
   "sections": {
     "about": "Acerca de",

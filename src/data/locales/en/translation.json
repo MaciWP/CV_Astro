@@ -19,8 +19,10 @@
     "locationShort": "Madrid",
     "relocation": "Open to relocation to Switzerland",
     "relocationShort": "Open to CH",
-    "noticePeriod": "2 weeks notice",
-    "noticePeriodShort": "2 weeks"
+    "noticePeriod": "Available immediately",
+    "noticePeriodShort": "Immediate",
+    "bornIn": "Born",
+    "coverLetterShort": "Cover Letter"
   },
   "sections": {
     "about": "About",
