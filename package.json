@@ -45,7 +45,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@playform/compress": "^0.2.5",
-    "astro": "^6.4.8"
+    "astro": "^7.3.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
