@@ -1,0 +1,84 @@
+---
+/**
+ * The CV home page, shared by /, /es, /fr and /de. Title, description and
+ * canonical come from Layout (seo.ts optimizes the language homes); the
+ * per-language copy lives in src/data/home.ts.
+ * @file src/components/HomePage.astro
+ */
+import Layout from "../layouts/Layout.astro";
+import ProfileHeader from "./cv/ProfileHeader.astro";
+import Experience from "./cv/Experience.astro";
+import Skills from "./cv/Skills.astro";
+import Languages from "./cv/Languages.astro";
+import Education from "./cv/Education.astro";
+import Projects from "./cv/Projects.astro";
+import ExpertiseSummary from "./cv/ExpertiseSummary.astro";
+import About from "./cv/About.astro";
+import FAQSchema from "./FAQSchema.astro";
+import { homeCopy, type HomeLang } from "../data/home";
+
+interface Props {
+    lang: HomeLang;
+}
+
+const { lang } = Astro.props;
+const copy = homeCopy[lang];
+
+const swissCities = ["zurich", "geneva", "basel", "lausanne"];
+const spanishCities = ["madrid", "barcelona"];
+---
+
+<Layout lang={lang}>
+    <div
+        id="cv-person"
+        class="space-y-12"
+        itemscope
+        itemtype="https://schema.org/Person"
+    >
+        <div class="-mb-8">
+            <ProfileHeader lang={lang} />
+        </div>
+
+        <ExpertiseSummary lang={lang} />
+        <About lang={lang} />
+        <Experience lang={lang} />
+        <Skills lang={lang} />
+        <Education lang={lang} />
+        <Languages lang={lang} />
+        <Projects lang={lang} />
+
+        {/* Regional profiles: internal links to the market hubs */}
+        <nav
+            class="text-sm text-gray-700 dark:text-gray-300"
+            aria-label={copy.regionalLabel}
+        >
+            {copy.regionalPrompt}
+            <a href="/switzerland" class="text-brand-red hover:underline font-semibold">{copy.links["/switzerland"]}</a>{copy.colon}
+            {swissCities.map((city, i) => (
+                <>
+                    <a href={`/switzerland#${city}`} class="text-brand-red hover:underline">{copy.links[`/switzerland#${city}`]}</a>{i < swissCities.length - 1 && ","}
+                </>
+            ))}
+            <span aria-hidden="true"> · </span>
+            <a href="/spain" class="text-brand-red hover:underline font-semibold">{copy.links["/spain"]}</a>{copy.colon}
+            {spanishCities.map((city, i) => (
+                <>
+                    <a href={`/spain#${city}`} class="text-brand-red hover:underline">{copy.links[`/spain#${city}`]}</a>{i < spanishCities.length - 1 && ","}
+                </>
+            ))}
+        </nav>
+
+        <FAQSchema faqs={copy.faqs} lang={lang} />
+
+        {/* Hidden schema.org Person microdata */}
+        <div class="sr-only">
+            <div itemprop="name">Oriol Macias</div>
+            <div itemprop="jobTitle">{copy.jobTitle}</div>
+            <div itemprop="description">{copy.description}</div>
+            <div itemprop="email">oriolomb@gmail.com</div>
+            <a itemprop="url" href="https://oriolmacias.dev">https://oriolmacias.dev</a>
+            <a itemprop="sameAs" href="https://github.com/MaciWP">GitHub</a>
+            <a itemprop="sameAs" href="https://linkedin.com/in/oriolmaciasbadosa">LinkedIn</a>
+        </div>
+    </div>
+</Layout>
