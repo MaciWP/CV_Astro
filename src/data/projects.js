@@ -4,7 +4,7 @@
  */
 
 // Import helper function from new unified icons system
-import { normalizeLang } from './_lang';
+import { normalizeLang } from '../i18n';
 
 // Personal projects with GitHub links and multilingual descriptions
 const personalProjectsData = [

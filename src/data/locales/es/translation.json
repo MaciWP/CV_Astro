@@ -1,8 +1,4 @@
 {
-  "meta": {
-    "title": "Oriol Macias - Portfolio de Desarrollador de Software",
-    "description": "CV y portfolio profesional de Oriol Macias, Desarrollador de Software especializado en desarrollo backend, integración de protocolos industriales e infraestructura de centros de datos."
-  },
   "header": {
     "fullName": "Oriol Macias",
     "jobTitle": "Backend Senior | IoT Industrial, Integraciones & IA",
@@ -24,49 +20,30 @@
     "bornIn": "Nacido en",
     "coverLetterShort": "Carta"
   },
-  "sections": {
-    "about": "Acerca de",
-    "experience": "Experiencia Laboral",
-    "skills": "Habilidades Técnicas",
-    "education": "Formación Académica",
-    "languages": "Idiomas",
-    "projects": "Proyectos Destacados"
-  },
   "experience": {
     "title": "Experiencia Laboral",
     "responsibilities": "Responsabilidades",
-    "keyAchievements": "Logros Principales",
-    "showMore": "Mostrar más",
-    "showLess": "Mostrar menos"
-  },
-  "skills": {
-    "title": "Habilidades Técnicas",
-    "languages": "Lenguajes de Programación",
-    "libraries": "Bibliotecas y Frameworks",
-    "technologies": "Tecnologías y Bases de Datos",
-    "tools": "Herramientas y Aplicaciones",
-    "protocols": "Protocolos"
+    "keyAchievements": "Logros Clave",
+    "showDetails": "Ver detalles",
+    "hideDetails": "Ocultar detalles"
   },
   "education": {
-    "title": "Formación Académica",
+    "title": "Educación y Certificaciones",
     "institution": "Institución",
     "period": "Período",
-    "details": "Detalles"
+    "details": "Detalles",
+    "showMore": "Ver más certificaciones",
+    "showLess": "Ver menos"
   },
   "languages": {
-    "title": "Idiomas",
-    "native": "Nativo",
-    "fluent": "Fluido (C2)",
-    "advanced": "Avanzado (C1)",
-    "intermediate": "Intermedio (B2)",
-    "basic": "Básico (A1/A2)"
+    "title": "Idiomas"
   },
   "projects": {
-    "title": "Proyectos Destacados",
+    "title": "Proyectos Clave",
     "personalProjects": "Proyectos Personales",
-    "professionalWork": "Proyectos Profesionales",
+    "professionalWork": "Trabajo Profesional",
     "technologies": "Tecnologías",
-    "keyFeatures": "Características Principales",
+    "keyFeatures": "Características Clave",
     "viewOnGithub": "Ver en GitHub",
     "showAllDetails": "Mostrar todos los detalles",
     "showLessDetails": "Mostrar menos detalles",
@@ -74,16 +51,69 @@
     "professionalProjectsNote": "Estos son solo algunos de los proyectos profesionales desarrollados durante mi trabajo en Bjumper. Los repositorios son privados debido a acuerdos de confidencialidad."
   },
   "buttons": {
-    "downloadCV": "Descargar CV",
-    "backToTop": "Volver arriba",
-    "switchLanguage": "Cambiar Idioma",
-    "switchTheme": "Cambiar Tema",
     "downloadCoverLetter": "Descargar Carta"
   },
   "footer": {
-    "copyright": "© 2025 Oriol Macias. Todos los derechos reservados."
+    "references": "Referencias y certificados de trabajo disponibles a petición",
+    "backToTop": "Volver arriba",
+    "downloadCvLabel": "Descargar CV en formato PDF",
+    "downloadCv": "Descargar CV"
   },
   "navbar": {
-    "topLink": "↑ Inicio"
+    "downloadCV": "Descargar CV",
+    "openMenu": "Abrir menú",
+    "mainNav": "Navegación principal",
+    "githubProfile": "Perfil de GitHub",
+    "linkedinProfile": "Perfil de LinkedIn",
+    "darkMode": "Modo oscuro",
+    "language": "Idioma",
+    "returnedToTop": "Has vuelto al principio de la página",
+    "sections": {
+      "experience": "Experiencia",
+      "skills": "Habilidades",
+      "education": "Educación",
+      "languages": "Idiomas",
+      "projects": "Proyectos"
+    }
+  },
+  "about": {
+    "title": "Sobre mí",
+    "arc": "De la administración de sistemas a la ingeniería backend. Los últimos años los he dedicado a construir software de integración que conecta sistemas externos y plataformas DCIM en infraestructura de centros de datos.",
+    "now": "Ahora mismo trabajo con IA cada día: Claude Code como herramienta diaria, integrando LLMs en productos reales y desarrollando herramientas propias como Poneglyph. En aprendizaje continuo y abierto a trasladarme a Suiza."
+  },
+  "expertise": {
+    "title": "Experiencia Principal",
+    "areas": [
+      {
+        "icon": "cogs",
+        "title": "Protocolos Industriales",
+        "description": "SNMP, Modbus, BACnet"
+      },
+      {
+        "icon": "code",
+        "title": "Backend e IA",
+        "description": "Python, C#, Integración LLM"
+      },
+      {
+        "icon": "network-wired",
+        "title": "Infraestructura",
+        "description": "On-Premise y Cloud"
+      }
+    ]
+  },
+  "blog": {
+    "subtitle": "Notas sobre ingeniería backend, protocolos industriales y herramientas de desarrollo.",
+    "empty": "Aún no hay entradas — vuelve pronto.",
+    "tags": "Etiquetas",
+    "back": "Volver al blog",
+    "updated": "Actualizado",
+    "comments": "Comentarios",
+    "meta": {
+      "title": "Blog — Oriol Macias",
+      "description": "Notas (en/es/fr/de) sobre desarrollo backend, integración de protocolos industriales (SNMP/Modbus/BACnet), infraestructura de centros de datos y herramientas de desarrollo — por Oriol Macias."
+    }
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes"
   }
 }

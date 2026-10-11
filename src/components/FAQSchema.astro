@@ -9,6 +9,7 @@
  * ]} lang="en" />
  */
 import SvgIcons from './icons/SvgIcons.astro';
+import { messages } from '../i18n';
 
 interface FAQ {
   question: string;
@@ -35,15 +36,7 @@ const faqSchema = {
   }))
 };
 
-// Translations for section title
-const titles: Record<string, string> = {
-  en: "Frequently Asked Questions",
-  es: "Preguntas Frecuentes",
-  fr: "Questions Fréquentes",
-  de: "Häufig gestellte Fragen"
-};
-
-const title = titles[lang] || titles.en;
+const title = messages(lang).faq.title;
 ---
 
 <section class="mt-16 mb-8 faq-section">

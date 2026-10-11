@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 // Configuration
 // The live translations rendered by the site live in src/data/locales
-// (imported by ProfileHeader.astro); public/locales was an unused, drifted
+// (read through src/i18n.ts); public/locales was an unused, drifted
 // copy that nothing fetched at runtime — removed in the same change.
 const LOCALES_DIR = path.join(__dirname, '../src/data/locales');
 const SUPPORTED_LANGUAGES = ['en', 'es', 'fr', 'de'];

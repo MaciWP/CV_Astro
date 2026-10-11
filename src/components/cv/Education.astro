@@ -6,6 +6,7 @@
  */
 import { getPrimaryEducation, getSecondaryEducation } from '../../data/education';
 import SvgIcons from '../icons/SvgIcons.astro';
+import { messages } from '../../i18n';
 
 interface Props {
   lang?: string;
@@ -17,29 +18,7 @@ const { lang = 'en' } = Astro.props;
 const primaryEducation = getPrimaryEducation(lang);
 const secondaryEducation = getSecondaryEducation(lang);
 
-// Get title translation
-const titles = {
-  en: 'Education & Certifications',
-  es: 'Educación y Certificaciones',
-  fr: 'Éducation et Certifications',
-  de: 'Ausbildung & Zertifizierungen'
-};
-
-const showMoreText: Record<string, string> = {
-  en: 'Show more certifications',
-  es: 'Ver más certificaciones',
-  fr: 'Voir plus de certifications',
-  de: 'Mehr Zertifizierungen anzeigen'
-};
-
-const showLessText: Record<string, string> = {
-  en: 'Show less',
-  es: 'Ver menos',
-  fr: 'Voir moins',
-  de: 'Weniger anzeigen'
-};
-
-const title = titles[lang as keyof typeof titles] || titles.en;
+const t = messages(lang).education;
 ---
 
 <section id="education" class="mb-20" aria-labelledby="education-heading">
@@ -48,7 +27,7 @@ const title = titles[lang as keyof typeof titles] || titles.en;
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
       <SvgIcons name="graduation-cap" class="w-4 h-4" />
     </div>
-    <h2 id="education-heading" class="text-2xl font-bold ml-3">{title}</h2>
+    <h2 id="education-heading" class="text-2xl font-bold ml-3">{t.title}</h2>
   </div>
 
   <div class="space-y-6 education-section">
@@ -90,15 +69,15 @@ const title = titles[lang as keyof typeof titles] || titles.en;
     {secondaryEducation.length > 0 && (
       <button
         class="education-toggle text-sm inline-flex items-center gap-2 text-brand-red hover:text-brand-red/80 focus:outline-hidden focus:underline py-2"
-        data-show-text={showMoreText[lang]}
-        data-hide-text={showLessText[lang]}
+        data-show-text={t.showMore}
+        data-hide-text={t.showLess}
         aria-expanded="false"
         aria-controls="secondary-education"
       >
         <span class="toggle-icon transition-transform duration-200">
           <SvgIcons name="chevron-down" class="w-3 h-3" />
         </span>
-        <span class="btn-text">{showMoreText[lang]}</span>
+        <span class="btn-text">{t.showMore}</span>
       </button>
     )}
 

@@ -12,14 +12,14 @@ import { getExperiences } from '../data/experiences';
 import skillsData, { getSectionTitle } from '../data/skills';
 import { getPrimaryEducation } from '../data/education';
 import { getLanguages } from '../data/languages';
-import headerData from '../data/header';
+import { profile } from '../data/profile';
 import { getPersonalProjects, getProfessionalProjects } from '../data/projects';
-import enTranslations from '../data/locales/en/translation.json';
+import { messages } from '../i18n';
 
 const lang = 'en';
-const header = (enTranslations as { header?: { jobTitle?: string; summary?: string } }).header ?? {};
-const jobTitle = header.jobTitle ?? headerData.jobTitle;
-const summary = header.summary ?? headerData.summary;
+const header = messages(lang).header;
+const { jobTitle, summary } = header;
+const email = profile.contacts[0].value;
 
 const experiences = getExperiences(lang);
 const education = getPrimaryEducation(lang);
@@ -97,16 +97,16 @@ const proTitles = professional.map((p) => p.title).join(', ');
   <body>
     <header class="cv-head">
       <div>
-        <h1>{headerData.fullName}</h1>
+        <h1>{profile.fullName}</h1>
         <div class="role">{jobTitle}</div>
         <div class="meta">
-          <a href={`mailto:${headerData.contactInfo.find((c) => c.type === 'email')?.value}`}>{headerData.contactInfo.find((c) => c.type === 'email')?.value}</a>
+          <a href={`mailto:${email}`}>{email}</a>
           <span class="sep">·</span>linkedin.com/in/oriolmaciasbadosa
           <span class="sep">·</span>github.com/MaciWP
           <span class="sep">·</span>oriolmacias.dev
         </div>
         <div class="meta" style="margin-top:3px;">
-          {headerData.location}<span class="sep">·</span>{headerData.nationality}<span class="sep">·</span>{headerData.workPermit}<span class="sep">·</span>Born {headerData.dateOfBirth}<span class="sep">·</span>{headerData.noticePeriod}<span class="sep">·</span>{headerData.relocation}
+          {header.location}<span class="sep">·</span>{header.nationality}<span class="sep">·</span>{header.workPermit}<span class="sep">·</span>{header.bornIn} {profile.dateOfBirth}<span class="sep">·</span>{header.noticePeriod}<span class="sep">·</span>{header.relocation}
         </div>
       </div>
       {photoDataUri && <img class="photo" src={photoDataUri} alt="Oriol Macias" />}

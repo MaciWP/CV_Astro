@@ -3,7 +3,7 @@
  * File: src/data/skills.js
  */
 
-import { normalizeLang } from './_lang';
+import { normalizeLang } from '../i18n';
 
 // Section titles with multilingual support
 // Reorganized for Swiss market and ATS optimization

@@ -3,7 +3,7 @@
  * File: src/data/education.js
  */
 
-import { normalizeLang } from './_lang';
+import { normalizeLang } from '../i18n';
 
 // Base education data structure with translations
 // Cleaned for Swiss market: only most relevant entries (3 max)

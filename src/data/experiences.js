@@ -6,7 +6,7 @@
  * the original terms for company names, technologies, and dates.
  */
 
-import { normalizeLang } from './_lang';
+import { normalizeLang } from '../i18n';
 
 // Base experiences data structure with translations
 const experiencesData = [

@@ -3,7 +3,7 @@
  * File: src/data/languages.js
  */
 
-import { normalizeLang } from './_lang';
+import { normalizeLang } from '../i18n';
 
 // Base languages data with translations
 const languagesData = [

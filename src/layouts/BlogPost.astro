@@ -10,6 +10,7 @@
 import Layout from './Layout.astro';
 import Giscus from '../components/Giscus.astro';
 import { blogUrl } from '../utils/blog';
+import { messages, normalizeLang, DATE_LOCALE } from '../i18n';
 
 export interface Props {
   lang: string;
@@ -42,18 +43,10 @@ const {
 const SITE = 'https://oriolmacias.dev';
 const canonical = `${SITE}${blogUrl(lang, slug)}`;
 
-// Localized UI chrome.
-const STRINGS: Record<string, { back: string; updated: string; tags: string; comments: string }> = {
-  en: { back: 'Back to blog', updated: 'Updated', tags: 'Tags', comments: 'Comments' },
-  es: { back: 'Volver al blog', updated: 'Actualizado', tags: 'Etiquetas', comments: 'Comentarios' },
-  fr: { back: 'Retour au blog', updated: 'Mis à jour', tags: 'Tags', comments: 'Commentaires' },
-  de: { back: 'Zurück zum Blog', updated: 'Aktualisiert', tags: 'Tags', comments: 'Kommentare' },
-};
-const DATE_LOCALE: Record<string, string> = { en: 'en-GB', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
-const t = STRINGS[lang] ?? STRINGS.en;
+const t = messages(lang).blog;
 
 // Deterministic at build time (formats the fixed frontmatter date, not "now").
-const fmt = new Intl.DateTimeFormat(DATE_LOCALE[lang] ?? 'en-GB', {
+const fmt = new Intl.DateTimeFormat(DATE_LOCALE[normalizeLang(lang)], {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
