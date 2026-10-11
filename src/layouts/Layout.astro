@@ -390,9 +390,6 @@ const isMultilingualPage =
       document.querySelectorAll('[data-reveal]').forEach((section) => revealObserver.observe(section));
     </script>
 
-    <!-- Scroll Animations Script -->
-    <script src="/scripts/animations.js" defer></script>
-
     <!-- Service Worker registration - deferred -->
     <script is:inline>
       if(location.hostname!=='localhost'&&'serviceWorker'in navigator){
