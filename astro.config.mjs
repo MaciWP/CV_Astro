@@ -9,14 +9,11 @@ import sitemap from '@astrojs/sitemap';
 import compress from '@playform/compress';
 import tailwindcss from '@tailwindcss/vite';
 import { CONTENT_REVISED } from './src/utils/seo';
-// React removed - all components are now pure Astro + vanilla JS
-// Netlify adapter removed - pure static site doesn't need it
-// Tailwind 4: @astrojs/tailwind dropped (no Astro 6 support) -> @tailwindcss/vite plugin
-// astro-compress deprecated -> @playform/compress (maintained successor)
+import { SITE_URL } from './src/data/profile';
 
 export default defineConfig({
   // Site configuration (required for SEO)
-  site: 'https://oriolmacias.dev',
+  site: SITE_URL,
 
   // Pure Static Output - No adapter needed for CV/portfolio site
   // This eliminates server overhead and improves performance

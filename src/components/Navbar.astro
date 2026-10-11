@@ -410,9 +410,7 @@ function initNavbar() {
         spyUnlockTimer = setTimeout(() => { spyLocked = false; computeActiveSection(); }, 650);
         window.scrollTo({ top: position, behavior: 'smooth' });
         history.pushState(null, '', `#${targetId}`);
-        if (window.announceToScreenReader) {
-            window.announceToScreenReader(`Navigated to ${targetId} section`);
-        }
+        window.announceToScreenReader?.(targetElement.querySelector('h2')?.textContent?.trim() ?? '');
     }
 
     // Mobile menu toggle
@@ -517,9 +515,6 @@ function initNavbar() {
         document.documentElement.classList.add(newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcons();
-        if (window.announceToScreenReader) {
-            window.announceToScreenReader(`Theme changed to ${newTheme} mode`);
-        }
     }
 
     // Logo click: the <a> navigates to the current language's home (root). If we're
