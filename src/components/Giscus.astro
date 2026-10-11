@@ -27,8 +27,10 @@
 interface Props {
   /** Post locale — drives the giscus comment-UI language (en/es/fr/de). */
   lang?: string;
+  /** Accessible name of the comments region, in the post's language. */
+  label?: string;
 }
-const { lang = 'en' } = Astro.props;
+const { lang = 'en', label = 'Comments' } = Astro.props;
 
 // Single source of truth for the giscus configuration.
 const GISCUS_CONFIG = {
@@ -45,7 +47,7 @@ const configured =
 
 {
   configured && (
-    <section class="giscus-wrap" aria-label="Comments">
+    <section class="giscus-wrap" aria-label={label}>
       <div
         class="giscus"
         data-giscus
