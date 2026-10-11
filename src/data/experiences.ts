@@ -1,12 +1,12 @@
 /**
  * Work experience data with multilingual support
- * File: src/data/experiences.js
+ * File: src/data/experiences.ts
  *
  * This data structure supports multiple languages while maintaining
  * the original terms for company names, technologies, and dates.
  */
 
-import { normalizeLang } from '../i18n';
+import { normalizeLang, type Localized } from '../i18n';
 
 // Base experiences data structure with translations
 const experiencesData = [
@@ -146,7 +146,6 @@ const experiencesData = [
             de: "Systemadministrator & IT-Support"
         },
         company: "SERES, Educand SCCL, Salt City Council",
-        companyUrl: null,
         period: "2014 - 2017",
         collapsible: true, // This job will be collapsed by default at the card level
         keyResponsibilities: {
@@ -199,26 +198,34 @@ const experiencesData = [
         },
         techStack: ["Windows Server", "Network Admin", "Hardware Maintenance"]
     }
-];
+] satisfies {
+    id: string;
+    title: string | Localized;
+    company: string;
+    companyUrl?: string;
+    period: string | Localized;
+    keyResponsibilities: Localized<string[]>;
+    achievements: Localized<string[]>;
+    techStack: string[];
+    collapsible?: boolean;
+}[];
 
 /**
  * Get experiences data in the specified language
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Experiences with texts in the specified language
+ * @param lang - Language code (en, es, fr, de)
+ * @returns Experiences with texts in the specified language
  */
-export const getExperiences = (lang = 'en') => {
+export const getExperiences = (lang?: string) => {
     const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return experiencesData.map(exp => ({
         ...exp,
-        // Handle title - can be string or object
-        title: typeof exp.title === 'object' ? (exp.title[language] || exp.title.en) : exp.title,
-        // Handle period - can be string or object
-        period: typeof exp.period === 'object' ? (exp.period[language] || exp.period.en) : exp.period,
-        keyResponsibilities: exp.keyResponsibilities[language] || exp.keyResponsibilities.en,
-        achievements: exp.achievements[language] || exp.achievements.en,
-        techStack: exp.techStack || [],
-        collapsible: exp.collapsible || false
+        // title and period are either one string for every language or Localized
+        title: typeof exp.title === 'string' ? exp.title : exp.title[language],
+        period: typeof exp.period === 'string' ? exp.period : exp.period[language],
+        keyResponsibilities: exp.keyResponsibilities[language],
+        achievements: exp.achievements[language],
+        collapsible: 'collapsible' in exp && exp.collapsible === true
     }));
 };

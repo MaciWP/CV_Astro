@@ -1,9 +1,9 @@
 /**
  * Languages data for CV with multilingual support
- * File: src/data/languages.js
+ * File: src/data/languages.ts
  */
 
-import { normalizeLang } from '../i18n';
+import { normalizeLang, type Localized } from '../i18n';
 
 // Base languages data with translations
 const languagesData = [
@@ -71,20 +71,20 @@ const languagesData = [
         badge: "A1",
         percent: 20
     }
-];
+] satisfies { language: Localized; level: Localized; badge: string; percent: number }[];
 
 /**
  * Get languages data in the specified language
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Languages with texts in the specified language
+ * @param lang - Language code (en, es, fr, de)
+ * @returns Languages with texts in the specified language
  */
-export const getLanguages = (lang = 'en') => {
+export const getLanguages = (lang?: string) => {
     const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return languagesData.map(l => ({
-        language: l.language[language] || l.language.en,
-        level: l.level[language] || l.level.en,
+        language: l.language[language],
+        level: l.level[language],
         badge: l.badge,
         percent: l.percent
     }));

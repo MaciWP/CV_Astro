@@ -26,6 +26,9 @@ export const messages = (lang: string | undefined): Messages =>
     MESSAGES[normalizeLang(lang)];
 
 /** BCP 47 locale for Intl date formatting, per site language. */
+/** One value per language. A Record (not Partial) makes a missing language a type error. */
+export type Localized<T = string> = Record<Lang, T>;
+
 export const DATE_LOCALE: Record<Lang, string> = {
     en: "en-GB",
     es: "es-ES",
