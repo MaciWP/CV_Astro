@@ -71,7 +71,8 @@ export default defineConfig({
     build: {
       // (assetsInlineLimit 4096, server.fs.strict, server.middlewareMode removed —
       //  all were Vite defaults, so explicit copies added no behavior.)
-      sourcemap: true,
+      // sourcemap left at Vite's default (false): every script ships inline, so the
+      // emitted .map files were orphans served from production.
       cssCodeSplit: true,
     },
   },

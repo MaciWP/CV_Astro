@@ -1,6 +1,8 @@
 version: 2
 updates:
-  # npm/pnpm dependencies — grouped into a single weekly PR to cut noise.
+  # npm/pnpm dependencies — minor/patch bumps grouped into one weekly PR to cut noise.
+  # Majors stay out of the group and arrive as individual PRs, so one breaking
+  # major (e.g. TS 7 on 2026-09-09) can no longer block the safe updates.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -9,9 +11,17 @@ updates:
     commit-message:
       prefix: "build(deps)"
     groups:
-      all-dependencies:
+      minor-and-patch:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # ponytail: TS held at 6.x — typescript-eslint peers typescript <6.1.0 and
+      # @astrojs/check peers ^5 || ^6. Drop this once both accept TS 7.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   # Keep the GitHub Actions in the CI workflow up to date too.
   - package-ecosystem: "github-actions"
