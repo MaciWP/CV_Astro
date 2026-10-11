@@ -1,10 +1,12 @@
-﻿// scripts/generate-profile-images.js
+// scripts/generate-profile-images.js
 import fs from "fs/promises";
 import sharp from "sharp";
 import path from "path";
 
-// Ensure this points to the original JPG:
-const INPUT = path.resolve("public/images/original/oriol_macias.jpg");
+// Run manually (`pnpm run generate-images`) when the photo changes, then commit the
+// outputs: builds ship the committed images, so they stay byte-reproducible. The
+// full-resolution original lives outside public/ so it is never deployed.
+const INPUT = path.resolve("assets/oriol_macias.jpg");
 const OUTDIR = path.resolve("public/images");
 // Added 480 for mobile devices with 1.5-2x DPR (better than jumping to 640)
 const SIZES = [192, 320, 480, 640, 960, 1280];

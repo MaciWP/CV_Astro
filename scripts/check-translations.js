@@ -42,6 +42,7 @@ async function checkTranslations() {
             await fs.access(LOCALES_DIR);
         } catch {
             console.error(`❌ Error: Locales directory not found at ${LOCALES_DIR}`);
+            process.exitCode = 1;
             return;
         }
 
@@ -61,12 +62,14 @@ async function checkTranslations() {
                 console.log(`✓ Loaded translations for ${lang}`);
             } catch (error) {
                 console.error(`❌ Error loading translations for ${lang}:`, error.message);
+                process.exitCode = 1;
             }
         }
 
         // No translations found
         if (Object.keys(translations).length === 0) {
             console.error('❌ No translation files found. Verify the locales directory structure.');
+            process.exitCode = 1;
             return;
         }
 
@@ -147,8 +150,14 @@ async function checkTranslations() {
         await fs.writeFile(reportPath, JSON.stringify(report, null, 2));
         console.log(`\n📝 Report saved to: ${reportPath}`);
 
+        // A gate, not a report: any key drift between languages fails `pnpm run check`.
+        if (Object.keys(missing).length > 0 || Object.keys(extra).length > 0) {
+            process.exitCode = 1;
+        }
+
     } catch (error) {
         console.error('❌ Error checking translations:', error);
+        process.exitCode = 1;
     }
 }
 

@@ -17,11 +17,13 @@ const __dirname = path.dirname(__filename);
 const DIST_DIR = path.join(__dirname, '../dist');
 const REPORT_FILE = path.join(__dirname, '../validation-report.json');
 
-// Representative pages: homepage, a language root, and both geo hubs
-// (spain.html is the only page that emits a BreadcrumbList).
+// Every page that emits the profile schema set: the four language homes and both
+// geo hubs (spain.html is the only page that emits a BreadcrumbList).
 const PAGES_TO_CHECK = [
     'index.html',
     'es.html',
+    'fr.html',
+    'de.html',
     'switzerland.html',
     'spain.html',
 ];

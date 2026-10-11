@@ -80,6 +80,34 @@ describe("detectMarketAndOptimizeSEO", () => {
         expect(r.market).toBe("spain");
         expect(r.title).toContain("España");
     });
+
+    it.each([
+        ["/es/blog", "es"],
+        ["/es/blog/some-post", "es"],
+        ["/fr/blog/some-post.html", "fr"],
+        ["/de/blog", "de"],
+        ["/blog/some-post", "en"],
+        ["/404", "en"],
+    ])("keeps the page's own metadata on non-home page %s", (path, lang) => {
+        // Regression guard: the language-home branches used to fire on every
+        // page in that language, so localized blog posts got the home title.
+        const r = at(path, lang);
+        expect(r.title).toBe("Default Title");
+        expect(r.description).toBe("Default Description");
+    });
+
+    it("emits no geo market on pages outside the homes and hubs", () => {
+        // A Swiss default leaked geo.region and work-permit metas into /blog and /404.
+        expect(at("/blog", "en").market).toBe("general");
+        expect(at("/404", "en").market).toBe("general");
+        expect(at("/de/blog", "de").market).toBe("general");
+    });
+
+    it("falls back to the generic Swiss copy for a city without its own config", () => {
+        const r = at("/switzerland/bern", "en");
+        expect(r.market).toBe("switzerland");
+        expect(r.city).toBe("bern");
+    });
 });
 
 describe("structured data generators", () => {

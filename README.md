@@ -70,7 +70,8 @@ pnpm run preview    # serve the production build locally
 | Script | What it does |
 |---|---|
 | `pnpm run dev` | Start the dev server |
-| `pnpm run build` | Build for production (`astro build` + responsive images) |
+| `pnpm run build` | Build for production (`astro build`) |
+| `pnpm run generate-images` | Regenerate the responsive profile set from `assets/oriol_macias.jpg` (run when the photo changes, then commit) |
 | `pnpm run preview` | Preview the production build |
 | `pnpm run check` | Run all domain gates: contrast + translations + structured data |
 | `pnpm run lint` | ESLint (zero errors / zero warnings) |
