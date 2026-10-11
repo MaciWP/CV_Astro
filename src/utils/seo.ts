@@ -73,7 +73,8 @@ export function detectMarketAndOptimizeSEO(
     defaultTitle: string,
     defaultDescription: string
 ): MarketDetection {
-    let detectedMarket: "general" | "switzerland" | "spain" = "switzerland"; // Default to Swiss market
+    // "general" emits no geo metas; only the homes and the geo hubs target a market.
+    let detectedMarket: "general" | "switzerland" | "spain" = "general";
     let detectedCity = "general";
     let enhancedTitle = defaultTitle;
     let enhancedDescription = defaultDescription;
@@ -87,6 +88,9 @@ export function detectMarketAndOptimizeSEO(
         // "/index.html" -> "/" and strips ".html"/trailing slashes (so geo pages match too).
         const path = normalizePathname(currentUrl.pathname);
         const pathSegments = path.split("/").filter(Boolean);
+        // The language branches below rewrite the title: they must only fire on that
+        // language's home ("/fr"), never on its blog or other pages ("/fr/blog/x").
+        const isLanguageHome = path === `/${language}`;
 
         // Swiss cities detection with enhanced targeting
         const swissCities = [
@@ -151,7 +155,7 @@ export function detectMarketAndOptimizeSEO(
             }
         }
         // Swiss languages detection (French, German) - Target Swiss market
-        else if (language === "fr" || language === "de") {
+        else if (isLanguageHome && (language === "fr" || language === "de")) {
             detectedMarket = "switzerland";
 
             if (language === "fr") {
@@ -183,7 +187,7 @@ export function detectMarketAndOptimizeSEO(
                 "desarrollador backend madrid, desarrollador backend barcelona, python desarrollador españa, ingeniero software madrid";
         }
         // Spanish language home (general / Switzerland-oriented)
-        else if (language === "es") {
+        else if (isLanguageHome && language === "es") {
             detectedMarket = "spain";
             enhancedTitle =
                 "Oriol Macias - Desarrollador Backend Senior | España y Suiza";
@@ -194,6 +198,7 @@ export function detectMarketAndOptimizeSEO(
         }
         // Homepage brand optimization
         else if (path === "/") {
+            detectedMarket = "switzerland";
             enhancedTitle =
                 "Oriol Macias - Senior Backend Developer | Switzerland-Ready";
             enhancedDescription =
