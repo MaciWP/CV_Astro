@@ -114,12 +114,7 @@ const t = messages(lang).education;
 </section>
 
 <script>
-  function initEducationSection() {
-    const sections = document.querySelectorAll('.education-section:not(.initialized)');
-
-    sections.forEach(section => {
-      section.classList.add('initialized');
-
+  document.querySelectorAll('.education-section').forEach(section => {
       const toggleBtn = section.querySelector('.education-toggle');
       const secondaryContent = section.querySelector<HTMLElement>('.secondary-education');
 
@@ -150,13 +145,5 @@ const t = messages(lang).education;
           }
         });
       }
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initEducationSection);
-  } else {
-    initEducationSection();
-  }
-  document.addEventListener('astro:page-load', initEducationSection);
+  });
 </script>

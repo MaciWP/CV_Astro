@@ -377,6 +377,19 @@ const isMultilingualPage =
           </footer>
     </div>
 
+    <!-- Scroll-reveal for [data-reveal] sections: adds `visible` once 10% is in view;
+         each section's CSS runs its slide-in from there. -->
+    <script>
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('[data-reveal]').forEach((section) => revealObserver.observe(section));
+    </script>
+
     <!-- Scroll Animations Script -->
     <script src="/scripts/animations.js" defer></script>
 
