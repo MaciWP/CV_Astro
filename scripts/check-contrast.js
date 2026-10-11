@@ -140,3 +140,8 @@ if (issues.length > 0) {
 const reportPath = path.join(__dirname, '../contrast-report.json');
 fs.writeFileSync(reportPath, JSON.stringify(results, null, 2));
 console.log(`\n📝 Report saved to: ${reportPath}`);
+
+// A gate, not a report: any pair below AA fails `pnpm run check`.
+if (issues.length > 0) {
+    process.exitCode = 1;
+}
