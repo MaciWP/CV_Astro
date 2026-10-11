@@ -25,10 +25,10 @@ const translatedNavItems = getNavItems(lang);
 // language (/blog for en, /<lang>/blog otherwise); highlight it on any blog path.
 const blogHref = lang === 'en' ? '/blog' : `/${lang}/blog`;
 const isBlogSection = Astro.url.pathname.includes('/blog');
-const uiTexts = {
-    downloadCV: getUITranslation('downloadCV', lang),
-    openMenu: getUITranslation('openMenu', lang),
-};
+const uiTexts = Object.fromEntries(
+    ['downloadCV', 'openMenu', 'mainNav', 'githubProfile', 'linkedinProfile', 'darkMode', 'language', 'returnedToTop']
+        .map((key) => [key, getUITranslation(key, lang)])
+);
 
 // Language options for selector
 const languageOptions = [
@@ -42,9 +42,9 @@ const languageOptions = [
 <nav
     id="main-navbar"
     class="py-4 sticky top-0 z-50 bg-white/50 dark:bg-dark-primary/50 backdrop-blur-xs border-b border-light-border dark:border-dark-border"
-    role="navigation"
-    aria-label="Main Navigation"
+    aria-label={uiTexts.mainNav}
     data-lang={lang}
+    data-returned-to-top={uiTexts.returnedToTop}
 >
     <div class="container mx-auto px-4 flex justify-between items-center max-w-5xl">
         <!-- Logo section -->
@@ -53,7 +53,6 @@ const languageOptions = [
                 id="navbar-logo"
                 href={homeHref}
                 class="flex items-center gap-2 cursor-pointer no-underline"
-                aria-label="Oriol Macias — home"
             >
                 <span class="w-12 h-12 flex items-center justify-center bg-brand-red text-white text-lg font-bold" aria-hidden="true">OM</span>
                 <span class="font-medium tracking-tight whitespace-nowrap">Oriol Macias</span>
@@ -66,7 +65,7 @@ const languageOptions = [
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
-                    aria-label="GitHub Profile"
+                    aria-label={uiTexts.githubProfile}
                 >
                     <SvgIcons name="github" class="w-5 h-5" />
                 </a>
@@ -75,7 +74,7 @@ const languageOptions = [
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
-                    aria-label="LinkedIn Profile"
+                    aria-label={uiTexts.linkedinProfile}
                 >
                     <SvgIcons name="linkedin" class="w-5 h-5" />
                 </a>
@@ -123,8 +122,9 @@ const languageOptions = [
                 <button
                     id="lang-toggle"
                     class="flex items-center space-x-1 p-2 rounded-none border border-gray-300 dark:border-gray-600 hover:border-brand-red hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-xs focus:border-brand-red focus:outline-hidden focus:ring-2 focus:ring-brand-red bg-light-surface dark:bg-dark-surface transition-all duration-200"
+                    aria-label={`${uiTexts.language}: ${lang.toUpperCase()}`}
                     aria-expanded="false"
-                    aria-haspopup="listbox"
+                    aria-controls="lang-dropdown"
                 >
                     <span class="text-sm font-medium">{lang.toUpperCase()}</span>
                     <svg class="w-4 h-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -134,15 +134,14 @@ const languageOptions = [
                 <div
                     id="lang-dropdown"
                     class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-none shadow-lg z-50 overflow-hidden"
-                    role="listbox"
                 >
                     <div class="py-1">
                         {languageOptions.map((option) => (
                             <button
                                 class={`lang-option w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${lang === option.code ? 'bg-brand-red/10 text-brand-red' : 'text-gray-700 dark:text-gray-200'}`}
                                 data-lang={option.code}
-                                role="option"
-                                aria-selected={lang === option.code ? "true" : "false"}
+                                lang={option.code}
+                                aria-current={lang === option.code ? "true" : undefined}
                             >
                                 {option.name}
                             </button>
@@ -155,7 +154,7 @@ const languageOptions = [
             <button
                 id="theme-toggle"
                 class="p-2 rounded-none text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 focus:outline-hidden focus:ring-2 focus:ring-brand-red focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                aria-label="Switch to light mode"
+                aria-label={uiTexts.darkMode}
                 aria-pressed="true"
                 type="button"
             >
@@ -167,7 +166,6 @@ const languageOptions = [
                 <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
-                <span class="sr-only">Switch theme</span>
             </button>
 
             <!-- Download CV Button (desktop) -->
@@ -188,7 +186,6 @@ const languageOptions = [
                 aria-label={uiTexts.openMenu}
                 aria-expanded="false"
                 aria-controls="mobile-menu"
-                aria-haspopup="menu"
             >
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -202,15 +199,12 @@ const languageOptions = [
     <div
         id="mobile-menu"
         class="md:hidden hidden absolute left-0 right-0 px-4 pt-2 pb-4 bg-white dark:bg-dark-primary border-b border-light-border dark:border-dark-border shadow-lg"
-        role="menu"
-        aria-labelledby="mobile-menu-button"
     >
         <div class="flex flex-col space-y-3">
             {translatedNavItems.map((item) => (
                 <a
                     href={`${homeHref}${item.href}`}
                     class="mobile-nav-link text-sm font-medium py-2 px-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-                    role="menuitem"
                     data-section={item.id}
                 >
                     {item.name}
@@ -227,7 +221,6 @@ const languageOptions = [
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200',
                 ]}
                 aria-current={isBlogSection ? 'page' : undefined}
-                role="menuitem"
             >
                 Blog
             </a>
@@ -239,8 +232,7 @@ const languageOptions = [
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
-                    aria-label="GitHub Profile"
-                    role="menuitem"
+                    aria-label={uiTexts.githubProfile}
                 >
                     <SvgIcons name="github" class="w-5 h-5" />
                 </a>
@@ -249,8 +241,7 @@ const languageOptions = [
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
-                    aria-label="LinkedIn Profile"
-                    role="menuitem"
+                    aria-label={uiTexts.linkedinProfile}
                 >
                     <SvgIcons name="linkedin" class="w-5 h-5" />
                 </a>
@@ -261,7 +252,6 @@ const languageOptions = [
                 href="/OriolMacias_CV.pdf"
                 download="OriolMacias_CV.pdf"
                 class="inline-flex items-center justify-center mt-3 px-3 py-2 text-sm text-white bg-brand-red rounded-none hover:bg-red-700 hover:shadow-md transition-all duration-200 dark:hover:bg-red-600"
-                role="menuitem"
             >
                 <span class="mr-1.5"><SvgIcons name="download" class="w-4 h-4" /></span>
                 <span>{uiTexts.downloadCV}</span>
@@ -313,7 +303,6 @@ function initNavbar() {
         if (sunIcon && moonIcon && themeBtn) {
             sunIcon.classList.toggle('hidden', !isDark);
             moonIcon.classList.toggle('hidden', isDark);
-            themeBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
             themeBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
         }
     }
@@ -547,7 +536,7 @@ function initNavbar() {
             spyUnlockTimer = setTimeout(() => { spyLocked = false; computeActiveSection(); }, 650);
             history.pushState(null, '', window.location.pathname);
             if (window.announceToScreenReader) {
-                window.announceToScreenReader('Returned to the top of the page');
+                window.announceToScreenReader(navbar?.dataset.returnedToTop ?? '');
             }
         }
         // Otherwise let the <a href> navigate to the language home normally.
