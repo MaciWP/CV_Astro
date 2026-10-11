@@ -241,30 +241,24 @@ function getProjectIconName(project: { icon?: string }): string {
 </section>
 
 <style>
-    /* Initial hidden state only with JS (progressive enhancement). */
+    /* Slide-only reveal, like the other sections: never animate opacity (Lighthouse's
+       old axe samples text mid-fade as low contrast, axe-core #1866/#2171). Applies
+       only with JS; without JS, content is in place. */
     :global(html.js-enabled) .section-header,
     :global(html.js-enabled) .footer-note {
-        opacity: 0;
         transform: translateY(20px);
-        transition: opacity 400ms ease-out, transform 400ms ease-out;
+        transition: transform 400ms ease-out;
     }
 
     /* Project cards use CSS animation for both static and dynamically loaded cards */
     .project-card {
-        animation: projectCardFadeIn 400ms ease-out forwards;
+        animation: projectCardSlideIn 400ms ease-out backwards;
         animation-delay: var(--delay, 0ms);
-        opacity: 0;
-        transform: translateY(20px);
     }
 
-    @keyframes projectCardFadeIn {
+    @keyframes projectCardSlideIn {
         from {
-            opacity: 0;
             transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
         }
     }
 
@@ -279,7 +273,6 @@ function getProjectIconName(project: { icon?: string }): string {
     /* Visible state for header and footer */
     .projects-section.visible .section-header,
     .projects-section.visible .footer-note {
-        opacity: 1;
         transform: translateY(0);
     }
 
