@@ -100,6 +100,9 @@ const isMultilingualPage =
 <!doctype html>
 <html lang={lang} class="dark" dir="ltr">
   <head>
+    <!-- charset must sit in the first 1024 bytes (HTML spec), so it goes first -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- LCP Image Preload - WebP is smaller (8.6KB vs 13KB AVIF) -->
     <link
       rel="preload"
@@ -147,8 +150,6 @@ const isMultilingualPage =
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#D83333" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Enhanced SEO Meta tags -->
     <title>{marketData.title}</title>
@@ -409,15 +410,15 @@ const isMultilingualPage =
           </footer>
     </div>
 
-  </body>
-  <!-- Scroll Animations Script -->
-  <script src="/scripts/animations.js" defer></script>
+    <!-- Scroll Animations Script -->
+    <script src="/scripts/animations.js" defer></script>
 
-  <!-- Service Worker registration - deferred -->
-  <script is:inline>
-    if(location.hostname!=='localhost'&&'serviceWorker'in navigator){
-      window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
-    }
-  </script>
+    <!-- Service Worker registration - deferred -->
+    <script is:inline>
+      if(location.hostname!=='localhost'&&'serviceWorker'in navigator){
+        window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+      }
+    </script>
+  </body>
 </html>
 
