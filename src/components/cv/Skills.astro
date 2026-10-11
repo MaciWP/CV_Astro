@@ -44,9 +44,9 @@ const categories = [
         <div class={`space-y-4 skill-category-animate${category.full ? ' md:col-span-2' : ''}`} style={`--anim-delay: ${category.delay}ms;`}>
           <div class="border-b border-light-border dark:border-gray-700 pb-3 mb-4">
             <h3 class="text-lg font-semibold flex items-center gap-2">
-              <div class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
+              <span class="w-8 h-8 bg-red-100 dark:bg-red-900/20 flex items-center justify-center rounded-none">
                 <SvgIcons name={category.icon} class="w-4 h-4 text-brand-red" />
-              </div>
+              </span>
               {getSectionTitle(category.key, lang)}
             </h3>
           </div>
