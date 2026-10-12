@@ -1,10 +1,22 @@
 /**
  * Projects data with multilingual support
- * File: src/data/projects.js
+ * File: src/data/projects.ts
  */
 
-// Import helper function from new unified icons system
-import { normalizeLang } from './_lang';
+import { normalizeLang, type Localized } from '../i18n';
+
+interface ProjectItem {
+    id: string;
+    title: Localized;
+    description: Localized;
+    longDescription: Localized;
+    keyFeatures: Localized<string[]>;
+    technologies: string[];
+    icon: string;
+    highlight?: boolean;
+    githubUrl?: string;
+    company?: string;
+}
 
 // Personal projects with GitHub links and multilingual descriptions
 const personalProjectsData = [
@@ -228,7 +240,7 @@ const personalProjectsData = [
             ]
         }
     }
-];
+] satisfies ProjectItem[];
 
 // Professional projects without GitHub links (proprietary) with multilingual support
 const professionalProjectsData = [
@@ -570,41 +582,41 @@ const professionalProjectsData = [
             ]
         }
     }
-];
+] satisfies ProjectItem[];
 
 /**
  * Get personal projects in the specified language
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Projects with texts in the specified language
+ * @param lang - Language code (en, es, fr, de)
+ * @returns Projects with texts in the specified language
  */
-export function getPersonalProjects(lang = 'en') {
+export function getPersonalProjects(lang?: string) {
     const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return personalProjectsData.map(project => ({
         ...project,
-        title: project.title[language] || project.title.en,
-        description: project.description[language] || project.description.en,
-        longDescription: project.longDescription[language] || project.longDescription.en,
-        keyFeatures: project.keyFeatures[language] || project.keyFeatures.en
+        title: project.title[language],
+        description: project.description[language],
+        longDescription: project.longDescription[language],
+        keyFeatures: project.keyFeatures[language]
     }));
 }
 
 /**
  * Get professional projects in the specified language
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Projects with texts in the specified language
+ * @param lang - Language code (en, es, fr, de)
+ * @returns Projects with texts in the specified language
  */
-export function getProfessionalProjects(lang = 'en') {
+export function getProfessionalProjects(lang?: string) {
     const language = normalizeLang(lang);
 
     // Transform data structure to use the specified language
     return professionalProjectsData.map(project => ({
         ...project,
-        title: project.title[language] || project.title.en,
-        description: project.description[language] || project.description.en,
-        longDescription: project.longDescription[language] || project.longDescription.en,
-        keyFeatures: project.keyFeatures[language] || project.keyFeatures.en
+        title: project.title[language],
+        description: project.description[language],
+        longDescription: project.longDescription[language],
+        keyFeatures: project.keyFeatures[language]
     }));
 }
 

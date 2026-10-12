@@ -5,11 +5,14 @@
  * @file src/components/SkipToContent.astro
  */
 
+import { messages } from "../i18n";
+
 interface Props {
+    lang?: string;
     targetId?: string;
 }
 
-const { targetId = "cv-content" } = Astro.props;
+const { lang, targetId = "cv-content" } = Astro.props;
 ---
 
 <a
@@ -17,7 +20,7 @@ const { targetId = "cv-content" } = Astro.props;
     class="skip-to-content"
     data-target={targetId}
 >
-    Skip to main content
+    {messages(lang).navbar.skipToContent}
 </a>
 
 <style>
@@ -55,11 +58,6 @@ const { targetId = "cv-content" } = Astro.props;
             target.focus({ preventScroll: false });
             target.scrollIntoView({ behavior: 'smooth' });
             target.addEventListener('blur', () => target.removeAttribute('tabIndex'), { once: true });
-
-            // Announce to screen reader if available
-            if (typeof window !== 'undefined' && window.announceToScreenReader) {
-                window.announceToScreenReader('Skipped to main content');
-            }
         }
     });
 </script>

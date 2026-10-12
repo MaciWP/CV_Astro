@@ -9,6 +9,7 @@
  *   { name: "Spain", url: "https://oriolmacias.dev/spain" }
  * ]} />
  */
+import JsonLd from './JsonLd.astro';
 
 interface BreadcrumbItem {
   name: string;
@@ -33,4 +34,4 @@ const breadcrumbSchema = {
 };
 ---
 
-<Fragment set:html={`<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`} />
+<JsonLd data={breadcrumbSchema} />

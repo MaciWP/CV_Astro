@@ -5,6 +5,7 @@
  * @file src/components/BlogList.astro
  */
 import { slugFromId, blogUrl, type BlogEntry } from '../utils/blog';
+import { messages, normalizeLang, DATE_LOCALE } from '../i18n';
 
 interface Props {
   lang: string;
@@ -12,32 +13,9 @@ interface Props {
 }
 const { lang, posts } = Astro.props;
 
-const STRINGS: Record<string, { subtitle: string; empty: string; tags: string }> = {
-  en: {
-    subtitle: 'Notes on backend engineering, industrial protocols, and developer tooling.',
-    empty: 'No posts yet — check back soon.',
-    tags: 'Tags',
-  },
-  es: {
-    subtitle: 'Notas sobre ingeniería backend, protocolos industriales y herramientas de desarrollo.',
-    empty: 'Aún no hay entradas — vuelve pronto.',
-    tags: 'Etiquetas',
-  },
-  fr: {
-    subtitle: "Notes sur l'ingénierie backend, les protocoles industriels et l'outillage de développement.",
-    empty: "Pas encore d'articles — revenez bientôt.",
-    tags: 'Tags',
-  },
-  de: {
-    subtitle: 'Notizen zu Backend-Engineering, Industrieprotokollen und Entwickler-Tooling.',
-    empty: 'Noch keine Beiträge — schau bald wieder vorbei.',
-    tags: 'Tags',
-  },
-};
-const DATE_LOCALE: Record<string, string> = { en: 'en-GB', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+const t = messages(lang).blog;
 
-const t = STRINGS[lang] ?? STRINGS.en;
-const fmt = new Intl.DateTimeFormat(DATE_LOCALE[lang] ?? 'en-GB', {
+const fmt = new Intl.DateTimeFormat(DATE_LOCALE[normalizeLang(lang)], {
   day: 'numeric',
   month: 'short',
   year: 'numeric',

@@ -8,16 +8,18 @@ import BlogList from '../../components/BlogList.astro';
 import LanguageAlternates from '../../components/LanguageAlternates.astro';
 import { getCollection } from 'astro:content';
 import { localizedPosts } from '../../utils/blog';
+import { messages } from '../../i18n';
+import { SITE_URL } from '../../data/profile';
 
 const posts = localizedPosts(await getCollection('blog'), 'en');
-const SITE = 'https://oriolmacias.dev';
+const m = messages('en').blog.meta;
 ---
 
 <Layout
-  title="Blog — Oriol Macias"
-  description="Multilingual notes (en/es/fr/de) on backend development, industrial protocol integration (SNMP/Modbus/BACnet), data center infrastructure, and developer tooling — by Oriol Macias."
+  title={m.title}
+  description={m.description}
   lang="en"
-  canonicalUrl={`${SITE}/blog`}
+  canonicalUrl={`${SITE_URL}/blog`}
 >
   <LanguageAlternates slot="head" currentLang="en" currentPath="/blog" />
   <BlogList lang="en" posts={posts} />

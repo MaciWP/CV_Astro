@@ -1,9 +1,9 @@
 /**
  * Skills data for CV with multilingual support
- * File: src/data/skills.js
+ * File: src/data/skills.ts
  */
 
-import { normalizeLang } from './_lang';
+import { normalizeLang, type Localized } from '../i18n';
 
 // Section titles with multilingual support
 // Reorganized for Swiss market and ATS optimization
@@ -44,7 +44,7 @@ const sectionTitles = {
         fr: "Bases de Données",
         de: "Datenbanken"
     },
-};
+} satisfies Record<string, Localized>;
 
 // Base skills data with consistent IDs
 // Reorganized for Swiss market: cleaner categories, removed IDEs, focused on ATS keywords
@@ -101,21 +101,8 @@ const skillsData = {
     ],
 };
 
-/**
- * Get section title in the specified language
- * @param {string} section - Section key
- * @param {string} lang - Language code (en, es, fr)
- * @returns {string} Section title in the specified language
- */
-export const getSectionTitle = (section, lang = 'en') => {
-    const language = normalizeLang(lang);
-
-    if (sectionTitles[section] && sectionTitles[section][language]) {
-        return sectionTitles[section][language];
-    }
-
-    // Fallback to English or section key itself
-    return sectionTitles[section]?.en || section;
-};
+/** Title of a skills section in the given language. */
+export const getSectionTitle = (section: keyof typeof sectionTitles, lang?: string) =>
+    sectionTitles[section][normalizeLang(lang)];
 
 export default skillsData;

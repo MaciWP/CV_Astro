@@ -6,6 +6,7 @@
  */
 
 import { normalizePathname } from '../utils/seo';
+import { SITE_URL } from '../data/profile';
 
 interface Props {
     currentLang?: string;
@@ -15,7 +16,7 @@ interface Props {
 const { currentLang = 'en', currentPath = '/' } = Astro.props;
 
 // Website base URL
-const baseUrl = 'https://oriolmacias.dev';
+const baseUrl = SITE_URL;
 
 // Normalize the path (ensure it starts with /)
 const normalizedPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`;

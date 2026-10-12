@@ -9,6 +9,8 @@
  * ]} lang="en" />
  */
 import SvgIcons from './icons/SvgIcons.astro';
+import { messages } from '../i18n';
+import JsonLd from './JsonLd.astro';
 
 interface FAQ {
   question: string;
@@ -35,18 +37,10 @@ const faqSchema = {
   }))
 };
 
-// Translations for section title
-const titles: Record<string, string> = {
-  en: "Frequently Asked Questions",
-  es: "Preguntas Frecuentes",
-  fr: "Questions Fréquentes",
-  de: "Häufig gestellte Fragen"
-};
-
-const title = titles[lang] || titles.en;
+const title = messages(lang).faq.title;
 ---
 
-<section class="mt-16 mb-8 faq-section">
+<section class="mt-16 mb-8 faq-section" data-reveal>
   <div class="flex items-center mb-6 section-header">
     <div class="w-10 h-10 flex items-center justify-center bg-brand-red text-white rounded-none section-icon">
       <SvgIcons name="question-circle" class="w-4 h-4" />
@@ -96,39 +90,4 @@ const title = titles[lang] || titles.en;
     }
 </style>
 
-<script>
-    function initFAQSection() {
-        const sections = document.querySelectorAll('.faq-section:not(.initialized)');
-
-        sections.forEach(section => {
-            section.classList.add('initialized');
-
-            // IntersectionObserver for scroll animation
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.disconnect();
-                        }
-                    });
-                },
-                { threshold: 0.1 }
-            );
-
-            observer.observe(section);
-        });
-    }
-
-    // Run when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFAQSection);
-    } else {
-        initFAQSection();
-    }
-
-    // Re-run on Astro page transitions
-    document.addEventListener('astro:page-load', initFAQSection);
-</script>
-
-<Fragment set:html={`<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`} />
+<JsonLd data={faqSchema} />

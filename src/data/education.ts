@@ -1,9 +1,9 @@
 /**
  * Education data for CV with multilingual support
- * File: src/data/education.js
+ * File: src/data/education.ts
  */
 
-import { normalizeLang } from './_lang';
+import { normalizeLang, type Lang, type Localized } from '../i18n';
 
 // Base education data structure with translations
 // Cleaned for Swiss market: only most relevant entries (3 max)
@@ -49,7 +49,7 @@ const primaryEducationData = [
             de: "Grundausbildung in Computer-Hardware, Netzwerken und Systemadministration."
         }
     }
-];
+] satisfies EducationItem[];
 
 // Secondary education items (collapsible)
 const secondaryEducationData = [
@@ -138,34 +138,43 @@ const secondaryEducationData = [
             de: "Obligatorische Sekundarschulbildung abgeschlossen."
         }
     }
-];
+] satisfies EducationItem[];
+
+interface EducationItem {
+    id: string;
+    title: Localized;
+    institution: string;
+    period: string;
+    badge?: Localized;
+    details: Localized;
+}
 
 // Helper to transform education data to language-specific format
-const transformEducation = (data, language) => data.map(edu => ({
+const transformEducation = (data: EducationItem[], language: Lang) => data.map(edu => ({
     id: edu.id,
-    title: edu.title[language] || edu.title.en,
+    title: edu.title[language],
     institution: edu.institution,
     period: edu.period,
-    badge: edu.badge ? (edu.badge[language] || edu.badge.en) : null,
-    details: edu.details[language] || edu.details.en
+    badge: edu.badge ? edu.badge[language] : null,
+    details: edu.details[language]
 }));
 
 /**
  * Get primary education items (always visible)
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Primary education items
+ * @param lang - Language code (en, es, fr, de)
+ * @returns Primary education items
  */
-export const getPrimaryEducation = (lang = 'en') => {
+export const getPrimaryEducation = (lang?: string) => {
     const language = normalizeLang(lang);
     return transformEducation(primaryEducationData, language);
 };
 
 /**
  * Get secondary education items (collapsible)
- * @param {string} lang - Language code (en, es, fr, de)
- * @returns {Array} Secondary education items
+ * @param lang - Language code (en, es, fr, de)
+ * @returns Secondary education items
  */
-export const getSecondaryEducation = (lang = 'en') => {
+export const getSecondaryEducation = (lang?: string) => {
     const language = normalizeLang(lang);
     return transformEducation(secondaryEducationData, language);
 };

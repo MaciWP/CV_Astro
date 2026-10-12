@@ -3,6 +3,14 @@
  * @file src/utils/seo.ts
  * @description Centralized logic for market detection and schema generation
  */
+import { SITE_URL, profile } from "../data/profile";
+
+/**
+ * Serializes structured data for a <script type="application/ld+json">.
+ * `<` becomes \u003c, so no string in the data can close the script early.
+ */
+export const serializeJsonLd = (data: unknown, pretty = false): string =>
+    JSON.stringify(data, null, pretty ? 2 : undefined).replace(/</g, "\\u003c");
 
 export interface MarketDetection {
     market: "general" | "switzerland" | "spain";
@@ -227,16 +235,16 @@ export function generatePersonStructuredData(): PersonSchema {
     return {
         "@context": "https://schema.org",
         "@type": "Person",
-        "@id": "https://oriolmacias.dev/#oriol-macias-dev",
+        "@id": `${SITE_URL}/#oriol-macias-dev`,
         name: "Oriol Macias",
         alternateName: ["Oriol Dev", "Macias Dev", "Oriol Macias Dev"],
         description: "Senior Backend Developer known professionally as Oriol Macias Dev",
-        url: "https://oriolmacias.dev",
-        mainEntityOfPage: "https://oriolmacias.dev",
+        url: SITE_URL,
+        mainEntityOfPage: SITE_URL,
         jobTitle: "Senior Backend Developer",
         sameAs: [
-            "https://linkedin.com/in/oriolmaciasbadosa",
-            "https://github.com/MaciWP",
+            profile.linkedin,
+            profile.github,
         ],
         worksFor: {
             "@type": "Organization",
@@ -246,7 +254,7 @@ export function generatePersonStructuredData(): PersonSchema {
         brand: {
             "@type": "Brand",
             name: "Oriol Macias Dev",
-            url: "https://oriolmacias.dev",
+            url: SITE_URL,
         },
         knowsAbout: [
             "Software Development",
@@ -298,8 +306,8 @@ export function generateProfilePageStructuredData(): ProfilePageSchema {
     return {
         "@context": "https://schema.org",
         "@type": "ProfilePage",
-        "@id": "https://oriolmacias.dev/#profilepage",
-        url: "https://oriolmacias.dev/",
+        "@id": `${SITE_URL}/#profilepage`,
+        url: `${SITE_URL}/`,
         dateModified: CONTENT_REVISED,
         mainEntity: person,
     };
@@ -327,12 +335,12 @@ export function generateWebSiteStructuredData(): WebSiteSchema {
     return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "@id": "https://oriolmacias.dev/#website",
-        url: "https://oriolmacias.dev",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
         name: "Oriol Macias - Backend Developer Portfolio",
         description: "Professional CV and portfolio for Oriol Macias, Backend Developer specialized in industrial protocols and Python/Django",
         publisher: {
-            "@id": "https://oriolmacias.dev/#oriol-macias-dev"
+            "@id": `${SITE_URL}/#oriol-macias-dev`
         },
         inLanguage: ["en", "es", "fr", "de"]
     };

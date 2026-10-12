@@ -1,0 +1,18 @@
+---
+/**
+ * Emits one JSON-LD <script>, escaped by serializeJsonLd (src/utils/seo.ts).
+ * @file src/components/JsonLd.astro
+ */
+import { serializeJsonLd } from "../utils/seo";
+
+interface Props {
+    data: unknown;
+    /** Indent the JSON (kept for the head schemas' existing output). */
+    pretty?: boolean;
+}
+
+const { data, pretty = false } = Astro.props;
+const json = serializeJsonLd(data, pretty);
+---
+
+<Fragment set:html={`<script type="application/ld+json">${json}</script>`} />

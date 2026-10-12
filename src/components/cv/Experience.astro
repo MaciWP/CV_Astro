@@ -5,6 +5,7 @@
  */
 import { getExperiences } from '../../data/experiences';
 import SvgIcons from '../icons/SvgIcons.astro';
+import { messages } from '../../i18n';
 
 interface Props {
     lang?: string;
@@ -15,48 +16,11 @@ const { lang = 'en' } = Astro.props;
 // Get translated data at build time
 const experiences = getExperiences(lang);
 
-// UI translations
-const translationsByLang: Record<string, Record<string, string>> = {
-    en: {
-        title: 'Work Experience',
-        responsibilities: 'Responsibilities',
-        keyAchievements: 'Key Achievements'
-    },
-    es: {
-        title: 'Experiencia Laboral',
-        responsibilities: 'Responsabilidades',
-        keyAchievements: 'Logros Clave'
-    },
-    fr: {
-        title: 'Expérience Professionnelle',
-        responsibilities: 'Responsabilités',
-        keyAchievements: 'Réalisations Clés'
-    },
-    de: {
-        title: 'Berufserfahrung',
-        responsibilities: 'Verantwortlichkeiten',
-        keyAchievements: 'Wichtige Erfolge'
-    }
-};
+const t = messages(lang).experience;
 
-const t = translationsByLang[lang] || translationsByLang.en;
-
-// Additional translations for collapsible sections
-const showDetailsText: Record<string, string> = {
-    en: 'Show details',
-    es: 'Ver detalles',
-    fr: 'Voir détails',
-    de: 'Details anzeigen'
-};
-const hideDetailsText: Record<string, string> = {
-    en: 'Hide details',
-    es: 'Ocultar detalles',
-    fr: 'Masquer détails',
-    de: 'Details ausblenden'
-};
 ---
 
-<section id="experience" class="scroll-mt-20 mb-8 sm:mb-16 mt-2 sm:mt-8 experience-section">
+<section id="experience" class="scroll-mt-20 mb-8 sm:mb-16 mt-2 sm:mt-8 experience-section" data-reveal>
     <div class="flex items-center gap-4 mb-10 section-header">
         <div class="h-10 w-10 bg-brand-red dark:bg-brand-red rounded-none flex items-center justify-center shrink-0 transition-colors duration-150 section-icon">
             <SvgIcons name="briefcase" class="w-4 h-4 text-white" />
@@ -83,11 +47,11 @@ const hideDetailsText: Record<string, string> = {
                             <button
                                 class="collapsible-toggle w-8 h-8 flex items-center justify-center text-brand-red hover:bg-brand-red/10 rounded-none transition-colors"
                                 data-job-id={job.id}
-                                data-show-text={showDetailsText[lang]}
-                                data-hide-text={hideDetailsText[lang]}
+                                data-show-text={t.showDetails}
+                                data-hide-text={t.hideDetails}
                                 aria-expanded="false"
                                 aria-controls={`job-details-${job.id}`}
-                                aria-label={showDetailsText[lang]}
+                                aria-label={t.showDetails}
                             >
                                 <span class="toggle-icon transition-transform duration-200">
                                     <SvgIcons name="chevron-right" class="w-3 h-3" />
@@ -253,68 +217,37 @@ const hideDetailsText: Record<string, string> = {
 </style>
 
 <script>
-    function initExperienceSection() {
-        const sections = document.querySelectorAll('.experience-section:not(.initialized)');
+    document.querySelectorAll('.experience-section').forEach(section => {
+        // Collapsible job card functionality (for Early Career, etc.)
+        const collapsibleToggles = section.querySelectorAll('.collapsible-toggle');
+        collapsibleToggles.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const jobId = btn.getAttribute('data-job-id');
+                const content = section.querySelector(`.collapsible-content[data-job-content="${jobId}"]`);
+                const jobItem = btn.closest('.collapsible-job');
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
 
-        sections.forEach(section => {
-            section.classList.add('initialized');
-
-            // IntersectionObserver for scroll animation
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.disconnect();
-                        }
-                    });
-                },
-                { threshold: 0.1 }
-            );
-
-            observer.observe(section);
-
-            // Collapsible job card functionality (for Early Career, etc.)
-            const collapsibleToggles = section.querySelectorAll('.collapsible-toggle');
-            collapsibleToggles.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const jobId = btn.getAttribute('data-job-id');
-                    const content = section.querySelector(`.collapsible-content[data-job-content="${jobId}"]`);
-                    const jobItem = btn.closest('.collapsible-job');
-                    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-                    if (content) {
-                        if (isExpanded) {
-                            content.classList.remove('expanded');
-                            // Hide only after the 300ms max-height transition, or it never plays.
-                            setTimeout(() => {
-                                if (!content.classList.contains('expanded')) content.classList.add('hidden');
-                            }, 300);
-                            jobItem?.classList.remove('expanded');
-                            btn.setAttribute('aria-expanded', 'false');
-                            btn.setAttribute('aria-label', btn.getAttribute('data-show-text') || 'Show details');
-                        } else {
-                            content.classList.remove('hidden');
-                            requestAnimationFrame(() => {
-                                content.classList.add('expanded');
-                            });
-                            jobItem?.classList.add('expanded');
-                            btn.setAttribute('aria-expanded', 'true');
-                            btn.setAttribute('aria-label', btn.getAttribute('data-hide-text') || 'Hide details');
-                        }
+                if (content) {
+                    if (isExpanded) {
+                        content.classList.remove('expanded');
+                        // Hide only after the 300ms max-height transition, or it never plays.
+                        setTimeout(() => {
+                            if (!content.classList.contains('expanded')) content.classList.add('hidden');
+                        }, 300);
+                        jobItem?.classList.remove('expanded');
+                        btn.setAttribute('aria-expanded', 'false');
+                        btn.setAttribute('aria-label', btn.getAttribute('data-show-text') || 'Show details');
+                    } else {
+                        content.classList.remove('hidden');
+                        requestAnimationFrame(() => {
+                            content.classList.add('expanded');
+                        });
+                        jobItem?.classList.add('expanded');
+                        btn.setAttribute('aria-expanded', 'true');
+                        btn.setAttribute('aria-label', btn.getAttribute('data-hide-text') || 'Hide details');
                     }
-                });
+                }
             });
         });
-    }
-
-    // Run when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initExperienceSection);
-    } else {
-        initExperienceSection();
-    }
-
-    // Re-run on Astro page transitions
-    document.addEventListener('astro:page-load', initExperienceSection);
+    });
 </script>

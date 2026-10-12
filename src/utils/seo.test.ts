@@ -6,6 +6,7 @@ import {
     generateProfilePageStructuredData,
     generateWebSiteStructuredData,
     CONTENT_REVISED,
+    serializeJsonLd,
 } from "./seo";
 
 const at = (path: string, language = "en") =>
@@ -134,5 +135,18 @@ describe("structured data generators", () => {
         const site = generateWebSiteStructuredData();
         expect(site["@type"]).toBe("WebSite");
         expect(site.inLanguage).toEqual(["en", "es", "fr", "de"]);
+    });
+});
+
+describe("serializeJsonLd", () => {
+    it("escapes < so a value cannot close the script element", () => {
+        const out = serializeJsonLd({ name: "</script><script>alert(1)</script>" });
+        expect(out).not.toContain("<");
+        expect(JSON.parse(out).name).toBe("</script><script>alert(1)</script>");
+    });
+
+    it("indents only when asked", () => {
+        expect(serializeJsonLd({ a: 1 })).toBe('{"a":1}');
+        expect(serializeJsonLd({ a: 1 }, true)).toBe('{\n  "a": 1\n}');
     });
 });

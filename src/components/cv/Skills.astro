@@ -25,7 +25,7 @@ const categories = [
   { key: 'libraries', icon: 'puzzle-piece', items: skillsData.libraries, delay: 250, full: true },
   { key: 'protocols', icon: 'network-wired', items: skillsData.protocols, delay: 350, full: true },
   { key: 'devops', icon: 'cogs', items: skillsData.devops, delay: 450, full: true },
-];
+] as const;
 ---
 
 <section id="skills" class="mb-16" aria-labelledby="skills-heading">

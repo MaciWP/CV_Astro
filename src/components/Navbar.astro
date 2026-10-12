@@ -4,7 +4,8 @@
  * Eliminates 131KB of React runtime from initial bundle
  * @file src/components/Navbar.astro
  */
-import { getNavItems, getUITranslation } from '../data/navigation';
+import { messages } from '../i18n';
+import { profile } from '../data/profile';
 import SvgIcons from './icons/SvgIcons.astro';
 
 interface Props {
@@ -16,8 +17,12 @@ const { lang = 'en' } = Astro.props;
 // Logo links to the current language's home (root), preserving the locale.
 const homeHref = lang === 'en' ? '/' : `/${lang}`;
 
-// Get translated nav items and UI texts at build time
-const translatedNavItems = getNavItems(lang);
+const uiTexts = messages(lang).navbar;
+
+// In-page sections, in page order. "About" is left out to save header space;
+// the logo scrolls to the top.
+const translatedNavItems = (['experience', 'skills', 'education', 'languages', 'projects'] as const)
+    .map((id) => ({ id, name: uiTexts.sections[id], href: `#${id}` }));
 
 // Blog is a REAL page link (not an in-page scroll anchor). It deliberately
 // omits the `nav-link`/`data-section` hooks so the navbar JS leaves it as
@@ -25,10 +30,6 @@ const translatedNavItems = getNavItems(lang);
 // language (/blog for en, /<lang>/blog otherwise); highlight it on any blog path.
 const blogHref = lang === 'en' ? '/blog' : `/${lang}/blog`;
 const isBlogSection = Astro.url.pathname.includes('/blog');
-const uiTexts = Object.fromEntries(
-    ['downloadCV', 'openMenu', 'mainNav', 'githubProfile', 'linkedinProfile', 'darkMode', 'language', 'returnedToTop']
-        .map((key) => [key, getUITranslation(key, lang)])
-);
 
 // Language options for selector
 const languageOptions = [
@@ -61,7 +62,7 @@ const languageOptions = [
             <!-- Social links (desktop) -->
             <div class="hidden md:flex items-center gap-3">
                 <a
-                    href="https://github.com/MaciWP"
+                    href={profile.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
@@ -70,7 +71,7 @@ const languageOptions = [
                     <SvgIcons name="github" class="w-5 h-5" />
                 </a>
                 <a
-                    href="https://linkedin.com/in/oriolmaciasbadosa"
+                    href={profile.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
@@ -228,7 +229,7 @@ const languageOptions = [
             <!-- Social links (mobile) -->
             <div class="flex items-center gap-4 py-2 px-3 border-t border-light-border dark:border-gray-700 mt-2">
                 <a
-                    href="https://github.com/MaciWP"
+                    href={profile.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
@@ -237,7 +238,7 @@ const languageOptions = [
                     <SvgIcons name="github" class="w-5 h-5" />
                 </a>
                 <a
-                    href="https://linkedin.com/in/oriolmaciasbadosa"
+                    href={profile.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-red-400 hover:scale-110 transition-all duration-200"
@@ -409,9 +410,7 @@ function initNavbar() {
         spyUnlockTimer = setTimeout(() => { spyLocked = false; computeActiveSection(); }, 650);
         window.scrollTo({ top: position, behavior: 'smooth' });
         history.pushState(null, '', `#${targetId}`);
-        if (window.announceToScreenReader) {
-            window.announceToScreenReader(`Navigated to ${targetId} section`);
-        }
+        window.announceToScreenReader?.(targetElement.querySelector('h2')?.textContent?.trim() ?? '');
     }
 
     // Mobile menu toggle
@@ -516,9 +515,6 @@ function initNavbar() {
         document.documentElement.classList.add(newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcons();
-        if (window.announceToScreenReader) {
-            window.announceToScreenReader(`Theme changed to ${newTheme} mode`);
-        }
     }
 
     // Logo click: the <a> navigates to the current language's home (root). If we're
