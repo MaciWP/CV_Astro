@@ -1,3 +1,0 @@
-# 404 handling for Astro static MPA
-# Do NOT use SPA redirect - Astro generates separate HTML files for each route
-/404 /404.html 404
