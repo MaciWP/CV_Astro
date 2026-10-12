@@ -124,7 +124,7 @@ const isMultilingualPage =
       (function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.className=t;}catch{document.documentElement.className='dark';}})();
     </script>
 
-    <!-- CSP is defined via HTTP headers in public/_headers (Netlify) -->
+    <!-- CSP and the other security headers: public/_headers (Netlify) -->
     <!-- Removing meta tag CSP to avoid "CSP in meta tag" penalty in Best Practices -->
 
     <!-- Local Fonts - Self-hosted for better performance (no external requests) -->

@@ -1,64 +1,22 @@
-# =========================
-# Netlify _headers (production) - with Cloudflare in front
-# =========================
-
-# HTML pages - no cache, must revalidate
-# NOTE: Early Hints (Link header) removed - causes double download when DPR varies
-# The <link rel="preload" imagesrcset> in HTML handles responsive image selection correctly
-/
-  Cache-Control: public, max-age=0, must-revalidate
-  Content-Type: text/html; charset=utf-8
-
-/*.html
-  Cache-Control: public, max-age=0, must-revalidate
-  Content-Type: text/html; charset=utf-8
-
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/images/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/scripts/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/manifest.json
-  Cache-Control: public, max-age=86400
-  Content-Type: application/manifest+json
-
-/robots.txt
-  Cache-Control: public, max-age=86400
-  Content-Type: text/plain; charset=utf-8
-
-/sw.js
-  Cache-Control: no-store
-  Service-Worker-Allowed: /
-
-# Original CSP (blocked Google Analytics) - DISABLED
-#/*
-#  # Strict CSP without Google Analytics / Tag Manager
-#  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-#  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; script-src-elem 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'
-#  Cross-Origin-Opener-Policy: same-origin
-#  Cross-Origin-Resource-Policy: same-origin
-#  X-Content-Type-Options: nosniff
-#  Referrer-Policy: strict-origin-when-cross-origin
+# Netlify response headers: the single source (netlify.toml has no [[headers]]).
+# Cloudflare sits in front and honours these Cache-Control values.
+# HTML keeps Netlify's default (public, max-age=0, must-revalidate).
+# No `Link: rel=preload` header for the hero: the DPR-aware
+# <link rel="preload" imagesrcset> in the HTML picks the right size; a fixed
+# header double-downloaded it on high-DPR screens.
 
 # ===========================================================
-# CSP with 'unsafe-inline' (required for Tailwind + inline styles)
-# Hash-based CSP is NOT viable due to:
-# - astro-compress changes script content after hash calculation
-# - Hundreds of inline style="" attributes from animations
-# - External scripts (Cloudflare Web Analytics) need allowlist
-#
-# giscus (blog comments) additions: script-src + connect-src + frame-src allow
-# https://giscus.app (client.js + the comments iframe); img-src allows
-# https://*.githubusercontent.com (GitHub avatars rendered by giscus). These
-# only take effect on the blog post pages that actually embed giscus; no other
-# page loads it. frame-src keeps 'self' so same-origin frames are unaffected.
+# Security, every response.
+# CSP keeps 'unsafe-inline': @playform/compress rewrites inline scripts after
+# any hash could be taken, components use inline style="" attributes, and
+# Cloudflare Web Analytics needs an allowlist entry.
+# giscus (blog comments, post pages only): script/connect/frame-src allow
+# https://giscus.app; img-src allows GitHub avatars.
+# frame-ancestors 'none' matches X-Frame-Options: DENY (the site is never framed).
+# X-XSS-Protection is not sent: browsers removed the filter and the CSP covers it.
 # ===========================================================
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://giscus.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com https://giscus.app; frame-src 'self' https://giscus.app; manifest-src 'self'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://giscus.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com https://giscus.app; frame-src 'self' https://giscus.app; manifest-src 'self'
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), accelerometer=(), gyroscope=(), magnetometer=()
@@ -66,3 +24,31 @@
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+
+# ===========================================================
+# Caching
+# ===========================================================
+
+# Content-hashed by Vite.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Not hashed, but replaced only under a new file name (generate-images / font swap).
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The service worker must never be long-cached, or returning visitors keep
+# an old worker (Cloudflare once served a days-old sw.js).
+/sw.js
+  Cache-Control: no-store
+  Service-Worker-Allowed: /
+
+/manifest.json
+  Cache-Control: public, max-age=86400
+  Content-Type: application/manifest+json
+
+/robots.txt
+  Cache-Control: public, max-age=86400
