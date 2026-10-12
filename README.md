@@ -8,7 +8,7 @@
 
 [![CI](https://github.com/MaciWP/CV_Astro/actions/workflows/ci.yml/badge.svg)](https://github.com/MaciWP/CV_Astro/actions/workflows/ci.yml)
 ![Lighthouse 100 ×5](https://img.shields.io/badge/Lighthouse-100%20×%205-success?logo=lighthouse&logoColor=white)
-![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-7-BC52EE?logo=astro&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-11-F69220?logo=pnpm&logoColor=white)
@@ -35,7 +35,7 @@ Add a real screenshot at docs/preview.png and uncomment:
 - **Quality gates that actually run on every build:** WCAG colour-contrast, translation-key consistency, and JSON-LD structured-data validation against the real `dist/` output.
 - **Progressive enhancement** — full content renders without JS; animations and interactivity are layered on top.
 - **SEO**: ProfilePage + Person + WebSite JSON-LD, `hreflang` alternates, auto-sitemap, and market-aware metadata.
-- **Security & supply chain**: CSP via HTTP headers; pnpm with an explicit build-script allowlist (esbuild/sharp vetted).
+- **Security & supply chain**: CSP and security headers from one file (`public/_headers`); pnpm with an explicit build-script allowlist (esbuild/sharp vetted).
 - **Installable PWA** with an offline-capable service worker, plus a print-optimised layout (one-click PDF export).
 
 ## 🧰 Tech stack
@@ -69,15 +69,16 @@ pnpm run preview    # serve the production build locally
 
 | Script | What it does |
 |---|---|
-| `pnpm run dev` | Start the dev server |
-| `pnpm run build` | Build for production (`astro build`) |
+| `pnpm run dev` | Start the dev server (`scripts/dev.js` → `astro dev`) |
+| `pnpm run build` | Build for production (`scripts/build.js` → `astro build`; the sitemap is generated during the build) |
 | `pnpm run generate-images` | Regenerate the responsive profile set from `assets/oriol_macias.jpg` (run when the photo changes, then commit) |
+| `pnpm run cv:pdf` | Regenerate `public/OriolMacias_CV.pdf` from the `/cv` page with local Chrome (run locally, then commit) |
 | `pnpm run preview` | Preview the production build |
-| `pnpm run check` | Run all domain gates: contrast + translations + structured data |
+| `pnpm run check` | Run all domain gates: `check:contrast` + `check:translations` + `check:structured-data` (the last reads `dist/`, so build first) |
 | `pnpm run lint` | ESLint (zero errors / zero warnings) |
 | `pnpm run check:types` | Type-check `.astro` and `.ts` files (`astro check`) |
 | `pnpm test` | Run the Vitest unit suite (`src/utils/seo.ts` logic) |
-| `pnpm run a11y:audit` | Lighthouse accessibility audit |
+| `pnpm run a11y:audit` | Lighthouse accessibility audit of the running dev server |
 | `pnpm run clean` | Remove `dist/` and `.astro/` |
 
 ## 📂 Project structure
@@ -87,20 +88,21 @@ src/
 ├── components/
 │   ├── cv/          # CV sections: ProfileHeader, Experience, Skills, …
 │   └── icons/       # SvgIcons.astro — the inline SVG set
-├── data/
-│   └── locales/     # en/es/fr/de translation JSON (the live i18n tree)
+├── data/          # CV content as typed Localized<T> modules, profile.ts, home.ts
+│   └── locales/     # en/es/fr/de UI strings, read through messages() in src/i18n.ts
 ├── layouts/         # Layout.astro (head, CSP, structured data, footer)
 ├── pages/           # /  ·  /es /fr /de  ·  /spain  ·  /switzerland  ·  404
 ├── styles/          # global.css
 └── utils/           # seo.ts — market detection + JSON-LD generators
 scripts/             # build · dev · check-contrast · check-translations
-                     # · validate-structured-data · generate-profile-images
+                     # · validate-structured-data · generate-profile-images · generate-cv-pdf
 ```
 
 ## ✅ Quality & verification
 
-Correctness is enforced on every push by **GitHub Actions CI** (lint → type check →
-build → domain checks → unit tests) and by the Netlify production build:
+Correctness is enforced on every pull request and every push to `main` by **GitHub
+Actions CI** (lint → type check → build → domain checks → unit tests), and each PR gets
+a Netlify deploy preview with a Lighthouse run:
 
 - `pnpm test` — Vitest unit suite for the SEO logic (market detection, path
   normalization, JSON-LD generators)
