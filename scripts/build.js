@@ -1,6 +1,7 @@
 /**
  * Build orchestrator: runs `astro build` and reports timing.
- * (Profile images are generated separately by the `build` script — see package.json.)
+ * Profile images are not built here: `pnpm run generate-images` makes them and
+ * they are committed.
  * File: scripts/build.js
  */
 import { execSync } from 'child_process';

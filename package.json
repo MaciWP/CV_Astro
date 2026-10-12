@@ -36,8 +36,7 @@
     "check:translations": "node scripts/check-translations.js",
     "check:structured-data": "node scripts/validate-structured-data.js",
     "check:types": "astro check",
-    "a11y": "pnpm run check:contrast",
-    "a11y:audit": "lighthouse http://localhost:4321 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
+    "a11y:audit": "pnpm dlx lighthouse@12 http://localhost:4321 --output-path=./lighthouse-report.html --view --chrome-flags=\"--headless\" --only-categories=accessibility",
     "clean": "rimraf dist .astro",
     "lint": "eslint .",
     "test": "vitest run"

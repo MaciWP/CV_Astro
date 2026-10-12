@@ -2,13 +2,14 @@
  * Service Worker — lean caching for a static site.
  * Hashed/static assets (/_astro/*, fonts, images, js, css) are cache-first
  * (content-hashed or rarely change); HTML navigations are network-first so
- * updates show immediately, with a cache fallback for offline.
+ * updates show immediately, with a cache fallback when offline or when the
+ * network stalls past NAV_TIMEOUT_MS.
  * @file public/sw.js
  */
 
 // Bump the version to invalidate old caches on activate.
-const STATIC_CACHE = 'oriol-cv-static-v5';
-const ASSET_CACHE = 'oriol-cv-assets-v5';
+const STATIC_CACHE = 'oriol-cv-static-v6';
+const ASSET_CACHE = 'oriol-cv-assets-v6';
 const VALID_CACHES = [STATIC_CACHE, ASSET_CACHE];
 
 // Lifecycle logging is opt-in (keeps the production console clean).
@@ -19,6 +20,10 @@ const log = (...args) => { if (DEBUG) console.log(...args); };
 // App shell precached on install.
 const CORE_ASSETS = ['/', '/manifest.json', '/favicon.svg'];
 const SECONDARY_ASSETS = ['/es', '/fr', '/de', '/404.html'];
+
+// A stalled connection (e.g. a weak mobile link) can hang a navigation for a
+// long time; after this long, a cached copy of the page is served instead.
+const NAV_TIMEOUT_MS = 4000;
 
 // Cache-first candidates: content-hashed bundles, fonts, images, js/css.
 function isAsset(url) {
@@ -56,10 +61,6 @@ self.addEventListener('activate', (event) => {
     })());
 });
 
-self.addEventListener('message', (event) => {
-    if (event.data === 'skipWaiting') self.skipWaiting();
-});
-
 self.addEventListener('fetch', (event) => {
     const { request } = event;
 
@@ -93,13 +94,19 @@ self.addEventListener('fetch', (event) => {
     // Network-first for HTML navigations (fresh content), cache fallback offline.
     if (request.mode === 'navigate' || request.destination === 'document') {
         event.respondWith((async () => {
-            try {
-                const response = await fetch(request);
+            const network = fetch(request).then((response) => {
                 if (response.ok) {
-                    const cache = await caches.open(STATIC_CACHE);
-                    cache.put(request, response.clone());
+                    const copy = response.clone();
+                    caches.open(STATIC_CACHE).then((cache) => cache.put(request, copy));
                 }
                 return response;
+            });
+            const timeout = new Promise((resolve) => setTimeout(resolve, NAV_TIMEOUT_MS));
+            try {
+                const first = await Promise.race([network, timeout]);
+                if (first) return first;
+                // Network is slow: serve the cached page if any, else keep waiting.
+                return (await caches.match(request)) ?? (await network);
             } catch (error) {
                 const cached = await caches.match(request);
                 if (cached) return cached;

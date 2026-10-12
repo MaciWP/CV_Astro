@@ -1,4 +1,4 @@
-# netlify.toml - Complete configuration for performance optimization and MIME issues
+# netlify.toml - build settings and redirects (headers: public/_headers)
 
 [build]
   command = "pnpm run build"
@@ -9,87 +9,7 @@
   # -> exit 0 -> Netlify cancels. exit 1 forces the build unconditionally.
   ignore = "exit 1"
 
-# ===== LCP IMAGE PRELOAD =====
-# The hero image is preloaded by a DPR-aware <link rel="preload" imagesrcset>
-# in the HTML <head> (320w/480w + imagesizes). A fixed `Link: rel=preload` header
-# was removed (2026-06-17): it forced the 320 webp regardless of DPR, so on
-# higher-DPR devices — where the browser picks 480 from imagesrcset — it
-# double-downloaded the hero. The HTML preload selects the right size on its own.
-
-# ===== MIME HEADERS CONFIGURATION =====
-
-# Headers for Astro build output (hashed filenames = immutable)
-[[headers]]
-  for = "/_astro/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Headers for optimized images (LCP critical)
-[[headers]]
-  for = "/images/*.avif"
-  [headers.values]
-    Content-Type = "image/avif"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/images/*.webp"
-  [headers.values]
-    Content-Type = "image/webp"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Headers for JavaScript files
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Service worker must NEVER be long-cached: the generic *.js immutable rule
-# above let Cloudflare serve a days-old sw.js, blocking SW updates for
-# returning visitors. Explicit rule wins for the exact path.
-[[headers]]
-  for = "/sw.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "no-store"
-    Service-Worker-Allowed = "/"
-
-# Headers for CSS files
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Content-Type = "text/css; charset=utf-8"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# ===== FONT HEADERS =====
-# FontAwesome removed - using inline SVG icons
-# Generic woff2 headers for system fonts only
-
-[[headers]]
-  for = "*.woff2"
-  [headers.values]
-    Content-Type = "font/woff2"
-    Cache-Control = "public, max-age=31536000, immutable"
-    Access-Control-Allow-Origin = "*"
-
-# ===== SECURITY HEADERS =====
-# NOTE: the @netlify/plugin-csp-nonce edge function was REMOVED 2026-06-12:
-# it processed every HTML request and its cold starts added 6-7s TTFB for
-# the first visitor after idle (measured; also the likely cause of the
-# historical GSC 5xx errors). The active CSP is the static allowlist in
-# public/_headers (script-src 'self' 'unsafe-inline' + GA/Cloudflare).
-
-# Headers for main HTML and other pages
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
-    X-Frame-Options = "DENY"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    # HSTS with includeSubDomains and preload for Lighthouse Best Practices
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+# Response headers live in public/_headers (the single source).
 
 # ===== LANGUAGE REDIRECTS =====
 # Redirect trailing slash versions to non-trailing (Astro uses trailingSlash: 'never')
@@ -337,38 +257,10 @@
   status = 301
   force = true
 
-# ===== 404 HANDLING =====
-
-# Handle 404 pages
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
-
-# Force HTTPS
-[[redirects]]
-  from = "http://*"
-  to = "https://:splat"
-  status = 301
-  force = true
-
-# NOTE: NO SPA redirect - Astro is a static MPA with separate HTML files per route
-# Routes: /, /es/, /fr/, /de/ each have their own index.html
+# No catch-all 404 or http->https rules: Netlify serves /404.html for any
+# missing path and forces HTTPS on its own.
 
 # ===== BUILD ENVIRONMENT =====
 
 [build.environment]
   NODE_VERSION = "24"
-
-# NOTE: Netlify Asset Optimization was deprecated Oct 2023
-# Astro handles bundling/minification at build time via Vite
-# See: https://answers.netlify.com/t/asset-optimization-deprecated/103986
-
-# ===== NETLIFY FUNCTIONS =====
-# Functions disabled - pure static site
-# [functions]
-#   directory = "netlify/functions"
-#   node_bundler = "esbuild"
-
-# ===== NETLIFY PLUGINS =====
-# @netlify/plugin-csp-nonce removed 2026-06-12 (see SECURITY HEADERS note)
