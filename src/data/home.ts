@@ -11,6 +11,8 @@ export interface HomeCopy {
   faqs: { question: string; answer: string }[];
   regionalLabel: string;
   regionalPrompt: string;
+  latestPostsTitle: string;
+  allPostsLabel: string;
   /** Label-to-list separator; French typography puts a space before the colon. */
   colon: string;
   /** Visible label per regional link, keyed by href. */
@@ -45,6 +47,8 @@ export const homeCopy: Record<HomeLang, HomeCopy> = {
       }
     ],
     "regionalLabel": "Regional profiles",
+    "latestPostsTitle": "Latest writing",
+    "allPostsLabel": "All posts",
     "regionalPrompt": "Hiring in a specific market?",
     "links": {
       "/switzerland": "Switzerland",
@@ -84,6 +88,8 @@ export const homeCopy: Record<HomeLang, HomeCopy> = {
       }
     ],
     "regionalLabel": "Perfiles regionales",
+    "latestPostsTitle": "Últimos artículos",
+    "allPostsLabel": "Todos los artículos",
     "regionalPrompt": "¿Contratas en un mercado concreto?",
     "links": {
       "/switzerland": "Suiza",
@@ -123,6 +129,8 @@ export const homeCopy: Record<HomeLang, HomeCopy> = {
       }
     ],
     "regionalLabel": "Profils régionaux",
+    "latestPostsTitle": "Derniers articles",
+    "allPostsLabel": "Tous les articles",
     "regionalPrompt": "Vous recrutez sur un marché précis ?",
     "links": {
       "/switzerland": "Suisse",
@@ -162,6 +170,8 @@ export const homeCopy: Record<HomeLang, HomeCopy> = {
       }
     ],
     "regionalLabel": "Regionale Profile",
+    "latestPostsTitle": "Neueste Beiträge",
+    "allPostsLabel": "Alle Beiträge",
     "regionalPrompt": "Sie stellen in einem bestimmten Markt ein?",
     "links": {
       "/switzerland": "Schweiz",

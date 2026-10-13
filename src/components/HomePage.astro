@@ -15,6 +15,7 @@ import Projects from "./cv/Projects.astro";
 import ExpertiseSummary from "./cv/ExpertiseSummary.astro";
 import About from "./cv/About.astro";
 import FAQSchema from "./FAQSchema.astro";
+import LatestPosts from "./LatestPosts.astro";
 import { homeCopy, type HomeLang } from "../data/home";
 import { SITE_URL, profile } from "../data/profile";
 
@@ -47,6 +48,7 @@ const spanishCities = ["madrid", "barcelona"];
         <Education lang={lang} />
         <Languages lang={lang} />
         <Projects lang={lang} />
+        <LatestPosts lang={lang} title={copy.latestPostsTitle} allLabel={copy.allPostsLabel} />
 
         {/* Regional profiles: internal links to the market hubs */}
         <nav
@@ -57,14 +59,14 @@ const spanishCities = ["madrid", "barcelona"];
             <a href="/switzerland" class="text-brand-red hover:underline font-semibold">{copy.links["/switzerland"]}</a>{copy.colon}
             {swissCities.map((city, i) => (
                 <>
-                    <a href={`/switzerland#${city}`} class="text-brand-red hover:underline">{copy.links[`/switzerland#${city}`]}</a>{i < swissCities.length - 1 && ","}
+                    <a href={`/switzerland#${city}`} class="text-brand-red underline">{copy.links[`/switzerland#${city}`]}</a>{i < swissCities.length - 1 && ","}
                 </>
             ))}
             <span aria-hidden="true"> · </span>
             <a href="/spain" class="text-brand-red hover:underline font-semibold">{copy.links["/spain"]}</a>{copy.colon}
             {spanishCities.map((city, i) => (
                 <>
-                    <a href={`/spain#${city}`} class="text-brand-red hover:underline">{copy.links[`/spain#${city}`]}</a>{i < spanishCities.length - 1 && ","}
+                    <a href={`/spain#${city}`} class="text-brand-red underline">{copy.links[`/spain#${city}`]}</a>{i < spanishCities.length - 1 && ","}
                 </>
             ))}
         </nav>
