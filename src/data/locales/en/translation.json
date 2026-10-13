@@ -108,7 +108,6 @@
     "tags": "Tags",
     "back": "Back to blog",
     "updated": "Updated",
-    "comments": "Comments",
     "meta": {
       "title": "Blog — Oriol Macias",
       "description": "Multilingual notes (en/es/fr/de) on backend development, industrial protocol integration (SNMP/Modbus/BACnet), data center infrastructure, and developer tooling — by Oriol Macias."

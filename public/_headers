@@ -10,13 +10,11 @@
 # CSP keeps 'unsafe-inline': @playform/compress rewrites inline scripts after
 # any hash could be taken, components use inline style="" attributes, and
 # Cloudflare Web Analytics needs an allowlist entry.
-# giscus (blog comments, post pages only): script/connect/frame-src allow
-# https://giscus.app; img-src allows GitHub avatars.
 # frame-ancestors 'none' matches X-Frame-Options: DENY (the site is never framed).
 # X-XSS-Protection is not sent: browsers removed the filter and the CSP covers it.
 # ===========================================================
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://giscus.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com https://giscus.app; frame-src 'self' https://giscus.app; manifest-src 'self'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; frame-src 'self'; manifest-src 'self'
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), accelerometer=(), gyroscope=(), magnetometer=()
