@@ -21,58 +21,58 @@ heroImageAlt: "Abstract diagram: a lead node fanning out into parallel agents th
   until you `git push`.
 -->
 
-For a while, the centerpiece of my work with [Claude Code](https://www.anthropic.com/claude-code) was an orchestration layer I was building on top of it. The idea felt like the obvious next level: instead of one assistant working through a task, have it break the work into atomic pieces and run **five or ten agents in parallel** — each with its own focused context, each owning a well-defined slice, talking to each other to coordinate. More throughput, less context bloat, faster results.
+For a while, most of my work with [Claude Code](https://www.anthropic.com/claude-code) went into an orchestration layer I was building on top of it. The next step seemed obvious. Instead of one assistant working through a task, it would split the work into small pieces and run **five or ten agents in parallel**. Each agent would get its own focused context and its own slice of the work, and they would talk to each other to coordinate. I expected more throughput, less context bloat and faster results.
 
-It did the opposite of all three. It cost more, it ran slower, and the quality went down. This is the honest write-up.
+I got the opposite on all three counts. It cost more, ran slower, and the quality went down. Here is what happened.
 
-## The dream
+## The plan
 
-The shape I was after was a team, not a tool. A "lead" would plan the work and split it; independent pieces would run as separate agents at the same time; each agent would get an isolated context so the main conversation stayed clean; and they'd communicate to hand off the parts that depend on each other. On paper, that's how you turn a single assistant into something that scales.
+I wanted a team. A "lead" agent would plan the work and split it. Independent pieces would run as separate agents at the same time, each with an isolated context so the main conversation stayed clean, and they would hand off to each other wherever one piece depended on another. On paper, that turns a single assistant into something that scales.
 
-Claude Code gives you the building blocks — **subagents** for delegation, **skills** for reusable instructions, **hooks** for event-driven scripts. I wired them together into logic that decided when to split work and which skill each step should use.
+Claude Code has the building blocks: **subagents** for delegation, **skills** for reusable instructions and **hooks** for scripts that run on events. I wired them into logic that decided when to split the work and which skill each step should use.
 
 ## What actually happened
 
-The reality, in my own words at the time:
+This is how I described it at the time:
 
 > I thought the next level was having 5 or 10 agents in parallel to go much faster, but it has a lot of drawbacks. There's no communication between them. Often the main session wanted to do the work and I had to force myself to change how I worked — and when I finally managed it, only one agent got invoked, so it spent more tokens, many more, and didn't improve anything: slower, more expensive, lower quality. In the end I removed them all.
 
-Concretely, four things broke:
+Four things broke.
 
-- **It serialized to a single agent.** Where I expected a fan-out, the system kept launching *one* agent and waiting for it. No concurrency, no speed-up — just an extra layer between me and the work.
-- **Token cost multiplied.** Every delegation re-sends context to the agent and summarizes the result back. One delegated run of a single skill cost ~112k tokens and over eight minutes for *zero* parallelism, much of it re-reading files the main session already had. Another time, a review panel I launched late burned ~278k tokens and returned nothing, because the agents hit the session limit before producing a verdict.
-- **The agents couldn't talk to each other.** The one thing my "team" idea depended on — coordination — wasn't really there.
-- **Skills wouldn't activate.** Agents ignored the skill that should have governed a step. The irony peaked when I realized the orchestration skill *meant to run the whole thing* often never loaded at all — the behavior only happened because I'd also written it into the always-loaded config.
+1. **It ran one agent at a time.** I expected a fan-out, and the system kept launching a single agent and waiting for it. There was no concurrency and no speed-up, only an extra layer between me and the work.
+2. **Token cost multiplied.** Every delegation sends the context to the agent again and summarizes the result back. One delegated run of a single skill cost about 112k tokens and over eight minutes with no parallelism at all, much of it spent re-reading files the main session already had. Another time, a review panel I launched late used about 278k tokens and returned nothing, because the agents hit the session limit before giving a verdict.
+3. **The agents couldn't talk to each other.** My whole idea of a team depended on coordination, and it wasn't really there.
+4. **Skills didn't load.** Agents ignored the skill that should have guided a step. The orchestration skill that was supposed to run everything often never loaded either. The behaviour only happened because I had also written it into the always-loaded config.
 
 ## Why it failed
 
-The interesting part is the diagnosis, because the symptoms have *different* root causes. Lumping them into "agents don't work" hides that.
+The symptoms have different causes, and calling it all "agents don't work" hides that.
 
-**The summary bottleneck.** When an agent writes code and hands back a summary, detail is lost in the summary. The lead then has to review code it never "saw born." For write-heavy work, quality drops *by design* — not because of a bad invocation.
+**Summaries lose detail.** When an agent writes code and hands back a summary, part of the detail stays behind. The lead then reviews code it never saw being written. For work that is mostly writing, quality drops because of how delegation works, even when every call is correct.
 
-**The economics of context.** Each agent re-pays the cost of orienting itself. A fan-out of five pays five times for the context the main session already had amortized. Isolation helps a *reader*; it taxes a *writer*.
+**Context has a price.** Every agent pays again to get its bearings. A fan-out of five pays five times for context the main session already had. Isolation helps an agent that only reads, and it costs an agent that writes.
 
-**Skills are non-deterministic on purpose.** Claude Code doesn't pick a skill from an index — the model semantically matches your request against each skill's description, and it tends to *under*-trigger. No mechanism forces activation; a hook can only nudge. And a skill loaded in the main session **does not carry over to a spawned subagent** — so my delegated agents started without the very instructions they needed. My fix at the time (rules telling agents to read the skill files manually) was the lowest-leverage option available. The highest-leverage one, which I found later, is almost embarrassing: write more directive descriptions ("Use when…", with concrete triggers). That single change moves activation more than any hook.
+**Skills don't load deterministically.** Claude Code doesn't pick a skill from an index. The model compares your request with each skill's description, and it tends to load too few. Nothing forces a skill to load; a hook can only remind the model. A skill loaded in the main session also **does not carry over to a subagent**, so my delegated agents started without the instructions they needed. My fix at the time was rules telling agents to read the skill files by hand, which was the weakest option. The one that works best, which I found later, is simple: write descriptions that say when to use the skill ("Use when…", with concrete triggers). That change does more for activation than any hook.
 
-**And the reframe that reorganized everything:** even if ten agents *did* generate code in parallel, the bottleneck of the system is *me*. Quality-first means I review and decide serially. Parallelizing the generation doesn't speed the system up — it just moves the queue to me. I was optimizing the part that wasn't the constraint.
+**The bottleneck was me.** Even if ten agents had written code in parallel, I review and decide one thing at a time, because I care about quality more than speed. Parallel generation would only have moved the queue to my desk. I was optimizing a part of the system that wasn't the constraint.
 
 ## The part I couldn't do: measure it
 
-I want to be honest about a gap. I concluded "it cost more" because it was *obvious*, not because I measured it cleanly. I waived measurement more than once. And that's the genuinely hard problem: these systems are non-deterministic, so the same task delegated twice doesn't cost or behave the same way, and a clean before/after is hard to pin down. I'll need that instrumentation anyway — deciding by doctrine instead of by data only works until the doctrine is wrong.
+There is a gap I should admit. I concluded that it cost more because it was obvious, not because I measured it properly, and I skipped measurement more than once. That is the hard problem here. These systems are non-deterministic: the same task delegated twice won't cost or behave the same, so a clean before-and-after is hard to get. I need that instrumentation anyway, because deciding by doctrine only works until the doctrine is wrong.
 
 ## What I changed
 
-I stopped trying to make agents do the writing. The system now runs on two rules:
+I stopped asking agents to write. The system now runs on two rules.
 
-1. **Inline-first.** All build and write work happens in the main session, with direct edits. One agent is never worth it. Agents are reserved for genuinely parallel, *read-only* work, and only when there are enough independent units to justify it.
-2. **A structured, iterative flow instead of a swarm.** Work moves through explicit phases — scope, plan, design checks, build, review, retrospective — each with a human gate. Slower per step on paper, but it converges, it's debuggable, and it doesn't burn tokens re-explaining itself. (The trap here is ceremony: a many-step flow can over-process a small task. The fix is adaptive triage — match the weight of the process to the size of the work.)
+1. **Inline first.** All building and writing happens in the main session, with direct edits. Handing a write task to a single agent is never worth it. Agents are only for read-only work that can run in parallel, and only when there are enough independent pieces to justify it.
+2. **A structured flow with human checkpoints.** Work moves through explicit phases (scope, plan, design checks, build, review, retrospective), and I approve the step from one phase to the next. Each step is slower on paper, but the work converges, I can debug it, and it doesn't burn tokens explaining itself again. The risk is ceremony: a many-step flow can overload a small task. So the weight of the process now depends on the size of the work.
 
 ## What actually worked
 
-Not everything about agents failed — I'd pointed them at the wrong half of the problem. The half that works *today* is the read-only, verification side. Fanning out independent reviewers and having one agent try to *refute* another's finding caught real mistakes every single time I ran it: wrong figures, stale numbers, a miscited claim. That kind of adversarial verification isn't ceremony — it's where the rigor actually lives. An independent reviewer with fresh context changed real outcomes instead of rubber-stamping them. Parallelism there is close to free, and it makes the output better.
+Agents did fail at writing, but they are good at reading and checking, and that half works today. I fanned out independent reviewers and had one agent try to refute another's finding. It caught real mistakes every time I ran it: wrong figures, stale numbers, a claim with the wrong source. A reviewer with fresh context changed real outcomes instead of approving whatever it was shown. Running those reviewers in parallel costs very little, and the result is better.
 
 ## Where I think this goes
 
-I haven't given up on the team idea — agents that divide the work and communicate is still the version of the future I'd bet on. But I'll be honest about the state of it: that's the *least* mature part right now. Cross-agent communication is minimal, agents can't yet take on specialized roles or delegate further, and the whole mode is experimental and expensive. So my plan isn't to force it. It's to keep the writing inline, let agents do the reading and the checking where they already shine, instrument the cost so I can *see* when delegation pays — and pick the team model back up when the tooling, and my measurements, are ready for it.
+I still believe in the team idea. Agents that split the work and talk to each other is the future I'd bet on. Right now it is also the least mature part: agents barely communicate, they can't take on specialized roles or delegate further, and the whole mode is experimental and expensive. So I won't force it. I'll keep the writing inline, let agents do the reading and checking where they already work well, and measure the cost so I can see when delegation pays off. When the tooling and my measurements are ready, I'll try the team model again.
 
-<!-- TODO: optional — once the poneglyph repo is public, link it here as "the system this post is about." And if you want, name the iterative flow explicitly. -->
+The system this post is about is [Poneglyph](https://github.com/MaciWP/poneglyph), and it's public.

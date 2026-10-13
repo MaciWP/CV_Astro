@@ -34,7 +34,7 @@ Docker, Git, GitHub Actions, CI/CD, AWS, Nginx, Gunicorn
 Claude Code (daily driver), LLM integration into production products, agentic tooling (Poneglyph — TypeScript/Bun)
 
 ## Selected Projects
-- **Poneglyph** — Personal orchestration layer for AI coding agents (Claude Code): skills, hooks, rules, and multi-agent workflows that turn an LLM into a disciplined engineering co-worker. TypeScript/Bun. https://github.com/MaciWP/claude-code-poneglyph
+- [Poneglyph](https://github.com/MaciWP/poneglyph): Personal orchestration layer for AI coding agents (Claude Code): skills, hooks, rules, and multi-agent workflows that turn an LLM into a disciplined engineering co-worker. TypeScript/Bun.
 - **SNMP Monitor** — Web platform for SNMP device discovery, monitoring, and real-time visualization. Django, PostgreSQL, Celery, Redis.
 - **Card Vision Tracker** — Computer-vision app for real-time card detection and score tracking using ONNX models. Python, Kivy, ONNX.
 - **Professional work at Bjumper** — DCIM and integration platforms (iTRACS, ThinkData, HPE IMC, VMware, PowerIQ, NFC asset management). Repositories are private under confidentiality agreements.
@@ -56,13 +56,18 @@ Claude Code (daily driver), LLM integration into production products, agentic to
 - Availability: immediate (no notice period)
 - Employment: Full-time, remote-friendly
 
+## Blog
+- [Building an orchestration layer for Claude Code: an honest retrospective](https://oriolmacias.dev/blog/building-a-claude-code-orchestrator): what went wrong with parallel agents, why, and the iterative flow that replaced them.
+- [All posts](https://oriolmacias.dev/blog)
+
 ## Links
-- Homepage (English): https://oriolmacias.dev/
-- CV en Español: https://oriolmacias.dev/es/
-- CV en Français: https://oriolmacias.dev/fr/
-- Lebenslauf auf Deutsch: https://oriolmacias.dev/de/
-- Blog: https://oriolmacias.dev/blog
-- Switzerland focus: https://oriolmacias.dev/switzerland/
-- Email: oriolomb@gmail.com
-- LinkedIn: https://linkedin.com/in/oriolmaciasbadosa
-- GitHub: https://github.com/MaciWP
+- [Homepage (English)](https://oriolmacias.dev/)
+- [CV en Español](https://oriolmacias.dev/es)
+- [CV en Français](https://oriolmacias.dev/fr)
+- [Lebenslauf auf Deutsch](https://oriolmacias.dev/de)
+- [Switzerland focus](https://oriolmacias.dev/switzerland)
+- [Spain focus](https://oriolmacias.dev/spain)
+- [CV (PDF)](https://oriolmacias.dev/OriolMacias_CV.pdf)
+- [Email](mailto:oriolomb@gmail.com)
+- [LinkedIn](https://linkedin.com/in/oriolmaciasbadosa)
+- [GitHub](https://github.com/MaciWP)

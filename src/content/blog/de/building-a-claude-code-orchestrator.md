@@ -11,56 +11,58 @@ heroImageAlt: "Abstraktes Diagramm: ein Lead-Knoten, der sich in parallele Agent
 <!-- Deutsche Übersetzung des englischen Beitrags (src/content/blog/en). Die Zahlen
      112k / ~278k sind echt (poneglyph Pläne 007/017); vor der Veröffentlichung prüfen. -->
 
-Eine Zeit lang war das Herzstück meiner Arbeit mit [Claude Code](https://www.anthropic.com/claude-code) eine Orchestrierungsschicht, die ich darauf aufbaute. Die Idee fühlte sich wie die naheliegende nächste Stufe an: Statt eines einzelnen Assistenten, der eine Aufgabe abarbeitet, sollte er sie in atomare Teile zerlegen und **fünf oder zehn Agenten parallel** starten — jeder mit eigenem, fokussiertem Kontext, jeder verantwortlich für einen klar abgegrenzten Teil, miteinander kommunizierend, um sich abzustimmen. Mehr Durchsatz, weniger aufgeblähter Kontext, schnellere Ergebnisse.
+Eine Zeit lang drehte sich der Großteil meiner Arbeit mit [Claude Code](https://www.anthropic.com/claude-code) um eine Orchestrierungsschicht, die ich darauf aufbaute. Der nächste Schritt schien klar. Statt eines einzelnen Assistenten, der eine Aufgabe abarbeitet, sollte die Schicht die Arbeit in kleine Teile zerlegen und **fünf oder zehn Agenten parallel** starten. Jeder Agent bekäme seinen eigenen Kontext und seinen eigenen Teil der Arbeit, und sie würden sich untereinander abstimmen. Ich erwartete mehr Durchsatz, weniger aufgeblähten Kontext und schnellere Ergebnisse.
 
-Es tat das Gegenteil von allen dreien. Es kostete mehr, war langsamer, und die Qualität sank. Das ist der ehrliche Bericht.
+Bekommen habe ich in allen drei Punkten das Gegenteil. Es war teurer, langsamer, und die Qualität sank. Das ist passiert.
 
-## Der Traum
+## Der Plan
 
-Was ich anstrebte, war ein Team, kein Werkzeug. Ein „Lead" würde die Arbeit planen und aufteilen; die unabhängigen Teile würden gleichzeitig als getrennte Agenten laufen; jeder Agent bekäme einen isolierten Kontext, damit die Hauptkonversation sauber bleibt; und sie würden kommunizieren, um die voneinander abhängigen Teile zu verzahnen. Auf dem Papier macht man so aus einem einzelnen Assistenten etwas, das skaliert.
+Ich wollte ein Team. Ein „Lead“-Agent sollte die Arbeit planen und aufteilen. Unabhängige Teile sollten gleichzeitig als eigene Agenten laufen, jeder mit isoliertem Kontext, damit die Hauptunterhaltung sauber blieb, und sie sollten sich die Arbeit dort übergeben, wo ein Teil von einem anderen abhing. Auf dem Papier wird so aus einem einzelnen Assistenten etwas, das skaliert.
 
-Claude Code liefert die Bausteine: **Subagents** zum Delegieren, **Skills** für wiederverwendbare Anweisungen und **Hooks** für ereignisgesteuerte Skripte. Ich verdrahtete sie zu einer Logik, die entschied, wann die Arbeit aufgeteilt wird und welche Skill in jedem Schritt zum Einsatz kommt.
+Claude Code hat die Bausteine: **Subagenten** zum Delegieren, **Skills** für wiederverwendbare Anweisungen und **Hooks** für Skripte, die bei Ereignissen laufen. Ich habe sie zu einer Logik verbunden, die entschied, wann die Arbeit aufgeteilt wird und welcher Skill bei jedem Schritt gilt.
 
-## Was tatsächlich geschah
+## Was tatsächlich passierte
 
-Die Realität, in meinen eigenen Worten von damals:
+So habe ich es damals beschrieben:
 
 > Ich dachte, die nächste Stufe wäre, 5 oder 10 Agenten parallel zu haben, um viel schneller zu sein, aber das hat viele Haken. Es gibt keine Kommunikation zwischen ihnen. Oft wollte die Hauptsitzung die Arbeit selbst machen, und ich musste mich zwingen, meine Arbeitsweise zu ändern — und als ich es schaffte, wurde nur ein Agent aufgerufen, also verbrauchte es mehr Tokens, viel mehr, und verbesserte nichts: langsamer, teurer, geringere Qualität. Am Ende habe ich sie alle entfernt.
 
-Konkret gingen vier Dinge schief:
+Vier Dinge gingen kaputt.
 
-- **Es serialisierte auf einen einzigen Agenten.** Wo ich eine parallele Aufteilung erwartete, startete das System immer wieder *einen* Agenten und wartete auf ihn. Keine Nebenläufigkeit, kein Geschwindigkeitsgewinn — nur eine zusätzliche Schicht zwischen der Arbeit und mir.
-- **Die Token-Kosten vervielfachten sich.** Jede Delegation schickt den Kontext erneut an den Agenten und fasst das Ergebnis zurück. Ein einziger delegierter Lauf einer Skill kostete ~112k Tokens und über acht Minuten für *null* Parallelität, größtenteils beim erneuten Lesen von Dateien, die die Hauptsitzung schon hatte. Ein anderes Mal verbrannte ein spät gestartetes Review-Panel ~278k Tokens und lieferte nichts, weil die Agenten das Sitzungslimit erreichten, bevor ein Urteil zustande kam.
-- **Die Agenten konnten nicht miteinander reden.** Das Einzige, worauf meine „Team"-Idee beruhte — die Koordination — war nicht wirklich da.
-- **Die Skills aktivierten sich nicht.** Die Agenten ignorierten die Skill, die einen Schritt hätte steuern sollen. Die Ironie gipfelte, als ich merkte, dass die Orchestrierungs-Skill, *die das Ganze steuern sollte*, oft gar nicht lud — das Verhalten trat nur ein, weil ich sie auch in die stets geladene Konfiguration geschrieben hatte.
+1. **Es lief immer nur ein Agent.** Ich erwartete eine parallele Verteilung, und das System startete weiter einen einzigen Agenten und wartete auf ihn. Keine Nebenläufigkeit, kein Tempogewinn, nur eine zusätzliche Schicht zwischen mir und der Arbeit.
+2. **Die Token-Kosten vervielfachten sich.** Jede Delegation schickt den Kontext erneut an den Agenten und fasst das Ergebnis auf dem Rückweg zusammen. Ein einziger delegierter Lauf eines Skills kostete rund 112k Tokens und über acht Minuten, ganz ohne Parallelität, vieles davon für das erneute Lesen von Dateien, die die Hauptsitzung schon hatte. Ein anderes Mal verbrauchte ein Review-Panel, das ich zu spät startete, rund 278k Tokens und lieferte nichts, weil die Agenten vor einem Urteil an das Sitzungslimit stießen.
+3. **Die Agenten konnten nicht miteinander reden.** Meine ganze Team-Idee hing an der Koordination, und die gab es kaum.
+4. **Skills luden nicht.** Agenten ignorierten den Skill, der einen Schritt leiten sollte. Auch der Orchestrierungs-Skill, der alles steuern sollte, lud oft nicht. Das Verhalten trat nur auf, weil ich es zusätzlich in die immer geladene Konfiguration geschrieben hatte.
 
 ## Warum es scheiterte
 
-Der interessante Teil ist die Diagnose, denn die Symptome haben *unterschiedliche* Grundursachen. Alles in „Agenten funktionieren nicht" zu packen, verdeckt das.
+Die Symptome haben verschiedene Ursachen, und wer alles unter „Agenten funktionieren nicht“ zusammenfasst, verdeckt das.
 
-**Der Flaschenhals der Zusammenfassung.** Wenn ein Agent Code schreibt und eine Zusammenfassung zurückgibt, geht das Detail in dieser Zusammenfassung verloren. Der Lead muss dann Code prüfen, den er nie „hat entstehen sehen". Bei schreibintensiver Arbeit sinkt die Qualität *konstruktionsbedingt* — nicht wegen eines schlechten Aufrufs.
+**Zusammenfassungen verlieren Details.** Wenn ein Agent Code schreibt und eine Zusammenfassung zurückgibt, bleibt ein Teil der Details auf der Strecke. Der Lead prüft danach Code, dessen Entstehung er nie gesehen hat. Bei Arbeit, die vor allem aus Schreiben besteht, sinkt die Qualität durch die Art, wie Delegation funktioniert, selbst wenn jeder Aufruf korrekt ist.
 
-**Die Ökonomie des Kontexts.** Jeder Agent zahlt erneut die Kosten, sich zu orientieren. Eine Aufteilung auf fünf zahlt fünfmal für den Kontext, den die Hauptsitzung bereits amortisiert hatte. Isolation hilft dem, der *liest*; sie belastet den, der *schreibt*.
+**Kontext hat seinen Preis.** Jeder Agent zahlt erneut dafür, sich zu orientieren. Eine Verteilung auf fünf Agenten zahlt fünfmal für Kontext, den die Hauptsitzung schon hatte. Isolation hilft einem Agenten, der nur liest, und kostet einen Agenten, der schreibt.
 
-**Skills sind absichtlich nicht deterministisch.** Claude Code wählt eine Skill nicht aus einem Index — das Modell gleicht deine Anfrage semantisch mit der Beschreibung jeder Skill ab, und es neigt dazu, *zu selten* auszulösen. Kein Mechanismus erzwingt die Aktivierung; ein Hook kann nur anstoßen. Und eine in der Hauptsitzung geladene Skill **wird nicht an einen Subagent weitergegeben** — meine delegierten Agenten starteten also ohne genau die Anweisungen, die sie brauchten. Meine damalige Lösung (Regeln, die den Agenten sagten, die Skill-Dateien von Hand zu lesen) war die wirkungsschwächste verfügbare Option. Die wirkungsstärkste, die ich später fand, ist fast peinlich: direktivere Beschreibungen schreiben („Use when…", mit konkreten Auslösern). Diese eine Änderung bewegt die Aktivierung mehr als jeder Hook.
+**Skills laden nicht deterministisch.** Claude Code wählt einen Skill nicht aus einem Index. Das Modell vergleicht deine Anfrage mit der Beschreibung jedes Skills und lädt eher zu wenige. Nichts zwingt einen Skill zum Laden; ein Hook kann das Modell nur daran erinnern. Ein in der Hauptsitzung geladener Skill **geht außerdem nicht auf einen Subagenten über**, also starteten meine delegierten Agenten ohne die Anweisungen, die sie brauchten. Meine damalige Lösung, Regeln, die Agenten die Skill-Dateien von Hand lesen ließen, war die schwächste Option. Die beste, die ich später fand, ist einfach: Beschreibungen schreiben, die sagen, wann der Skill gilt („Use when…“, mit konkreten Auslösern). Diese Änderung bringt für die Aktivierung mehr als jeder Hook.
 
-**Und die Neubewertung, die alles umordnete:** Selbst wenn zehn Agenten Code parallel *erzeugen* würden, der Flaschenhals des Systems bin *ich*. Qualität zuerst heißt, dass ich seriell prüfe und entscheide. Die Erzeugung zu parallelisieren beschleunigt das System nicht — es verschiebt die Warteschlange nur zu mir. Ich optimierte den Teil, der nicht der Engpass war.
+**Der Engpass war ich.** Selbst wenn zehn Agenten parallel Code geschrieben hätten, prüfe und entscheide ich eins nach dem anderen, weil mir Qualität wichtiger ist als Tempo. Paralleles Generieren hätte die Warteschlange nur auf meinen Schreibtisch verschoben. Ich optimierte einen Teil des Systems, der nicht der Engpass war.
 
-## Was ich nicht tun konnte: es messen
+## Was ich nicht geschafft habe: es zu messen
 
-Ich will ehrlich über eine Lücke sein. Ich schloss „es kostete mehr", weil es *offensichtlich* war, nicht weil ich es sauber gemessen hätte. Ich verzichtete mehr als einmal aufs Messen. Und das ist das wirklich harte Problem: Diese Systeme sind nicht deterministisch, dieselbe zweimal delegierte Aufgabe kostet und verhält sich also nicht gleich, und ein sauberes Vorher/Nachher ist schwer festzunageln. Ich werde diese Instrumentierung ohnehin brauchen — nach Doktrin statt nach Daten zu entscheiden funktioniert nur, bis die Doktrin falsch liegt.
+Eine Lücke muss ich zugeben. Ich habe geschlossen, dass es teurer war, weil es offensichtlich war, nicht weil ich es sauber gemessen hätte, und ich habe das Messen mehr als einmal ausgelassen. Genau da liegt das schwierige Problem. Diese Systeme sind nicht deterministisch: Dieselbe Aufgabe, zweimal delegiert, kostet nicht dasselbe und verhält sich nicht gleich, also ist ein sauberer Vorher-nachher-Vergleich schwer zu bekommen. Diese Instrumentierung brauche ich trotzdem, denn Entscheidungen nach Doktrin funktionieren nur, bis die Doktrin falsch liegt.
 
-## Was ich änderte
+## Was ich geändert habe
 
-Ich hörte auf, die Agenten schreiben lassen zu wollen. Das System läuft jetzt nach zwei Regeln:
+Ich habe aufgehört, Agenten schreiben zu lassen. Das System folgt jetzt zwei Regeln.
 
-1. **Inline zuerst.** Alle Bau- und Schreibarbeit passiert in der Hauptsitzung, mit direkten Edits. Ein einzelner Agent lohnt sich nie. Agenten sind für wirklich parallele, *nur lesende* Arbeit reserviert, und nur, wenn es genug unabhängige Einheiten gibt, die es rechtfertigen.
-2. **Ein strukturierter, iterativer Ablauf statt eines Schwarms.** Die Arbeit durchläuft explizite Phasen — Scope, Plan, Validierungsentwurf, Build, Review, Retrospektive — jede mit einem menschlichen Tor. Pro Schritt langsamer auf dem Papier, aber es konvergiert, ist debugbar und verbrennt keine Tokens, um sich neu zu erklären. (Die Falle hier ist die Zeremonie: Ein Ablauf mit vielen Schritten kann eine kleine Aufgabe überverarbeiten. Die Abhilfe ist adaptive Triage — das Gewicht des Prozesses an die Größe der Arbeit anpassen.)
+1. **Inline zuerst.** Alles, was gebaut und geschrieben wird, passiert in der Hauptsitzung, mit direkten Änderungen. Eine Schreibaufgabe an einen einzelnen Agenten zu geben, lohnt sich nie. Agenten sind nur für reine Lesearbeit da, die parallel laufen kann, und nur, wenn es genug unabhängige Teile gibt, um das zu rechtfertigen.
+2. **Ein strukturierter Ablauf mit menschlichen Kontrollpunkten.** Die Arbeit durchläuft explizite Phasen (Umfang, Plan, Entwurf der Prüfungen, Build, Review, Retrospektive), und ich gebe den Übergang von einer Phase zur nächsten frei. Jeder Schritt ist auf dem Papier langsamer, aber die Arbeit konvergiert, ich kann sie debuggen, und sie verbrennt keine Tokens damit, sich erneut zu erklären. Das Risiko ist Zeremonie: Ein Ablauf mit vielen Schritten kann eine kleine Aufgabe überfrachten. Deshalb hängt das Gewicht des Prozesses jetzt von der Größe der Arbeit ab.
 
 ## Was wirklich funktionierte
 
-Nicht alles an den Agenten scheiterte — ich hatte sie auf die falsche Hälfte des Problems gerichtet. Die Hälfte, die *heute* funktioniert, ist die nur lesende, die Verifikation. Unabhängige Prüfer aufzufächern und einen Agenten den Fund eines anderen *widerlegen* zu lassen, fing jedes einzelne Mal echte Fehler: falsche Zahlen, veraltete Werte, eine falsch zitierte Behauptung. Diese adversariale Verifikation ist keine Zeremonie — dort wohnt die eigentliche Strenge. Ein unabhängiger Prüfer mit frischem Kontext änderte echte Ergebnisse, statt nur abzunicken. Dort ist Parallelität fast gratis, und sie verbessert das Ergebnis.
+Beim Schreiben sind die Agenten gescheitert, aber Lesen und Prüfen können sie gut, und diese Hälfte funktioniert heute. Ich habe unabhängige Reviewer verteilt und einen Agenten den Befund eines anderen widerlegen lassen. Das fand bei jedem Lauf echte Fehler: falsche Werte, veraltete Zahlen, eine Aussage mit der falschen Quelle. Ein Reviewer mit frischem Kontext hat echte Ergebnisse verändert, statt abzunicken, was man ihm zeigte. Diese Reviewer parallel laufen zu lassen kostet sehr wenig, und das Ergebnis wird besser.
 
 ## Wohin das meiner Meinung nach führt
 
-Ich habe die Team-Idee nicht aufgegeben — Agenten, die sich die Arbeit aufteilen und kommunizieren, bleiben die Version der Zukunft, auf die ich setzen würde. Aber ich bin ehrlich über ihren Stand: Das ist derzeit der *unreifste* Teil. Die Kommunikation zwischen Agenten ist minimal, Agenten können noch keine spezialisierten Rollen übernehmen oder weiter delegieren, und der ganze Modus ist experimentell und teuer. Mein Plan ist also nicht, es zu erzwingen. Es ist, das Schreiben inline zu halten, die Agenten das Lesen und Prüfen tun zu lassen, wo sie schon glänzen, die Kosten zu instrumentieren, um zu *sehen*, wann sich Delegation lohnt — und das Team-Modell wieder aufzunehmen, wenn das Werkzeug und meine Messungen bereit sind.
+An die Team-Idee glaube ich weiterhin. Agenten, die sich die Arbeit teilen und miteinander reden, sind die Zukunft, auf die ich setzen würde. Im Moment ist das aber auch der unreifste Teil: Agenten kommunizieren kaum, sie können keine spezialisierten Rollen übernehmen oder selbst weiter delegieren, und der ganze Modus ist experimentell und teuer. Also werde ich ihn nicht erzwingen. Ich halte das Schreiben inline, lasse Agenten dort lesen und prüfen, wo sie schon gut funktionieren, und messe die Kosten, um zu sehen, wann sich Delegieren lohnt. Wenn das Werkzeug und meine Messungen so weit sind, probiere ich das Team-Modell wieder aus.
+
+Das System, um das es in diesem Beitrag geht, heißt [Poneglyph](https://github.com/MaciWP/poneglyph) und ist öffentlich.

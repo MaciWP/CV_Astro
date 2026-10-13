@@ -97,7 +97,7 @@ const personalProjectsData = [
         },
         technologies: ["TypeScript", "Bun", "Claude Code", "LLM", "AI Agents"],
         icon: "cogs",
-        githubUrl: "https://github.com/MaciWP/claude-code-poneglyph",
+        githubUrl: "https://github.com/MaciWP/poneglyph",
         highlight: true,
         keyFeatures: {
             en: [
