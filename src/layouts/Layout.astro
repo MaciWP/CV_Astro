@@ -286,11 +286,10 @@ const isMultilingualPage =
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:creator" content="@oriolmacias" />
 
-    <!-- Analytics: Cloudflare Web Analytics (cookieless, privacy-first, injected by
-         Cloudflare at the edge — no inline snippet, no GDPR cookie banner needed).
-         Google Analytics was removed 2026-06-17: it set cookies (consent liability in
-         the EU) and added a third-party script; Cloudflare's beacon covers the basics
-         without either cost. -->
+    <!-- Analytics: none on the page. Google Analytics was removed 2026-06-17 (cookies,
+         EU consent liability); Cloudflare Web Analytics' edge-injected beacon was
+         switched off 2026-10-13 (third-party script, ~40 sampled visits a month).
+         Search traffic comes from Search Console (monthly report workflow). -->
 
     <!-- ProfilePage Structured Data (Person as mainEntity) -->
     <JsonLd data={profilePageSchema} pretty />
