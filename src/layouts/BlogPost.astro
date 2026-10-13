@@ -2,13 +2,12 @@
 /**
  * Blog post layout — wraps Layout.astro with reading-optimized typography,
  * BlogPosting JSON-LD + per-post hreflang (injected into <head> via Layout's
- * `head` slot), a localized "Back to blog" link, and lazy theme-aware Giscus.
+ * `head` slot), and a localized "Back to blog" link.
  * Multilingual: `lang` localizes the chrome; `translations` lists the locales
  * that actually have this post (drives correct, 404-free hreflang).
  * @file src/layouts/BlogPost.astro
  */
 import Layout from './Layout.astro';
-import Giscus from '../components/Giscus.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { blogUrl } from '../utils/blog';
 import { messages, normalizeLang, DATE_LOCALE } from '../i18n';
@@ -143,8 +142,6 @@ const xDefaultLang = translations.includes('en') ? 'en' : translations[0];
     <div class="post-prose">
       <slot />
     </div>
-
-    <Giscus lang={lang} label={t.comments} />
   </article>
 </Layout>
 
