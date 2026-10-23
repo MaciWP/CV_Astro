@@ -13,6 +13,7 @@
 # switched off on 2026-10-13 (re-enabling either needs its origins here again).
 # frame-ancestors 'none' matches X-Frame-Options: DENY (the site is never framed).
 # X-XSS-Protection is not sent: browsers removed the filter and the CSP covers it.
+# Link rel="describedby" points every response at /llms.txt (llms.txt v2).
 # ===========================================================
 /*
   Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; manifest-src 'self'
@@ -23,6 +24,7 @@
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+  Link: </llms.txt>; rel="describedby"
 
 # ===========================================================
 # Caching
