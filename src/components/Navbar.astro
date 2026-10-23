@@ -599,7 +599,9 @@ function initNavbar() {
 
     // Initialize
     updateThemeIcons();
-    computeActiveSection(); // mark the right section on first paint
-    window.addEventListener('resize', computeActiveSection, { passive: true });
+    // Geometry reads wait for the next frame: run synchronously right after the
+    // class toggles above, they forced a layout (Lighthouse "forced reflow").
+    requestAnimationFrame(computeActiveSection); // mark the right section on first paint
+    window.addEventListener('resize', handleScroll, { passive: true });
 } // end initNavbar
 </script>
