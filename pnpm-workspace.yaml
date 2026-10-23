@@ -15,7 +15,7 @@ allowBuilds:
 # astro (plus its Vite and advisories) next to ours; pin it to the project's astro
 # through the catalog (package.json uses `catalog:` too; Dependabot updates catalogs).
 catalog:
-  astro: ^7.3.8
+  astro: ^7.4.1
 
 overrides:
   '@playform/compress>astro': 'catalog:'
