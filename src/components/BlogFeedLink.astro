@@ -1,0 +1,19 @@
+---
+/**
+ * <link rel="alternate"> to the RSS feed of a blog locale, for the head slot.
+ * Renders nothing for locales without a feed (see FEED_LOCALES).
+ * @file src/components/BlogFeedLink.astro
+ */
+import { feedUrl } from '../utils/blog';
+import { messages } from '../i18n';
+import { SITE_URL } from '../data/profile';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const href = feedUrl(lang);
+---
+
+{href && <link rel="alternate" type="application/rss+xml" title={messages(lang).blog.meta.title} href={`${SITE_URL}${href}`} />}

@@ -9,6 +9,7 @@
  */
 import Layout from './Layout.astro';
 import JsonLd from '../components/JsonLd.astro';
+import BlogFeedLink from '../components/BlogFeedLink.astro';
 import { blogUrl } from '../utils/blog';
 import { messages, normalizeLang, DATE_LOCALE } from '../i18n';
 import { SITE_URL } from '../data/profile';
@@ -87,6 +88,7 @@ const xDefaultLang = translations.includes('en') ? 'en' : translations[0];
 >
   <Fragment slot="head">
     <JsonLd data={blogPostingSchema} />
+    <BlogFeedLink lang={lang} />
     {
       emitHreflang && (
         <Fragment>

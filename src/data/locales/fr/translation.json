@@ -109,8 +109,8 @@
     "back": "Retour au blog",
     "updated": "Mis à jour",
     "meta": {
-      "title": "Blog — Oriol Macias",
-      "description": "Notes (en/es/fr/de) sur le développement backend, l'intégration de protocoles industriels (SNMP/Modbus/BACnet), l'infrastructure de centres de données et l'outillage de développement — par Oriol Macias."
+      "title": "Blog : Claude Code et agents IA — Oriol Macias",
+      "description": "Notes d'Oriol Macias, tirées de projets réels, sur Claude Code et les agents IA de développement : ce qui marche, ce qui échoue et pourquoi."
     }
   },
   "faq": {

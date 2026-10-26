@@ -1,6 +1,6 @@
 ---
 title: "Construire une couche d'orchestration pour Claude Code : une rétrospective honnête"
-description: "Je voulais 5 à 10 agents travaillant en parallèle, se répartissant le travail et communiquant entre eux. Il en lançait un seul, consommait bien plus de tokens, était plus lent, et les skills ne se chargeaient même pas. Voici ce qui n'a pas marché, pourquoi, et le flux itératif que j'ai adopté à la place."
+description: "Je voulais 5 à 10 agents en parallèle. Il n'en a lancé qu'un, a consommé bien plus de tokens et les skills ne se chargeaient pas. Ce qui a raté et pourquoi."
 pubDate: 2026-06-18
 tags: ["claude-code", "ai-agents", "orchestration", "developer-tools", "retrospective"]
 draft: false

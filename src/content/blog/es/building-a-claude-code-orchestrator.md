@@ -1,6 +1,6 @@
 ---
 title: "Construir una capa de orquestación para Claude Code: una retrospectiva honesta"
-description: "Quería 5–10 agentes trabajando en paralelo, repartiéndose el trabajo y hablando entre ellos. Lanzaba uno solo, gastaba muchos más tokens, iba más lento y las skills ni siquiera se cargaban. Esto es lo que salió mal, por qué, y el flujo iterativo que adopté en su lugar."
+description: "Quería 5–10 agentes en paralelo. Arrancó uno solo, gastó muchos más tokens y las skills no se cargaban. Qué salió mal, por qué y el flujo que uso ahora."
 pubDate: 2026-06-18
 tags: ["claude-code", "ai-agents", "orchestration", "developer-tools", "retrospective"]
 draft: false
@@ -66,3 +66,5 @@ Los agentes fallaron escribiendo, pero se les da bien leer y comprobar, y esa mi
 Sigo creyendo en la idea del equipo. Agentes que se reparten el trabajo y hablan entre ellos es el futuro por el que apostaría. Ahora mismo también es la parte menos madura: los agentes apenas se comunican, no pueden asumir roles especializados ni delegar a su vez, y todo el modo es experimental y caro. Así que no lo voy a forzar. Mantendré la escritura inline, dejaré que los agentes lean y comprueben donde ya funcionan bien y mediré el coste para ver cuándo compensa delegar. Cuando la herramienta y mis mediciones estén listas, volveré a probar el modelo de equipo.
 
 El sistema del que habla este post es [Poneglyph](https://github.com/MaciWP/poneglyph), y es público.
+
+Lo que vino después está en [Hooks de Claude Code: convertir reglas escritas en reglas que el agente no puede saltarse](/es/blog/claude-code-hooks-that-enforce-the-rules).

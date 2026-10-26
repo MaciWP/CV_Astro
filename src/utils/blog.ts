@@ -47,3 +47,13 @@ export function localesForSlug(all: BlogEntry[], slug: string): string[] {
 export function blogUrl(lang: string, slug: string): string {
   return lang === 'en' ? `/blog/${slug}` : `/${lang}/blog/${slug}`;
 }
+
+/** Locales with an RSS feed (fr/de have too few posts to be worth one). */
+export const FEED_LOCALES = ['en', 'es'] as const;
+export type FeedLocale = (typeof FEED_LOCALES)[number];
+
+/** Path of a locale's RSS feed, or undefined when it has none. */
+export function feedUrl(lang: string): string | undefined {
+  if (!FEED_LOCALES.includes(lang as FeedLocale)) return undefined;
+  return lang === 'en' ? '/rss.xml' : `/${lang}/rss.xml`;
+}

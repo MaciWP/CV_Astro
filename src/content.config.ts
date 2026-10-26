@@ -21,6 +21,8 @@
  *   4. Images: inline Markdown images MUST carry alt text — `![meaningful alt](/path)`.
  *      For a header image set `heroImage` (a path under public/) + `heroImageAlt`.
  *   5. Run `pnpm run build` — the new page and its sitemap entry are automatic.
+ *      Its sitemap lastmod is `updatedDate ?? pubDate`, so set `updatedDate` on a
+ *      real revision. en and es posts also enter /rss.xml and /es/rss.xml.
  *
  * LANGUAGE POLICY
  *   Blog posts are multilingual: one Markdown file per locale under

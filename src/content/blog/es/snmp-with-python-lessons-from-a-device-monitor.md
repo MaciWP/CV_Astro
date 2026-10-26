@@ -1,6 +1,6 @@
 ---
 title: "SNMP con Python: lo que aprendí construyendo un monitor de dispositivos"
-description: "Lo que aprendí sondeando dispositivos de centro de datos por SNMP con pysnmp: el parámetro que para el walk al final de la tabla, las cuentas del timeout, reutilizar un engine (1,8 ms frente a 235 ms por GET) y compilar MIBs a JSON."
+description: "SNMP con pysnmp en dispositivos de centro de datos: el walk que para al final de la tabla, las cuentas del timeout, un engine reutilizado y las MIBs en JSON."
 pubDate: 2026-10-26
 tags: ["snmp", "python", "pysnmp", "monitoring", "dcim"]
 draft: false
@@ -146,3 +146,5 @@ Puedes grabar un dispositivo real en un fichero de datos con `snmpsim-record-com
 - Lanzar los sondeos en paralelo y por lotes.
 - Compilar las MIBs a JSON una vez y tratarlas como datos.
 - Probar contra snmpsim antes de tocar hardware real.
+
+También en este blog: [Hooks de Claude Code: convertir reglas escritas en reglas que el agente no puede saltarse](/es/blog/claude-code-hooks-that-enforce-the-rules).

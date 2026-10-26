@@ -1,6 +1,6 @@
 ---
 title: "SNMP with Python: lessons from building a device monitor"
-description: "What I learned polling data-center devices over SNMP with pysnmp: the walk flag that stops at the table, the timeout maths, reusing one engine (1.8 ms vs 235 ms per GET) and compiling MIBs to JSON."
+description: "SNMP with pysnmp on data-center devices: the walk flag that stops at the table, timeout maths, one reused engine (1.8 ms vs 235 ms per GET) and MIBs as JSON."
 pubDate: 2026-10-26
 tags: ["snmp", "python", "pysnmp", "monitoring", "dcim"]
 draft: false
@@ -148,3 +148,5 @@ You can record a real device into a data file with `snmpsim-record-commands` and
 - Run probes concurrently, in batches.
 - Compile MIBs to JSON once and treat them as data.
 - Test against snmpsim before you touch real hardware.
+
+Also on this blog: [Claude Code hooks: turning written rules into ones the agent can't skip](/blog/claude-code-hooks-that-enforce-the-rules).

@@ -6,6 +6,7 @@
 import Layout from '../../layouts/Layout.astro';
 import BlogList from '../../components/BlogList.astro';
 import LanguageAlternates from '../../components/LanguageAlternates.astro';
+import BlogFeedLink from '../../components/BlogFeedLink.astro';
 import { getCollection } from 'astro:content';
 import { localizedPosts } from '../../utils/blog';
 import { messages } from '../../i18n';
@@ -22,5 +23,6 @@ const m = messages('en').blog.meta;
   canonicalUrl={`${SITE_URL}/blog`}
 >
   <LanguageAlternates slot="head" currentLang="en" currentPath="/blog" />
+  <BlogFeedLink slot="head" lang="en" />
   <BlogList lang="en" posts={posts} />
 </Layout>
