@@ -1,6 +1,6 @@
 ---
 title: "Building an orchestration layer for Claude Code: an honest retrospective"
-description: "I wanted 5–10 agents working in parallel, dividing the work and talking to each other. It launched one, cost far more tokens, ran slower, and the skills wouldn't even load. Here is what went wrong, why, and the iterative flow I landed on instead."
+description: "I wanted 5–10 agents working in parallel. It launched one, burned far more tokens, and the skills wouldn't load. What went wrong, why, and the flow I use now."
 pubDate: 2026-06-18
 tags: ["claude-code", "ai-agents", "orchestration", "developer-tools", "retrospective"]
 draft: false
@@ -76,3 +76,5 @@ Agents did fail at writing, but they are good at reading and checking, and that 
 I still believe in the team idea. Agents that split the work and talk to each other is the future I'd bet on. Right now it is also the least mature part: agents barely communicate, they can't take on specialized roles or delegate further, and the whole mode is experimental and expensive. So I won't force it. I'll keep the writing inline, let agents do the reading and checking where they already work well, and measure the cost so I can see when delegation pays off. When the tooling and my measurements are ready, I'll try the team model again.
 
 The system this post is about is [Poneglyph](https://github.com/MaciWP/poneglyph), and it's public.
+
+What came next is in [Claude Code hooks: turning written rules into ones the agent can't skip](/blog/claude-code-hooks-that-enforce-the-rules).

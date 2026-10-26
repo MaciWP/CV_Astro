@@ -1,6 +1,6 @@
 ---
 title: "Eine Orchestrierungsschicht für Claude Code bauen: ein ehrlicher Rückblick"
-description: "Ich wollte 5–10 Agenten, die parallel arbeiten, sich die Arbeit aufteilen und miteinander reden. Es startete einen einzigen, verbrauchte weit mehr Tokens, war langsamer, und die Skills luden nicht einmal. Hier steht, was schiefging, warum, und der iterative Ablauf, den ich stattdessen gewählt habe."
+description: "Ich wollte 5–10 parallele Agenten. Das System startete einen einzigen, verbrauchte weit mehr Tokens, und die Skills luden nicht. Was schiefging und warum."
 pubDate: 2026-06-18
 tags: ["claude-code", "ai-agents", "orchestration", "developer-tools", "retrospective"]
 draft: false

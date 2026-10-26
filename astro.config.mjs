@@ -8,8 +8,12 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import compress from '@playform/compress';
 import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'node:url';
 import { CONTENT_REVISED } from './src/utils/seo';
+import { lastmodFor, readPostDates } from './src/utils/sitemap-lastmod';
 import { SITE_URL } from './src/data/profile';
+
+const POST_DATES = readPostDates(fileURLToPath(new URL('./src/content/blog', import.meta.url)));
 
 export default defineConfig({
   // Site configuration (required for SEO)
@@ -41,10 +45,14 @@ export default defineConfig({
       // Exact-path match: a substring test (includes('/cv')) would also drop
       // unrelated URLs such as a future /cv-guide page or a /blog/cv-* post slug.
       filter: (page) => new URL(page).pathname.replace(/\/$/, '') !== '/cv',
-      // lastmod: Google uses it only if verifiably accurate. CONTENT_REVISED is bumped by
-      // hand on real content changes (same source as ProfilePage dateModified), so it
-      // qualifies. changefreq/priority omitted on purpose — Google (and Astro docs) ignore them.
-      lastmod: new Date(CONTENT_REVISED),
+      // lastmod: Google uses it only if verifiably accurate. Posts carry their own date and
+      // blog indexes their newest post's; every other page takes CONTENT_REVISED, bumped by
+      // hand on real content changes (same source as ProfilePage dateModified).
+      // changefreq/priority omitted on purpose — Google (and Astro docs) ignore them.
+      serialize(item) {
+        item.lastmod = lastmodFor(item.url, POST_DATES, CONTENT_REVISED);
+        return item;
+      },
       i18n: {
         defaultLocale: 'en',
         locales: {

@@ -289,7 +289,7 @@ export function generatePersonStructuredData(): PersonSchema {
  * ProfilePage validator rejected ("fecha y hora no válida"). Bump this by hand
  * when the CV content changes meaningfully.
  */
-export const CONTENT_REVISED = "2026-06-15T00:00:00Z";
+export const CONTENT_REVISED = "2026-10-26T00:00:00Z";
 
 interface ProfilePageSchema {
     "@context": string;

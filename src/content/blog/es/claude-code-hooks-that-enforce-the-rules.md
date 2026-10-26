@@ -1,6 +1,6 @@
 ---
 title: "Hooks de Claude Code: convertir reglas escritas en reglas que el agente no puede saltarse"
-description: "Mi configuración de Claude Code ignoraba sus propias reglas escritas. Medí cuánto y pasé las más caras a hooks. Qué mostraron los números, qué hooks me quedé y cuál me bloqueó a mí."
+description: "Mi configuración de Claude Code ignoraba sus reglas escritas. Medí cuánto y pasé las más caras a hooks. Qué mostraron los números y el hook que me bloqueó a mí."
 pubDate: 2026-10-26
 tags: ["claude-code", "hooks", "ai-agents", "developer-tools"]
 draft: false

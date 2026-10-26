@@ -109,8 +109,8 @@
     "back": "Volver al blog",
     "updated": "Actualizado",
     "meta": {
-      "title": "Blog — Oriol Macias",
-      "description": "Notas (en/es/fr/de) sobre desarrollo backend, integración de protocolos industriales (SNMP/Modbus/BACnet), infraestructura de centros de datos y herramientas de desarrollo — por Oriol Macias."
+      "title": "Blog: Claude Code, agentes de IA y Python — Oriol Macias",
+      "description": "Notas de Oriol Macias sobre Claude Code, agentes de IA para programar y Python para monitorizar equipos con SNMP, sacadas de proyectos reales."
     }
   },
   "faq": {
