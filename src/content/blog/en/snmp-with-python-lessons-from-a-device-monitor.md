@@ -1,9 +1,9 @@
 ---
 title: "SNMP with Python: lessons from building a device monitor"
 description: "What I learned polling data-center devices over SNMP with pysnmp: the walk flag that stops at the table, the timeout maths, reusing one engine (1.8 ms vs 235 ms per GET) and compiling MIBs to JSON."
-pubDate: 2026-10-13
+pubDate: 2026-10-26
 tags: ["snmp", "python", "pysnmp", "monitoring", "dcim"]
-draft: true
+draft: false
 ---
 
 <!--
