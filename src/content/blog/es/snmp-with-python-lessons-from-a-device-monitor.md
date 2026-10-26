@@ -1,9 +1,9 @@
 ---
 title: "SNMP con Python: lo que aprendí construyendo un monitor de dispositivos"
 description: "Lo que aprendí sondeando dispositivos de centro de datos por SNMP con pysnmp: el parámetro que para el walk al final de la tabla, las cuentas del timeout, reutilizar un engine (1,8 ms frente a 235 ms por GET) y compilar MIBs a JSON."
-pubDate: 2026-10-13
+pubDate: 2026-10-26
 tags: ["snmp", "python", "pysnmp", "monitoring", "dcim"]
-draft: true
+draft: false
 ---
 
 <!--

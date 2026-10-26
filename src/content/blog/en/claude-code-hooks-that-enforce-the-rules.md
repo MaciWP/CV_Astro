@@ -1,9 +1,9 @@
 ---
 title: "Claude Code hooks: turning written rules into ones the agent can't skip"
 description: "My Claude Code setup kept ignoring its own written rules, so I measured how often and moved the expensive ones into hooks. What the numbers showed, the hooks I kept, and the one that blocked me."
-pubDate: 2026-10-13
+pubDate: 2026-10-26
 tags: ["claude-code", "hooks", "ai-agents", "developer-tools"]
-draft: true
+draft: false
 ---
 
 <!--

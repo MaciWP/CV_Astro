@@ -20,13 +20,13 @@ From systems administration to backend engineering. For the past several years I
 - Protocols & Data Formats: SNMP, Modbus, BACnet, REST API, JSON, XML, JWT, NFC
 - Databases: PostgreSQL, MySQL, Redis
 - DevOps & Tools: Docker, Git, GitHub Actions, CI/CD, AWS, Nginx, Gunicorn
-- AI / LLM: Claude Code (daily driver), LLM integration into production products, agentic tooling (Poneglyph — TypeScript/Bun)
+- AI / LLM: Claude Code (daily driver), LLM integration into production products, agentic tooling (Agentic OS and Poneglyph — TypeScript/Bun)
 
 **Selected Projects**
+- [Agentic OS](https://github.com/MaciWP/agentic-os): Local cockpit for working with several coding agents at once: Jira tickets, GitHub pull requests and live agent terminals (Claude Code, Codex, Grok) in one window. Bun, Hono, SQLite, React 19; 16 ADRs and 1,800+ tests.
 - [Poneglyph](https://github.com/MaciWP/poneglyph): Personal orchestration layer for AI coding agents (Claude Code): skills, hooks, rules, and multi-agent workflows that turn an LLM into a disciplined engineering co-worker. TypeScript/Bun.
-- **SNMP Monitor** — Web platform for SNMP device discovery, monitoring, and real-time visualization. Django, PostgreSQL, Celery, Redis.
 - **Card Vision Tracker** — Computer-vision app for real-time card detection and score tracking using ONNX models. Python, Kivy, ONNX.
-- **Professional work at Bjumper** — DCIM and integration platforms (iTRACS, ThinkData, HPE IMC, VMware, PowerIQ, NFC asset management). Repositories are private under confidentiality agreements.
+- **Professional work at Bjumper** — DCIM and integration platforms (iTRACS, ThinkData, HPE IMC, VMware, PowerIQ, NFC asset management, an SNMP device monitor with autodiscovery). Repositories are private under confidentiality agreements.
 
 **Education & Certifications**
 - Higher Technical Diploma in Multiplatform Application Development — UNIR (2025)

@@ -21,57 +21,57 @@ interface ProjectItem {
 // Personal projects with GitHub links and multilingual descriptions
 const personalProjectsData = [
     {
-        id: "swiss-cv",
+        id: "agentic-os",
         title: {
-            en: "CV Portfolio",
-            es: "Portfolio CV",
-            fr: "Portfolio CV",
-            de: "CV Portfolio"
+            en: "Agentic OS",
+            es: "Agentic OS",
+            fr: "Agentic OS",
+            de: "Agentic OS"
         },
         description: {
-            en: "Professional CV/portfolio website built with a clean, minimalist aesthetic, strong typography and structured layout for optimal presentation of credentials.",
-            es: "Sitio web de CV/portfolio profesional construido con una estética limpia y minimalista, tipografía fuerte y diseño estructurado para una presentación óptima de credenciales.",
-            fr: "Site web CV/portfolio professionnel construit avec une esthétique propre et minimaliste, une typographie forte et une mise en page structurée pour une présentation optimale des références.",
-            de: "Professionelle CV/Portfolio-Webseite mit klarer, minimalistischer Ästhetik, starker Typografie und strukturiertem Layout für optimale Präsentation der Qualifikationen."
+            en: "Local cockpit for working with several coding agents at once: Jira tickets, GitHub pull requests, notes and live agent terminals (Claude Code, Codex, Grok) in one window.",
+            es: "Cabina local para trabajar con varios agentes de código a la vez: tickets de Jira, pull requests de GitHub, notas y terminales de agentes en vivo (Claude Code, Codex, Grok) en una sola ventana.",
+            fr: "Cockpit local pour travailler avec plusieurs agents de code à la fois : tickets Jira, pull requests GitHub, notes et terminaux d'agents en direct (Claude Code, Codex, Grok) dans une seule fenêtre.",
+            de: "Lokales Cockpit für die Arbeit mit mehreren Coding-Agenten gleichzeitig: Jira-Tickets, GitHub-Pull-Requests, Notizen und laufende Agent-Terminals (Claude Code, Codex, Grok) in einem Fenster."
         },
         longDescription: {
-            en: "This project is a responsive web application designed for optimal presentation of professional credentials. It features theme switching between light and dark modes, multilingual support, responsive design for all devices, and the ability to export the CV as PDF with a single click. The design follows international style principles with sharp corners, strong typography, and strategic use of accent colors.",
-            es: "Este proyecto es una aplicación web responsiva diseñada para la presentación óptima de credenciales profesionales. Presenta cambio de tema entre modos claro y oscuro, soporte multilingüe, diseño responsivo para todos los dispositivos y la capacidad de exportar el CV como PDF con un solo clic. El diseño sigue principios de estilo internacional con esquinas afiladas, tipografía fuerte y uso estratégico de colores de acento.",
-            fr: "Ce projet est une application web responsive conçue pour une présentation optimale des références professionnelles. Il comprend un changement de thème entre les modes clair et sombre, un support multilingue, un design responsive pour tous les appareils et la possibilité d'exporter le CV au format PDF en un seul clic. Le design suit les principes du style international avec des coins nets, une typographie forte et une utilisation stratégique des couleurs d'accentuation.",
-            de: "Dieses Projekt ist eine responsive Webanwendung für die optimale Präsentation beruflicher Qualifikationen. Es bietet Theme-Wechsel zwischen Hell- und Dunkelmodus, mehrsprachige Unterstützung, responsives Design für alle Geräte und die Möglichkeit, den Lebenslauf mit einem Klick als PDF zu exportieren. Das Design folgt internationalen Stilprinzipien mit scharfen Ecken, starker Typografie und strategischem Einsatz von Akzentfarben."
+            en: "Agentic OS answers one question: what needs me now? A ticket, its git worktrees and the agents working on it sit in one view, and a terminal whose agent finished or asked a question shows it within seconds. Each agent runs in a real PTY owned by a separate host process, so terminals survive server restarts and sessions resume. The workspace also opens from a phone over Tailscale, and voice dictation runs on a local model, so audio never leaves the machine.",
+            es: "Agentic OS responde a una pregunta: ¿qué necesita mi atención ahora? Un ticket, sus worktrees de git y los agentes que trabajan en él están en una sola vista, y una terminal cuyo agente ha terminado o ha preguntado algo lo muestra en segundos. Cada agente corre en un PTY real que gestiona un proceso aparte, así que las terminales sobreviven a los reinicios del servidor y las sesiones se reanudan. El espacio de trabajo también se abre desde el móvil por Tailscale, y el dictado por voz usa un modelo local, así que el audio nunca sale del equipo.",
+            fr: "Agentic OS répond à une question : qu'est-ce qui a besoin de moi maintenant ? Un ticket, ses worktrees git et les agents qui y travaillent tiennent dans une seule vue, et un terminal dont l'agent a terminé ou pose une question le signale en quelques secondes. Chaque agent tourne dans un vrai PTY géré par un processus séparé, si bien que les terminaux survivent aux redémarrages du serveur et que les sessions reprennent. L'espace de travail s'ouvre aussi depuis un téléphone via Tailscale, et la dictée vocale utilise un modèle local : l'audio ne quitte jamais la machine.",
+            de: "Agentic OS beantwortet eine Frage: Was braucht mich gerade? Ein Ticket, seine Git-Worktrees und die Agenten, die daran arbeiten, liegen in einer Ansicht, und ein Terminal, dessen Agent fertig ist oder eine Frage stellt, zeigt das innerhalb von Sekunden an. Jeder Agent läuft in einem echten PTY, das ein separater Prozess verwaltet, sodass Terminals Server-Neustarts überstehen und Sitzungen fortgesetzt werden. Der Arbeitsbereich öffnet sich auch vom Handy über Tailscale, und die Sprachdiktierung nutzt ein lokales Modell, sodass kein Audio das Gerät verlässt."
         },
-        technologies: ["Astro", "Tailwind CSS", "TypeScript", "i18n", "PWA"],
-        icon: "id-card",
-        githubUrl: "https://github.com/MaciWP/CV_Astro",
+        technologies: ["TypeScript", "Bun", "Hono", "SQLite", "React", "Vite", "Playwright"],
+        icon: "desktop",
+        githubUrl: "https://github.com/MaciWP/agentic-os",
         highlight: true,
         keyFeatures: {
             en: [
-                "Responsive design optimized for all devices",
-                "Theme switching with smooth transitions",
-                "PDF export functionality",
-                "Multilingual support (EN, ES, FR, DE)",
-                "Progressive Web App capabilities"
+                "Jira tickets, GitHub PRs and agent terminals in one view",
+                "Terminals that survive server restarts and resume their sessions",
+                "Ticket kickoff and PR review with one action",
+                "Remote access from a phone over Tailscale",
+                "16 architecture decision records, 1,800+ unit tests and 44 end-to-end specs"
             ],
             es: [
-                "Diseño responsivo optimizado para todos los dispositivos",
-                "Cambio de tema con transiciones suaves",
-                "Funcionalidad de exportación a PDF",
-                "Soporte multilingüe (EN, ES, FR, DE)",
-                "Capacidades de Progressive Web App"
+                "Tickets de Jira, PR de GitHub y terminales de agentes en una sola vista",
+                "Terminales que sobreviven a los reinicios del servidor y reanudan sus sesiones",
+                "Arranque de tickets y revisión de PR con una sola acción",
+                "Acceso remoto desde el móvil por Tailscale",
+                "16 registros de decisiones de arquitectura, más de 1.800 tests unitarios y 44 specs end-to-end"
             ],
             fr: [
-                "Design responsive optimisé pour tous les appareils",
-                "Changement de thème avec transitions fluides",
-                "Fonctionnalité d'exportation PDF",
-                "Support multilingue (EN, ES, FR, DE)",
-                "Capacités d'application web progressive"
+                "Tickets Jira, PR GitHub et terminaux d'agents dans une seule vue",
+                "Des terminaux qui survivent aux redémarrages du serveur et reprennent leurs sessions",
+                "Lancement de ticket et revue de PR en une seule action",
+                "Accès à distance depuis un téléphone via Tailscale",
+                "16 décisions d'architecture documentées, plus de 1 800 tests unitaires et 44 specs end-to-end"
             ],
             de: [
-                "Responsives Design für alle Geräte optimiert",
-                "Theme-Wechsel mit fließenden Übergängen",
-                "PDF-Export-Funktionalität",
-                "Mehrsprachige Unterstützung (EN, ES, FR, DE)",
-                "Progressive Web App Funktionen"
+                "Jira-Tickets, GitHub-PRs und Agent-Terminals in einer Ansicht",
+                "Terminals, die Server-Neustarts überstehen und ihre Sitzungen fortsetzen",
+                "Ticket-Start und PR-Review mit einer Aktion",
+                "Fernzugriff vom Handy über Tailscale",
+                "16 Architekturentscheidungen, über 1.800 Unit-Tests und 44 End-to-End-Specs"
             ]
         }
     },
@@ -127,57 +127,57 @@ const personalProjectsData = [
         }
     },
     {
-        id: "snmp-monitor",
+        id: "swiss-cv",
         title: {
-            en: "SNMP Monitor",
-            es: "Monitor SNMP",
-            fr: "Moniteur SNMP",
-            de: "SNMP-Monitor"
+            en: "CV Portfolio",
+            es: "Portfolio CV",
+            fr: "Portfolio CV",
+            de: "CV Portfolio"
         },
         description: {
-            en: "Comprehensive platform for network device monitoring via SNMP protocol, featuring automated discovery, real-time visualization, and MIB management for infrastructure tracking.",
-            es: "Plataforma integral para la monitorización de dispositivos de red a través del protocolo SNMP, con descubrimiento automatizado, visualización en tiempo real y gestión MIB para el seguimiento de infraestructura.",
-            fr: "Plateforme complète pour la surveillance des périphériques réseau via le protocole SNMP, comprenant la découverte automatisée, la visualisation en temps réel et la gestion MIB pour le suivi des infrastructures.",
-            de: "Umfassende Plattform zur Überwachung von Netzwerkgeräten über das SNMP-Protokoll mit automatischer Erkennung, Echtzeit-Visualisierung und MIB-Verwaltung zur Infrastrukturüberwachung."
+            en: "Professional CV/portfolio website built with a clean, minimalist aesthetic, strong typography and structured layout for optimal presentation of credentials.",
+            es: "Sitio web de CV/portfolio profesional construido con una estética limpia y minimalista, tipografía fuerte y diseño estructurado para una presentación óptima de credenciales.",
+            fr: "Site web CV/portfolio professionnel construit avec une esthétique propre et minimaliste, une typographie forte et une mise en page structurée pour une présentation optimale des références.",
+            de: "Professionelle CV/Portfolio-Webseite mit klarer, minimalistischer Ästhetik, starker Typografie und strukturiertem Layout für optimale Präsentation der Qualifikationen."
         },
         longDescription: {
-            en: "SNMP Monitor is a specialized web platform for managing and monitoring network devices using the SNMP Protocol. The system automates the discovery, monitoring, and real-time visualization, reducing problem detection time and improving incident response capability. The application is based on Django with asynchronous processing for intensive tasks.",
-            es: "SNMP Monitor es una plataforma web especializada para la gestión y monitorización de dispositivos de red utilizando el Protocolo SNMP. El sistema automatiza el descubrimiento, monitorización y visualización en tiempo real, reduciendo el tiempo de detección de problemas y mejorando la capacidad de respuesta a incidentes. La aplicación está basada en Django con procesamiento asíncrono para tareas intensivas.",
-            fr: "SNMP Monitor est une plateforme web spécialisée pour la gestion et la surveillance des périphériques réseau utilisant le protocole SNMP. Le système automatise la découverte, la surveillance et la visualisation en temps réel, réduisant le temps de détection des problèmes et améliorant la capacité de réponse aux incidents. L'application est basée sur Django avec un traitement asynchrone pour les tâches intensives.",
-            de: "SNMP Monitor ist eine spezialisierte Webplattform zur Verwaltung und Überwachung von Netzwerkgeräten mit dem SNMP-Protokoll. Das System automatisiert Erkennung, Überwachung und Echtzeit-Visualisierung, reduziert die Problemerkennungszeit und verbessert die Incident-Response-Fähigkeit. Die Anwendung basiert auf Django mit asynchroner Verarbeitung für intensive Aufgaben."
+            en: "This project is a responsive web application designed for optimal presentation of professional credentials. It features theme switching between light and dark modes, multilingual support, responsive design for all devices, and the ability to export the CV as PDF with a single click. The design follows international style principles with sharp corners, strong typography, and strategic use of accent colors.",
+            es: "Este proyecto es una aplicación web responsiva diseñada para la presentación óptima de credenciales profesionales. Presenta cambio de tema entre modos claro y oscuro, soporte multilingüe, diseño responsivo para todos los dispositivos y la capacidad de exportar el CV como PDF con un solo clic. El diseño sigue principios de estilo internacional con esquinas afiladas, tipografía fuerte y uso estratégico de colores de acento.",
+            fr: "Ce projet est une application web responsive conçue pour une présentation optimale des références professionnelles. Il comprend un changement de thème entre les modes clair et sombre, un support multilingue, un design responsive pour tous les appareils et la possibilité d'exporter le CV au format PDF en un seul clic. Le design suit les principes du style international avec des coins nets, une typographie forte et une utilisation stratégique des couleurs d'accentuation.",
+            de: "Dieses Projekt ist eine responsive Webanwendung für die optimale Präsentation beruflicher Qualifikationen. Es bietet Theme-Wechsel zwischen Hell- und Dunkelmodus, mehrsprachige Unterstützung, responsives Design für alle Geräte und die Möglichkeit, den Lebenslauf mit einem Klick als PDF zu exportieren. Das Design folgt internationalen Stilprinzipien mit scharfen Ecken, starker Typografie und strategischem Einsatz von Akzentfarben."
         },
-        technologies: ["Python", "Django", "PostgreSQL", "Celery", "Redis", "SNMP"],
-        icon: "network-wired",
-        githubUrl: "https://github.com/MaciWP/TrackData",
+        technologies: ["Astro", "Tailwind CSS", "TypeScript", "i18n", "PWA"],
+        icon: "id-card",
+        githubUrl: "https://github.com/MaciWP/CV_Astro",
         highlight: true,
         keyFeatures: {
             en: [
-                "Automatic network device discovery",
-                "Real-time monitoring with 5-second updates",
-                "MIB management for enriched monitoring information",
-                "Customizable visualization with various time ranges",
-                "Scalable background task system for managing large device numbers"
+                "Responsive design optimized for all devices",
+                "Theme switching with smooth transitions",
+                "PDF export functionality",
+                "Multilingual support (EN, ES, FR, DE)",
+                "Progressive Web App capabilities"
             ],
             es: [
-                "Descubrimiento automático de dispositivos de red",
-                "Monitorización en tiempo real con actualizaciones cada 5 segundos",
-                "Gestión MIB para información de monitorización enriquecida",
-                "Visualización personalizable con varios rangos de tiempo",
-                "Sistema de tareas en segundo plano escalable para gestionar gran número de dispositivos"
+                "Diseño responsivo optimizado para todos los dispositivos",
+                "Cambio de tema con transiciones suaves",
+                "Funcionalidad de exportación a PDF",
+                "Soporte multilingüe (EN, ES, FR, DE)",
+                "Capacidades de Progressive Web App"
             ],
             fr: [
-                "Découverte automatique des périphériques réseau",
-                "Surveillance en temps réel avec mises à jour toutes les 5 secondes",
-                "Gestion MIB pour des informations de surveillance enrichies",
-                "Visualisation personnalisable avec différentes plages de temps",
-                "Système de tâches en arrière-plan évolutif pour gérer un grand nombre d'appareils"
+                "Design responsive optimisé pour tous les appareils",
+                "Changement de thème avec transitions fluides",
+                "Fonctionnalité d'exportation PDF",
+                "Support multilingue (EN, ES, FR, DE)",
+                "Capacités d'application web progressive"
             ],
             de: [
-                "Automatische Netzwerkgeräte-Erkennung",
-                "Echtzeit-Überwachung mit 5-Sekunden-Updates",
-                "MIB-Verwaltung für erweiterte Überwachungsinformationen",
-                "Anpassbare Visualisierung mit verschiedenen Zeitbereichen",
-                "Skalierbares Hintergrund-Task-System zur Verwaltung großer Gerätezahlen"
+                "Responsives Design für alle Geräte optimiert",
+                "Theme-Wechsel mit fließenden Übergängen",
+                "PDF-Export-Funktionalität",
+                "Mehrsprachige Unterstützung (EN, ES, FR, DE)",
+                "Progressive Web App Funktionen"
             ]
         }
     },
@@ -203,8 +203,6 @@ const personalProjectsData = [
         },
         technologies: ["Python", "Kivy", "ONNX", "NumPy"],
         icon: "eye",
-        githubUrl: "https://github.com/MaciWP/SnapScore",
-        highlight: true,
         keyFeatures: {
             en: [
                 "Real-time card detection using ONNX neural network",
@@ -300,6 +298,61 @@ const professionalProjectsData = [
         }
     },
     {
+        id: "snmp-monitor",
+        title: {
+            en: "SNMP Monitor",
+            es: "Monitor SNMP",
+            fr: "Moniteur SNMP",
+            de: "SNMP-Monitor"
+        },
+        company: "Bjumper",
+        description: {
+            en: "Comprehensive platform for network device monitoring via SNMP protocol, featuring automated discovery, real-time visualization, and MIB management for infrastructure tracking.",
+            es: "Plataforma integral para la monitorización de dispositivos de red a través del protocolo SNMP, con descubrimiento automatizado, visualización en tiempo real y gestión MIB para el seguimiento de infraestructura.",
+            fr: "Plateforme complète pour la surveillance des périphériques réseau via le protocole SNMP, comprenant la découverte automatisée, la visualisation en temps réel et la gestion MIB pour le suivi des infrastructures.",
+            de: "Umfassende Plattform zur Überwachung von Netzwerkgeräten über das SNMP-Protokoll mit automatischer Erkennung, Echtzeit-Visualisierung und MIB-Verwaltung zur Infrastrukturüberwachung."
+        },
+        longDescription: {
+            en: "SNMP Monitor is a specialized web platform for managing and monitoring network devices using the SNMP Protocol. The system automates the discovery, monitoring, and real-time visualization, reducing problem detection time and improving incident response capability. The application is based on Django with asynchronous processing for intensive tasks.",
+            es: "SNMP Monitor es una plataforma web especializada para la gestión y monitorización de dispositivos de red utilizando el Protocolo SNMP. El sistema automatiza el descubrimiento, monitorización y visualización en tiempo real, reduciendo el tiempo de detección de problemas y mejorando la capacidad de respuesta a incidentes. La aplicación está basada en Django con procesamiento asíncrono para tareas intensivas.",
+            fr: "SNMP Monitor est une plateforme web spécialisée pour la gestion et la surveillance des périphériques réseau utilisant le protocole SNMP. Le système automatise la découverte, la surveillance et la visualisation en temps réel, réduisant le temps de détection des problèmes et améliorant la capacité de réponse aux incidents. L'application est basée sur Django avec un traitement asynchrone pour les tâches intensives.",
+            de: "SNMP Monitor ist eine spezialisierte Webplattform zur Verwaltung und Überwachung von Netzwerkgeräten mit dem SNMP-Protokoll. Das System automatisiert Erkennung, Überwachung und Echtzeit-Visualisierung, reduziert die Problemerkennungszeit und verbessert die Incident-Response-Fähigkeit. Die Anwendung basiert auf Django mit asynchroner Verarbeitung für intensive Aufgaben."
+        },
+        technologies: ["Python", "Django", "PostgreSQL", "Celery", "Redis", "SNMP"],
+        icon: "network-wired",
+        highlight: true,
+        keyFeatures: {
+            en: [
+                "Automatic network device discovery",
+                "Real-time monitoring with 5-second updates",
+                "MIB management for enriched monitoring information",
+                "Customizable visualization with various time ranges",
+                "Scalable background task system for managing large device numbers"
+            ],
+            es: [
+                "Descubrimiento automático de dispositivos de red",
+                "Monitorización en tiempo real con actualizaciones cada 5 segundos",
+                "Gestión MIB para información de monitorización enriquecida",
+                "Visualización personalizable con varios rangos de tiempo",
+                "Sistema de tareas en segundo plano escalable para gestionar gran número de dispositivos"
+            ],
+            fr: [
+                "Découverte automatique des périphériques réseau",
+                "Surveillance en temps réel avec mises à jour toutes les 5 secondes",
+                "Gestion MIB pour des informations de surveillance enrichies",
+                "Visualisation personnalisable avec différentes plages de temps",
+                "Système de tâches en arrière-plan évolutif pour gérer un grand nombre d'appareils"
+            ],
+            de: [
+                "Automatische Netzwerkgeräte-Erkennung",
+                "Echtzeit-Überwachung mit 5-Sekunden-Updates",
+                "MIB-Verwaltung für erweiterte Überwachungsinformationen",
+                "Anpassbare Visualisierung mit verschiedenen Zeitbereichen",
+                "Skalierbares Hintergrund-Task-System zur Verwaltung großer Gerätezahlen"
+            ]
+        }
+    },
+    {
         id: "itracs-service",
         title: {
             en: "iTRACS MicroService",
@@ -315,10 +368,10 @@ const professionalProjectsData = [
             de: "Bidirektionale Integrationsplattform zur Synchronisierung von Rechenzentrumsinfrastrukturdaten zwischen mehreren heterogenen Systemen und der iTRACS DCIM-Plattform."
         },
         longDescription: {
-            en: "This integration platform provides seamless synchronization between various datacenter management systems (HPE IMC, VMware, TakeData, ThinkData) and the iTRACS DCIM platform. The system automates asset documentation, optimizes infrastructure monitoring, and centralizes critical operational data in real-time.",
-            es: "Esta plataforma de integración proporciona sincronización perfecta entre varios sistemas de gestión de centros de datos (HPE IMC, VMware, TakeData, ThinkData) y la plataforma iTRACS DCIM. El sistema automatiza la documentación de activos, optimiza la monitorización de infraestructura y centraliza datos operativos críticos en tiempo real.",
-            fr: "Cette plateforme d'intégration fournit une synchronisation transparente entre divers systèmes de gestion de centre de données (HPE IMC, VMware, TakeData, ThinkData) et la plateforme iTRACS DCIM. Le système automatise la documentation des actifs, optimise la surveillance de l'infrastructure et centralise les données opérationnelles critiques en temps réel.",
-            de: "Diese Integrationsplattform bietet nahtlose Synchronisation zwischen verschiedenen Rechenzentrum-Managementsystemen (HPE IMC, VMware, TakeData, ThinkData) und der iTRACS DCIM-Plattform. Das System automatisiert Asset-Dokumentation, optimiert Infrastrukturüberwachung und zentralisiert kritische Betriebsdaten in Echtzeit."
+            en: "This integration platform provides seamless synchronization between various datacenter management systems (HPE IMC, VMware, TrackData, ThinkData) and the iTRACS DCIM platform. The system automates asset documentation, optimizes infrastructure monitoring, and centralizes critical operational data in real-time.",
+            es: "Esta plataforma de integración proporciona sincronización perfecta entre varios sistemas de gestión de centros de datos (HPE IMC, VMware, TrackData, ThinkData) y la plataforma iTRACS DCIM. El sistema automatiza la documentación de activos, optimiza la monitorización de infraestructura y centraliza datos operativos críticos en tiempo real.",
+            fr: "Cette plateforme d'intégration fournit une synchronisation transparente entre divers systèmes de gestion de centre de données (HPE IMC, VMware, TrackData, ThinkData) et la plateforme iTRACS DCIM. Le système automatise la documentation des actifs, optimise la surveillance de l'infrastructure et centralise les données opérationnelles critiques en temps réel.",
+            de: "Diese Integrationsplattform bietet nahtlose Synchronisation zwischen verschiedenen Rechenzentrum-Managementsystemen (HPE IMC, VMware, TrackData, ThinkData) und der iTRACS DCIM-Plattform. Das System automatisiert Asset-Dokumentation, optimiert Infrastrukturüberwachung und zentralisiert kritische Betriebsdaten in Echtzeit."
         },
         technologies: ["Python", "Django", "REST API", "PostgreSQL", "Docker"],
         icon: "exchange-alt",
