@@ -35,7 +35,7 @@ Al principio la app adivinaba si un agente trabajaba contando los bytes que escr
 
 Ahora el servidor lee lo que cada harness ya escribe sobre sí mismo, y no inyecta nada al lanzarlo. Para Claude Code es `~/.claude/sessions/<pid>.json`. Para Codex es el fichero de sesión de `~/.codex/sessions` que el proceso de la terminal tiene abierto, y lo encuentra con una sola llamada a `lsof` para todos los Codex en marcha. Eso sustituyó a un emparejamiento por carpeta y hora de inicio, que dejaba sin sesión a varias terminales de Codex en la misma carpeta y no veía las reanudadas.
 
-El resultado son tres estados: `working`, `needs_you` y desconocido. El desconocido vuelve al recuento de bytes de antes. Los límites también están escritos. Codex no registra cuándo pide una aprobación, así que un Codex esperando un permiso aparece como trabajando. Grok no tiene de dónde leer su estado y se queda en desconocido.
+El resultado son tres estados: `working`, `needs_you` y desconocido. El desconocido vuelve al recuento de bytes de antes. Los límites también están escritos. Codex no registra cuándo pide una aprobación, así que un Codex esperando un permiso aparece como trabajando. Grok da un id de sesión, pero no un estado de trabajando o esperando, así que se queda en desconocido.
 
 Los mismos ficheros dan el id de sesión, que sigue a `/clear`. Es el id que la app reanuda después de reiniciar el host, así que la terminal del agente vuelve donde estaba.
 
@@ -51,4 +51,6 @@ Una regla así solo se cumple si algo la comprueba, así que un test vigila las 
 
 La costumbre que mantendría es escribir un ADR por decisión. Cada uno recoge las opciones que descartó y por qué, y lo que la decisión no da, como los límites de arriba. Cuando una opción descartada vuelve a parecer buena idea, el razonamiento ya está escrito.
 
-El repo tiene 1.839 tests unitarios y 44 specs end-to-end con Playwright, y `bun run check` ejecuta la comprobación de tipos, Biome y los tests unitarios. El código se puede leer en [github.com/MaciWP/agentic-os](https://github.com/MaciWP/agentic-os).
+El repo tiene más de 2.000 tests unitarios y 44 specs end-to-end con Playwright, y `bun run check` ejecuta la comprobación de tipos, Biome y los tests unitarios. El código se puede leer en [github.com/MaciWP/agentic-os](https://github.com/MaciWP/agentic-os).
+
+También en este blog: [Hooks de Claude Code: convertir reglas escritas en reglas que el agente no puede saltarse](/es/blog/claude-code-hooks-that-enforce-the-rules) y [Construir una capa de orquestación para Claude Code: una retrospectiva honesta](/es/blog/building-a-claude-code-orchestrator).

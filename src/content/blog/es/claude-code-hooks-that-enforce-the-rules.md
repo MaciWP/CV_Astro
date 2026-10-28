@@ -41,7 +41,7 @@ Los primeros hooks fueron de coste, porque el coste se mide fácil.
 
 Algunas reglas protegen cosas que no puedo deshacer. La más clara: el agente solo hace push, abre pull requests, mergea o borra ramas remotas si se lo he pedido en el mensaje actual. `remote-git-gate.ts` lee mi último mensaje y, si no lo encuentra, bloquea el comando.
 
-Funciona, y hoy se ha pasado de estricto conmigo. Mientras publicaba esta web aprobé un merge eligiendo una opción en la herramienta de preguntas, y el hook lo bloqueó: solo lee lo que escribo. Luego escribí «abre las PR» y también lo bloqueó, porque esperaba el singular «abre la PR». Tuve que escribir la frase exacta. Un control que bloquea a la persona a la que protege tiene un fallo: debería entender lo que quiero decir, y hoy solo compara palabras exactas. Lo dejo estricto hasta arreglarlo bien, porque un control demasiado permisivo es peor.
+Funciona, y el 13 de octubre de 2026 se pasó de estricto conmigo. Mientras publicaba esta web aprobé un merge eligiendo una opción en la herramienta de preguntas, y el hook lo bloqueó: solo lee lo que escribo. Luego escribí «abre las PR» y también lo bloqueó, porque esperaba el singular «abre la PR». Tuve que escribir la frase exacta. Un control que bloquea a la persona a la que protege tiene un fallo: debería entender lo que quiero decir, y por ahora solo compara palabras exactas. Lo dejo estricto hasta arreglarlo bien, porque un control demasiado permisivo es peor.
 
 No todos los hooks deben bloquear. `security-gate.ts` busca secretos en los ficheros que acaban de cambiar y solo avisa. Un falso positivo pararía el trabajo sin motivo, y con un aviso me basta para revisarlo.
 
