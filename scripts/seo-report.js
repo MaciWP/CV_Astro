@@ -51,7 +51,7 @@ async function api(token, path, body) {
 
 const day = (offset) => new Date(Date.now() - offset * 86_400_000).toISOString().slice(0, 10);
 
-function query(token, start, end, dimensions = [], rowLimit = 10) {
+function query(token, start, end, dimensions = [], rowLimit = 25_000) {
     const path = `/sites/${encodeURIComponent(SITE)}/searchAnalytics/query`;
     return api(token, path, { startDate: start, endDate: end, dimensions, rowLimit })
         .then((r) => r.rows ?? []);
@@ -63,7 +63,10 @@ const delta = (now, before) => `${now >= before ? '+' : ''}${now - before}`;
 
 function table(title, key, rows) {
     if (rows.length === 0) return `### ${title}\n\nNo rows (Google hides low-volume queries).\n`;
-    const lines = rows.map((r) =>
+    // The API orders by clicks and breaks ties arbitrarily, so with 0 clicks we
+    // fetch every row (rowLimit) and rank by impressions ourselves.
+    const top = [...rows].sort((a, b) => b.clicks - a.clicks || b.impressions - a.impressions).slice(0, 10);
+    const lines = top.map((r) =>
         `| ${r.keys[0]} | ${r.clicks} | ${r.impressions} | ${pct(r.ctr)} | ${r.position.toFixed(1)} |`);
     return [`### ${title}`, '', `| ${key} | Clicks | Impr. | CTR | Pos. |`, '|---|---|---|---|---|', ...lines, ''].join('\n');
 }
