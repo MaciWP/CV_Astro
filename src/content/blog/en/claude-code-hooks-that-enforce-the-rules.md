@@ -42,7 +42,7 @@ The first hooks I wrote were about cost, because cost is easy to measure.
 
 Some rules protect things I can't undo. The clearest one: the agent only pushes, opens pull requests, merges or deletes remote branches when I asked for that in the current message. `remote-git-gate.ts` reads my last message and blocks the command otherwise.
 
-It works, and today it was too strict with me. While shipping this site I approved a merge by picking an option in the question tool, and the hook blocked it: it only reads what I type. Then I typed "abre las PR" ("open the PRs") and it blocked that too, because it matched the singular "abre la PR". I had to type the exact phrase. A gate that blocks the person it protects has a bug: it should understand what I mean, and today it only matches exact words. I'm leaving it strict until I fix that properly, because a gate that is too loose is worse.
+It works, and on 2026-10-13 it was too strict with me. While shipping this site I approved a merge by picking an option in the question tool, and the hook blocked it: it only reads what I type. Then I typed "abre las PR" ("open the PRs") and it blocked that too, because it matched the singular "abre la PR". I had to type the exact phrase. A gate that blocks the person it protects has a bug: it should understand what I mean, and for now it only matches exact words. I'm leaving it strict until I fix that properly, because a gate that is too loose is worse.
 
 Not every hook should block. `security-gate.ts` scans recently changed files for secrets and only warns. A false positive there would stop work for no reason, and a warning is enough for me to look.
 

@@ -38,7 +38,7 @@ At first the app guessed whether an agent was working by counting output bytes. 
 
 Now the server reads what each harness already writes about itself, and injects nothing into a launch. For Claude Code that is `~/.claude/sessions/<pid>.json`. For Codex it is the session file under `~/.codex/sessions` that the terminal's process holds open, found with one `lsof` call for every running Codex. That replaced a match by folder and start time, which gave several Codex terminals in one folder no session at all and missed resumed ones.
 
-The result is three states: `working`, `needs_you` and unknown. Unknown falls back to the old byte count. The limits are written down too. Codex records no approval request, so a Codex waiting on a permission reads as working. Grok has no state source and stays unknown.
+The result is three states: `working`, `needs_you` and unknown. Unknown falls back to the old byte count. The limits are written down too. Codex records no approval request, so a Codex waiting on a permission reads as working. Grok exposes a session id but no working or needs-you state, so it stays unknown.
 
 The same files give the session id, and it follows `/clear`. That is the id the app resumes after a host restart, so an agent's terminal comes back where it was.
 
@@ -54,4 +54,6 @@ A rule like this only holds if something checks it, so a test enforces the brows
 
 The habit I would keep is the ADR for each decision. Each one records the options it rejected and why, and states what the decision does not give me, like the limits above. When a rejected option looks attractive again, the reasoning is already written down.
 
-The repo has 1,839 unit tests and 44 Playwright end-to-end specs, and `bun run check` runs the type check, Biome and the unit tests. The code is public to read at [github.com/MaciWP/agentic-os](https://github.com/MaciWP/agentic-os).
+The repo has more than 2,000 unit tests and 44 Playwright end-to-end specs, and `bun run check` runs the type check, Biome and the unit tests. The code is public to read at [github.com/MaciWP/agentic-os](https://github.com/MaciWP/agentic-os).
+
+Also on this blog: [Claude Code hooks: turning written rules into ones the agent can't skip](/blog/claude-code-hooks-that-enforce-the-rules) and [Building an orchestration layer for Claude Code: an honest retrospective](/blog/building-a-claude-code-orchestrator).
